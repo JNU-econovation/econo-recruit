@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-const KanbanSelectedButtonNumberState = atom({
+export const KanbanSelectedButtonNumberState = atom({
   key: 'KanbanSelectedButtonNumberState',
   default: 0,
 })
