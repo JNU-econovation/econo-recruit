@@ -15,7 +15,7 @@ const KanbanRowComponent = () => {
   ]
 
   return (
-    <div className="max-h-full border-[1px] w-fit p-4 rounded-lg min-w-[17rem]">
+    <div className="max-h-full border-[1px] border-[#F0F0F0] w-fit p-4 rounded-lg min-w-[17rem]">
       <div className="flex justify-between">
         <div className="flex gap-2">
           <div className="font-bold text-lg">{title}</div>
