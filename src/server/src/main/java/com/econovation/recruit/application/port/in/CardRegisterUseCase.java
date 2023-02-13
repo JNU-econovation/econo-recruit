@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.application.port.in;
 
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.card.Card;

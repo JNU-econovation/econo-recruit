@@ -1,6 +1,9 @@
 package com.econovation.recruit.domain.board;
 
+import com.econovation.recruit.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,7 +11,9 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board extends BaseTimeEntity{
+@Getter
+@Builder
+public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -26,5 +31,6 @@ public class Board extends BaseTimeEntity{
 
     @Column(name = "low_loc")
     private Integer lowLoc;
+
 
 }

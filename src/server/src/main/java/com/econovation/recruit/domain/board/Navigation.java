@@ -15,4 +15,7 @@ public class Navigation {
     private Long id;
     @Column(name = "nav_title")
     private String navTitle;
+
+    @Column(name = "nav_loc")
+    private Integer navLoc;
 }

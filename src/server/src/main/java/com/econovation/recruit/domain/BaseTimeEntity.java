@@ -1,4 +1,4 @@
-package com.econovation.recruit.domain.board;
+package com.econovation.recruit.domain;
 
 import java.time.LocalDateTime;
 

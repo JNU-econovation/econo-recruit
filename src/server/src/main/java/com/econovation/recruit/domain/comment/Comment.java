@@ -1,8 +1,7 @@
 package com.econovation.recruit.domain.comment;
 
 import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.board.BaseTimeEntity;
-import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
