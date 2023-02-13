@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -28,5 +29,20 @@ public class Card extends BaseTimeEntity {
     @Column(name = "work_card_info")
     private String workCardInfo;
 
+    public Card(Applicant applicant, Board board) {
+        this.applicant = applicant;
+        this.workCardInfo = null;
+        this.board = board;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
+        return Objects.equals(id, this.id);
+    }
 }
