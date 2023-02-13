@@ -16,10 +16,12 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ApplicantController {
+    private static final String APPLT_SUCCESS_MESSAGE = "성공적으로 지원됐습니다";
     private final ApplicantRegisterUseCase applicantRegisterUseCase;
     private final ApplicantMapper applicantMapper;
     @PostMapping("/v1/applicant")
-    public ResponseEntity<HttpStatus> registerApplicant(@Valid ApplicantRegisterDto applicantRegisterDto){
+    public ResponseEntity registerApplicant(@Valid ApplicantRegisterDto applicantRegisterDto){
         applicantRegisterUseCase.apply(applicantMapper.toEntity(applicantRegisterDto));
+        return new ResponseEntity<>(APPLT_SUCCESS_MESSAGE,HttpStatus.OK);
     }
 }

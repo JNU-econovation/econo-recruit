@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 public class ApplicantService implements ApplicantRegisterUseCase {
@@ -18,7 +20,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
     private final LoadApplicantPort loadApplicantPort;
     private final RecordApplicantPort recordApplicantPort;
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {IllegalStateException.class})
     public void apply(Applicant applicant) {
         //  applicant 중복 검사
         if(isDuplicate(applicant)){

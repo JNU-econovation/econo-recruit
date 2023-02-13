@@ -36,16 +36,5 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     public Board save(Board board) {
         return boardRepository.save(board);
     }
-//    @Override
-//    public Board getColLocByLocation(Map<String, Integer> newestLocation, Integer navLoc) {
-//        Navigation navigation = navigationRepository.findNavigationByNavLoc(navLoc)
-//                .orElseThrow(() -> new IllegalStateException(NO_NAVLOC_MESSAGE));
-//
-//        Board.builder().navigation()
-//                .lowLoc()
-//                .colLoc()
-//                .colTitle()
-//
-//    }
 
 }

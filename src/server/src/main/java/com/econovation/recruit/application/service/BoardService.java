@@ -21,7 +21,7 @@ public class BoardService implements BoardRegisterUseCase {
         Board board = Board.builder()
                 .colLoc(newestLocation.get("colLoc"))
                 .colTitle(hopeField)
-                .lowLoc(newestLocation.get("colLoc"))
+                .lowLoc(newestLocation.get("lowLoc"))
                 .navigation(navigation)
                 .build();
         return boardRecordPort.save(board);

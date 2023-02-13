@@ -9,12 +9,10 @@ import java.util.List;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+    // hope_field 와 board.col_title
     @Query(value = "SELECT b " +
             "FROM Board as b " +
             "WHERE b.colTitle = :hope_field"
-//            "ON b.col_title = :hope_field"
-//            , nativeQuery = true)
     )
-    // hope_field 와 board.col_title
     List<Board> getByHopeField(@Param("hope_field") String hopeField);
 }

@@ -1,10 +1,7 @@
 package com.econovation.recruit.domain.board;
 
 import com.econovation.recruit.domain.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
