@@ -13,7 +13,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/kanban/:period',
-    element: <KanbanBoardPage />,
+    children: [
+      { path: '/kanban/:period', element: <KanbanBoardPage /> },
+      { path: '/kanban/:period/detail/:boardId' },
+    ],
   },
 ])
 

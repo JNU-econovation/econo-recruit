@@ -18,10 +18,10 @@ const KanbanAddColumnComponent = ({ AddColumnCallBack }: KanbanAddColumnComponen
           />
           <div className="flex gap-3 justify-end">
             <button onClick={() => setIsOpenAddCard(false)}>
-              <img src="/public/ellipsis.multiply.svg" alt="" />
+              <img src="/ellipsis.multiply.svg" alt="" />
             </button>
             <button onClick={AddColumnCallBack}>
-              <img src="/public/arrow.forward.circle.fill.svg" alt="" />
+              <img src="/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
         </div>
@@ -32,7 +32,7 @@ const KanbanAddColumnComponent = ({ AddColumnCallBack }: KanbanAddColumnComponen
             setIsOpenAddCard(true)
           }}
         >
-          <img src="/public/ellipsis.plus.svg" alt="AddColumn" />
+          <img src="/ellipsis.plus.svg" alt="AddColumn" />
           Add a card
         </button>
       )}
