@@ -1,17 +1,15 @@
-package com.econovation.recruit.domain.board;
+package com.econovation.recruit.domain.dto;
 
-import com.econovation.recruit.domain.BaseTimeEntity;
-import lombok.*;
+
+import com.econovation.recruit.domain.board.Navigation;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Builder
-public class Board extends BaseTimeEntity {
-    @Id
+@Data
+public class BoardResponseDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long id;
@@ -28,9 +26,4 @@ public class Board extends BaseTimeEntity {
 
     @Column(name = "low_loc")
     private Integer lowLoc;
-
-    public void update(Integer colLoc, Integer lowLoc) {
-        this.colLoc = colLoc;
-        this.lowLoc = lowLoc;
-    }
 }

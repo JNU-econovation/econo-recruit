@@ -1,12 +1,17 @@
 package com.econovation.recruit.application.utils;
 
 import com.econovation.recruit.domain.applicant.Applicant;
+import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.ApplicantRegisterDto;
+import com.econovation.recruit.domain.dto.BoardResponseDto;
+import com.econovation.recruit.domain.dto.CommentResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ApplicantMapperImpl {
-    Applicant toEntity(ApplicantRegisterDto applicantRegisterDto) {
+public class EntityMapperImpl implements EntityMapper{
+    @Override
+    public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
         return Applicant.builder()
                 .email(applicantRegisterDto.getEmail())
                 .grade(applicantRegisterDto.getGrade())
@@ -25,4 +30,17 @@ public class ApplicantMapperImpl {
                 .secondPriority(applicantRegisterDto.getSecondPriority())
                 .build();
     }
+
+    @Override
+    public BoardResponseDto UpdateLocationBoardDtoToEntity(Board board) {
+        return BoardResponseDto.builder().
+                build();
+    }
+
+    /*@Override
+    public CommentResponseDto toCommentResponseDto(Comment comment) {
+        return CommentResponseDto.builder()
+                .
+        .build()
+    }*/
 }
