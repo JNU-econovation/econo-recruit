@@ -45,7 +45,7 @@ const KanbanBoardPage = () => {
       <div className="flex gap-4 py-6 font-medium">
         <KanbanNavbarComponent />
       </div>
-      <div className="overflow-auto max-h-[calc(100vh-18rem)] ">
+      <div className="overflow-auto max-h-[calc(100vh-18rem)]">
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable" type="COLUMN" direction="horizontal">
             {(provided) => (

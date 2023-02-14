@@ -2,6 +2,7 @@ import { Draggable, Droppable } from '@hello-pangea/dnd'
 import KanbanAddColumnComponent from './AddColumn.component'
 import KanbanColumnComponent from './Column.components'
 import { KanbanColumnData } from '../../Atoms/KanbanBoard/Kanban.atoms'
+import { MutableRefObject } from 'react'
 
 type KanbanRowComponent = {
   index: number
@@ -45,16 +46,20 @@ const KanbanRowComponent = ({ index, columnData, title, columnCount }: KanbanRow
                       ></div>
                     )}
                   </Draggable>
-                  {columnData.map((column, index) => (
-                    <Draggable draggableId={`${index}-${column.id}`} index={index} key={column.id}>
+                  {columnData.map((column, colIndex) => (
+                    <Draggable
+                      draggableId={`${colIndex}-${column.id}`}
+                      index={colIndex}
+                      key={column.id}
+                    >
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className=" my-4"
+                          className="my-4"
                         >
-                          <KanbanColumnComponent data={column} />
+                          <KanbanColumnComponent data={column} row={index} />
                         </div>
                       )}
                     </Draggable>
