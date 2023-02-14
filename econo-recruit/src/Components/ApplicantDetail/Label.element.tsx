@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const KanbanLabelElement = () => {
+const ApplicantLabelElement = () => {
   const [label, setLabel] = useState(['윤성', '민주', '서현', '수민', '규민', '채승'])
   const allLabel = [
     '윤성',
@@ -65,4 +65,4 @@ const KanbanLabelElement = () => {
   )
 }
 
-export default KanbanLabelElement
+export default ApplicantLabelElement

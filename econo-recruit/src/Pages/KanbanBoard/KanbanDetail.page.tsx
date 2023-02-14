@@ -3,9 +3,10 @@ import { useRecoilValue } from 'recoil'
 import { KanbanDataArrayState } from '../../Atoms/KanbanBoard/Kanban.atoms'
 import { useSearchParams } from 'react-router-dom'
 import KanbanColumnComponent from '../../Components/KanbanBoard/Column.components'
-import KanbanApplicationComponent from '../../Components/KanbanDetail/Application.element'
-import KanbanUserElement from '../../Components/KanbanDetail/User.element'
-import KanbanLabelElement from '../../Components/KanbanDetail/Label.element'
+import ApplicantApplicationComponent from '../../Components/ApplicantDetail/Application.element'
+import ApplicantUserElement from '../../Components/ApplicantDetail/User.element'
+import ApplicantLabelElement from '../../Components/ApplicantDetail/Label.element'
+import ApplicantCommentElement from '../../Components/ApplicantDetail/Comment.element'
 
 const KanbanDetailPage = () => {
   const { period } = useParams()
@@ -56,12 +57,13 @@ const KanbanDetailPage = () => {
           </div>
         </div>
         <div className="flex flex-1 pl-12">
-          <div className="flex-1 min-w-[28rem]">
-            <KanbanUserElement />
-            <KanbanLabelElement />
+          <div className="w-[30rem] mr-12 pb-8 h-[calc(100vh-12rem)] overflow-auto">
+            <ApplicantUserElement />
+            <ApplicantLabelElement />
+            <ApplicantCommentElement />
           </div>
           <div className="flex-1 pr-24 min-w-[40rem]">
-            <KanbanApplicationComponent />
+            <ApplicantApplicationComponent />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-const KanbanUserElement = () => {
+const ApplicantUserElement = () => {
   return (
     <div className="w-full">
       <div className="text-lg text-gray-600">소프트웨어공학과</div>
@@ -32,4 +32,4 @@ const KanbanUserElement = () => {
     </div>
   )
 }
-export default KanbanUserElement
+export default ApplicantUserElement
