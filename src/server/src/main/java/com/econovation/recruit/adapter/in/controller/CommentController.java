@@ -24,12 +24,17 @@ public class CommentController {
     }
 
     @PostMapping("/comments/delete")
-    public ResponseEntity<Integer> deleteComment(){
+    public ResponseEntity<Integer> deleteComment(Integer commentId){
         // 코멘트가 있는지 확인
-
+        Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면
-        // 코멘트의 isDeleted false -> true
-        // 코멘트와 연결된 Applicant 테이블 조회
-        // Applicant Comment_Count 1--
+        if(!comment.equals(null)){
+            // 코멘트의 isDeleted false -> true
+            comment.delete();
+            // 코멘트와 연결된 Applicant 테이블 조회
+            comment.getApplicant().minusCommentCount();
+            // Applicant Comment_Count 1--
+        }
+        return new ResponseEntity<>(commentId, HttpStatus.OK);
     }
 }

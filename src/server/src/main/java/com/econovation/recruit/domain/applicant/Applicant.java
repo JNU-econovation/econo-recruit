@@ -22,6 +22,7 @@ public class Applicant extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToOne
     @JoinColumn(name = "card_id")
     private Card card;
@@ -64,5 +65,16 @@ public class Applicant extends BaseTimeEntity {
 
     public String getHopeField() {
         return hopeField;
+    }
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+    public void minusCommentCount(){
+        if(commentCount == 0) return;
+        this.commentCount = this.commentCount - 1;
     }
 }

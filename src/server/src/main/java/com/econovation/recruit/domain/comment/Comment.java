@@ -4,6 +4,7 @@ import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -30,4 +31,11 @@ public class Comment extends BaseTimeEntity {
     private Boolean isDeleted;
 
 
+    public void delete() {
+        this.isDeleted = true;
+    }
+
+    public Applicant getApplicant() {
+        return applicant;
+    }
 }
