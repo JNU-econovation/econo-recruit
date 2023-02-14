@@ -6,7 +6,7 @@ const KanbanApplicationComponent = () => {
     ' 어머님, 보고, 오면 어머니 묻힌 언덕 추억과 계십니다. 말 하나 사랑과 하나에 별 속의 있습니다. 하나에 까닭이요, 벌써 아스라히 별들을 그러나 않은 한 봅니다. 나는 어머니, 벌레는 별빛이 있습니다. 나는 프랑시스 청춘이 가난한 하나에 계십니다. 차 동경과 이름자 버리었습니다. 우는 언덕 멀리 가을로 봅니다. 못 언덕 새워 이웃 차 그리고 나는 계십니다. 무성할 내 때 사랑과 이름을 아직 벌써 있습니다.'
 
   return (
-    <div className="p-2 mr-24 overflow-auto max-h-[calc(100vh-12rem)] h-fit">
+    <div className="p-2 overflow-auto max-h-[calc(100vh-12rem)] h-fit">
       <div className="drop-shadow-[0_3px_3px_rgba(0,0,0,0.25)] bg-white p-16 w-[98%] font-medium">
         <div className="mb-12">
           <div className="flex items-baseline">
