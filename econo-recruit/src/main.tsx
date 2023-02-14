@@ -6,11 +6,12 @@ import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
 import KanbanBoardPage from './Pages/KanbanBoard/KanbanBoard.page'
 import KanbanDetailPage from './Pages/KanbanBoard/KanbanDetail.page'
+import HomePage from './Pages/Home/Home.page'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>asdf</div>,
+    element: <HomePage />,
   },
   {
     path: '/kanban/:period',
