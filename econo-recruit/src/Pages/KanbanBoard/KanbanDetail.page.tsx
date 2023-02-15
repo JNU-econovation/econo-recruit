@@ -63,7 +63,9 @@ const KanbanDetailPage = () => {
             <ApplicantCommentElement />
           </div>
           <div className="flex-1 pr-24 min-w-[40rem]">
-            <ApplicantApplicationComponent />
+            <div className="p-2 overflow-auto max-h-[calc(100vh-12rem)] h-fit">
+              <ApplicantApplicationComponent />
+            </div>
           </div>
         </div>
       </div>

@@ -11,3 +11,8 @@ export const applicantListState = atom({
   key: 'applicantListState',
   default: [] as applicantBoardState[],
 })
+
+export const applicantPopupBooleanState = atom({
+  key: 'applicantPopupBooleanState',
+  default: false,
+})

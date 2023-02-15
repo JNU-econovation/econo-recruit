@@ -42,7 +42,7 @@ const ApplicantCommentElement = () => {
       </div>
       <div className="flex flex-col gap-8 pt-8">
         {commentData.map((comment) => (
-          <CommentDetailElement comment={comment} />
+          <CommentDetailElement comment={comment} key={comment.id} />
         ))}
       </div>
     </div>
