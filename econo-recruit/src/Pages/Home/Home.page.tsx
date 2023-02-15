@@ -1,4 +1,4 @@
-import HomeCardElement from '../../Components/Home/Card.element'
+import HomeCardElement from '../../Elements/Home/Card.element'
 import { MainMenu } from '../../Data/25/MainMenus'
 
 const HomePage = () => {

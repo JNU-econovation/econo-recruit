@@ -7,6 +7,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import KanbanBoardPage from './Pages/KanbanBoard/KanbanBoard.page'
 import KanbanDetailPage from './Pages/KanbanBoard/KanbanDetail.page'
 import HomePage from './Pages/Home/Home.page'
+import ApplicantBoardPage from './Pages/ApplicantBoard/ApplicantBoard.page'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       { path: '/kanban/:period', element: <KanbanBoardPage /> },
       { path: '/kanban/:period/detail', element: <KanbanDetailPage /> },
     ],
+  },
+  {
+    path: '/applicant/:period',
+    children: [{ path: '/applicant/:period', element: <ApplicantBoardPage /> }],
   },
 ])
 

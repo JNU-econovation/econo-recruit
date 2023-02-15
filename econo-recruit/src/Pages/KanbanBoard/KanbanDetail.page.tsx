@@ -2,11 +2,11 @@ import { useParams } from 'react-router'
 import { useRecoilValue } from 'recoil'
 import { KanbanDataArrayState } from '../../Atoms/KanbanBoard/Kanban.atoms'
 import { useSearchParams } from 'react-router-dom'
-import KanbanColumnComponent from '../../Components/KanbanBoard/Column.components'
-import ApplicantApplicationComponent from '../../Components/ApplicantDetail/Application.element'
-import ApplicantUserElement from '../../Components/ApplicantDetail/User.element'
-import ApplicantLabelElement from '../../Components/ApplicantDetail/Label.element'
-import ApplicantCommentElement from '../../Components/ApplicantDetail/Comment.element'
+import KanbanColumnComponent from '../../Elements/KanbanBoard/Column.components'
+import ApplicantApplicationComponent from '../../Elements/ApplicantDetail/Application.element'
+import ApplicantUserElement from '../../Elements/ApplicantDetail/User.element'
+import ApplicantLabelElement from '../../Elements/ApplicantDetail/Label.element'
+import ApplicantCommentElement from '../../Elements/ApplicantDetail/Comment.element'
 
 const KanbanDetailPage = () => {
   const { period } = useParams()

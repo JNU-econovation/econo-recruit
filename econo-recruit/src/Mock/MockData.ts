@@ -120,3 +120,48 @@ export const ApplicantCommentMock = [
     checked: false,
   },
 ]
+
+export const ApplicationListMock = [
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    semester: '1학년 1학기',
+    registerDate: '2023.03.31',
+  },
+]
