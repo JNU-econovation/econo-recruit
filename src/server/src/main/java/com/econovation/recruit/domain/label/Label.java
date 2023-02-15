@@ -1,8 +1,10 @@
 package com.econovation.recruit.domain.label;
 
 import com.econovation.recruit.domain.applicant.Applicant;
+import com.econovation.recruit.domain.interviewer.Interviewer;
 import com.econovation.recruit.domain.interviewer.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +23,7 @@ public class Label {
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
-    @Column(name = "idp_id")
-    private Long idpId;
+    @ManyToOne
+    @JoinColumn(name = "idp_id")
+    private Interviewer interviewer;
 }

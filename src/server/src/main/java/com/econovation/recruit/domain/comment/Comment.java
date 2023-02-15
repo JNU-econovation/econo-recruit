@@ -30,6 +30,8 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
+    @Column(name = "like_count")
+    private Integer likeCount;
 
     public void delete() {
         this.isDeleted = true;
@@ -37,5 +39,18 @@ public class Comment extends BaseTimeEntity {
 
     public Applicant getApplicant() {
         return applicant;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.likeCount = this.likeCount == null ? 0 : this.likeCount;
+    }
+
+    public void plusLikeCount(){
+        this.likeCount++;
+    }
+
+    public void minusLikeCount(){
+        this.likeCount++;
     }
 }
