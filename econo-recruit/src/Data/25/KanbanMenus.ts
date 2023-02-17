@@ -1,3 +1,5 @@
+import { deepFreeze } from '../../utils/objectController'
+
 export const KANBAN_MANUES = [
   '공통',
   '회장단',
@@ -8,4 +10,4 @@ export const KANBAN_MANUES = [
   '기타 참고',
 ]
 
-Object.freeze(KANBAN_MANUES)
+deepFreeze(KANBAN_MANUES)

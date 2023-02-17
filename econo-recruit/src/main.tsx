@@ -8,12 +8,19 @@ import KanbanBoardPage from './Pages/KanbanBoard/KanbanBoard.page'
 import KanbanDetailPage from './Pages/KanbanBoard/KanbanDetail.page'
 import HomePage from './Pages/Home/Home.page'
 import ApplicantBoardPage from './Pages/ApplicantBoard/ApplicantBoard.page'
+import ApplicationPage from './Pages/Application/Application.page'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
   },
+
+  {
+    path: '/application/:period',
+    element: <ApplicationPage />,
+  },
+
   {
     path: '/kanban/:period',
     children: [

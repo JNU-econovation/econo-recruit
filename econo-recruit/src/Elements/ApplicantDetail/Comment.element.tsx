@@ -4,6 +4,7 @@ import CommentDetailElement from './CommentDetail.element'
 
 const ApplicantCommentElement = () => {
   const [isNocomment, setIsNocomment] = useState(false)
+  const [comment, setComment] = useState('')
   const commentData = ApplicantCommentMock
 
   return (
@@ -21,6 +22,8 @@ const ApplicantCommentElement = () => {
         <textarea
           className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 outline-none resize-none text-sm h-24"
           disabled={isNocomment}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         ></textarea>
         <div className="font-normal">
           <div className="flex items-center gap-2 text-sm font-normal my-2">
@@ -34,7 +37,10 @@ const ApplicantCommentElement = () => {
               name="nocomment"
               id="nocomment"
               checked={isNocomment}
-              onChange={() => setIsNocomment(!isNocomment)}
+              onChange={() => {
+                setIsNocomment(!isNocomment)
+                setComment('지인이므로 코멘트 삼가겠습니다.')
+              }}
             />
             <label htmlFor="nocomment">지인이므로 코멘트 삼가겠습니다.</label>
           </div>

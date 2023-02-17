@@ -1,11 +1,10 @@
 import HomeCardElement from '../../Elements/Home/Card.element'
-import { MainMenu } from '../../Data/25/MainMenus'
+import { MAIN_MENU } from '../../Data/25/MainMenus'
 
 const HomePage = () => {
   const currentRecruit = 25
   let currentRecruitAfterString =
     currentRecruit % 10 === 1 ? 'st' : currentRecruit % 10 === 2 ? 'nd' : 'th'
-  const cards = MainMenu
 
   return (
     <div className="flex justify-between">
@@ -18,7 +17,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 absolute bottom-0 right-0">
-        {cards.map((card, index) => (
+        {MAIN_MENU.map((card, index) => (
           <HomeCardElement
             title={card.title}
             subtitle={card.subtitle}

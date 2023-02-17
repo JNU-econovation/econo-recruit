@@ -1,7 +1,13 @@
-import { ApplicationQuestion } from '../../Data/25/Application'
+import {
+  APPLICATION_CAN_TIME,
+  APPLICATION_QUESTION,
+  APPLICATION_REPORT,
+} from '../../Data/25/Application'
 
 const ApplicantApplicationComponent = ({ isShadow = true }) => {
-  const questions = ApplicationQuestion
+  const questions = APPLICATION_QUESTION
+  const report = APPLICATION_REPORT
+
   const mockAnswer =
     ' 어머님, 보고, 오면 어머니 묻힌 언덕 추억과 계십니다. 말 하나 사랑과 하나에 별 속의 있습니다. 하나에 까닭이요, 벌써 아스라히 별들을 그러나 않은 한 봅니다. 나는 어머니, 벌레는 별빛이 있습니다. 나는 프랑시스 청춘이 가난한 하나에 계십니다. 차 동경과 이름자 버리었습니다. 우는 언덕 멀리 가을로 봅니다. 못 언덕 새워 이웃 차 그리고 나는 계십니다. 무성할 내 때 사랑과 이름을 아직 벌써 있습니다.'
 
@@ -16,7 +22,7 @@ const ApplicantApplicationComponent = ({ isShadow = true }) => {
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">1. </div>
-          <div className="my-4">{questions[0].title}</div>
+          <div className="my-4">{report.filter((r) => r.id === 1)[0].title}*</div>
         </div>
         <div className="flex items-center">
           <div className="text-4xl font-bold">개발자</div>
@@ -29,7 +35,7 @@ const ApplicantApplicationComponent = ({ isShadow = true }) => {
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">2. </div>
-          <div className="my-4">{questions[1].title}</div>
+          <div className="my-4">{report.filter((r) => r.id === 2)[0].title}*</div>
         </div>
         <div className="flex items-center mb-12  font-normal">
           <div className="text-4xl font-bold">임채승</div>
@@ -47,15 +53,15 @@ const ApplicantApplicationComponent = ({ isShadow = true }) => {
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">3. </div>
-          <div className="my-4">{questions[2].title}</div>
+          <div className="my-4">{report.filter((r) => r.id === 4)[0].title}</div>
         </div>
         <div className="flex gap-12 mt-2">
           <div className="flex flex-col gap-1">
-            <div>{questions[2].children?.at(0)?.title}</div>
+            <div>향후 계획 활동</div>
             <div className="font-normal">디자인 스터디 예정</div>
           </div>
           <div className="flex flex-col gap-1">
-            <div>{questions[2].children?.at(1)?.title}</div>
+            <div>지원 경로* (중복 선택 가능)</div>
             <div className="font-normal">학과 공지사항</div>
           </div>
         </div>
@@ -63,57 +69,60 @@ const ApplicantApplicationComponent = ({ isShadow = true }) => {
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">4. </div>
-          <div className="my-4">{questions[3].title}</div>
+          <div className="my-4">{questions[0].title}</div>
         </div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">5. </div>
-          <div className="my-4">{questions[4].title}</div>
+          <div className="my-4">{questions[1].title}</div>
         </div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">6. </div>
-          <div className="my-4">{questions[5].title}</div>
+          <div className="my-4">{questions[2].title}</div>
         </div>
         <div className="text-lg">있다</div>
-        <div className="my-4 text-sm">6-1. {questions[5].children?.at(0)?.title}</div>
+        <div className="my-4 text-sm">6-1. {questions[2].children?.at(0)?.title}</div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">7. </div>
-          <div className="my-4">{questions[6].title}</div>
+          <div className="my-4">{questions[3].title}</div>
         </div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">8. </div>
-          <div className="my-4">{questions[7].title}</div>
+          <div className="my-4">{questions[4].title}</div>
         </div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
           <div className="w-0 -translate-x-6">9. </div>
-          <div className="my-4">{questions[8].title}</div>
+          <div className="my-4">{questions[5].title}</div>
         </div>
         <div className="mt-2 font-normal">{mockAnswer}</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
-          <div className="w-0 -translate-x-6">10. </div>
-          <div className="my-4">{questions[9].title}</div>
+          <div className="w-0 -translate-x-6">12. </div>
+          <div className="my-4">
+            에코노베이션은 3학기 이상의 활동을 권장하고 있으며 매주 금요일 17시에는 주간발표가
+            있습니다. 위 내용을 확인하셨으면 '확인했습니다'를 기입해주세요.*
+          </div>
         </div>
         <div className="mt-2 font-normal">확인했습니다.</div>
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
-          <div className="w-0 -translate-x-6">11. </div>
+          <div className="w-0 -translate-x-6">13. </div>
           <div className="my-4">
             개인정보 수집에 관한 안내 및 개인정보 수집에 대한 안내에 동의하시나요?
           </div>
@@ -149,8 +158,8 @@ const ApplicantApplicationComponent = ({ isShadow = true }) => {
       </div>
       <div className="mb-12">
         <div className="flex items-baseline">
-          <div className="w-0 -translate-x-6">12. </div>
-          <div className="my-4">{questions[10].title}</div>
+          <div className="w-0 -translate-x-6">14. </div>
+          <div className="my-4">{APPLICATION_CAN_TIME.title}</div>
         </div>
       </div>
     </div>
