@@ -23,7 +23,6 @@ public class Label {
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
-    @ManyToOne
-    @JoinColumn(name = "idp_id")
-    private Interviewer interviewer;
+    @Column(name = "idpId")
+    private Integer idpId;
 }

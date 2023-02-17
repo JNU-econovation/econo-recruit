@@ -10,6 +10,8 @@ import com.econovation.recruit.domain.comment.CommentLikeRepository;
 import com.econovation.recruit.domain.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class CommentPersistencAdapter implements CommentRecordPort, CommentLoadPort, CommentLikeRecordPort, CommentLikeLoadPort {
     private final CommentRepository commentRepository;
@@ -35,6 +37,15 @@ public class CommentPersistencAdapter implements CommentRecordPort, CommentLoadP
     }
 
     @Override
+    public List<Comment> findAll() {
+        List<Comment> all = commentRepository.findAll();
+        if (all.isEmpty()) {
+            throw new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE);
+        }
+        return all;
+    }
+
+    @Override
     public CommentLike saveCommentLike(CommentLike commentLike) {
         return commentLikeRepository.save(commentLike);
     }
@@ -47,5 +58,10 @@ public class CommentPersistencAdapter implements CommentRecordPort, CommentLoadP
     @Override
     public CommentLike getByComment(Comment comment) {
         return commentLikeRepository.findByComment(comment).orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENTLIKE_MESSAGE));
+    }
+
+    @Override
+    public Boolean getByIdpId(Integer idpId) {
+        return commentLikeRepository.existsByIdpId(idpId);
     }
 }

@@ -6,4 +6,5 @@ public interface LoadApplicantPort {
     Boolean isDuplicate(Applicant applicant);
 
     Applicant loadApplicantById(Integer applicantId);
+
 }

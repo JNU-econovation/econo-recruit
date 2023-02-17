@@ -22,7 +22,7 @@ import javax.persistence.*;
 public class Applicant extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "card_id")
@@ -81,19 +81,8 @@ public class Applicant extends BaseTimeEntity {
         this.commentCount = this.commentCount == null ? 0 : this.commentCount;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getHopeField() {
-        return hopeField;
-    }
-    public Integer getLabelCount() {
-        return labelCount;
-    }
-
-    public Integer getCommentCount() {
-        return commentCount;
+    public void plusCommentCount() {
+        this.commentCount = this.commentCount + 1;
     }
     public void minusCommentCount(){
         if(commentCount == 0) return;
@@ -106,4 +95,6 @@ public class Applicant extends BaseTimeEntity {
         if(commentCount == 0) return;
         this.commentCount = this.commentCount - 1;
     }
+
+
 }

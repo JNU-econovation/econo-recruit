@@ -1,26 +1,36 @@
 package com.econovation.recruit.adapter.in.controller;
 
 import com.econovation.recruit.application.port.in.CommentUseCase;
+import com.econovation.recruit.application.utils.EntityMapper;
 import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.CommentRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/vi")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentUseCase commentUseCase;
-    @PostMapping("/comments")
-    public ResponseEntity<Comment> createComment(CommentRegisterDto commentRegisterDto) {
-        Comment comment = commentUseCase.saveComment(commentRegisterDto);
-//        CommentResponseDto commentResponseDto = entityMapper.toCommentResponseDto(comment);
-        return new ResponseEntity(comment, HttpStatus.OK);
+
+    @GetMapping("/comments")
+    public ResponseEntity<List<Comment>> findAll(){
+        List<Comment> comments = commentUseCase.findAll();
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
+    @GetMapping("/comments/")
+    @PostMapping("/comments/is/likes")
+    public ResponseEntity<Boolean> isCheckedLike(Integer idpId) {
+        Boolean isCheck = commentUseCase.isCheckedLike(idpId);
+        return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 
     @PostMapping("/comments/delete")
@@ -38,6 +48,7 @@ public class CommentController {
         return new ResponseEntity<>(commentId, HttpStatus.OK);
     }
     // 댓글 수정
+
     @PostMapping("/comments/likes/plus")
     public ResponseEntity plusLikeCount(Integer commentId, Integer idpId) {
         // 코멘트가 있는지 확인
@@ -45,7 +56,7 @@ public class CommentController {
         // 코멘트가 있으면
         if(!comment.equals(null)){
             comment.plusLikeCount();
-            commentUseCase.createCommentLike(comment, idpId);
+            commentUseCase.createCommentLike(comment,idpId);
         }
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }

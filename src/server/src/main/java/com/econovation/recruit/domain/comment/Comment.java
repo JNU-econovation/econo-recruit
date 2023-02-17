@@ -13,11 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")
@@ -32,6 +33,8 @@ public class Comment extends BaseTimeEntity {
 
     @Column(name = "like_count")
     private Integer likeCount;
+    @Column(name = "idp_id")
+    private Integer idpId;
 
     public void delete() {
         this.isDeleted = true;

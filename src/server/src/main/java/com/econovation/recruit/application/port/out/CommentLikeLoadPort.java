@@ -7,4 +7,6 @@ public interface CommentLikeLoadPort {
     void deleteCommentLike(CommentLike commentLike);
 
     CommentLike getByComment(Comment comment);
+
+    Boolean getByIdpId(Integer idpId);
 }

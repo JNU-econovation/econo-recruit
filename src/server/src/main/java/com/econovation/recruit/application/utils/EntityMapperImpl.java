@@ -1,13 +1,19 @@
 package com.econovation.recruit.application.utils;
 
+import com.econovation.recruit.application.port.out.LoadApplicantPort;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.ApplicantRegisterDto;
 import com.econovation.recruit.domain.dto.BoardResponseDto;
+import com.econovation.recruit.domain.dto.CommentRegisterDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EntityMapperImpl implements EntityMapper{
+    private final LoadApplicantPort loadApplicantPort;
     @Override
     public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
         return Applicant.builder()
@@ -36,6 +42,17 @@ public class EntityMapperImpl implements EntityMapper{
     public BoardResponseDto UpdateLocationBoardDtoToEntity(Board board) {
         return BoardResponseDto.builder().
                 build();
+    }
+
+    @Override
+    public Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto) {
+        Applicant applicant = loadApplicantPort.loadApplicantById(commentRegisterDto.getApplicantId());
+        return Comment.builder()
+                .applicant(applicant)
+                .content(commentRegisterDto.getContent())
+                .isDeleted(false)
+                .parentId(commentRegisterDto.getParentId())
+                .build();
     }
 
     /*@Override

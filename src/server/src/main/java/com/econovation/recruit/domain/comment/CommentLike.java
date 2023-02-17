@@ -20,6 +20,7 @@ public class CommentLike {
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
     @Column(name = "idp_id")
     private Integer idpId;
 }

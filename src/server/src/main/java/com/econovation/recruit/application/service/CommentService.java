@@ -5,10 +5,11 @@ import com.econovation.recruit.application.port.out.*;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.comment.CommentLike;
-import com.econovation.recruit.domain.dto.CommentRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,21 +17,16 @@ public class CommentService implements CommentUseCase {
     private final CommentRecordPort commentRecordPort;
     private final CommentLoadPort commentLoadPort;
     private final CommentLikeRecordPort commentLikeRecordPort;
-
     private final CommentLikeLoadPort commentLikeLoadPort;
     private final LoadApplicantPort loadApplicantPort;
     @Override
     @Transactional
-    public Comment saveComment(CommentRegisterDto commentRegisterDto) {
-        Applicant applicant = loadApplicantPort.loadApplicantById(commentRegisterDto.getApplicantId());
-        Comment comment = Comment.builder()
-                .applicant(applicant)
-                .content(commentRegisterDto.getContent())
-                .isDeleted(false)
-                .parentId(commentRegisterDto.getParentId())
-                .build();
-        commentRecordPort.saveComment(comment);
-        return comment;
+    public Comment saveComment(Comment comment) {
+        Comment loadedComment = commentRecordPort.saveComment(comment);
+        // Applcant의 comment_count 추가
+        Applicant applicant = loadApplicantPort.loadApplicantById(comment.getApplicant().getId());
+        applicant.plusCommentCount();
+        return loadedComment;
     }
 
     @Override
@@ -44,10 +40,10 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public void createCommentLike(Comment comment, Integer idpId) {
+    public void createCommentLike(Comment comment,Integer idpId) {
         CommentLike commentLike = CommentLike.builder()
-                .idpId(idpId)
                 .comment(comment)
+                .idpId(idpId)
                 .build();
         commentLikeRecordPort.saveCommentLike(commentLike);
     }
@@ -56,5 +52,15 @@ public class CommentService implements CommentUseCase {
     public void deleteCommentLike(Comment comment) {
         CommentLike commentLike = commentLikeLoadPort.getByComment(comment);
         commentLikeRecordPort.deleteCommentLike(commentLike);
+    }
+
+    @Override
+    public List<Comment> findAll() {
+        return commentLoadPort.findAll();
+    }
+
+    @Override
+    public Boolean isCheckedLike(Integer idpId) {
+        return commentLikeLoadPort.getByIdpId(idpId);
     }
 }
