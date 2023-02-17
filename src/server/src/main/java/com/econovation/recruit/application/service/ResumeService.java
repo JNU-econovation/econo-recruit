@@ -1,8 +1,10 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.ResumeUseCase;
+import com.econovation.recruit.application.port.out.ResumeLoadPort;
 import com.econovation.recruit.application.port.out.ResumeRecordPort;
 import com.econovation.recruit.domain.dto.ResumeInsertDto;
+import com.econovation.recruit.domain.resume.Resume;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -18,11 +20,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResumeService implements ResumeUseCase {
     private final ResumeRecordPort resumeRecordPort;
+    private final ResumeLoadPort resumeLoadPort;
 
     @Override
     public List<ResumeInsertDto> submitResume(HashMap<String, Object> param) {
         List<ResumeInsertDto> resumeInsertDtos = toList(param);
         return resumeRecordPort.saveAll(resumeInsertDtos);
+    }
+
+    @Override
+    public List<Resume> findAll() {
+        return resumeLoadPort.findAll();
+    }
+
+    @Override
+    public Resume findById(Integer resumeId) {
+        return resumeLoadPort.findById(resumeId);
     }
 
     private List<ResumeInsertDto> toList(HashMap<String, Object> param) {

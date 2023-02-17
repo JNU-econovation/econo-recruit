@@ -4,6 +4,7 @@ import com.econovation.recruit.domain.BaseTimeEntity;
 import com.econovation.recruit.domain.card.Card;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicInsert
+@Getter
 @DynamicUpdate
 @Builder
 public class Applicant extends BaseTimeEntity {
@@ -22,25 +24,45 @@ public class Applicant extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @OneToOne
     @JoinColumn(name = "card_id")
     private Card card;
 
-    //지원분야
+    @Column(name = "hope_field")
     private String hopeField;
+    @Column(name = "first_priority")
     private String firstPriority;
+    @Column(name = "second_priority")
     private String secondPriority;
+    @Column(name = "name")
     private String name;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "email")
     private String email;
+    @Column(name = "student_id")
     private Integer studentId;
+    @Column(name = "grade")
     private Integer grade;
-    private String semester;
+    @Column(name = "semester")
+    private Integer semester;
+    @Column(name = "major")
     private String major;
+    @Column(name = "double_major")
     private String doubleMajor;
+    @Column(name = "minor")
     private String minor;
-    private Integer likeCount;
+
+    @Column(name = "portfolio")
+    private String portfolio;
+    @Column(name = "support_path")
+    private String supportPath;
+    @Column(name = "plan")
+    private String plan;
+    @Column(name = "label_count")
+
+    private Integer labelCount;
+    @Column(name = "comment_count")
     private Integer commentCount;
 
     /**
@@ -55,7 +77,7 @@ public class Applicant extends BaseTimeEntity {
      * */
     @PrePersist
     public void prePersist() {
-        this.likeCount = this.likeCount == null ? 0 : this.likeCount;
+        this.labelCount = this.labelCount == null ? 0 : this.labelCount;
         this.commentCount = this.commentCount == null ? 0 : this.commentCount;
     }
 
@@ -66,14 +88,21 @@ public class Applicant extends BaseTimeEntity {
     public String getHopeField() {
         return hopeField;
     }
-    public Integer getLikeCount() {
-        return likeCount;
+    public Integer getLabelCount() {
+        return labelCount;
     }
 
     public Integer getCommentCount() {
         return commentCount;
     }
     public void minusCommentCount(){
+        if(commentCount == 0) return;
+        this.commentCount = this.commentCount - 1;
+    }
+    public void plusLabelCount(){
+        this.labelCount = this.labelCount + 1;
+    }
+    public void minusLabelCount(){
         if(commentCount == 0) return;
         this.commentCount = this.commentCount - 1;
     }

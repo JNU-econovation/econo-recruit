@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.sql.PreparedStatement;
 import java.util.List;
-
-import static com.econovation.recruit.adapter.out.persistence.ResumePersistenceAdapter.NO_OBJECT_EXCEPTION;
-
 @Component
 @RequiredArgsConstructor
 public class TimeTablePersistenceAdapter implements TimeTableRecordPort, TimeTableLoadPort {

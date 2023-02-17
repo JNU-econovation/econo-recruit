@@ -39,12 +39,13 @@ public class CommentController {
     }
     // 댓글 수정
     @PostMapping("/comments/likes/plus")
-    public ResponseEntity plusLikeCount(Integer commentId){
+    public ResponseEntity plusLikeCount(Integer commentId, Integer idpId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면
         if(!comment.equals(null)){
             comment.plusLikeCount();
+            commentUseCase.createCommentLike(comment, idpId);
         }
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
@@ -56,6 +57,7 @@ public class CommentController {
         // 코멘트가 있으면
         if(!comment.equals(null)){
             comment.minusLikeCount();
+            commentUseCase.deleteCommentLike(comment);
         }
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }

@@ -2,10 +2,8 @@ package com.econovation.recruit.application.utils;
 
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.board.Board;
-import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.ApplicantRegisterDto;
 import com.econovation.recruit.domain.dto.BoardResponseDto;
-import com.econovation.recruit.domain.dto.CommentResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,11 +21,14 @@ public class EntityMapperImpl implements EntityMapper{
                 .hopeField(applicantRegisterDto.getHopeField())
 //                .commentCount()
 //                .likeCount()
-                .semester(applicantRegisterDto.getSemester())
+                .semester(Integer.valueOf(applicantRegisterDto.getSemester()))
                 .studentId(applicantRegisterDto.getStudentId())
                 .phoneNumber(applicantRegisterDto.getPhoneNumber())
                 .name(applicantRegisterDto.getName())
                 .secondPriority(applicantRegisterDto.getSecondPriority())
+                .portfolio((applicantRegisterDto.getPortfolio()))
+                .supportPath(applicantRegisterDto.getSupportPath())
+                .plan(applicantRegisterDto.getPlan())
                 .build();
     }
 

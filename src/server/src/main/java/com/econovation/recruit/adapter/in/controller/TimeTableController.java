@@ -4,6 +4,7 @@ import com.econovation.recruit.application.port.in.TimeTableUseCase;
 import com.econovation.recruit.domain.dto.TimeTableInsertDto;
 import com.econovation.recruit.domain.timetable.TimeTable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,6 @@ public class TimeTableController {
     @PostMapping("/timetable")
     public ResponseEntity<List<TimeTable> > createTimeTable(@RequestBody HashMap<String, Object> param,Integer applicantId) {
         List<TimeTableInsertDto> timeTables = timeTableUseCase.submitTimeTable(param,applicantId);
-
+        return new ResponseEntity(timeTables, HttpStatus.OK);
     }
 }

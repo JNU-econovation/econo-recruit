@@ -20,7 +20,7 @@ public class ApplicantPersistenceAdapter implements RecordApplicantPort, LoadApp
 
     @Override
     public Boolean isDuplicate(Applicant applicant) {
-        return applicantRepository.existsById(applicant.getId());
+        return applicantRepository.existsByEmail(applicant.getEmail());
     }
 
     @Override

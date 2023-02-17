@@ -1,11 +1,10 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.CommentUseCase;
-import com.econovation.recruit.application.port.out.CommentLoadPort;
-import com.econovation.recruit.application.port.out.CommentRecordPort;
-import com.econovation.recruit.application.port.out.LoadApplicantPort;
+import com.econovation.recruit.application.port.out.*;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.comment.Comment;
+import com.econovation.recruit.domain.comment.CommentLike;
 import com.econovation.recruit.domain.dto.CommentRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService implements CommentUseCase {
     private final CommentRecordPort commentRecordPort;
     private final CommentLoadPort commentLoadPort;
+    private final CommentLikeRecordPort commentLikeRecordPort;
+
+    private final CommentLikeLoadPort commentLikeLoadPort;
     private final LoadApplicantPort loadApplicantPort;
     @Override
     @Transactional
@@ -39,5 +41,20 @@ public class CommentService implements CommentUseCase {
     @Override
     public Comment findById(Integer commentId) {
         return commentLoadPort.findById(commentId);
+    }
+
+    @Override
+    public void createCommentLike(Comment comment, Integer idpId) {
+        CommentLike commentLike = CommentLike.builder()
+                .idpId(idpId)
+                .comment(comment)
+                .build();
+        commentLikeRecordPort.saveCommentLike(commentLike);
+    }
+
+    @Override
+    public void deleteCommentLike(Comment comment) {
+        CommentLike commentLike = commentLikeLoadPort.getByComment(comment);
+        commentLikeRecordPort.deleteCommentLike(commentLike);
     }
 }

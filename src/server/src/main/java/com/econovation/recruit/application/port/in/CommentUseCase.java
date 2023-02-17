@@ -8,4 +8,8 @@ public interface CommentUseCase {
     Boolean deleteComment();
 
     Comment findById(Integer commentId);
+
+    void createCommentLike(Comment comment, Integer idpId);
+
+    void deleteCommentLike(Comment comment);
 }
