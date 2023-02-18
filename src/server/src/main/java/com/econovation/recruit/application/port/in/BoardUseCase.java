@@ -2,6 +2,7 @@ package com.econovation.recruit.application.port.in;
 
 import com.econovation.recruit.domain.board.Board;
 
+import java.util.List;
 import java.util.Map;
 
 public interface BoardUseCase {
@@ -18,4 +19,6 @@ public interface BoardUseCase {
     void lagLowColBelowLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
 
     Board createWorkBoard(String workContent, Integer navLoc, Integer colLoc, Integer lowLoc);
+
+    List<Board> findAllByNavLoc(Integer navLoc);
 }

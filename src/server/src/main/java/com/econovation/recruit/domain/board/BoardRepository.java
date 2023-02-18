@@ -32,4 +32,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "WHERE b.colLoc =:colLoc"
     )
     List<Board> findByNavLocAndColLoc(Integer navLoc, Integer colLoc);
+
+    @Query(value = "SELECT b " +
+            "FROM Board as b " +
+            "JOIN Navigation as n " +
+            "ON n.navLoc = :navLoc "
+    )
+    List<Board> findByNavLoc(Integer navLoc);
 }

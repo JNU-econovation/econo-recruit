@@ -42,8 +42,13 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
-    public List<Board> findByNavColAndColLoc(Integer navLoc, Integer colLoc) {
+    public List<Board> getByNavColAndColLoc(Integer navLoc, Integer colLoc) {
         return boardRepository.findByNavLocAndColLoc(navLoc, colLoc);
+    }
+
+    @Override
+    public List<Board> getBoardByNavLoc(Integer navLoc) {
+        return boardRepository.findByNavLoc(navLoc);
     }
 
     @Override

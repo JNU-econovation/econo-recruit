@@ -47,7 +47,7 @@ public class BoardService implements BoardUseCase {
 
     @Override
     public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navLoc, Integer colLoc) {
-        List<Board> boards = boardLoadPort.findByNavColAndColLoc(navLoc, colLoc);
+        List<Board> boards = boardLoadPort.getByNavColAndColLoc(navLoc, colLoc);
         Board board = boards.stream()
                 .max(Comparator.comparing(Board::getLowLoc))
                 .orElseThrow(NoSuchFieldError::new);
@@ -82,5 +82,11 @@ public class BoardService implements BoardUseCase {
     @Override
     public Board createWorkBoard(String workContent, Integer navLoc, Integer colLoc, Integer lowLoc) {
         return null;
+    }
+
+    @Override
+    public List<Board> findAllByNavLoc(Integer navLoc) {
+        return boardLoadPort.getBoardByNavLoc(navLoc);
+
     }
 }

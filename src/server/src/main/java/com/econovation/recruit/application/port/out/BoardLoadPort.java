@@ -15,5 +15,7 @@ public interface BoardLoadPort {
 
     List<Board> getBoardByNavLocAndColLoc(Integer navLoc, Integer colLoc);
 
-    List<Board> findByNavColAndColLoc(Integer navLoc, Integer colLoc);
+    List<Board> getByNavColAndColLoc(Integer navLoc, Integer colLoc);
+
+    List<Board> getBoardByNavLoc(Integer navLoc);
 }
