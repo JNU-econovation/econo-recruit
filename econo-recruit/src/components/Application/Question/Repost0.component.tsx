@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil'
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '../../../storage/Application/ApplicationNavbar.atom'
+} from '../../../storage/Application/Application.atom'
 import { cloneDeep } from 'lodash'
 
 const ApplicationQuestionReport0Component = () => {

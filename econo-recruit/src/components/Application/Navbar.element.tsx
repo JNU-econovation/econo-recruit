@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil'
 import { APPLICATION_QUESTION, APPLICATION_REPORT } from '../../data/25/Application'
-import { ApplicationNavbarIndexState } from '../../storage/Application/ApplicationNavbar.atom'
+import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom'
 
 const ApplicationNavbarElement = () => {
   const [index, setIndex] = useRecoilState(ApplicationNavbarIndexState)

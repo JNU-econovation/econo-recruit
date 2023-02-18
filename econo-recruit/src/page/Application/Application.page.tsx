@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react'
 import ApplicationNavbarElement from '../../components/Application/Navbar.element'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { ApplicationNavbarIndexState } from '../../storage/Application/ApplicationNavbar.atom'
+import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom'
 
 const ApplicationQuestionReport0Component = lazy(
   () => import('../../components/Application/Question/Repost0.component')
