@@ -4,11 +4,12 @@ import './index.css'
 import { RecoilRoot } from 'recoil'
 import { RouterProvider } from 'react-router'
 import { createBrowserRouter } from 'react-router-dom'
-import KanbanBoardPage from './Pages/KanbanBoard/KanbanBoard.page'
-import KanbanDetailPage from './Pages/KanbanBoard/KanbanDetail.page'
-import HomePage from './Pages/Home/Home.page'
-import ApplicantBoardPage from './Pages/ApplicantBoard/ApplicantBoard.page'
-import ApplicationPage from './Pages/Application/Application.page'
+import KanbanBoardPage from './page/KanbanBoard/KanbanBoard.page'
+import KanbanDetailPage from './page/KanbanBoard/KanbanDetail.page'
+import HomePage from './page/Home/Home.page'
+import ApplicantBoardPage from './page/ApplicantBoard/ApplicantBoard.page'
+import ApplicationPage from './page/Application/Application.page'
+import ErrorPage from './page/Error.page'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/applicant/:period',
     children: [{ path: '/applicant/:period', element: <ApplicantBoardPage /> }],
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ])
 
