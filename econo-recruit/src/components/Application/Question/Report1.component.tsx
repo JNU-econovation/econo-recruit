@@ -6,9 +6,15 @@ import {
 } from '../../../storage/Application/Application.atom'
 import { cloneDeep } from 'lodash'
 import { useEffect, useState } from 'react'
+import { useLocalStorage } from '../../../hooks/localstorage.hook'
 
 const ApplicationQuestionReport1Component = () => {
-  const [appData, setAppData] = useRecoilState(ApplicationResultDataState)
+  const [name, setName] = useLocalStorage('name', '')
+  const [cellphone, setCellphone] = useLocalStorage('cellphone', '')
+  const [undergrad, setUndergrad] = useLocalStorage('undergrad', '')
+  const [grade, setGrade] = useLocalStorage('grade', '')
+  const [semister, setSemister] = useLocalStorage('semister', '')
+
   const setPage = useSetRecoilState(ApplicationNavbarIndexState)
   const [canNext, setCanNext] = useState(false)
 
@@ -18,63 +24,80 @@ const ApplicationQuestionReport1Component = () => {
     undergrad: false,
     grade: false,
   })
+
   useEffect(() => {
     setOnError((v) => {
       const cv = cloneDeep(v)
-      v.name = appData.name === ''
-      v.cellphone = appData.cellphone === ''
-      v.undergrad = appData.undergrad === ''
+      // v.name = false
+      v.cellphone = false
+      v.undergrad = false
+      return cv
+    })
+    return
+  })
+
+  useEffect(() => {
+    setOnError((v) => {
+      const cv = cloneDeep(v)
+      v.name = name === ''
+      v.cellphone = cellphone === ''
+      v.undergrad = undergrad === ''
       return cv
     })
     if (
-      !appData.name ||
-      !appData.cellphone ||
-      appData.cellphone.length !== 13 ||
-      !appData.undergrad ||
-      appData.undergrad.length !== 6 ||
-      !appData.grade ||
-      !appData.semester
+      name === '' ||
+      cellphone === '' ||
+      cellphone.length !== 13 ||
+      undergrad === '' ||
+      undergrad.length !== 6 ||
+      grade === '' ||
+      semister === ''
     ) {
       setCanNext(false)
     } else {
       setCanNext(true)
     }
-  }, [appData])
+  }, [name, cellphone, undergrad, grade, semister])
 
   const data = APPLICATION_REPORT[1]
   const nameClassName = 'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md'
   const nextButtonClassName = 'flex-1 rounded-md flex justify-center items-center p-4'
 
   const onNextPage = () => {
-    if (!appData.name) {
+    if (!name) {
       setOnError((v) => {
         const cv = cloneDeep(v)
         v.name = true
         return cv
       })
+      return
     }
 
-    if (!appData.cellphone || appData.cellphone.length !== 13) {
+    if (!cellphone || cellphone.length !== 13) {
       setOnError((v) => {
         const cv = cloneDeep(v)
         v.cellphone = true
         return cv
       })
+      return
     }
-    if (!appData.undergrad || appData.undergrad.length !== 6) {
+    if (!undergrad || undergrad.length !== 6) {
       setOnError((v) => {
         const cv = cloneDeep(v)
         v.undergrad = true
         return cv
       })
+      return
     }
-    if (!appData.grade || !appData.semester) {
+    if (!grade || !semister) {
       setOnError((v) => {
         const cv = cloneDeep(v)
         cv.grade = true
         return cv
       })
+      return
     }
+    setPage(2)
   }
 
   return (
@@ -93,14 +116,8 @@ const ApplicationQuestionReport1Component = () => {
             className={onError.name ? '!border-[#DC0000] ' + nameClassName : nameClassName}
             type="text"
             placeholder="홍길동"
-            value={appData.name}
-            onChange={(e) =>
-              setAppData((v) => {
-                const cv = cloneDeep(v)
-                cv.name = e.target.value
-                return cv
-              })
-            }
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <div className="h-4">
             {onError.name ? (
@@ -120,16 +137,14 @@ const ApplicationQuestionReport1Component = () => {
             className={onError.cellphone ? '!border-[#DC0000] ' + nameClassName : nameClassName}
             type="text"
             placeholder="010-1234-5678"
-            value={appData.cellphone}
+            value={cellphone}
             maxLength={13}
             onChange={(e) => {
-              setAppData((v) => {
-                const cv = cloneDeep(v)
-                cv.cellphone = e.target.value
+              setCellphone(
+                e.target.value
                   .replace(/[^0-9]/g, '')
                   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
-                return cv
-              })
+              )
             }}
           />
           <div className="h-4">
@@ -151,13 +166,9 @@ const ApplicationQuestionReport1Component = () => {
             placeholder="123456"
             type="text"
             maxLength={6}
-            value={appData.undergrad}
+            value={undergrad}
             onChange={(e) => {
-              setAppData((v) => {
-                const cv = cloneDeep(v)
-                cv.undergrad = e.target.value.replace(/[^0-9.]/g, '')
-                return cv
-              })
+              setUndergrad(e.target.value.replace(/[^0-9.]/g, ''))
             }}
           />
           <div className="h-4">
@@ -180,11 +191,7 @@ const ApplicationQuestionReport1Component = () => {
                 key={`grade${i}`}
                 className="w-full"
                 onClick={() => {
-                  setAppData((v) => {
-                    const cv = cloneDeep(v)
-                    cv.grade = `${1}`
-                    return cv
-                  })
+                  setGrade(`${i}`)
                   setOnError((v) => {
                     const cv = cloneDeep(v)
                     cv.grade = false
@@ -192,7 +199,13 @@ const ApplicationQuestionReport1Component = () => {
                   })
                 }}
               >
-                <input type="radio" name="grade" id={`grade${i}`} className={`hidden peer`} />
+                <input
+                  type="radio"
+                  name="grade"
+                  id={`grade${i}`}
+                  className={`hidden peer`}
+                  checked={+grade === i}
+                />
                 <label
                   htmlFor={`grade${i}`}
                   className="flex-1 p-4 border-[#DBDBDB] border-[1px] rounded-md flex justify-center items-center peer-checked:bg-[#303030] peer-checked:text-white"
@@ -203,18 +216,14 @@ const ApplicationQuestionReport1Component = () => {
             ))}
           </div>
           <div className="flex gap-2 mt-2">
-            {appData.grade ? (
+            {grade ? (
               <>
                 {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
                   <div
                     key={`semister${i}`}
                     className="w-full"
                     onClick={() => {
-                      setAppData((v) => {
-                        const cv = cloneDeep(v)
-                        cv.semester = `${1}`
-                        return cv
-                      })
+                      setSemister(`${i}`)
                       setOnError((v) => {
                         const cv = cloneDeep(v)
                         cv.grade = false
@@ -226,7 +235,8 @@ const ApplicationQuestionReport1Component = () => {
                       type="radio"
                       name="semester"
                       id={`semester${i}`}
-                      className={`hidden peer`}
+                      className="hidden peer"
+                      checked={+semister === i}
                     />
                     <label
                       htmlFor={`semester${i}`}
@@ -246,7 +256,10 @@ const ApplicationQuestionReport1Component = () => {
           {onError.grade ? <div className="text-[#DC0000]">학년 및 학기를 선택해주세요.</div> : ''}
         </div>
         <div className="flex gap-2 mt-4">
-          <button className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]">
+          <button
+            className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
+            onClick={() => setPage(0)}
+          >
             이전
           </button>
           <button

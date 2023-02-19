@@ -23,56 +23,58 @@ const ApplicationNavbarElement = () => {
         <div className="flex items-baseline cursor-pointer" onClick={() => setIndex(1)}>
           <span
             className={
-              index === 1 ? ' bg-black ' + circleClassName : 'bg-[#AFAFAF] ' + circleClassName
+              index === 1 || index === 2
+                ? ' bg-black ' + circleClassName
+                : 'bg-[#AFAFAF] ' + circleClassName
             }
           ></span>
-          <div className={index === 1 ? ' text-black ' : 'text-[#9C9C9C] '}>
+          <div className={index === 1 || index === 2 ? ' text-black ' : 'text-[#9C9C9C] '}>
             {APPLICATION_REPORT.find((v) => v.id === 2)?.title}
           </div>
         </div>
 
-        <div className="flex items-baseline cursor-pointer" onClick={() => setIndex(2)}>
+        <div className="flex items-baseline cursor-pointer" onClick={() => setIndex(3)}>
           <span
             className={
-              index === 2 ? ' bg-black ' + circleClassName : 'bg-[#AFAFAF] ' + circleClassName
+              index === 3 ? ' bg-black ' + circleClassName : 'bg-[#AFAFAF] ' + circleClassName
             }
           ></span>
-          <div className={index === 2 ? ' text-black ' : 'text-[#9C9C9C] '}>
-            {APPLICATION_REPORT.find((v) => v.id === 3)?.title}
+          <div className={index === 3 ? ' text-black ' : 'text-[#9C9C9C] '}>
+            {APPLICATION_REPORT.find((v) => v.id === 4)?.title}
           </div>
         </div>
         {APPLICATION_QUESTION.map((question, qIndex) => (
           <div
             className="flex items-baseline cursor-pointer"
             key={qIndex}
-            onClick={() => setIndex(3 + qIndex)}
+            onClick={() => setIndex(4 + qIndex)}
           >
             <span
               className={
-                index === 3 + qIndex
+                index === 4 + qIndex
                   ? ' bg-black ' + circleClassName
                   : 'bg-[#AFAFAF] ' + circleClassName
               }
             ></span>
-            <div className={index === 3 + qIndex ? ' text-black ' : 'text-[#9C9C9C] '}>
+            <div className={index === 4 + qIndex ? ' text-black ' : 'text-[#9C9C9C] '}>
               {question.title}
             </div>
           </div>
         ))}
         <div
           className="flex items-baseline cursor-pointer"
-          onClick={() => setIndex(4 + APPLICATION_QUESTION.length)}
+          onClick={() => setIndex(5 + APPLICATION_QUESTION.length)}
         >
           <span
             className={
-              index === 4 + APPLICATION_QUESTION.length
+              index === 5 + APPLICATION_QUESTION.length
                 ? ' bg-black ' + circleClassName
                 : 'bg-[#AFAFAF] ' + circleClassName
             }
           ></span>
           <div
             className={
-              index === 4 + APPLICATION_QUESTION.length ? ' text-black ' : 'text-[#9C9C9C] '
+              index === 5 + APPLICATION_QUESTION.length ? ' text-black ' : 'text-[#9C9C9C] '
             }
           >
             {APPLICATION_REPORT.find((v) => v.id === 5)?.title}

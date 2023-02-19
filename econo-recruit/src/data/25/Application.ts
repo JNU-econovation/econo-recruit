@@ -2,6 +2,20 @@ import { deepFreeze } from '../../utils/objectController'
 
 export const APPLICATION_REPORT_FIELD = ['APP', 'WEB', 'GAME', 'AI', 'IoT', 'AR/VR'] as const
 
+type application_report = {
+  id: number
+  title: string
+  subtitle: string
+  value: {
+    type?: string
+    title?: string
+    value?: any[]
+    absolete?: boolean
+    subtitle?: string
+    example?: string
+  }[]
+}
+
 export const APPLICATION_REPORT = [
   {
     id: 1,
@@ -86,6 +100,7 @@ export const APPLICATION_REPORT = [
       {
         type: 'text',
         title: '지원 경로',
+        subtitle: '(중복 선택 가능)',
         absolute: true,
         value: [
           '학과 공지사항',
@@ -120,14 +135,16 @@ export const APPLICATION_REPORT = [
         type: 'text',
         title:
           '기획자를 지원하는 경우 이번 학기에 진행하고 싶은 프로젝트의 기획서를 제출해 주세요.',
-        absolute: false,
+        absolete: false,
         example: '단, 제출한 기획을 기반으로 이번 학기에 프로젝트를 진행하지 못할 수 있습니다.',
-        value: {
-          type: 'text',
-          title: '파일 업로드',
-          absolute: false,
-          example: '(Google Drive 등)',
-        },
+        value: [
+          {
+            type: 'text',
+            title: '파일 업로드',
+            absolute: false,
+            example: '(Google Drive 등)',
+          },
+        ],
       },
     ],
   },
@@ -171,7 +188,7 @@ export const APPLICATION_REPORT = [
       },
     ],
   },
-]
+] as application_report[]
 
 deepFreeze(APPLICATION_REPORT)
 

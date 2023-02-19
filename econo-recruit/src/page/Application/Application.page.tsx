@@ -12,14 +12,32 @@ const ApplicationQuestionReport1Component = lazy(
   () => import('../../components/Application/Question/Report1.component')
 )
 
+const ApplicationQuestionReport2Component = lazy(
+  () => import('../../components/Application/Question/Report2.component')
+)
+
+const ApplicationQuestionReport3Component = lazy(
+  () => import('../../components/Application/Question/Report3.component')
+)
+
+const ApplicationQuestion0Component = lazy(
+  () => import('../../components/Application/Question/Question0.component')
+)
+
 const ApplicationPage = () => {
   const { period } = useParams()
   const [pageIndex, setPageIndex] = useRecoilState(ApplicationNavbarIndexState)
-  const page = [<ApplicationQuestionReport0Component />, <ApplicationQuestionReport1Component />]
+  const page = [
+    <ApplicationQuestionReport0Component />,
+    <ApplicationQuestionReport1Component />,
+    <ApplicationQuestionReport2Component />,
+    <ApplicationQuestionReport3Component />,
+    <ApplicationQuestion0Component />,
+  ]
 
   return (
     <div className="pt-24 flex">
-      <div className="pl-12 w-[26rem]">
+      <div className="pl-12 w-[36rem]">
         <ApplicationNavbarElement />
       </div>
       <div className="pl-32 w-full">

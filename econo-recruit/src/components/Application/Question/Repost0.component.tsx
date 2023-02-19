@@ -5,9 +5,12 @@ import {
   ApplicationResultDataState,
 } from '../../../storage/Application/Application.atom'
 import { cloneDeep } from 'lodash'
+import { useLocalStorage } from '../../../hooks/localstorage.hook'
 
 const ApplicationQuestionReport0Component = () => {
-  const [applicationData, setApplicationData] = useRecoilState(ApplicationResultDataState)
+  const [type, setType] = useLocalStorage('type', '')
+  const [field1, setField1] = useLocalStorage('field1', '')
+  const [field2, setField2] = useLocalStorage('field2', '')
   const setPage = useSetRecoilState(ApplicationNavbarIndexState)
 
   const data = APPLICATION_REPORT[0]
@@ -27,14 +30,8 @@ const ApplicationQuestionReport0Component = () => {
             type="radio"
             name="area"
             id="develop"
-            checked={applicationData.type === 'develop'}
-            onChange={() =>
-              setApplicationData((v) => {
-                const cv = cloneDeep(v)
-                cv.type = 'develop'
-                return cv
-              })
-            }
+            checked={type === 'develop'}
+            onChange={() => setType('develop')}
           />
           <label
             className="border-[1px] rounded-lg py-4 flex justify-center items-center cursor-pointer peer-checked/develop:bg-[#303030] peer-checked/develop:text-white"
@@ -47,14 +44,8 @@ const ApplicationQuestionReport0Component = () => {
             type="radio"
             name="area"
             id="pm"
-            checked={applicationData.type === 'pm'}
-            onChange={() =>
-              setApplicationData((v) => {
-                const cv = cloneDeep(v)
-                cv.type = 'pm'
-                return cv
-              })
-            }
+            checked={type === 'pm'}
+            onChange={() => setType('pm')}
           />
           <label
             className="border-[1px] rounded-lg py-4 flex justify-center items-center cursor-pointer peer-checked/pm:bg-[#303030] peer-checked/pm:text-white"
@@ -67,14 +58,8 @@ const ApplicationQuestionReport0Component = () => {
             type="radio"
             name="area"
             id="design"
-            checked={applicationData.type === 'design'}
-            onChange={() =>
-              setApplicationData((v) => {
-                const cv = cloneDeep(v)
-                cv.type = 'design'
-                return cv
-              })
-            }
+            checked={type === 'design'}
+            onChange={() => setType('design')}
           />
           <label
             className="border-[1px] rounded-lg py-4 flex justify-center items-center cursor-pointer peer-checked/design:bg-[#303030] peer-checked/design:text-white"
@@ -83,7 +68,7 @@ const ApplicationQuestionReport0Component = () => {
             디자이너
           </label>
         </div>
-        {applicationData.type ? (
+        {type ? (
           <div>
             <div className="py-8">1 순위</div>
             <div className="grid grid-cols-3 gap-2 w-[30rem] font-semibold">
@@ -97,16 +82,10 @@ const ApplicationQuestionReport0Component = () => {
                       className={inputClassName}
                       type="radio"
                       name="field1"
-                      checked={applicationData.field1 === field}
+                      checked={field1 === field}
                       id={`${field}1`}
-                      disabled={applicationData.field2 === field}
-                      onChange={() =>
-                        setApplicationData((v) => {
-                          const cv = cloneDeep(v)
-                          cv.field1 = field
-                          return cv
-                        })
-                      }
+                      disabled={field2 === field}
+                      onChange={() => setField1(field)}
                     />
                     <label className={labelClassName} htmlFor={`${field}1`}>
                       {field}
@@ -115,7 +94,7 @@ const ApplicationQuestionReport0Component = () => {
                 )
               })}
             </div>
-            {applicationData.field1 ? (
+            {field1 ? (
               <>
                 <div className="py-8">2 순위</div>
                 <div className="grid grid-cols-3 gap-2 w-[30rem] font-semibold">
@@ -130,16 +109,10 @@ const ApplicationQuestionReport0Component = () => {
                           type="radio"
                           name="field2"
                           id={`${field}2`}
-                          checked={applicationData.field2 === field}
-                          disabled={applicationData.field1 === field}
+                          checked={field2 === field}
+                          disabled={field1 === field}
                           onClick={() => setPage(1)}
-                          onChange={() =>
-                            setApplicationData((v) => {
-                              const cv = cloneDeep(v)
-                              cv.field2 = field
-                              return cv
-                            })
-                          }
+                          onChange={() => setField2(field)}
                         />
                         <label className={labelClassName} htmlFor={`${field}2`}>
                           {field}
@@ -153,15 +126,9 @@ const ApplicationQuestionReport0Component = () => {
                       type="radio"
                       name="field2"
                       id="none2"
-                      checked={applicationData.field2 === 'none'}
+                      checked={field2 === 'none'}
                       onClick={() => setPage(1)}
-                      onChange={() =>
-                        setApplicationData((v) => {
-                          const cv = cloneDeep(v)
-                          cv.field2 = 'none'
-                          return cv
-                        })
-                      }
+                      onChange={() => setField2('none')}
                     />
                     <label
                       className="border-[1px] rounded-lg py-4 flex justify-center items-center cursor-pointer  peer-checked:bg-[#303030] peer-checked:text-white"
