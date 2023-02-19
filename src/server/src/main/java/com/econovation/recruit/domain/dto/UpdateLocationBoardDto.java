@@ -6,7 +6,7 @@ import lombok.Getter;
 @Data
 @Getter
 public class UpdateLocationBoardDto {
-    private Long id;
+    private Integer id;
 
     private Integer navLoc;
     private Integer colLoc;

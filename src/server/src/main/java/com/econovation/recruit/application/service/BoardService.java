@@ -58,7 +58,7 @@ public class BoardService implements BoardUseCase {
     }
 
     @Override
-    public Board findById(Long id) {
+    public Board findById(Integer id) {
         return boardLoadPort.getBoardById(id);
     }
 

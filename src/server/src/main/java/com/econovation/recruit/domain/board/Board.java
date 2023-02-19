@@ -12,9 +12,9 @@ import javax.persistence.*;
 @Builder
 public class Board extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "navigation_id")

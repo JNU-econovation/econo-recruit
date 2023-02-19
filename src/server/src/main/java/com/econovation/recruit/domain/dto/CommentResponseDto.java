@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CommentResponseDto {
-    private Long id;
+    private Integer id;
     private String content;
     private Long parentId;
     private Integer applicantId;

@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Builder
 @Data
 public class BoardResponseDto {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "navigation_id")

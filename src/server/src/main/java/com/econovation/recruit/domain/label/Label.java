@@ -15,9 +15,9 @@ import javax.persistence.*;
 @Builder
 public class Label {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "label_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")

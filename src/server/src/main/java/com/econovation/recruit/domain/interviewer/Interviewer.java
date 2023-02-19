@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Interviewer {
     @Id
     @Column(name = "idp_id")
-    private Long id;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

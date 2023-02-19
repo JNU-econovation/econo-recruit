@@ -9,9 +9,11 @@ import com.econovation.recruit.domain.comment.CommentLike;
 import com.econovation.recruit.domain.comment.CommentLikeRepository;
 import com.econovation.recruit.domain.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class CommentPersistencAdapter implements CommentRecordPort, CommentLoadPort, CommentLikeRecordPort, CommentLikeLoadPort {
     private final CommentRepository commentRepository;

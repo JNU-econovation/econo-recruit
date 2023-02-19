@@ -14,8 +14,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Card extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
 
     @ManyToOne

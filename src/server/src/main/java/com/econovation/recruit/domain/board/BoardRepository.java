@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Integer> {
     // hope_field 와 board.col_title
     @Query(value = "SELECT b " +
             "FROM Board as b " +
             "WHERE b.colTitle = :hope_field"
+            ,nativeQuery = true
     )
     List<Board> getByHopeField(@Param("hope_field") String hopeField);
 
@@ -22,14 +23,16 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "JOIN Navigation as n " +
             "ON n.navLoc = :navLoc " +
             "WHERE b.colLoc =:colLoc AND b.lowLoc =:lowLoc"
+            ,nativeQuery = true
     )
-    Optional<Board> findByNavLocAndColLocAndLowLoc(@Param("nav_loc") Integer navLoc, @Param("col_loc") Integer colLoc, @Param("low_loc")  Integer lowLoc);
+    Board findByNavLocAndColLocAndLowLoc(@Param("navLoc") Integer navLoc, @Param("colLoc") Integer colLoc, @Param("lowLoc")  Integer lowLoc);
 
     @Query(value = "SELECT b " +
             "FROM Board as b " +
             "JOIN Navigation as n " +
             "ON n.navLoc = :navLoc " +
             "WHERE b.colLoc =:colLoc"
+            ,nativeQuery = true
     )
     List<Board> findByNavLocAndColLoc(Integer navLoc, Integer colLoc);
 
@@ -37,6 +40,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "FROM Board as b " +
             "JOIN Navigation as n " +
             "ON n.navLoc = :navLoc "
+            ,nativeQuery = true
     )
     List<Board> findByNavLoc(Integer navLoc);
 }

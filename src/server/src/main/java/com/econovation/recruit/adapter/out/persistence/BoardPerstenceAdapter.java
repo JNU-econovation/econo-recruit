@@ -28,11 +28,11 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
 
     @Override
     public Board getBoardByLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
-        return boardRepository.findByNavLocAndColLocAndLowLoc(navLoc, colLoc, lowLoc).orElse(null);
+        return boardRepository.findByNavLocAndColLocAndLowLoc(navLoc, colLoc, lowLoc);
     }
 
     @Override
-    public Board getBoardById(Long id) {
+    public Board getBoardById(Integer id) {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_MESSAGE));
     }
 

@@ -12,7 +12,7 @@ public interface BoardUseCase {
 
     Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navLoc, Integer colLoc);
 
-    Board findById(Long id);
+    Board findById(Integer id);
 
     boolean isDuplicateLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
 

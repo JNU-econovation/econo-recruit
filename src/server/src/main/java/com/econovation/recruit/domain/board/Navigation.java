@@ -13,11 +13,10 @@ import javax.persistence.*;
 @Setter
 public class Navigation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     @Column(name = "nav_title")
     private String navTitle;
-
     @Column(name = "nav_loc")
     private Integer navLoc;
 }

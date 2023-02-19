@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class TimeTable {
     @Id
     @Column(name = "timetable_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")
@@ -21,6 +21,6 @@ public class TimeTable {
     @Column(name = "end_time")
     private String endTime;
 
-    @Column(name = "start_time")
+    @Column(name = "day")
     private String day;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class ResumeController {
     private final ResumeUseCase resumeUseCase;
     private final TimeTableUseCase timeTableUseCase;
@@ -28,8 +28,8 @@ public class ResumeController {
         List<Resume> all = resumeUseCase.findAll();
         return new ResponseEntity<>(all,HttpStatus.OK);
     }
-    @GetMapping("/resumes")
-    public ResponseEntity<Resume> findById(Integer resumeId){
+    @GetMapping("/resumes/{id}")
+    public ResponseEntity<Resume> findById(@RequestParam(value = "id") Integer resumeId){
         Resume resume = resumeUseCase.findById(resumeId);
         return new ResponseEntity<>(resume,HttpStatus.OK);
     }

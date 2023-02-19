@@ -7,11 +7,13 @@ import com.econovation.recruit.domain.resume.Resume;
 import com.econovation.recruit.domain.resume.ResumeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.sql.PreparedStatement;
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPort {
     private static final String NO_OBJECT_EXCEPTION = "데이터가 존재하지 않습니다.";

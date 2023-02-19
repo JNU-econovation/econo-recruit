@@ -11,7 +11,7 @@ public interface BoardLoadPort {
 
     Board getBoardByLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
 
-    Board getBoardById(Long id);
+    Board getBoardById(Integer id);
 
     List<Board> getBoardByNavLocAndColLoc(Integer navLoc, Integer colLoc);
 

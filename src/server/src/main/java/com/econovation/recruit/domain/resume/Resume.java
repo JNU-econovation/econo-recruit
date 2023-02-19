@@ -13,9 +13,9 @@ import javax.persistence.*;
 @Getter
 public class Resume {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "resume_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")

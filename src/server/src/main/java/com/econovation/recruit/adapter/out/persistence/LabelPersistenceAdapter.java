@@ -6,9 +6,11 @@ import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.label.Label;
 import com.econovation.recruit.domain.label.LabelRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @RequiredArgsConstructor
 public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
     private static final String NO_MATCH_LABEL_MESSAGE = "";
