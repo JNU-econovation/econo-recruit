@@ -29,8 +29,9 @@ public class Board extends BaseTimeEntity {
     @Column(name = "low_loc")
     private Integer lowLoc;
 
-    public void update(Integer colLoc, Integer lowLoc) {
+    public Board update(Integer colLoc, Integer lowLoc) {
         this.colLoc = colLoc;
         this.lowLoc = lowLoc;
+        return this;
     }
 }

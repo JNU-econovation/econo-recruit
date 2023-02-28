@@ -1,6 +1,7 @@
 package com.econovation.recruit.application.port.out;
 
 import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.board.Navigation;
 
 import java.util.List;
 import java.util.Map;

@@ -1,19 +1,17 @@
 package com.econovation.recruit.domain.board;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@Getter
 public class Navigation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @Column(name = "nav_title")
     private String navTitle;

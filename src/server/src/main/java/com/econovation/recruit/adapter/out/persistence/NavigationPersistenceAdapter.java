@@ -6,6 +6,8 @@ import com.econovation.recruit.domain.board.NavigationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class NavigationPersistenceAdapter implements NavigationLoadPort {
@@ -16,5 +18,9 @@ public class NavigationPersistenceAdapter implements NavigationLoadPort {
     public Navigation getByNavLoc(Integer navLoc) {
         return navigationRepository.findNavigationByNavLoc(navLoc)
                 .orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_NAVLOC_MESSAGE));
+    }
+    @Override
+    public List<Navigation> getAllNavigation() {
+        return navigationRepository.findAll();
     }
 }

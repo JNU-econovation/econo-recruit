@@ -1,6 +1,7 @@
 package com.econovation.recruit.application.port.in;
 
 import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.board.Navigation;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,13 @@ public interface BoardUseCase {
     Board createWorkBoard(String workContent, Integer navLoc, Integer colLoc, Integer lowLoc);
 
     List<Board> findAllByNavLoc(Integer navLoc);
+
+    List<Navigation> getAllNavigation();
+
+    Navigation getNavigationByNavLoc(Integer navLoc);
+
+    Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
+
+//    Navigation getByNavLoc(Integer navLoc);
+
 }

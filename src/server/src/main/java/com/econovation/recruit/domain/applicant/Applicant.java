@@ -23,10 +23,9 @@ public class Applicant extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @OneToOne
-    @JoinColumn(name = "card_id")
-    private Card card;
+//    @OneToOne
+//    @JoinColumn(name = "card_id")
+//    private Card card;
 
     @Column(name = "hope_field")
     private String hopeField;
@@ -68,9 +67,9 @@ public class Applicant extends BaseTimeEntity {
     /**
      * Card 주입
     * */
-    public void presetCard(Card card){
-        this.card = card;
-    }
+//    public void presetCard(Card card){
+//        this.card = card;
+//    }
 
     /**
      * insert 되기전 (persist 되기전) 실행된다.

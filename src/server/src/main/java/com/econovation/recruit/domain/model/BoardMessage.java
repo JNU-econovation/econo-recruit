@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardMessage {
-    private String idpId;
     private String message;
     private LocalDateTime sendDate;
     private Integer navLoc;

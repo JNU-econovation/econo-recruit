@@ -9,5 +9,4 @@ public class CreateWorkCardDto {
     private String workContent;
     private Integer navLoc;
     private Integer colLoc;
-    private Integer lowLoc;
 }

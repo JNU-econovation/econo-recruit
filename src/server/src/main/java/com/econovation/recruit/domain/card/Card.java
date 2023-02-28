@@ -4,6 +4,7 @@ import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.BaseTimeEntity;
 import com.econovation.recruit.domain.board.Board;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Card extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +24,7 @@ public class Card extends BaseTimeEntity {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

@@ -27,8 +27,8 @@ public class ApplicantService implements ApplicantRegisterUseCase {
             throw new IllegalArgumentException(DUPLICATED_APPLICANT_EXCEPTION);
         }
         // 최신 card 생성
-        Card card = cardRegisterUseCase.saveApplicantCard(applicant);
-        applicant.presetCard(card);
+//        Card card = cardRegisterUseCase.saveApplicantCard(applicant);
+//        applicant.presetCard(card);
         recordApplicantPort.save(applicant);
     }
 

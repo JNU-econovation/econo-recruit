@@ -11,36 +11,36 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     // hope_field 와 board.col_title
-    @Query(value = "SELECT b " +
+    @Query(value = "SELECT * " +
             "FROM Board as b " +
-            "WHERE b.colTitle = :hope_field"
+            "WHERE b.col_title = :hope_field"
             ,nativeQuery = true
     )
     List<Board> getByHopeField(@Param("hope_field") String hopeField);
 
-    @Query(value = "SELECT b " +
+    @Query(value = "SELECT * " +
             "FROM Board as b " +
             "JOIN Navigation as n " +
-            "ON n.navLoc = :navLoc " +
-            "WHERE b.colLoc =:colLoc AND b.lowLoc =:lowLoc"
+            "ON n.nav_loc = :nav_loc " +
+            "WHERE b.col_loc =:col_loc AND b.low_loc =:low_loc"
             ,nativeQuery = true
     )
-    Board findByNavLocAndColLocAndLowLoc(@Param("navLoc") Integer navLoc, @Param("colLoc") Integer colLoc, @Param("lowLoc")  Integer lowLoc);
+    Board findByNavLocAndColLocAndLowLoc(@Param("nav_loc") Integer navLoc, @Param("col_loc") Integer colLoc, @Param("low_loc")  Integer lowLoc);
 
-    @Query(value = "SELECT b " +
+    @Query(value = "SELECT * " +
             "FROM Board as b " +
             "JOIN Navigation as n " +
-            "ON n.navLoc = :navLoc " +
-            "WHERE b.colLoc =:colLoc"
+            "ON n.nav_loc = :nav_loc " +
+            "WHERE b.col_loc =:col_loc"
             ,nativeQuery = true
     )
-    List<Board> findByNavLocAndColLoc(Integer navLoc, Integer colLoc);
+    List<Board> findByNavLocAndColLoc(@Param("nav_loc")Integer navLoc, @Param("col_loc")Integer colLoc);
 
-    @Query(value = "SELECT b " +
+    @Query(value = "SELECT * " +
             "FROM Board as b " +
             "JOIN Navigation as n " +
-            "ON n.navLoc = :navLoc "
+            "ON n.navLoc = :nav_loc "
             ,nativeQuery = true
     )
-    List<Board> findByNavLoc(Integer navLoc);
+    List<Board> findByNavLoc(@Param("nav_loc")Integer navLoc);
 }
