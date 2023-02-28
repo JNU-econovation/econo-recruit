@@ -1,9 +1,10 @@
 package com.econovation.recruit.domain.comment;
 
 import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.board.BaseTimeEntity;
-import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.BaseTimeEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,11 +12,13 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@Getter
 public class Comment extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")
@@ -28,5 +31,29 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
+    @Column(name = "like_count")
+    private Integer likeCount;
+    @Column(name = "idp_id")
+    private Integer idpId;
 
+    public void delete() {
+        this.isDeleted = true;
+    }
+
+    public Applicant getApplicant() {
+        return applicant;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.likeCount = this.likeCount == null ? 0 : this.likeCount;
+    }
+
+    public void plusLikeCount(){
+        this.likeCount++;
+    }
+
+    public void minusLikeCount(){
+        this.likeCount++;
+    }
 }

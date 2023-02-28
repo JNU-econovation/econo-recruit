@@ -1,18 +1,20 @@
 package com.econovation.recruit.domain.board;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.econovation.recruit.domain.BaseTimeEntity;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board extends BaseTimeEntity{
+@Getter
+@Builder
+public class Board extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "navigation_id")
@@ -27,4 +29,9 @@ public class Board extends BaseTimeEntity{
     @Column(name = "low_loc")
     private Integer lowLoc;
 
+    public Board update(Integer colLoc, Integer lowLoc) {
+        this.colLoc = colLoc;
+        this.lowLoc = lowLoc;
+        return this;
+    }
 }

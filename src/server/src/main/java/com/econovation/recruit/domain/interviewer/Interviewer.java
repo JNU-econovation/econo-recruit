@@ -11,11 +11,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Interviewer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "interviewer_id")
-    private Long id;
+    @Column(name = "idp_id")
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+    public void changeRole(Role role) {
+        this.role = role;
+    }
 }
