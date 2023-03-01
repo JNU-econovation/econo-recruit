@@ -3,7 +3,6 @@ package com.econovation.recruit.application.service;
 import com.econovation.recruit.application.port.in.LabelUseCase;
 import com.econovation.recruit.application.port.out.*;
 import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.interviewer.Interviewer;
 import com.econovation.recruit.domain.label.Label;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,11 @@ import java.util.List;
 public class LabelService implements LabelUseCase {
     private final LabelRecordPort labelRecordPort;
     private final LabelLoadPort labelLoadPort;
-    private final LoadApplicantPort loadApplicantPort;
+    private final ApplicantLoadPort applicantLoadPort;
     @Override
     @Transactional
     public Label createLabel(Integer applicantId, Integer idpId) {
-        Applicant applicant = loadApplicantPort.loadApplicantById(applicantId);
+        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
         Label label = Label.builder()
                 .idpId(idpId)
                 .applicant(applicant)
@@ -32,13 +31,13 @@ public class LabelService implements LabelUseCase {
 
     @Override
     public List<Label> findByApplicantId(Integer applicantId) {
-        Applicant applicant = loadApplicantPort.loadApplicantById(applicantId);
+        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
         return labelLoadPort.loadLabelByApplicant(applicant);
     }
 
     @Override
     public Boolean deleteLabel(Integer applicantId, Integer idpId) {
-        Applicant applicant = loadApplicantPort.loadApplicantById(applicantId);
+        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
         Label label = labelLoadPort.loadLabelByApplicantAndIdpId(applicant, idpId);
         applicant.minusLabelCount();
         return labelRecordPort.delete(label);

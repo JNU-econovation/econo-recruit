@@ -19,7 +19,7 @@ public class ApplicantRegisterDto {
     private Integer studentId;
     @Range(min=1, max=6)
     private Integer grade;
-    private String semester;
+    private Integer semester;
     private String major;
     private String doubleMajor;
     private String minor;

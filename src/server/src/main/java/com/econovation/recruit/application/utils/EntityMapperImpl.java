@@ -1,6 +1,6 @@
 package com.econovation.recruit.application.utils;
 
-import com.econovation.recruit.application.port.out.LoadApplicantPort;
+import com.econovation.recruit.application.port.out.ApplicantLoadPort;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.comment.Comment;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class EntityMapperImpl implements EntityMapper{
-    private final LoadApplicantPort loadApplicantPort;
+    private final ApplicantLoadPort applicantLoadPort;
     @Override
     public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
         return Applicant.builder()
@@ -27,7 +27,7 @@ public class EntityMapperImpl implements EntityMapper{
                 .hopeField(applicantRegisterDto.getHopeField())
 //                .commentCount()
 //                .likeCount()
-                .semester(Integer.valueOf(applicantRegisterDto.getSemester()))
+                .semester(applicantRegisterDto.getSemester())
                 .studentId(applicantRegisterDto.getStudentId())
                 .phoneNumber(applicantRegisterDto.getPhoneNumber())
                 .name(applicantRegisterDto.getName())
@@ -46,7 +46,7 @@ public class EntityMapperImpl implements EntityMapper{
 
     @Override
     public Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto) {
-        Applicant applicant = loadApplicantPort.loadApplicantById(commentRegisterDto.getApplicantId());
+        Applicant applicant = applicantLoadPort.loadApplicantById(commentRegisterDto.getApplicantId());
         return Comment.builder()
                 .applicant(applicant)
                 .content(commentRegisterDto.getContent())

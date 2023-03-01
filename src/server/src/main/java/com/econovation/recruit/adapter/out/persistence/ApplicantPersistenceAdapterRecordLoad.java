@@ -1,7 +1,7 @@
 package com.econovation.recruit.adapter.out.persistence;
 
-import com.econovation.recruit.application.port.out.LoadApplicantPort;
-import com.econovation.recruit.application.port.out.RecordApplicantPort;
+import com.econovation.recruit.application.port.out.ApplicantLoadPort;
+import com.econovation.recruit.application.port.out.ApplicantRecordPort;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.applicant.ApplicantRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ApplicantPersistenceAdapter implements RecordApplicantPort, LoadApplicantPort {
+public class ApplicantPersistenceAdapterRecordLoad implements ApplicantRecordPort, ApplicantLoadPort {
     private static final String NO_MATCH_APPLICANT_MESSSAGE = "해당하는 지원자가 없습니다.";
     private final ApplicantRepository applicantRepository;
     @Override
@@ -24,7 +24,7 @@ public class ApplicantPersistenceAdapter implements RecordApplicantPort, LoadApp
 
     @Override
     public Applicant loadApplicantById(Integer applicantId) {
-        return applicantRepository.findById(Long.valueOf(applicantId))
+        return applicantRepository.findById(applicantId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_APPLICANT_MESSSAGE));
     }
 }

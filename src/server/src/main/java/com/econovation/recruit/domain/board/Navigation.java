@@ -17,4 +17,12 @@ public class Navigation {
     private String navTitle;
     @Column(name = "nav_loc")
     private Integer navLoc;
+
+    public Integer getNavLoc() {
+        return navLoc;
+    }
+
+    public void setNavTitle(String navTitle) {
+        this.navTitle = navTitle;
+    }
 }

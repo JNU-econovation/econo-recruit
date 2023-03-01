@@ -5,17 +5,17 @@ import com.econovation.recruit.application.port.out.BoardLoadPort;
 import com.econovation.recruit.application.port.out.BoardRecordPort;
 import com.econovation.recruit.application.port.out.NavigationLoadPort;
 import com.econovation.recruit.domain.board.Board;
+import com.econovation.recruit.domain.board.BoardRepository;
 import com.econovation.recruit.domain.board.Navigation;
+import com.econovation.recruit.domain.card.Card;
+import com.econovation.recruit.domain.dto.UpdateLocationBoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -26,6 +26,8 @@ public class BoardService implements BoardUseCase {
     private final BoardRecordPort boardRecordPort;
     private final BoardLoadPort boardLoadPort;
     private final SimpMessagingTemplate messagingTemplate;
+    private final BoardRepository boardRepository;
+
 
     @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
@@ -122,10 +124,47 @@ public class BoardService implements BoardUseCase {
 
     @Override
     public Board updateLocation(Board board, Integer colLoc, Integer lowLoc) {
-        Board update = board.update(colLoc, lowLoc);
-        boardRecordPort.save(update);
-        messagingTemplate.convertAndSend("/sub/boards/update",update);
-        return update;
+        board.update(colLoc, lowLoc);
+        Board save = boardRecordPort.save(board);
+        // 소켓서버로 전송
+        messagingTemplate.convertAndSend("/sub/boards/",save);
+        return save;
     }
+
+    @Override
+    @Transactional
+    public void relocationBetweenStartToEndLowLoc(UpdateLocationBoardDto updateLocationBoardDto) {
+        //중복되지 않은 경우에  조회를 하려는 것 자체가 문제야
+        // 현재 board의 위치
+        Board board = findById(updateLocationBoardDto.getId());
+        Integer destinationLowLoc = updateLocationBoardDto.getLowLoc();
+        Integer startLowLoc = board.getLowLoc();
+        List<Board> boards = new ArrayList<>(boardLoadPort.getBoardBetweenLowLoc(startLowLoc, destinationLowLoc));
+        // 위로 올리는 경우
+        if (startLowLoc < destinationLowLoc) {
+            board.setLowLoc(destinationLowLoc);
+            boardRecordPort.save(board);
+            boards.remove(0);
+            for (Board b: boards) {
+                b.setLowLoc(b.getLowLoc()-1);
+            }
+            boardRecordPort.batchUpdate(boards);
+        } else if (startLowLoc == destinationLowLoc) {
+            throw new IllegalArgumentException("같은 위치는 이동할 수 없습니다.");
+        } else {
+            board.setLowLoc(destinationLowLoc);
+            boardRecordPort.save(board);
+            log.info(String.valueOf(boards.size()));
+            boards.remove(boards.size()-1);
+            for (Board b: boards) {
+                b.setLowLoc(b.getLowLoc()+1);
+                log.info(b.getColTitle() + " , " + b.getLowLoc() + " , " + b.getColTitle() + " , " + b.getColLoc() + " , " + b.getLowLoc());
+            }
+            boardRepository.saveAll(boards);
+//            소켓서버로 전송
+            messagingTemplate.convertAndSend("/sub/boards/",boards);
+        }
+    }
+
 
 }
