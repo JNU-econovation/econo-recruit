@@ -9,6 +9,8 @@ import {
 } from '../../storage/Applicant/Applicant.atom'
 import { useEffect } from 'react'
 import ApplicantPopupElement from '../../components/Applicant/Popup.element'
+import ApplicantSortListComponent from '../../components/Applicant/SortList.component'
+import ApplicantSearchComponent from '../../components/Applicant/Search.component'
 
 type OrderType = 'resent' | 'name' | 'area'
 
@@ -34,48 +36,25 @@ const ApplicantBoardPage = () => {
   return (
     <>
       {isPopuped ? <ApplicantPopupElement /> : ''}
-      <div className="px-24 w-screen h-screen">
-        <div className="pt-24 pb-6 border-b-4 flex justify-between items-baseline">
-          <div className="text-3xl font-bold">{period}기 신입모집</div>
-          <div className="flex gap-4 text-lg">
-            <a
-              href={`/applicant/${period}?type=stats&order=${order}&page=${page}`}
-              className={type === 'stats' ? 'border-b-[1px] border-[#0047FF]' : ''}
-            >
-              통계
-            </a>
-            <a
-              href={`/applicant/${period}?type=list&order=${order}&page=${page}`}
-              className={type === 'list' ? 'border-b-[1px] border-[#0047FF]' : ''}
-            >
-              리스트
-            </a>
+      <div className="px-24 w-screen h-screen flex p-12">
+        <div>asdf</div>
+        <div className="flex-1">
+          <div className="flex w-full justify-end gap-8 my-12">
+            <ApplicantSearchComponent />
+            <ApplicantSortListComponent sortList={orderMenu} />
           </div>
-        </div>
-        <div className="flex py-6">
-          <div className="flex gap-6 text-lg">
-            {orderMenu.map((menu) => (
+          <ApplicantListElement />
+          <div className="flex w-full justify-end gap-2">
+            {Array.from({ length: 4 }).map((_, i) => (
               <a
-                href={`/applicant/${period}?type=${type}&order=${menu.type}&page=${page}`}
-                className={menu.type === order ? 'border-b-[1px] border-[#0047FF]' : ''}
-                key={menu.type}
+                href={`/applicant/${period}?type=${type}&order=${order}&page=${i + 1}`}
+                className={i + 1 === +page ? 'p-3' : 'text-[#B6B6B6] p-3'}
+                key={i}
               >
-                {menu.string}
+                {i + 1}
               </a>
             ))}
           </div>
-        </div>
-        <ApplicantListElement />
-        <div className="flex w-full justify-center gap-2">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <a
-              href={`/applicant/${period}?type=${type}&order=${order}&page=${i + 1}`}
-              className={i + 1 === +page ? 'p-3' : 'text-[#B6B6B6] p-3'}
-              key={i}
-            >
-              {i + 1}
-            </a>
-          ))}
         </div>
       </div>
     </>

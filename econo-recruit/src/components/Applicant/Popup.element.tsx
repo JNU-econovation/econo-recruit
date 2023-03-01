@@ -9,7 +9,7 @@ const ApplicantPopupElement = () => {
   const setIsPopuped = useSetRecoilState(applicantPopupBooleanState)
   return (
     <div className="flex justify-center absolute top-0 left-0 z-20 bg-white w-screen h-screen overflow-hidden">
-      <div className="w-[90rem] p-20 drop-shadow-[0_3px_3px_rgba(0,0,0,0.25)]">
+      <div className="w-[90rem] p-20 drop-shadow-[0_8px_8px_rgba(0,0,0,0.25)]">
         <div className="flex flex-col bg-white p-20">
           <button
             onClick={() => {
