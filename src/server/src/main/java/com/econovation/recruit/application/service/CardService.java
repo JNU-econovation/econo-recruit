@@ -2,6 +2,7 @@ package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
+import com.econovation.recruit.application.port.out.ApplicantRecordPort;
 import com.econovation.recruit.application.port.out.BoardRecordPort;
 import com.econovation.recruit.application.port.out.CardLoadPort;
 import com.econovation.recruit.application.port.out.CardRecordPort;
@@ -18,7 +19,9 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class CardService implements CardRegisterUseCase {
+    private final Integer APPLICANT_REGISTER_NAVIGATION_LOCATION = 0;
     private final BoardUseCase boardUseCase;
+    private final ApplicantRecordPort applicantRecordPort;
     private final CardRecordPort cardRecordPort;
     private final CardLoadPort cardLoadPort;
     private final BoardRecordPort boardRecordPort;
@@ -27,8 +30,14 @@ public class CardService implements CardRegisterUseCase {
         // 지원자 희망 분야 (hope_field) 와 매칭되는  col_loc 조회 ( 새로 들어갈 빈 자리 )
         Map<String, Integer> newestLocation = boardUseCase.getNewestLocation(applicant.getHopeField());
         // 그 col_loc 에서 생성될 마지막 low_col 조회
-        Board board = boardUseCase.save(newestLocation, applicant.getHopeField(),0);
-        return cardRecordPort.save(new Card(applicant, board));
+        Board board = boardUseCase.save(newestLocation, applicant.getHopeField(),APPLICANT_REGISTER_NAVIGATION_LOCATION);
+        Applicant savedApplicant = applicantRecordPort.save(applicant);
+        Card card = Card.builder()
+                .applicant(savedApplicant)
+                .workCardInfo("-")
+                .board(board)
+                .build();
+        return cardRecordPort.save(card);
     }
 
     @Override

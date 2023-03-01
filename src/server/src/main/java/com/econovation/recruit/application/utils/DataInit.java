@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 @Component
@@ -23,14 +24,15 @@ public class DataInit {
     private final BoardRepository boardRepository;
     private final CardRepository cardRepository;
     private final ApplicantRepository applicantRepository;
+    private final EntityManager em;
     @PostConstruct
-    @Transactional
+//    @Transactional
     public void initData() {
         Navigation navigation = Navigation.builder()
                 .navTitle("공통")
                 .navLoc(0)
                 .build();
-        navigationRepository.save(navigation);
+        Navigation n1 = navigationRepository.save(navigation);
         Navigation presidentNav = Navigation.builder()
                 .navTitle("회장단")
                 .navLoc(1)
@@ -57,25 +59,25 @@ public class DataInit {
                 .build();
         navigationRepository.save(otNav);
         Navigation etcNav = Navigation.builder()
-                .navTitle("기타 담")
+                .navTitle("기타 담당")
                 .navLoc(6)
                 .build();
         navigationRepository.save(etcNav);
 
         Board board = Board.builder()
-                .navigation(navigation)
+                .navigation(n1)
                 .colLoc(0)
                 .lowLoc(0)
                 .colTitle("[개발자] 지원서")
                 .build();
-        boardRepository.save(board);
+        Board b1 = boardRepository.save(board);
 
         Applicant applicant = Applicant.builder()
                 .name("이서현")
                 .supportPath("인스타그램")
                 .portfolio("https://github.com/stove-smooth/sgs-smooth/tree/main/src/backend/chat")
                 .phoneNumber("010-1234-1234")
-                .studentId(100000)
+                .studentId(100001)
                 .minor("산업공학과")
                 .major("소프트웨어공학과")
                 .grade(4)
@@ -86,18 +88,25 @@ public class DataInit {
                 .hopeField("WEB")
                 .firstPriority("")
                 .plan("no plan is plan")
-                .semester(2).build();
-        applicantRepository.save(applicant);
+                .semester(2)
+        .build();
+        Applicant save = applicantRepository.save(applicant);
 
-        Card card = Card.builder().applicant(applicant)
-                .board(board)
+        Card card = Card.builder()
+                .board(b1)
                 .workCardInfo("마감기한좀 늘려줘")
+                .applicant(null)
                 .build();
         cardRepository.save(card);
-        Card card2 = Card.builder().applicant(applicant)
-                .board(board)
+
+        Card card2 = Card.builder()
+                .board(b1)
                 .workCardInfo("장난 아니야 진심으로 말하는거야")
+                .applicant(null)
                 .build();
-        cardRepository.save(card2);
+        Card c1 = cardRepository.save(card2);
+
+
+
     }
 }

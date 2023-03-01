@@ -10,10 +10,9 @@ import com.econovation.recruit.domain.dto.CommentResponseDto;
 
 public interface EntityMapper {
     Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto);
-
     BoardResponseDto UpdateLocationBoardDtoToEntity(Board board);
-
     Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto);
 
-//    CommentResponseDto toCommentResponseDto(Comment comment);
+    //    CommentResponseDto toCommentResponseDto(Comment comment);
+
 }

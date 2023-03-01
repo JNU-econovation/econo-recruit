@@ -18,13 +18,13 @@ public class CommentService implements CommentUseCase {
     private final CommentLoadPort commentLoadPort;
     private final CommentLikeRecordPort commentLikeRecordPort;
     private final CommentLikeLoadPort commentLikeLoadPort;
-    private final LoadApplicantPort loadApplicantPort;
+    private final ApplicantLoadPort applicantLoadPort;
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
         Comment loadedComment = commentRecordPort.saveComment(comment);
         // Applcant의 comment_count 추가
-        Applicant applicant = loadApplicantPort.loadApplicantById(comment.getApplicant().getId());
+        Applicant applicant = applicantLoadPort.loadApplicantById(comment.getApplicant().getId());
         applicant.plusCommentCount();
         return loadedComment;
     }

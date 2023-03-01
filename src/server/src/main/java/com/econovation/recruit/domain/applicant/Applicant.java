@@ -15,18 +15,17 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
 @Getter
-@DynamicUpdate
 @Builder
 public class Applicant extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
 //    @OneToOne
 //    @JoinColumn(name = "card_id")
 //    private Card card;
-
     @Column(name = "hope_field")
     private String hopeField;
     @Column(name = "first_priority")
