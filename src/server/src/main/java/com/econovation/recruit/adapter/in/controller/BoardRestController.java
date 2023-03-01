@@ -1,11 +1,11 @@
 package com.econovation.recruit.adapter.in.controller;
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
-import com.econovation.recruit.application.port.out.BoardLoadPort;
+import com.econovation.recruit.application.port.in.CardRegisterUseCase;
+import com.econovation.recruit.application.port.in.NavigationUseCase;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.board.Navigation;
 import com.econovation.recruit.domain.card.Card;
-import com.econovation.recruit.domain.card.CardRepository;
 import com.econovation.recruit.domain.dto.CreateWorkCardDto;
 import com.econovation.recruit.domain.dto.UpdateLocationBoardDto;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,10 +27,10 @@ import java.util.Map;
 @Slf4j
 public class BoardRestController {
     private final BoardUseCase boardUseCase;
-    private final BoardLoadPort boardLoadPort;
-    private final CardRepository cardRepository;
+    private final CardRegisterUseCase cardRegisterUseCase;
+    private final NavigationUseCase navigationUseCase;
     // 칸반보드 전체 조회 by navLoc
-    @PostMapping("/board/work-card")
+    @PostMapping("/boards/work-card")
     public ResponseEntity<Board> createWorkBoard(CreateWorkCardDto createWorkCardDto) {
         Map<String, Integer> newestLocationByNavLocAndColLoc = boardUseCase.getNewestLocationByNavLocAndColLoc(createWorkCardDto.getNavLoc(), createWorkCardDto.getColLoc());
         Board board = boardUseCase.createWorkBoard(createWorkCardDto.getWorkContent(),createWorkCardDto.getNavLoc(),
@@ -37,7 +38,7 @@ public class BoardRestController {
         return new ResponseEntity(board, HttpStatus.OK);
     }
 
-    @PostMapping("/board/location")
+    @PostMapping("/boards/location")
     public ResponseEntity<UpdateLocationBoardDto> updateLocationBoard(UpdateLocationBoardDto updateLocationBoardDto){
         // gu
 //        Board boardByLocation = boardLoadPort.getBoardByLocation(updateLocationBoardDto.getNavLoc(), updateLocationBoardDto.getColLoc(), bov);
@@ -56,9 +57,27 @@ public class BoardRestController {
             return new ResponseEntity(updatedBoard, HttpStatus.OK);
         }
     }
+
     @GetMapping("/boards/cards")
     public List<Card> getCardAll(){
-        return cardRepository.findAll();
+        return new ArrayList<>(cardRegisterUseCase.findAll());
+    }
+
+    @PostMapping("/boards/cards/delete")
+    public ResponseEntity deleteCard(Integer cardId) {
+        cardRegisterUseCase.deleteById(cardId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/boards/navigation")
+    public ResponseEntity createNavigation(String navTitle){
+        Navigation navigation = navigationUseCase.createNavigation(navTitle);
+        return new ResponseEntity(navigation, HttpStatus.OK);
+    }
+    @PostMapping("/boards/navigation/update")
+    public ResponseEntity createNavigation(Integer navLoc, String navTitle){
+        Navigation navigation = navigationUseCase.updateNavigationByNavLoc(navLoc, navTitle);
+        return new ResponseEntity(navigation, HttpStatus.OK);
     }
 
     @GetMapping("/boards/navigation")
@@ -74,5 +93,9 @@ public class BoardRestController {
         }
         return navigations;
     }
-
+    @PostMapping("/boards/navigation/delete")
+    public ResponseEntity deleteNavigation(Integer navId){
+        navigationUseCase.deleteById(navId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

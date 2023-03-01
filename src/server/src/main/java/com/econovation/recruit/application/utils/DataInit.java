@@ -70,26 +70,34 @@ public class DataInit {
                 .build();
         boardRepository.save(board);
 
-//        Applicant applicant = Applicant.builder()
-//                .name("이서현")
-//                .supportPath("인스타그램")
-//                .portfolio("https://github.com/stove-smooth/sgs-smooth/tree/main/src/backend/chat")
-//                .phoneNumber("010-1234-1234")
-//                .studentId(100000)
-//                .minor("산업공학과")
-//                .major("소프트웨어공학과")
-//                .grade(4)
-//                .email("ymecca12@gmail.com")
-//                //.commentCount()
-//                .secondPriority(null)
-//                .doubleMajor(null)
-//                .hopeField("WEB")
-//                .firstPriority("")
-//                .plan("no plan is plan")
-//                .semester(2).build();
-//        applicantRepository.save(applicant);
+        Applicant applicant = Applicant.builder()
+                .name("이서현")
+                .supportPath("인스타그램")
+                .portfolio("https://github.com/stove-smooth/sgs-smooth/tree/main/src/backend/chat")
+                .phoneNumber("010-1234-1234")
+                .studentId(100000)
+                .minor("산업공학과")
+                .major("소프트웨어공학과")
+                .grade(4)
+                .email("ymecca12@gmail.com")
+                //.commentCount()
+                .secondPriority("-")
+                .doubleMajor("-")
+                .hopeField("WEB")
+                .firstPriority("")
+                .plan("no plan is plan")
+                .semester(2).build();
+        applicantRepository.save(applicant);
+
+        Card card = Card.builder().applicant(applicant)
+                .board(board)
+                .workCardInfo("마감기한좀 늘려줘")
+                .build();
+        cardRepository.save(card);
+        Card card2 = Card.builder().applicant(applicant)
+                .board(board)
+                .workCardInfo("장난 아니야 진심으로 말하는거야")
+                .build();
+        cardRepository.save(card2);
     }
-
-
-
 }

@@ -5,6 +5,7 @@ import com.econovation.recruit.domain.BaseTimeEntity;
 import com.econovation.recruit.domain.board.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 public class Card extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,5 +1,6 @@
 package com.econovation.recruit.domain.board;
 
+import com.econovation.recruit.domain.card.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

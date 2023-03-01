@@ -7,6 +7,7 @@ import com.econovation.recruit.application.port.out.NavigationLoadPort;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.board.BoardRepository;
 import com.econovation.recruit.domain.board.Navigation;
+import com.econovation.recruit.domain.card.Card;
 import com.econovation.recruit.domain.dto.UpdateLocationBoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -123,10 +124,11 @@ public class BoardService implements BoardUseCase {
 
     @Override
     public Board updateLocation(Board board, Integer colLoc, Integer lowLoc) {
-        Board update = board.update(colLoc, lowLoc);
-        boardRecordPort.save(update);
-        messagingTemplate.convertAndSend("/sub/boards/update",update);
-        return update;
+        board.update(colLoc, lowLoc);
+        Board save = boardRecordPort.save(board);
+        // 소켓서버로 전송
+        messagingTemplate.convertAndSend("/sub/boards/",save);
+        return save;
     }
 
     @Override
@@ -159,7 +161,10 @@ public class BoardService implements BoardUseCase {
                 log.info(b.getColTitle() + " , " + b.getLowLoc() + " , " + b.getColTitle() + " , " + b.getColLoc() + " , " + b.getLowLoc());
             }
             boardRepository.saveAll(boards);
+//            소켓서버로 전송
+            messagingTemplate.convertAndSend("/sub/boards/",boards);
         }
     }
+
 
 }

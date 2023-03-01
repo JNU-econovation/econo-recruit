@@ -5,6 +5,7 @@ import com.econovation.recruit.application.port.out.BoardRecordPort;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.board.BoardRepository;
 import com.econovation.recruit.domain.board.Navigation;
+import com.econovation.recruit.domain.card.Card;
 import com.econovation.recruit.domain.dto.ResumeInsertDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,6 +113,11 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     public void batchUpdate(List<Board> boards) {
         log.info("야야");
         boardRepository.saveAll(boards);
+    }
+
+    @Override
+    public void delete(Board board) {
+        boardRepository.delete(board);
     }
 
 //    @Override

@@ -12,8 +12,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Builder
-@DynamicUpdate
-@DynamicInsert
 public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,10 +31,9 @@ public class Board extends BaseTimeEntity {
     @Column(name = "low_loc")
     private Integer lowLoc;
 
-    public Board update(Integer colLoc, Integer lowLoc) {
+    public void update(Integer colLoc, Integer lowLoc) {
         this.colLoc = colLoc;
         this.lowLoc = lowLoc;
-        return this;
     }
 
     public void setLowLoc(Integer lowLoc) {

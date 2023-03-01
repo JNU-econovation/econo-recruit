@@ -1,6 +1,7 @@
 package com.econovation.recruit.adapter.out.persistence;
 
 import com.econovation.recruit.application.port.out.NavigationLoadPort;
+import com.econovation.recruit.application.port.out.NavigationRecordPort;
 import com.econovation.recruit.domain.board.Navigation;
 import com.econovation.recruit.domain.board.NavigationRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class NavigationPersistenceAdapter implements NavigationLoadPort {
+public class NavigationPersistenceAdapter implements NavigationLoadPort, NavigationRecordPort {
     private static final String NOT_MATCH_NAVLOC_MESSAGE = "해당하는 navigation index가 없습니다";
     private final NavigationRepository navigationRepository;
 
@@ -22,5 +23,15 @@ public class NavigationPersistenceAdapter implements NavigationLoadPort {
     @Override
     public List<Navigation> getAllNavigation() {
         return navigationRepository.findAll();
+    }
+
+    @Override
+    public Navigation save(Navigation navigation) {
+        return navigationRepository.save(navigation);
+    }
+
+    @Override
+    public void deleteById(Integer navId) {
+        navigationRepository.deleteById(navId);
     }
 }
