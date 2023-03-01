@@ -53,7 +53,7 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
 
     @Override
     public Resume findById(Integer resumeId) {
-        return resumeRepository.findById(Long.valueOf(resumeId))
+        return resumeRepository.findById(resumeId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_RESUME_EXCEPTION));
     }
 }

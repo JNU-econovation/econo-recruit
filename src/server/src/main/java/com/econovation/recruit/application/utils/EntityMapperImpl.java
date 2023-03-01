@@ -7,12 +7,17 @@ import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.ApplicantRegisterDto;
 import com.econovation.recruit.domain.dto.BoardResponseDto;
 import com.econovation.recruit.domain.dto.CommentRegisterDto;
+import com.econovation.recruit.domain.dto.TimeTableInsertDto;
+import com.econovation.recruit.domain.timetable.TimeTable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
-public class EntityMapperImpl implements EntityMapper{
+public class EntityMapperImpl implements EntityMapper {
     private final ApplicantLoadPort applicantLoadPort;
     @Override
     public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
@@ -53,6 +58,22 @@ public class EntityMapperImpl implements EntityMapper{
                 .isDeleted(false)
                 .parentId(commentRegisterDto.getParentId())
                 .build();
+    }
+
+    @Override
+    public List<TimeTable> toTimeTables(List<TimeTableInsertDto> timetable, Integer applicantId) {
+        List<TimeTable> times = new LinkedList();
+        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
+        for (TimeTableInsertDto time:timetable) {
+            TimeTable a = TimeTable.builder()
+                    .endTime(time.getEndTime())
+                    .startTime(time.getStartTime())
+                    .day(time.getDay())
+                    .applicant(applicant)
+                    .build();
+            times.add(a);
+        }
+        return times;
     }
 
     /*@Override
