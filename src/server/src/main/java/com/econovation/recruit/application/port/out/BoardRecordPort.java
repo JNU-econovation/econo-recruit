@@ -8,4 +8,8 @@ public interface BoardRecordPort {
     Board save(Board board);
 
     List<Board> lagUpdateAll(List<Board> boards);
+
+    void batchUpdate(List<Board> boards);
+
+//    void update(Board board);
 }

@@ -2,6 +2,7 @@ package com.econovation.recruit.application.port.in;
 
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.board.Navigation;
+import com.econovation.recruit.domain.dto.UpdateLocationBoardDto;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ public interface BoardUseCase {
     Navigation getNavigationByNavLoc(Integer navLoc);
 
     Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
+
+    void relocationBetweenStartToEndLowLoc(UpdateLocationBoardDto updateLocationBoardDto);
 
 //    Navigation getByNavLoc(Integer navLoc);
 

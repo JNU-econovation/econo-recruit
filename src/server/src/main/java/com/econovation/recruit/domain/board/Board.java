@@ -2,6 +2,8 @@ package com.econovation.recruit.domain.board;
 
 import com.econovation.recruit.domain.BaseTimeEntity;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Builder
+@DynamicUpdate
+@DynamicInsert
 public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,5 +37,9 @@ public class Board extends BaseTimeEntity {
         this.colLoc = colLoc;
         this.lowLoc = lowLoc;
         return this;
+    }
+
+    public void setLowLoc(Integer lowLoc) {
+        this.lowLoc = lowLoc;
     }
 }

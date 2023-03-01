@@ -1,6 +1,7 @@
 package com.econovation.recruit.domain.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -43,4 +44,8 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
             ,nativeQuery = true
     )
     List<Board> findByNavLoc(@Param("nav_loc")Integer navLoc);
+
+//    @Modifying(clearAutomatically = true)
+//    @Query("UPDATE Board as b SET b.lowLoc=bd.")
+//    void update(@Param(value = "bd") Board board);
 }

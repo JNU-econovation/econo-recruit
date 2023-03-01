@@ -1,6 +1,7 @@
 package com.econovation.recruit.adapter.in.controller;
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
+import com.econovation.recruit.application.port.out.BoardLoadPort;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.board.Navigation;
 import com.econovation.recruit.domain.card.Card;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Slf4j
 public class BoardRestController {
     private final BoardUseCase boardUseCase;
+    private final BoardLoadPort boardLoadPort;
     private final CardRepository cardRepository;
     // 칸반보드 전체 조회 by navLoc
     @PostMapping("/board/work-card")
@@ -37,14 +39,22 @@ public class BoardRestController {
 
     @PostMapping("/board/location")
     public ResponseEntity<UpdateLocationBoardDto> updateLocationBoard(UpdateLocationBoardDto updateLocationBoardDto){
+        // gu
+//        Board boardByLocation = boardLoadPort.getBoardByLocation(updateLocationBoardDto.getNavLoc(), updateLocationBoardDto.getColLoc(), bov);
         // 기존 위치와 상충되면?
         if (boardUseCase.isDuplicateLocation(updateLocationBoardDto.getNavLoc(), updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc())) {
-            // 아래 인덱스를 다 한칸씩 밀어! -> 빈 자리에 추가해
-            boardUseCase.lagLowColBelowLocation(updateLocationBoardDto.getNavLoc(), updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
+            // 현재 위치 와 도착 인덱스 사이를 추출
+            // 추출된 데이터의 전체 lowLoc 를 재정렬 한다.
+            boardUseCase.relocationBetweenStartToEndLowLoc(updateLocationBoardDto);
+//            boardUseCase.lagLowColBelowLocation(updateLocationBoardDto.getNavLoc(), updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
+            return new ResponseEntity(HttpStatus.OK);
+
         }
-        Board board = boardUseCase.findById(updateLocationBoardDto.getId());
-        Board updatedBoard = boardUseCase.updateLocation(board,updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
-        return new ResponseEntity(updatedBoard, HttpStatus.OK);
+        else{
+            Board board = boardUseCase.findById(updateLocationBoardDto.getId());
+            Board updatedBoard = boardUseCase.updateLocation(board,updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
+            return new ResponseEntity(updatedBoard, HttpStatus.OK);
+        }
     }
     @GetMapping("/boards/cards")
     public List<Card> getCardAll(){

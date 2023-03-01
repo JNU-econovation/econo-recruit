@@ -61,6 +61,20 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
+    public List<Board> getBoardBetweenLowLoc(Integer startLowLoc, Integer destinationLowLoc) {
+        List<Board> all = boardRepository.findAll();
+        if(startLowLoc < destinationLowLoc){
+            return all.stream()
+                    .filter(m -> m.getLowLoc() >= startLowLoc && m.getLowLoc() <= destinationLowLoc)
+                    .toList();
+        } else{
+            return all.stream()
+                    .filter(m -> m.getLowLoc() <= startLowLoc && m.getLowLoc() >= destinationLowLoc)
+                    .toList();
+        }
+    }
+
+    @Override
     public Board save(Board board) {
         Board save = boardRepository.save(board);
         if(save == null){
@@ -70,21 +84,40 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
+    @Transactional
     public List<Board> lagUpdateAll(List<Board> boards) {
-        if (!boards.isEmpty()) {
-            StopWatch timer = new StopWatch();
-//            INSERT INTO food (`food_id`, `name`) VALUES (?, ?)
-//            String sql = "UPDATE board SET low_loc=?, updated_at=:updatedAt";
-            String sql = "UPDATE 'board' SET low_loc=?";
-            timer.start();
-            batchUpdate(boards, sql);
-            timer.stop();
-            log.info("batchUpdate -> Total time in seconds: " + (timer.getStopTime() - timer.getStartTime()));
-            return boards;
+        for (Board board: boards) {
+            log.info(board.toString());
+            //
+            board.setLowLoc(board.getLowLoc()+1);
+            boardRepository.save(board);
         }
+        return boards;
+//        if (!boards.isEmpty()) {
+//            StopWatch timer = new StopWatch();
+////            INSERT INTO food (`food_id`, `name`) VALUES (?, ?)
+////            String sql = "UPDATE board SET low_loc=?, updated_at=:updatedAt";
+//            String sql = "UPDATE 'board' SET low_loc=?";
+//            timer.start();
+//            batchUpdate(boards, sql);
+//            timer.stop();
+//            log.info("batchUpdate -> Total time in seconds: " + (timer.getStopTime() - timer.getStartTime()));
+//            return boards;
 //        }
-        throw new IllegalArgumentException(NOT_MATCH_MESSAGE);
+////        }
+//        throw new IllegalArgumentException(NOT_MATCH_MESSAGE);
     }
+
+    @Override
+    public void batchUpdate(List<Board> boards) {
+        log.info("야야");
+        boardRepository.saveAll(boards);
+    }
+
+//    @Override
+//    public void update(Board board) {
+//        boardRepository.update(board);
+//    }
 
     private void batchUpdate(List<Board> boards, String sql) {
         jdbcTemplate.batchUpdate(sql,
