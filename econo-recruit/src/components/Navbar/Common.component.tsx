@@ -33,7 +33,14 @@ const CommonNavbarComponent = ({ isShort = false }: CommonNavbarComponent) => {
             key={item.type}
           >
             {isShort ? item.short_title : item.title}
-            <img src="/lt.icon.svg" alt="right arrow" />
+            <img
+              src={
+                currentPath === item.type
+                  ? '/lt.icon.white.svg'
+                  : '/lt.icon.svg'
+              }
+              alt="right arrow"
+            />
           </a>
         ))}
       </div>

@@ -20,7 +20,7 @@ export const MainNavbar = [
     short_title: '면접기록',
     type: 'interview',
     target: 'none',
-    href: '#',
+    href: '/interview/25',
   },
   {
     title: '신입모집 지원현황',

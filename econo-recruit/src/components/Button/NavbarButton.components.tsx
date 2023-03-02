@@ -20,7 +20,7 @@ const NavbarButtonComponent = ({ value }: NavbarButtonComponent) => {
     <button
       className={
         findManueIndex === selected
-          ? 'bg-gray-800 text-white' + buttonClassName
+          ? 'bg-[#303030] text-white' + buttonClassName
           : 'bg-white text-gray-400' + buttonClassName
       }
       onClick={onClick}

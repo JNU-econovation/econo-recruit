@@ -89,7 +89,7 @@ export const KanbanMock = [
       },
     ],
   },
-]
+];
 
 export const ApplicantCommentMock = [
   {
@@ -119,7 +119,7 @@ export const ApplicantCommentMock = [
     like: 2,
     checked: false,
   },
-]
+];
 
 export const ApplicationListMock = [
   {
@@ -164,4 +164,49 @@ export const ApplicationListMock = [
     semester: '1학년 1학기',
     registerDate: '2023.03.31',
   },
-]
+];
+
+export const InterviewListMock = [
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+  {
+    title: '[개발자] 임채승',
+    apply: ['APP', 'WEB'],
+    score: '4.5',
+    registerDate: '2023.03.31',
+  },
+];
