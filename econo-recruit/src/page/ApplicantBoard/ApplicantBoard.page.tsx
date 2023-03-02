@@ -39,7 +39,7 @@ const ApplicantBoardPage = () => {
       {isPopuped ? <ApplicantPopupElement /> : ''}
       <div className="px-24 w-screen h-screen flex p-12">
         <CommonNavbarComponent />
-        <div className="flex-1">
+        <div className="flex-1 ml-32 min-w-[46rem]">
           <div className="flex w-full justify-end gap-8 my-12">
             <ApplicantSearchComponent />
             <ApplicantSortListComponent sortList={orderMenu} />

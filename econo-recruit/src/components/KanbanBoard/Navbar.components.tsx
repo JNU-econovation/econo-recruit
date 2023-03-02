@@ -1,5 +1,5 @@
-import { KANBAN_MANUES } from '../../data/25/KanbanMenus'
-import NavbarButtonComponent from '../Button/NavbarButton.components'
+import { KANBAN_MANUES } from '../../data/25/KanbanMenus';
+import NavbarButtonComponent from '../Button/NavbarButton.components';
 
 const KanbanNavbarComponent = () => {
   return (
@@ -8,7 +8,7 @@ const KanbanNavbarComponent = () => {
         <NavbarButtonComponent key={manue} value={manue} />
       ))}
     </>
-  )
-}
+  );
+};
 
-export default KanbanNavbarComponent
+export default KanbanNavbarComponent;

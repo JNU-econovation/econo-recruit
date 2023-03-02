@@ -1,19 +1,20 @@
-import { useRecoilState } from 'recoil'
-import { KanbanSelectedButtonNumberState } from '../../storage/KanbanBoard/Navbar.atoms'
-import { KANBAN_MANUES } from '../../data/25/KanbanMenus'
-import { useState } from 'react'
+import { useRecoilState } from 'recoil';
+import { KanbanSelectedButtonNumberState } from '../../storage/KanbanBoard/Navbar.atoms';
+import { KANBAN_MANUES } from '../../data/25/KanbanMenus';
 
-type NavbarButtonComponent = { value: string }
+type NavbarButtonComponent = { value: string };
 
 const NavbarButtonComponent = ({ value }: NavbarButtonComponent) => {
-  const findManueIndex = KANBAN_MANUES.findIndex((manue) => manue === value)
+  const findManueIndex = KANBAN_MANUES.findIndex((manue) => manue === value);
 
-  const [selected, setSelected] = useRecoilState(KanbanSelectedButtonNumberState)
-  const buttonClassName = ' py-2 px-6 rounded-lg'
+  const [selected, setSelected] = useRecoilState(
+    KanbanSelectedButtonNumberState
+  );
+  const buttonClassName = ' py-2 px-6 rounded-lg min-w-fit ';
 
   const onClick = () => {
-    setSelected(findManueIndex)
-  }
+    setSelected(findManueIndex);
+  };
 
   return (
     <button
@@ -26,7 +27,7 @@ const NavbarButtonComponent = ({ value }: NavbarButtonComponent) => {
     >
       {value}
     </button>
-  )
-}
+  );
+};
 
-export default NavbarButtonComponent
+export default NavbarButtonComponent;
