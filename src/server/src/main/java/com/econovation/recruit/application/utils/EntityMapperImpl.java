@@ -4,12 +4,14 @@ import com.econovation.recruit.application.port.out.ApplicantLoadPort;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.comment.Comment;
-import com.econovation.recruit.domain.dto.ApplicantRegisterDto;
-import com.econovation.recruit.domain.dto.BoardResponseDto;
-import com.econovation.recruit.domain.dto.CommentRegisterDto;
-import com.econovation.recruit.domain.dto.TimeTableInsertDto;
+import com.econovation.recruit.domain.dto.*;
+import com.econovation.recruit.domain.interviewer.Interviewer;
+import com.econovation.recruit.domain.interviewer.Role;
+import com.econovation.recruit.domain.resume.Resume;
 import com.econovation.recruit.domain.timetable.TimeTable;
+import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -74,6 +76,45 @@ public class EntityMapperImpl implements EntityMapper {
             times.add(a);
         }
         return times;
+    }
+
+    @Override
+    public Comment toComment(CommentRegisterDto commentRegisterDto) {
+        Applicant applicant = applicantLoadPort.loadApplicantById(commentRegisterDto.getApplicantId());
+
+        return Comment.builder()
+                .parentId(commentRegisterDto.getParentId())
+                .idpId(commentRegisterDto.getIdpId())
+                .applicant(applicant)
+                .content(commentRegisterDto.getContent())
+                .build();
+    }
+
+    @Override
+    public List<Resume> toResumes(List<ResumeInsertDto> resumesDto) {
+        Applicant applicant = applicantLoadPort.loadApplicantById(resumesDto.get(0).getApplicantId());
+        List<Resume> resumes = new LinkedList();
+        for (ResumeInsertDto resume : resumesDto) {
+            resumes.add(Resume.builder()
+                    .answer(resume.getAnswer())
+                    .questionId(resume.getQuestionId())
+                    .applicant(applicant)
+                    .build());
+        }
+        return resumes;
+    }
+
+    @Override
+    public List<Interviewer> toInterviewers(List<InterviewerCreateDto> interviewerCreateDtos) {
+        List<Interviewer> interviewers = new LinkedList();
+        for(InterviewerCreateDto interviewerCreateDto: interviewerCreateDtos) {
+            interviewers.add(Interviewer.builder()
+                    .role(Enum.valueOf(Role.class, interviewerCreateDto.getRole()))
+                    .id(interviewerCreateDto.getIdpId())
+                    .build()
+            );
+        }
+        return interviewers;
     }
 
     /*@Override

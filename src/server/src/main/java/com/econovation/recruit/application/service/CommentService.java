@@ -60,7 +60,7 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public Boolean isCheckedLike(Integer idpId) {
+    public Boolean isCheckedLike(Integer commentId, Integer idpId) {
         return commentLikeLoadPort.getByIdpId(idpId);
     }
 }

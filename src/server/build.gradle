@@ -19,9 +19,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -35,7 +35,6 @@ dependencies {
     }
     implementation 'com.google.code.gson:gson:2.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation 'org.springframework.security:spring-security-test'
 
     // websocket client
     implementation 'org.webjars:webjars-locator-core'

@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Range;
 @AllArgsConstructor
 public class ResumeInsertDto {
     private Integer applicantId;
-    @Range(min = 100, max = 999)
+    @Range(min = 1000, max = 9999)
     private Integer questionId;
     private String answer;
 }

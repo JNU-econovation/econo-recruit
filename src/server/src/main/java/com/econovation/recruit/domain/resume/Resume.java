@@ -2,6 +2,7 @@ package com.econovation.recruit.domain.resume;
 
 import com.econovation.recruit.domain.applicant.Applicant;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -47,6 +47,7 @@ public class Comment extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.likeCount = this.likeCount == null ? 0 : this.likeCount;
+        this.isDeleted = false;
     }
 
     public void plusLikeCount(){
