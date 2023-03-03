@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import ApplicantPopupElement from '../../components/Applicant/Popup.element';
 import ApplicantSortListComponent from '../../components/Applicant/SortList.component';
 import ApplicantSearchComponent from '../../components/Applicant/Search.component';
-import CommonNavbarComponent from '../../components/Navbar/Common.component';
+import CommonNavbarComponent from '../../components/Common/Navbar.component';
 
 type OrderType = 'resent' | 'name' | 'area';
 

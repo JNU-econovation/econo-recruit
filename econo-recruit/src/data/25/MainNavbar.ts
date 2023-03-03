@@ -37,9 +37,9 @@ export const MainNavbar = [
     href: '#',
   },
   {
-    title: '관리자 페이지',
-    short_title: '관리자',
-    type: 'manager',
+    title: '지난 신입모집',
+    short_title: '자난 모집',
+    type: 'history',
     target: '_blank',
     href: '#',
   },

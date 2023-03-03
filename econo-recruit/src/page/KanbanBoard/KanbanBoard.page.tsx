@@ -8,7 +8,7 @@ import {
   KanbanDataArrayState,
   KanbanRowData,
 } from '../../storage/KanbanBoard/Kanban.atoms';
-import CommonNavbarComponent from '../../components/Navbar/Common.component';
+import CommonNavbarComponent from '../../components/Common/Navbar.component';
 
 const KanbanBoardPage = () => {
   const { period } = useParams();

@@ -1,11 +1,15 @@
 import { useParams } from 'react-router';
 import { MainNavbar } from '../../data/25/MainNavbar';
+import { useRecoilValue } from 'recoil';
+import { userInformationState } from '../../storage/Common/user.atom';
+import CommonNavbarCellComponent from './NavbarCell.component';
 
 type CommonNavbarComponent = {
   isShort?: boolean;
 };
 
 const CommonNavbarComponent = ({ isShort = false }: CommonNavbarComponent) => {
+  const userData = useRecoilValue(userInformationState);
   const currentUrl = document.location.pathname;
   const currentPath = currentUrl.split('/')[1];
 
@@ -22,27 +26,27 @@ const CommonNavbarComponent = ({ isShort = false }: CommonNavbarComponent) => {
       </a>
       <div className="flex flex-col gap-8 mt-8 text-xl">
         {MainNavbar.map((item) => (
-          <a
-            className={
-              currentPath === item.type
-                ? linkButtonClassName + ' !bg-black !text-white'
-                : linkButtonClassName
-            }
-            href={item.href}
-            target={item.target === '_blank' ? '_blank' : ''}
-            key={item.type}
-          >
-            {isShort ? item.short_title : item.title}
-            <img
-              src={
-                currentPath === item.type
-                  ? '/lt.icon.white.svg'
-                  : '/lt.icon.svg'
-              }
-              alt="right arrow"
-            />
-          </a>
+          <CommonNavbarCellComponent
+            currentPath={currentPath}
+            isShort={isShort}
+            item={item}
+          />
         ))}
+        {userData.authority === 'chairman' ? (
+          <CommonNavbarCellComponent
+            currentPath={currentPath}
+            isShort={isShort}
+            item={{
+              href: '/manager/' + period,
+              short_title: '관리자',
+              title: '관리자 페이지',
+              target: '_self',
+              type: 'manager',
+            }}
+          />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

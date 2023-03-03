@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import InterviewPopupElement from '../../components/Interview/Popup.element';
 import InterviewSortListComponent from '../../components/Interview/SortList.component';
 import InterviewSearchComponent from '../../components/Interview/Search.component';
-import CommonNavbarComponent from '../../components/Navbar/Common.component';
+import CommonNavbarComponent from '../../components/Common/Navbar.component';
 
 const InterviewPage = () => {
   const { period } = useParams();
