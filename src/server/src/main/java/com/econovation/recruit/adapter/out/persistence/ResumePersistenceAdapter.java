@@ -2,6 +2,7 @@ package com.econovation.recruit.adapter.out.persistence;
 
 import com.econovation.recruit.application.port.out.ResumeLoadPort;
 import com.econovation.recruit.application.port.out.ResumeRecordPort;
+import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.dto.ResumeInsertDto;
 import com.econovation.recruit.domain.resume.Resume;
 import com.econovation.recruit.domain.resume.ResumeRepository;
@@ -20,17 +21,23 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
     private static final String NO_RESUME_EXCEPTION = "데이터가 존재하지 않습니다.";
     private final JdbcTemplate jdbcTemplate;
     private final ResumeRepository resumeRepository;
+//    @Override
+//    @Transactional
+//    public List<ResumeInsertDto> saveAll(List<ResumeInsertDto> resumes){
+//        String sql = "INSERT INTO resume (applicant_id, question_id, answer) " +
+//                "VALUES (?, ?, ?)";
+//        if (!resumes.isEmpty()) {
+//            batchInsert(resumes, sql);
+//            return resumes;
+//        }
+//        throw new IllegalArgumentException(NO_OBJECT_EXCEPTION);
+//    }
+
     @Override
-    @Transactional
-    public List<ResumeInsertDto> saveAll(List<ResumeInsertDto> resumes){
-        String sql = "INSERT INTO resume (applicant_id, question_id, answer) " +
-                "VALUES (?, ?, ?)";
-        if (!resumes.isEmpty()) {
-            batchInsert(resumes, sql);
-            return resumes;
-        }
-        throw new IllegalArgumentException(NO_OBJECT_EXCEPTION);
+    public List<Resume> saveAll(List<Resume> resumes) {
+        return resumeRepository.saveAll(resumes);
     }
+
     private void batchInsert(List<ResumeInsertDto> resumes, String sql) {
         jdbcTemplate.batchUpdate(sql,
                 resumes,
@@ -53,7 +60,12 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
 
     @Override
     public Resume findById(Integer resumeId) {
-        return resumeRepository.findById(Long.valueOf(resumeId))
+        return resumeRepository.findById(resumeId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_RESUME_EXCEPTION));
+    }
+
+    @Override
+    public List<Resume> findByApplicant(Applicant applicant) {
+        return resumeRepository.findByApplicant(applicant);
     }
 }

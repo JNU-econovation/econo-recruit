@@ -1,14 +1,22 @@
 package com.econovation.recruit.domain.timetable;
 
 import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.interviewer.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class TimeTable {
     @Id
-    @Column(name = "timetable_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "time_table_id")
     private Integer id;
 
     @ManyToOne

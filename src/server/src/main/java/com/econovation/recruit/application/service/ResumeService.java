@@ -1,8 +1,10 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.ResumeUseCase;
+import com.econovation.recruit.application.port.out.ApplicantLoadPort;
 import com.econovation.recruit.application.port.out.ResumeLoadPort;
 import com.econovation.recruit.application.port.out.ResumeRecordPort;
+import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.dto.ResumeInsertDto;
 import com.econovation.recruit.domain.resume.Resume;
 import com.google.gson.Gson;
@@ -21,11 +23,17 @@ import java.util.List;
 public class ResumeService implements ResumeUseCase {
     private final ResumeRecordPort resumeRecordPort;
     private final ResumeLoadPort resumeLoadPort;
+    private final ApplicantLoadPort applicantLoadPort;
+
+//    @Override
+//    public List<ResumeInsertDto> submitResume(HashMap<String, Object> param) {
+//        List<ResumeInsertDto> resumeInsertDtos = toList(param);
+//        return resumeRecordPort.saveAll(resumeInsertDtos);
+//    }
 
     @Override
-    public List<ResumeInsertDto> submitResume(HashMap<String, Object> param) {
-        List<ResumeInsertDto> resumeInsertDtos = toList(param);
-        return resumeRecordPort.saveAll(resumeInsertDtos);
+    public List<Resume> submitResume(List<Resume> resumes) {
+        return resumeRecordPort.saveAll(resumes);
     }
 
     @Override
@@ -36,6 +44,13 @@ public class ResumeService implements ResumeUseCase {
     @Override
     public Resume findById(Integer resumeId) {
         return resumeLoadPort.findById(resumeId);
+    }
+
+    @Override
+    public List<Resume> findByApplicantId(Integer applicantId) {
+        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
+        return resumeLoadPort.findByApplicant(applicant);
+
     }
 
     private List<ResumeInsertDto> toList(HashMap<String, Object> param) {

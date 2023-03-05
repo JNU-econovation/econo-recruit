@@ -7,7 +7,6 @@ import java.util.List;
 public interface CommentUseCase {
     Comment saveComment(Comment comment);
     Boolean deleteComment();
-
     Comment findById(Integer commentId);
 
     void createCommentLike(Comment comment,Integer idpId);
@@ -16,5 +15,5 @@ public interface CommentUseCase {
 
     List<Comment> findAll();
 
-    Boolean isCheckedLike(Integer idpId);
+    Boolean isCheckedLike(Integer commentId, Integer idpId);
 }

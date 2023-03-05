@@ -20,16 +20,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentUseCase commentUseCase;
+    private final EntityMapper entityMapper;
 
+    @PostMapping("/comments")
+    public ResponseEntity<Comment> createComment(CommentRegisterDto commentRegisterDto){
+        Comment comment = commentUseCase.saveComment(
+                entityMapper.toComment(commentRegisterDto));
+        return new ResponseEntity(comment, HttpStatus.OK);
+    }
     @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> findAll(){
+    public ResponseEntity<List<Comment>> findAll() {
         List<Comment> comments = commentUseCase.findAll();
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
-    @GetMapping("/comments/")
     @PostMapping("/comments/is/likes")
-    public ResponseEntity<Boolean> isCheckedLike(Integer idpId) {
-        Boolean isCheck = commentUseCase.isCheckedLike(idpId);
+    public ResponseEntity<Boolean> isCheckedLike(Integer commentId, Integer idpId) {
+        Boolean isCheck = commentUseCase.isCheckedLike(commentId,idpId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 

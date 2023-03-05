@@ -12,4 +12,9 @@ public class ExceptionController {
     protected Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
         return e.getBindingResult().getAllErrors();
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    protected Object handleMethodUsernameNotFoundExceptionException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        return e.getBindingResult().getAllErrors();
+    }
 }
