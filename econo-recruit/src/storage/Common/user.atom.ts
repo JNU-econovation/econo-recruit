@@ -11,5 +11,9 @@ type userInformation = {
 
 export const userInformationState = atom({
   key: 'userInformationState',
-  default: {} as userInformation,
+  default: {
+    name: '임채승',
+    period: 22,
+    authority: 'chairman',
+  } as userInformation,
 });

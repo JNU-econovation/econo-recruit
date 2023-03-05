@@ -11,6 +11,7 @@ import ApplicantBoardPage from './page/ApplicantBoard/ApplicantBoard.page';
 import ApplicationPage from './page/Application/Application.page';
 import ErrorPage from './page/Error.page';
 import InterviewPage from './page/Interview/Interview.page';
+import ManagerPage from './page/Manager/Manager.page';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: '/interview/:period',
     element: <InterviewPage />,
+  },
+  {
+    path: '/manager/:period',
+    element: <ManagerPage />,
   },
   {
     path: '*',

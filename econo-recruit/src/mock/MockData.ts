@@ -210,3 +210,41 @@ export const InterviewListMock = [
     registerDate: '2023.03.31',
   },
 ];
+
+export const ManagerListMock = [
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+  {
+    name: '임채승',
+    period: 22,
+    type: 'captin',
+  },
+];

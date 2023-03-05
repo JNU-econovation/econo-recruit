@@ -15,8 +15,6 @@ const CommonNavbarComponent = ({ isShort = false }: CommonNavbarComponent) => {
 
   const { period } = useParams();
 
-  const linkButtonClassName =
-    'flex justify-between p-4 hover:bg-[#B9B9B9] hover:text-white rounded-lg';
   return (
     <div className="flex flex-col">
       <a className="font-bold text-4xl" href="/">
