@@ -19,7 +19,7 @@ public class InterviewerPersistenceAdapter implements LoadInterviewerPort, Inter
 
     @Override
     public Interviewer loadInterviewById(Integer idpId) {
-        return interviewerRepository.findById(Long.valueOf(idpId))
+        return interviewerRepository.findById(Integer.valueOf(idpId))
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_INTERVIEWER_MESSAGE));
     }
     @Override

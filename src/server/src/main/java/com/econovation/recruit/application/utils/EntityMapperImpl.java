@@ -1,17 +1,19 @@
 package com.econovation.recruit.application.utils;
 
 import com.econovation.recruit.application.port.out.ApplicantLoadPort;
+import com.econovation.recruit.application.port.out.ScoreLoadPort;
 import com.econovation.recruit.domain.applicant.Applicant;
 import com.econovation.recruit.domain.board.Board;
 import com.econovation.recruit.domain.comment.Comment;
 import com.econovation.recruit.domain.dto.*;
 import com.econovation.recruit.domain.interviewer.Interviewer;
 import com.econovation.recruit.domain.interviewer.Role;
+import com.econovation.recruit.domain.record.Record;
 import com.econovation.recruit.domain.resume.Resume;
+import com.econovation.recruit.domain.score.Score;
+import com.econovation.recruit.domain.score.ScoreRepository;
 import com.econovation.recruit.domain.timetable.TimeTable;
-import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.EnumUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
@@ -20,7 +22,10 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class EntityMapperImpl implements EntityMapper {
+    private static final String NO_MATCH_SCORE = "해당하는 SCORE가 없습니다";
+    private final ScoreRepository scoreRepository;
     private final ApplicantLoadPort applicantLoadPort;
+    private final ScoreLoadPort scoreLoadPort;
     @Override
     public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
         return Applicant.builder()
@@ -109,12 +114,39 @@ public class EntityMapperImpl implements EntityMapper {
         List<Interviewer> interviewers = new LinkedList();
         for(InterviewerCreateDto interviewerCreateDto: interviewerCreateDtos) {
             interviewers.add(Interviewer.builder()
-                    .role(Enum.valueOf(Role.class, interviewerCreateDto.getRole()))
+                    .role(Role.getByName(interviewerCreateDto.getRole()))
                     .id(interviewerCreateDto.getIdpId())
                     .build()
             );
         }
         return interviewers;
+    }
+
+    @Override
+    public Score toScore(CreateScoreDto createScoreDto) {
+        Applicant applicant = applicantLoadPort.loadApplicantById(createScoreDto.getApplicantId());
+        return Score.builder()
+                .criteria(createScoreDto.getCriteria())
+                .score(createScoreDto.getScore())
+                .applicant(applicant)
+                .idpId(createScoreDto.getIdpId())
+                .build();
+    }
+
+    @Override
+    public Score toScoreByUpdateDto(UpdateScoreDto updateScoreDto) {
+        Score score = scoreRepository.findById(updateScoreDto.getScoreId()).orElseThrow(() -> new IllegalArgumentException(NO_MATCH_SCORE));
+        return score.updateScore(updateScoreDto.getCriteria(), updateScoreDto.getScore());
+    }
+
+    @Override
+    public Record toRecord(CreateRecordDto createRecordDto) {
+        Applicant applicant = applicantLoadPort.loadApplicantById(createRecordDto.getApplicantId());
+        return Record.builder()
+                .url(createRecordDto.getUrl())
+                .record(createRecordDto.getRecord())
+                .applicant(applicant)
+                .build();
     }
 
     /*@Override

@@ -5,49 +5,73 @@ import com.econovation.recruit.domain.interviewer.Role;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Base64;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class CookieFilter extends OncePerRequestFilter {
     @Value("${spring.jwt.secret-key}")
     private String secretKey;
 
-    @Autowired
-    private InterviewerUseCase interviewerUseCase;
+    private final InterviewerUseCase interviewerUseCase;
 
-    public Long getIdpId(String token) {
-        return Long.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
+    @PostConstruct
+    protected void init() {
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    }
+
+    public Integer getIdpId(String token) {
+        Integer aLong = Integer.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
+        return aLong;
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken(request.getHeader("Authorization"));
-        Long idpId = getIdpId(token);
-        String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().value();
-        if (token == null ) {
+        if(request.getRequestURI().startsWith("/swagger") || request.getRequestURI().startsWith("/api-docs") || request.getRequestURI().startsWith("/api/v1/interviewers")){
+            log.info("permisrsion access");
+            filterChain.doFilter(request,response);
             return;
         }
-        if(request.getRequestURI().startsWith("/swagger") || request.getRequestURI().startsWith("/api-docs")){
-            filterChain.doFilter(request,response);
+        if (token == null ) {
+            log.info("token is null");
+            return;
         }
+        Integer idpId = getIdpId(token);
+        filterChain.doFilter(request,response);
         if(request.getRequestURI().startsWith("/api/v1/interviewers")){
-            if(role.equals(Role.ROLE_ADMIN.value())){
+            String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
+            if(role.equals(Role.ROLE_PRESIDENT.name()) ||
+//                    role.equals(Role.ROLE_TF.name()) ||
+                    role.equals(Role.ROLE_OPERATION.name())){
+                log.info("ADMIN ACCESS");
                 filterChain.doFilter(request,response);
             }
-            else{
-                return;
-            }
+            return;
         }
+        // 전체 url 체크
+        /*if(request.getRequestURI().startsWith("/api/v1/*")){
+            String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
+            if(role.equals(Role.ROLE_PRESIDENT.name()) ||
+                    role.equals(Role.ROLE_TF.name()) ||
+                    role.equals(Role.ROLE_OPERATION.name())){
+                log.info("ADMIN ACCESS");
+                filterChain.doFilter(request,response);
+            }
+            return;
+        }*/
         // token은 있는데 다른 요청일 경우 넘어가자
+        log.info("token은 있는데 다른 요청일 경우 넘어가자");
         filterChain.doFilter(request,response);
     }
 

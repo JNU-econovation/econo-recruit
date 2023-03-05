@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ApplicantPersistenceAdapterRecordLoad implements ApplicantRecordPort, ApplicantLoadPort {
+public class ApplicantPersistenceAdapter implements ApplicantRecordPort, ApplicantLoadPort {
     private static final String NO_MATCH_APPLICANT_MESSSAGE = "해당하는 지원자가 없습니다.";
     private final ApplicantRepository applicantRepository;
     @Override
