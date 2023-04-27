@@ -1,12 +1,12 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   managerListState,
   managerPopupBooleanState,
 } from '../../storage/Manager/Manager.atom';
 
 const ManagerListComponent = () => {
-  const boardData = useRecoilValue(managerListState);
-  const setIsPopuped = useSetRecoilState(managerPopupBooleanState);
+  const boardData = useAtomValue(managerListState);
+  const setIsPopuped = useSetAtom(managerPopupBooleanState);
   const onBoardClick = () => {
     setIsPopuped(true);
   };

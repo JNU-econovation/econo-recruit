@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { RecoilRoot } from 'recoil';
 import { RouterProvider } from 'react-router';
 import { createBrowserRouter } from 'react-router-dom';
 import KanbanBoardPage from './page/KanbanBoard/KanbanBoard.page';
@@ -51,8 +50,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

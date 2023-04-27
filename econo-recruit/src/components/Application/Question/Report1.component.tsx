@@ -1,12 +1,11 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import { APPLICATION_REPORT } from '../../../data/25/Application'
 import {
   ApplicationNavbarIndexState,
-  ApplicationResultDataState,
 } from '../../../storage/Application/Application.atom'
 import { cloneDeep } from 'lodash'
 import { useEffect, useState } from 'react'
 import { useLocalStorage } from '../../../hooks/localstorage.hook'
+import { useSetAtom } from 'jotai'
 
 const ApplicationQuestionReport1Component = () => {
   const [name, setName] = useLocalStorage('name', '')
@@ -15,7 +14,7 @@ const ApplicationQuestionReport1Component = () => {
   const [grade, setGrade] = useLocalStorage('grade', '')
   const [semister, setSemister] = useLocalStorage('semister', '')
 
-  const setPage = useSetRecoilState(ApplicationNavbarIndexState)
+  const setPage = useSetAtom(ApplicationNavbarIndexState)
   const [canNext, setCanNext] = useState(false)
 
   const [onError, setOnError] = useState({

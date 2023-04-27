@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 
 type applicantBoardState = {
   title: string
@@ -7,12 +7,6 @@ type applicantBoardState = {
   registerDate: string
 }
 
-export const applicantListState = atom({
-  key: 'applicantListState',
-  default: [] as applicantBoardState[],
-})
+export const applicantListState = atom([] as applicantBoardState[])
 
-export const applicantPopupBooleanState = atom({
-  key: 'applicantPopupBooleanState',
-  default: false,
-})
+export const applicantPopupBooleanState = atom(false)

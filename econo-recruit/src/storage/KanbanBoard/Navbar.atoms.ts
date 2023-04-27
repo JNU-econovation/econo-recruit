@@ -1,6 +1,3 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 
-export const KanbanSelectedButtonNumberState = atom({
-  key: 'KanbanSelectedButtonNumberState',
-  default: 0,
-})
+export const KanbanSelectedButtonNumberState = atom(0)

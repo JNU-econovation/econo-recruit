@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 type managerBoardState = {
   name: string;
@@ -6,12 +6,6 @@ type managerBoardState = {
   type: string;
 };
 
-export const managerListState = atom({
-  key: 'managerListState',
-  default: [] as managerBoardState[],
-});
+export const managerListState = atom([] as managerBoardState[]);
 
-export const managerPopupBooleanState = atom({
-  key: 'managerPopupBooleanState',
-  default: false,
-});
+export const managerPopupBooleanState = atom( false );

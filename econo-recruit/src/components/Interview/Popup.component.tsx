@@ -1,12 +1,12 @@
-import { useSetRecoilState } from 'recoil';
 // import InterviewApplicationComponent from '../InterviewDetail/Application.component';
 // import InterviewCommentComponent from '../InterviewDetail/Comment.component';
 // import InterviewLabelComponent from '../InterviewDetail/Label.component';
 // import InterviewUserComponent from '../InterviewDetail/User.component';
 import { interviewPopupBooleanState } from '@/storage/Interview/Interview.atom';
+import { useSetAtom } from 'jotai';
 
 const InterviewPopupComponent = () => {
-  const setIsPopuped = useSetRecoilState(interviewPopupBooleanState);
+  const setIsPopuped = useSetAtom(interviewPopupBooleanState);
   return (
     <div className="flex justify-center absolute top-0 left-0 z-20 bg-white w-screen h-screen overflow-hidden">
       <div className="w-[90rem] p-20 drop-shadow-[0_8px_8px_rgba(0,0,0,0.25)]">

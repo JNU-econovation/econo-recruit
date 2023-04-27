@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 type interviewBoardState = {
   title: string;
@@ -7,12 +7,6 @@ type interviewBoardState = {
   registerDate: string;
 };
 
-export const interviewListState = atom({
-  key: 'interviewListState',
-  default: [] as interviewBoardState[],
-});
+export const interviewListState = atom( [] as interviewBoardState[]);
 
-export const interviewPopupBooleanState = atom({
-  key: 'interviewPopupBooleanState',
-  default: false,
-});
+export const interviewPopupBooleanState = atom(false);

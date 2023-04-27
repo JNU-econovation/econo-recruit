@@ -1,12 +1,12 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import {
   applicantListState,
   applicantPopupBooleanState,
 } from '../../storage/Applicant/Applicant.atom'
 
 const ApplicantListComponent = () => {
-  const boardData = useRecoilValue(applicantListState)
-  const setIsPopuped = useSetRecoilState(applicantPopupBooleanState)
+  const boardData = useAtomValue(applicantListState)
+  const setIsPopuped = useSetAtom(applicantPopupBooleanState)
   const onBoardClick = () => {
     setIsPopuped(true)
   }

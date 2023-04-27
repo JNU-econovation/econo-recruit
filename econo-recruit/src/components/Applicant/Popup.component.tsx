@@ -1,12 +1,12 @@
-import { useSetRecoilState } from 'recoil';
 import ApplicantApplicationComponent from '../ApplicantDetail/Application.component';
 import ApplicantCommentComponent from '../ApplicantDetail/Comment.component';
 import ApplicantLabelComponent from '../ApplicantDetail/Label.component';
 import ApplicantUserComponent from '../ApplicantDetail/User.component';
 import { applicantPopupBooleanState } from '../../storage/Applicant/Applicant.atom';
+import { useSetAtom } from 'jotai';
 
 const ApplicantPopupComponent = () => {
-  const setIsPopuped = useSetRecoilState(applicantPopupBooleanState);
+  const setIsPopuped = useSetAtom(applicantPopupBooleanState);
   return (
     <div className="flex justify-center absolute top-0 left-0 z-20 bg-white w-screen h-screen overflow-hidden">
       <div className="w-[90rem] p-20 drop-shadow-[0_8px_8px_rgba(0,0,0,0.25)]">

@@ -3,16 +3,16 @@ import KanbanNavbarComponent from '../../components/KanbanBoard/Navbar.component
 import KanbanRowComponent from '../../components/KanbanBoard/Row.components';
 import KanbanAddRowComponent from '../../components/KanbanBoard/AddRow.component';
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd';
-import { useRecoilState } from 'recoil';
 import {
   KanbanDataArrayState,
   KanbanRowData,
 } from '../../storage/KanbanBoard/Kanban.atoms';
 import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import { useAtom } from 'jotai';
 
 const KanbanBoardPage = () => {
   const { period } = useParams();
-  const [kanbanData, setKanbanData] = useRecoilState(KanbanDataArrayState);
+  const [kanbanData, setKanbanData] = useAtom(KanbanDataArrayState);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;

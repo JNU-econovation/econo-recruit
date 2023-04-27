@@ -1,15 +1,15 @@
 import { useParams } from 'react-router';
 import { MainNavbar } from '../../data/25/MainNavbar';
-import { useRecoilValue } from 'recoil';
 import { userInformationState } from '../../storage/Common/user.atom';
 import CommonNavbarCellComponent from './NavbarCell.component';
+import { useAtomValue } from 'jotai';
 
 type CommonNavbarComponent = {
   isShort?: boolean;
 };
 
 const CommonNavbarComponent = ({ isShort = false }: CommonNavbarComponent) => {
-  const userData = useRecoilValue(userInformationState);
+  const userData = useAtomValue(userInformationState);
   const currentUrl = document.location.pathname;
   const currentPath = currentUrl.split('/')[1];
 

@@ -1,12 +1,12 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   interviewListState,
   interviewPopupBooleanState,
 } from '../../storage/Interview/Interview.atom';
 
 const InterviewListComponent = () => {
-  const boardData = useRecoilValue(interviewListState);
-  const setIsPopuped = useSetRecoilState(interviewPopupBooleanState);
+  const boardData = useAtomValue(interviewListState);
+  const setIsPopuped = useSetAtom(interviewPopupBooleanState);
   const onBoardClick = () => {
     setIsPopuped(true);
   };

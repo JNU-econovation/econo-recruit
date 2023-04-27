@@ -1,13 +1,13 @@
-import { useRecoilState } from 'recoil';
 import { KanbanSelectedButtonNumberState } from '../../storage/KanbanBoard/Navbar.atoms';
 import { KANBAN_MANUES } from '../../data/25/KanbanMenus';
+import { useAtom } from 'jotai';
 
 type NavbarButtonComponent = { value: string };
 
 const NavbarButtonComponent = ({ value }: NavbarButtonComponent) => {
   const findManueIndex = KANBAN_MANUES.findIndex((manue) => manue === value);
 
-  const [selected, setSelected] = useRecoilState(
+  const [selected, setSelected] = useAtom(
     KanbanSelectedButtonNumberState
   );
   const buttonClassName = ' py-2 px-6 rounded-lg min-w-fit ';

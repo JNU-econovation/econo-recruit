@@ -1,4 +1,3 @@
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import { APPLICATION_QUESTION } from '../../../data/25/Application'
 import {
   ApplicationNavbarIndexState,
@@ -6,10 +5,11 @@ import {
 } from '../../../storage/Application/Application.atom'
 import { useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
+import { useAtom, useSetAtom } from 'jotai'
 
 const ApplicationQuestion0Component = () => {
-  const [appData, setAppData] = useRecoilState(ApplicationResultDataState)
-  const setPage = useSetRecoilState(ApplicationNavbarIndexState)
+  const [appData, setAppData] = useAtom(ApplicationResultDataState)
+  const setPage = useSetAtom(ApplicationNavbarIndexState)
   const data = APPLICATION_QUESTION[0]
   const nextButtonClassName = 'flex-1 rounded-md flex justify-center items-center p-4'
   const [canNext, setCanNext] = useState(false)

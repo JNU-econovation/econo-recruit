@@ -2,7 +2,6 @@ import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { InterviewListMock } from '../../mock/MockData';
 import InterviewListComponent from '../../components/Interview/List.component';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   interviewListState,
   interviewPopupBooleanState,
@@ -12,6 +11,7 @@ import InterviewPopupComponent from '../../components/Interview/Popup.component'
 import InterviewSortListComponent from '../../components/Interview/SortList.component';
 import InterviewSearchComponent from '../../components/Interview/Search.component';
 import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 const InterviewPage = () => {
   const { period } = useParams();
@@ -20,8 +20,8 @@ const InterviewPage = () => {
   const order = searchParmas.get('order') ?? 'newset';
   const page = searchParmas.get('page') ?? '1';
 
-  const setInterviewList = useSetRecoilState(interviewListState);
-  const isPopuped = useRecoilValue(interviewPopupBooleanState);
+  const setInterviewList = useSetAtom(interviewListState);
+  const isPopuped = useAtomValue(interviewPopupBooleanState);
   const orderMenu = [
     { type: 'newset', string: '최신순' },
     { type: 'name', string: '이름순' },

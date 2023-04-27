@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 import { APPLICATION_QUESTION } from '../../data/25/Application'
 
 export const ApplicationNavbarIndexState = atom({
@@ -24,7 +24,4 @@ type ApplicationResult = {
   question: string[]
 }
 
-export const ApplicationResultDataState = atom({
-  key: 'ApplicationResultDataState',
-  default: { supportPath: '[]' } as ApplicationResult,
-})
+export const ApplicationResultDataState = atom({ supportPath: '[]' } as ApplicationResult)

@@ -2,7 +2,6 @@ import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { ApplicationListMock } from '../../mock/MockData';
 import ApplicantListComponent from '../../components/Applicant/List.component';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   applicantListState,
   applicantPopupBooleanState,
@@ -12,6 +11,7 @@ import ApplicantPopupComponent from '../../components/Applicant/Popup.component'
 import ApplicantSortListComponent from '../../components/Applicant/SortList.component';
 import ApplicantSearchComponent from '../../components/Applicant/Search.component';
 import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 type OrderType = 'resent' | 'name' | 'area';
 
@@ -22,8 +22,8 @@ const ApplicantBoardPage = () => {
   const order = searchParmas.get('order') ?? 'newset';
   const page = searchParmas.get('page') ?? '1';
 
-  const setApplicantBoardList = useSetRecoilState(applicantListState);
-  const isPopuped = useRecoilValue(applicantPopupBooleanState);
+  const setApplicantBoardList = useSetAtom(applicantListState);
+  const isPopuped = useAtomValue(applicantPopupBooleanState);
   const orderMenu = [
     { type: 'newset', string: '최신순' },
     { type: 'name', string: '이름순' },

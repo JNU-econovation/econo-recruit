@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 import { KanbanMock } from '../../mock/MockData'
 
 export type KanbanRowData = {
@@ -17,7 +17,4 @@ export type KanbanColumnData = {
   isHearted: boolean
 }
 
-export const KanbanDataArrayState = atom({
-  key: 'KanbanDataArrayState',
-  default: KanbanMock as KanbanRowData[],
-})
+export const KanbanDataArrayState = atom(KanbanMock as KanbanRowData[])

@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react';
 import ApplicationNavbarComponent from '../../components/Application/Navbar.component';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom';
+import { useAtom } from 'jotai';
 
 const ApplicationQuestionReport0Component = lazy(
   () => import('../../components/Application/Question/Repost0.component')
@@ -26,7 +26,7 @@ const ApplicationQuestion0Component = lazy(
 
 const ApplicationPage = () => {
   const { period } = useParams();
-  const [pageIndex, setPageIndex] = useRecoilState(ApplicationNavbarIndexState);
+  const [pageIndex, setPageIndex] = useAtom(ApplicationNavbarIndexState);
   const page = [
     <ApplicationQuestionReport0Component />,
     <ApplicationQuestionReport1Component />,

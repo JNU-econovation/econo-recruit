@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import {
   APPLICATION_QUESTION,
   APPLICATION_REPORT,
@@ -6,7 +6,7 @@ import {
 import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom';
 
 const ApplicationNavbarComponent = () => {
-  const [index, setIndex] = useRecoilState(ApplicationNavbarIndexState);
+  const [index, setIndex] = useAtom(ApplicationNavbarIndexState);
 
   const circleClassName =
     'h-2 w-2 rounded-full absolute -translate-x-[2.3rem] translate-y-2';

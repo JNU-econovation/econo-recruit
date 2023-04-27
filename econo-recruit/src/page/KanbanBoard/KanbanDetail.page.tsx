@@ -1,5 +1,4 @@
 import { useParams } from 'react-router';
-import { useRecoilValue } from 'recoil';
 import { KanbanDataArrayState } from '../../storage/KanbanBoard/Kanban.atoms';
 import { useSearchParams } from 'react-router-dom';
 import KanbanColumnComponent from '../../components/KanbanBoard/Column.components';
@@ -7,6 +6,7 @@ import ApplicantApplicationComponent from '../../components/ApplicantDetail/Appl
 import ApplicantUserComponent from '../../components/ApplicantDetail/User.component';
 import ApplicantLabelComponent from '../../components/ApplicantDetail/Label.component';
 import ApplicantCommentComponent from '../../components/ApplicantDetail/Comment.component';
+import { useAtomValue } from 'jotai';
 
 const KanbanDetailPage = () => {
   const { period } = useParams();
@@ -14,7 +14,7 @@ const KanbanDetailPage = () => {
   const detailId = searchParams.get('id') ?? '0';
   const detailRow = searchParams.get('row') ?? '0';
 
-  const kanbanDataArray = useRecoilValue(KanbanDataArrayState);
+  const kanbanDataArray = useAtomValue(KanbanDataArrayState);
   const rowTitle = kanbanDataArray[+detailRow].title;
   const columnCount = kanbanDataArray[+detailRow].column.length;
   const detailData = kanbanDataArray[+detailRow].column.filter(

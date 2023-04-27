@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 export const USER_AUTHORITY = ['chairman', 'manager', 'TF'] as const;
 export type user_authority = (typeof USER_AUTHORITY)[number];
@@ -9,11 +9,8 @@ type userInformation = {
   authority: user_authority;
 };
 
-export const userInformationState = atom({
-  key: 'userInformationState',
-  default: {
+export const userInformationState = atom( {
     name: '임채승',
     period: 22,
     authority: 'chairman',
-  } as userInformation,
-});
+  } as userInformation,);

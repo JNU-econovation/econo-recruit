@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { APPLICATION_REPORT } from '../../../data/25/Application'
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
 } from '../../../storage/Application/Application.atom'
 import { cloneDeep } from 'lodash'
+import { useAtom, useSetAtom } from 'jotai'
 
 const ApplicationQuestionReport2Component = () => {
-  const [appData, setAppData] = useRecoilState(ApplicationResultDataState)
-  const setPage = useSetRecoilState(ApplicationNavbarIndexState)
+  const [appData, setAppData] = useAtom(ApplicationResultDataState)
+  const setPage = useSetAtom(ApplicationNavbarIndexState)
   const data = APPLICATION_REPORT[2]
   const [onError, setOnError] = useState(false)
   const [canNext, setCanNext] = useState(false)

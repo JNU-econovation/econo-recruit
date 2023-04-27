@@ -5,9 +5,9 @@ import ManagerSearchComponent from '../../components/Manager/Search.component';
 import ManagerSortListComponent from '../../components/Manager/SortList.component';
 import { useEffect } from 'react';
 import { ManagerListMock } from '../../mock/MockData';
-import { useSetRecoilState } from 'recoil';
 import { managerListState } from '../../storage/Manager/Manager.atom';
 import ManagerListComponent from '../../components/Manager/List.component';
+import { useSetAtom } from 'jotai';
 
 const ManagerPage = () => {
   const { period } = useParams();
@@ -15,7 +15,7 @@ const ManagerPage = () => {
   const type = searchParmas.get('type') ?? 'list';
   const order = searchParmas.get('order') ?? 'newset';
   const page = searchParmas.get('page') ?? '1';
-  const setManagerList = useSetRecoilState(managerListState);
+  const setManagerList = useSetAtom(managerListState);
 
   const orderMenu = [
     { type: 'newset', string: '최신순' },

@@ -1,17 +1,16 @@
 import { APPLICATION_REPORT, APPLICATION_REPORT_FIELD } from '../../../data/25/Application'
-import { useRecoilState, useSetRecoilState } from 'recoil'
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
 } from '../../../storage/Application/Application.atom'
-import { cloneDeep } from 'lodash'
 import { useLocalStorage } from '../../../hooks/localstorage.hook'
+import { useSetAtom } from 'jotai'
 
 const ApplicationQuestionReport0Component = () => {
   const [type, setType] = useLocalStorage('type', '')
   const [field1, setField1] = useLocalStorage('field1', '')
   const [field2, setField2] = useLocalStorage('field2', '')
-  const setPage = useSetRecoilState(ApplicationNavbarIndexState)
+  const setPage = useSetAtom(ApplicationNavbarIndexState)
 
   const data = APPLICATION_REPORT[0]
   return (
