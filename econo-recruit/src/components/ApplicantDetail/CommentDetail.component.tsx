@@ -1,16 +1,16 @@
 type CommentDetailType = {
   comment: {
-    id: number
-    author: string
-    date: string
-    content: string
-    like: number
-    checked: boolean
-  }
-}
+    id: number;
+    author: string;
+    date: string;
+    content: string;
+    like: number;
+    checked: boolean;
+  };
+};
 
-const CommentDetailElement = ({ comment }: CommentDetailType) => {
-  const { id, author, date, content, like, checked } = comment
+const CommentDetailComponent = ({ comment }: CommentDetailType) => {
+  const { id, author, date, content, like, checked } = comment;
   return (
     <div className="border-l-4 border-[#717171] pl-3">
       <div className="flex justify-between mb-4">
@@ -19,7 +19,10 @@ const CommentDetailElement = ({ comment }: CommentDetailType) => {
           <div className="text-xs">{date}</div>
         </div>
         <div className="flex gap-2 items-end">
-          <img src={checked ? '/face.smiling.fill.svg' : '/face.smiling.svg'} alt="" />
+          <img
+            src={checked ? '/face.smiling.fill.svg' : '/face.smiling.svg'}
+            alt=""
+          />
           <span className="text-xs text-[#808080]">{like}</span>
         </div>
       </div>
@@ -34,7 +37,7 @@ const CommentDetailElement = ({ comment }: CommentDetailType) => {
         ''
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CommentDetailElement
+export default CommentDetailComponent;

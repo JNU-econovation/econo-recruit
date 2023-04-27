@@ -1,21 +1,21 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  applicantListState,
-  applicantPopupBooleanState,
-} from '../../storage/Applicant/Applicant.atom'
+  interviewListState,
+  interviewPopupBooleanState,
+} from '../../storage/Interview/Interview.atom';
 
-const ApplicantListElement = () => {
-  const boardData = useRecoilValue(applicantListState)
-  const setIsPopuped = useSetRecoilState(applicantPopupBooleanState)
+const InterviewListComponent = () => {
+  const boardData = useRecoilValue(interviewListState);
+  const setIsPopuped = useSetRecoilState(interviewPopupBooleanState);
   const onBoardClick = () => {
-    setIsPopuped(true)
-  }
+    setIsPopuped(true);
+  };
 
   return (
     <div className="flex flex-col text-lg">
       {boardData.map((board, index) => (
         <button
-          className="flex h-[calc(14vh-3rem)] border-t-[1px] border-[#B9B9B9]"
+          className="flex h-[calc(14vh-3rem)] min-h-[2rem] border-t-[1px] border-[#B9B9B9]"
           onClick={onBoardClick}
           key={index}
         >
@@ -28,7 +28,7 @@ const ApplicantListElement = () => {
                 ))}
               </div>
               <div className="flex gap-16">
-                <div>{board.semester}</div>
+                <div>{board.score}</div>
                 <div>{board.registerDate}</div>
               </div>
             </div>
@@ -36,7 +36,7 @@ const ApplicantListElement = () => {
         </button>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ApplicantListElement
+export default InterviewListComponent;

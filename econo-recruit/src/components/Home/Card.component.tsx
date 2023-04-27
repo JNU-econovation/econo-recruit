@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-type HomeCardElementType = {
-  title: string
-  subtitle: string
-  href: string
-}
+type HomeCardComponentType = {
+  title: string;
+  subtitle: string;
+  href: string;
+};
 
-const HomeCardElement = ({ title, subtitle, href }: HomeCardElementType) => {
-  const [isHover, setIsHover] = useState(false)
+const HomeCardComponent = ({
+  title,
+  subtitle,
+  href,
+}: HomeCardComponentType) => {
+  const [isHover, setIsHover] = useState(false);
   return (
     <a
       href={href}
@@ -27,7 +31,7 @@ const HomeCardElement = ({ title, subtitle, href }: HomeCardElementType) => {
         />
       </div>
     </a>
-  )
-}
+  );
+};
 
-export default HomeCardElement
+export default HomeCardComponent;

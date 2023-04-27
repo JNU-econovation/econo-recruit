@@ -1,14 +1,14 @@
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { InterviewListMock } from '../../mock/MockData';
-import InterviewListElement from '../../components/Interview/List.element';
+import InterviewListComponent from '../../components/Interview/List.component';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   interviewListState,
   interviewPopupBooleanState,
 } from '../../storage/Interview/Interview.atom';
 import { useEffect } from 'react';
-import InterviewPopupElement from '../../components/Interview/Popup.element';
+import InterviewPopupComponent from '../../components/Interview/Popup.component';
 import InterviewSortListComponent from '../../components/Interview/SortList.component';
 import InterviewSearchComponent from '../../components/Interview/Search.component';
 import CommonNavbarComponent from '../../components/Common/Navbar.component';
@@ -35,7 +35,7 @@ const InterviewPage = () => {
 
   return (
     <>
-      {isPopuped ? <InterviewPopupElement /> : ''}
+      {isPopuped ? <InterviewPopupComponent /> : ''}
       <div className="px-24 w-screen h-screen flex p-12">
         <CommonNavbarComponent />
         <div className="flex-1 ml-32 min-w-[46rem] mb-48">
@@ -43,7 +43,7 @@ const InterviewPage = () => {
             <InterviewSearchComponent />
             <InterviewSortListComponent sortList={orderMenu} />
           </div>
-          <InterviewListElement />
+          <InterviewListComponent />
           <div className="flex w-full justify-end gap-2 absolute bottom-12 right-24">
             {Array.from({ length: 4 }).map((_, i) => (
               <a

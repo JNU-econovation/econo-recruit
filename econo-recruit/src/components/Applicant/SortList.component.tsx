@@ -9,17 +9,6 @@ const ApplicantSortListComponent = ({
 }: ApplicantSortListComponent) => {
   const [order, setOrder] = useState(sortList[0].type);
   const [isOpen, setIsOpen] = useState(false);
-  // const modelRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const clickModalOutside = (event: MouseEvent) => {
-  //     if (modelRef.current && !modelRef.current.contains(event.target as any)) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener('click', clickModalOutside);
-  //   return document.removeEventListener('click', clickModalOutside);
-  // });
 
   return (
     <div className="relative z-10">

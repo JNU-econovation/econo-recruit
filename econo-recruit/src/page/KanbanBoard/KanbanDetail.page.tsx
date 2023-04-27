@@ -1,27 +1,29 @@
-import { useParams } from 'react-router'
-import { useRecoilValue } from 'recoil'
-import { KanbanDataArrayState } from '../../storage/KanbanBoard/Kanban.atoms'
-import { useSearchParams } from 'react-router-dom'
-import KanbanColumnComponent from '../../components/KanbanBoard/Column.components'
-import ApplicantApplicationComponent from '../../components/ApplicantDetail/Application.element'
-import ApplicantUserElement from '../../components/ApplicantDetail/User.element'
-import ApplicantLabelElement from '../../components/ApplicantDetail/Label.element'
-import ApplicantCommentElement from '../../components/ApplicantDetail/Comment.element'
+import { useParams } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import { KanbanDataArrayState } from '../../storage/KanbanBoard/Kanban.atoms';
+import { useSearchParams } from 'react-router-dom';
+import KanbanColumnComponent from '../../components/KanbanBoard/Column.components';
+import ApplicantApplicationComponent from '../../components/ApplicantDetail/Application.component';
+import ApplicantUserComponent from '../../components/ApplicantDetail/User.component';
+import ApplicantLabelComponent from '../../components/ApplicantDetail/Label.component';
+import ApplicantCommentComponent from '../../components/ApplicantDetail/Comment.component';
 
 const KanbanDetailPage = () => {
-  const { period } = useParams()
-  const [searchParams] = useSearchParams()
-  const detailId = searchParams.get('id') ?? '0'
-  const detailRow = searchParams.get('row') ?? '0'
+  const { period } = useParams();
+  const [searchParams] = useSearchParams();
+  const detailId = searchParams.get('id') ?? '0';
+  const detailRow = searchParams.get('row') ?? '0';
 
-  const kanbanDataArray = useRecoilValue(KanbanDataArrayState)
-  const rowTitle = kanbanDataArray[+detailRow].title
-  const columnCount = kanbanDataArray[+detailRow].column.length
-  const detailData = kanbanDataArray[+detailRow].column.filter((col) => col.id === +detailId)[0]
+  const kanbanDataArray = useRecoilValue(KanbanDataArrayState);
+  const rowTitle = kanbanDataArray[+detailRow].title;
+  const columnCount = kanbanDataArray[+detailRow].column.length;
+  const detailData = kanbanDataArray[+detailRow].column.filter(
+    (col) => col.id === +detailId
+  )[0];
 
   const onBackClick = () => {
-    location.href = `/kanban/${period}`
-  }
+    location.href = `/kanban/${period}`;
+  };
 
   return (
     <div className="pl-24 w-screen h-screen">
@@ -58,9 +60,9 @@ const KanbanDetailPage = () => {
         </div>
         <div className="flex flex-1 pl-12">
           <div className="w-[30rem] mr-12 pb-8 h-[calc(100vh-12rem)] overflow-auto">
-            <ApplicantUserElement />
-            <ApplicantLabelElement />
-            <ApplicantCommentElement />
+            <ApplicantUserComponent />
+            <ApplicantLabelComponent />
+            <ApplicantCommentComponent />
           </div>
           <div className="flex-1 pr-24 min-w-[40rem]">
             <div className="p-2 overflow-auto max-h-[calc(100vh-12rem)] h-fit">
@@ -70,7 +72,7 @@ const KanbanDetailPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default KanbanDetailPage
+export default KanbanDetailPage;

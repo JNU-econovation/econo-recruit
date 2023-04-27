@@ -1,11 +1,11 @@
 import { useSetRecoilState } from 'recoil';
-// import InterviewApplicationComponent from '../InterviewDetail/Application.element';
-// import InterviewCommentElement from '../InterviewDetail/Comment.element';
-// import InterviewLabelElement from '../InterviewDetail/Label.element';
-// import InterviewUserElement from '../InterviewDetail/User.element';
-import { interviewPopupBooleanState } from '../../storage/Interview/Interview.atom';
+// import InterviewApplicationComponent from '../InterviewDetail/Application.component';
+// import InterviewCommentComponent from '../InterviewDetail/Comment.component';
+// import InterviewLabelComponent from '../InterviewDetail/Label.component';
+// import InterviewUserComponent from '../InterviewDetail/User.component';
+import { interviewPopupBooleanState } from '@/storage/Interview/Interview.atom';
 
-const InterviewPopupElement = () => {
+const InterviewPopupComponent = () => {
   const setIsPopuped = useSetRecoilState(interviewPopupBooleanState);
   return (
     <div className="flex justify-center absolute top-0 left-0 z-20 bg-white w-screen h-screen overflow-hidden">
@@ -20,9 +20,9 @@ const InterviewPopupElement = () => {
           </button>
           <div className="flex flex-1">
             <div className="w-[40rem] pt-14 h-[calc(100vh-14rem)] overflow-auto">
-              {/* <InterviewUserElement />
-              <InterviewLabelElement />
-              <InterviewCommentElement /> */}
+              {/* <InterviewUserComponent />
+              <InterviewLabelComponent />
+              <InterviewCommentComponent /> */}
             </div>
             <div className="flex-1 min-w-[40rem]">
               <div className="p-2 overflow-auto max-h-[calc(100vh-14rem)] h-fit">
@@ -36,4 +36,4 @@ const InterviewPopupElement = () => {
   );
 };
 
-export default InterviewPopupElement;
+export default InterviewPopupComponent;

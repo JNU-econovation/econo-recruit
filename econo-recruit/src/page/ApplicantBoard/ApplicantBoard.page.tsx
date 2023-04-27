@@ -1,14 +1,14 @@
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { ApplicationListMock } from '../../mock/MockData';
-import ApplicantListElement from '../../components/Applicant/List.element';
+import ApplicantListComponent from '../../components/Applicant/List.component';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   applicantListState,
   applicantPopupBooleanState,
 } from '../../storage/Applicant/Applicant.atom';
 import { useEffect } from 'react';
-import ApplicantPopupElement from '../../components/Applicant/Popup.element';
+import ApplicantPopupComponent from '../../components/Applicant/Popup.component';
 import ApplicantSortListComponent from '../../components/Applicant/SortList.component';
 import ApplicantSearchComponent from '../../components/Applicant/Search.component';
 import CommonNavbarComponent from '../../components/Common/Navbar.component';
@@ -36,7 +36,7 @@ const ApplicantBoardPage = () => {
 
   return (
     <>
-      {isPopuped ? <ApplicantPopupElement /> : ''}
+      {isPopuped ? <ApplicantPopupComponent /> : ''}
       <div className="px-24 w-screen h-screen flex p-12">
         <CommonNavbarComponent />
         <div className="flex-1 ml-32 min-w-[46rem]">
@@ -44,7 +44,7 @@ const ApplicantBoardPage = () => {
             <ApplicantSearchComponent />
             <ApplicantSortListComponent sortList={orderMenu} />
           </div>
-          <ApplicantListElement />
+          <ApplicantListComponent />
           <div className="flex w-full justify-end gap-2">
             {Array.from({ length: 4 }).map((_, i) => (
               <a

@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { ApplicantCommentMock } from '../../mock/MockData'
-import CommentDetailElement from './CommentDetail.element'
+import { useState } from 'react';
+import { ApplicantCommentMock } from '../../mock/MockData';
+import CommentDetailComponent from './CommentDetail.component';
 
-const ApplicantCommentElement = () => {
-  const [isNocomment, setIsNocomment] = useState(false)
-  const [comment, setComment] = useState('')
-  const commentData = ApplicantCommentMock
+const ApplicantCommentComponent = () => {
+  const [isNocomment, setIsNocomment] = useState(false);
+  const [comment, setComment] = useState('');
+  const commentData = ApplicantCommentMock;
 
   return (
     <div className="w-[28rem]">
@@ -27,7 +27,12 @@ const ApplicantCommentElement = () => {
         ></textarea>
         <div className="font-normal">
           <div className="flex items-center gap-2 text-sm font-normal my-2">
-            <input className="accent-black" type="checkbox" name="question" id="question" />
+            <input
+              className="accent-black"
+              type="checkbox"
+              name="question"
+              id="question"
+            />
             <label htmlFor="question">질문드립니다.</label>
           </div>
           <div className="flex items-center gap-2 text-sm font-normal my-2">
@@ -38,8 +43,8 @@ const ApplicantCommentElement = () => {
               id="nocomment"
               checked={isNocomment}
               onChange={() => {
-                setIsNocomment(!isNocomment)
-                setComment('지인이므로 코멘트 삼가겠습니다.')
+                setIsNocomment(!isNocomment);
+                setComment('지인이므로 코멘트 삼가겠습니다.');
               }}
             />
             <label htmlFor="nocomment">지인이므로 코멘트 삼가겠습니다.</label>
@@ -48,11 +53,11 @@ const ApplicantCommentElement = () => {
       </div>
       <div className="flex flex-col gap-8 pt-8">
         {commentData.map((comment) => (
-          <CommentDetailElement comment={comment} key={comment.id} />
+          <CommentDetailComponent comment={comment} key={comment.id} />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicantCommentElement
+export default ApplicantCommentComponent;
