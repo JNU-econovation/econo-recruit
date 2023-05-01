@@ -1,5 +1,5 @@
-import HomeCardComponent from '../../components/Home/Card.component';
-import { MAIN_MENU } from '../../data/25/MainMenus';
+import HomeCardComponent from '@/components/Home/Card.component';
+import { MAIN_MENU } from '@/data/25/MainMenus';
 
 const HomePage = () => {
   const currentRecruit = 25;

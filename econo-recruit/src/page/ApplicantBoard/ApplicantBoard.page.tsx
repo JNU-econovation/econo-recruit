@@ -1,16 +1,16 @@
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { ApplicationListMock } from '../../mock/MockData';
-import ApplicantListComponent from '../../components/Applicant/List.component';
+import { ApplicationListMock } from '@/mock/MockData';
+import ApplicantListComponent from '@/components/Applicant/List.component';
 import {
   applicantListState,
   applicantPopupBooleanState,
-} from '../../storage/Applicant/Applicant.atom';
+} from '@/storage/Applicant/Applicant.atom';
 import { useEffect } from 'react';
-import ApplicantPopupComponent from '../../components/Applicant/Popup.component';
-import ApplicantSortListComponent from '../../components/Applicant/SortList.component';
-import ApplicantSearchComponent from '../../components/Applicant/Search.component';
-import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import ApplicantPopupComponent from '@/components/Applicant/Popup.component';
+import ApplicantSortListComponent from '@/components/Applicant/SortList.component';
+import ApplicantSearchComponent from '@/components/Applicant/Search.component';
+import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 type OrderType = 'resent' | 'name' | 'area';

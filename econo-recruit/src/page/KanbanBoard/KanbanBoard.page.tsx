@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
-import KanbanNavbarComponent from '../../components/KanbanBoard/Navbar.components';
-import KanbanRowComponent from '../../components/KanbanBoard/Row.components';
-import KanbanAddRowComponent from '../../components/KanbanBoard/AddRow.component';
+import KanbanNavbarComponent from '@/components/KanbanBoard/Navbar.components';
+import KanbanRowComponent from '@/components/KanbanBoard/Row.components';
+import KanbanAddRowComponent from '@/components/KanbanBoard/AddRow.component';
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd';
 import {
   KanbanDataArrayState,
   KanbanRowData,
-} from '../../storage/KanbanBoard/Kanban.atoms';
-import CommonNavbarComponent from '../../components/Common/Navbar.component';
+} from '@/storage/KanbanBoard/Kanban.atoms';
+import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useAtom } from 'jotai';
 
 const KanbanBoardPage = () => {

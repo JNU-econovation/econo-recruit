@@ -1,4 +1,4 @@
-import { KANBAN_MANUES } from '../../data/25/KanbanMenus';
+import { KANBAN_MANUES } from '@/data/25/KanbanMenus';
 import NavbarButtonComponent from '../Button/NavbarButton.components';
 
 const KanbanNavbarComponent = () => {

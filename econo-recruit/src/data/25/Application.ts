@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils/objectController'
+import { deepFreeze } from "@/utils/objectController"
 
 export const APPLICATION_REPORT_FIELD = ['APP', 'WEB', 'GAME', 'AI', 'IoT', 'AR/VR'] as const
 

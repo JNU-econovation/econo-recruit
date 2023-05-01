@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import {
   interviewListState,
   interviewPopupBooleanState,
-} from '../../storage/Interview/Interview.atom';
+} from '@/storage/Interview/Interview.atom';
 
 const InterviewListComponent = () => {
   const boardData = useAtomValue(interviewListState);

@@ -1,10 +1,10 @@
 import { useAtom, useSetAtom } from 'jotai'
-import { APPLICATION_REPORT } from '../../../data/25/Application'
+import { APPLICATION_REPORT } from '@/data/25/Application'
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '../../../storage/Application/Application.atom'
-import { cloneDeep, find } from 'lodash'
+} from '@/storage/Application/Application.atom'
+import { cloneDeep, find } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
 const ApplicationQuestionReport3Component = () => {

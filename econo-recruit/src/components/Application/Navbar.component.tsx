@@ -2,8 +2,8 @@ import { useAtom } from 'jotai';
 import {
   APPLICATION_QUESTION,
   APPLICATION_REPORT,
-} from '../../data/25/Application';
-import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom';
+} from '@/data/25/Application';
+import { ApplicationNavbarIndexState } from '@/storage/Application/Application.atom';
 
 const ApplicationNavbarComponent = () => {
   const [index, setIndex] = useAtom(ApplicationNavbarIndexState);

@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils/objectController'
+import { deepFreeze } from '@/utils/objectController'
 
 export const KANBAN_MANUES = [
   '공통',

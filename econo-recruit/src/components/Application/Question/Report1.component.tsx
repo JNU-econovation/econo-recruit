@@ -1,11 +1,9 @@
-import { APPLICATION_REPORT } from '../../../data/25/Application'
-import {
-  ApplicationNavbarIndexState,
-} from '../../../storage/Application/Application.atom'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import { useEffect, useState } from 'react'
-import { useLocalStorage } from '../../../hooks/localstorage.hook'
 import { useSetAtom } from 'jotai'
+import { useLocalStorage } from '@/hooks/localstorage.hook'
+import { ApplicationNavbarIndexState } from '@/storage/Application/Application.atom'
+import { APPLICATION_REPORT } from '@/data/25/Application'
 
 const ApplicationQuestionReport1Component = () => {
   const [name, setName] = useLocalStorage('name', '')

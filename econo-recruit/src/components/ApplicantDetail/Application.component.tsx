@@ -2,7 +2,7 @@ import {
   APPLICATION_CAN_TIME,
   APPLICATION_QUESTION,
   APPLICATION_REPORT,
-} from '../../data/25/Application'
+} from '@/data/25/Application'
 
 const ApplicantApplicationComponent = ({ isShadow = true }) => {
   const questions = APPLICATION_QUESTION

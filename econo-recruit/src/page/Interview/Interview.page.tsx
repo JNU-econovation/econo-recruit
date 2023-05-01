@@ -1,16 +1,16 @@
 import { useParams } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
-import { InterviewListMock } from '../../mock/MockData';
-import InterviewListComponent from '../../components/Interview/List.component';
+import { InterviewListMock } from '@/mock/MockData';
+import InterviewListComponent from '@/components/Interview/List.component';
 import {
   interviewListState,
   interviewPopupBooleanState,
-} from '../../storage/Interview/Interview.atom';
+} from '@/storage/Interview/Interview.atom';
 import { useEffect } from 'react';
-import InterviewPopupComponent from '../../components/Interview/Popup.component';
-import InterviewSortListComponent from '../../components/Interview/SortList.component';
-import InterviewSearchComponent from '../../components/Interview/Search.component';
-import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import InterviewPopupComponent from '@/components/Interview/Popup.component';
+import InterviewSortListComponent from '@/components/Interview/SortList.component';
+import InterviewSearchComponent from '@/components/Interview/Search.component';
+import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 const InterviewPage = () => {

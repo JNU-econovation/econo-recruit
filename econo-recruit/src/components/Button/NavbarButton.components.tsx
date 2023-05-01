@@ -1,5 +1,5 @@
-import { KanbanSelectedButtonNumberState } from '../../storage/KanbanBoard/Navbar.atoms';
-import { KANBAN_MANUES } from '../../data/25/KanbanMenus';
+import { KanbanSelectedButtonNumberState } from '@/storage/KanbanBoard/Navbar.atoms';
+import { KANBAN_MANUES } from '@/data/25/KanbanMenus';
 import { useAtom } from 'jotai';
 
 type NavbarButtonComponent = { value: string };

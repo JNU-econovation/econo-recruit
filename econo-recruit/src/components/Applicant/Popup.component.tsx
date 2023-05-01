@@ -1,9 +1,9 @@
-import ApplicantApplicationComponent from '../ApplicantDetail/Application.component';
-import ApplicantCommentComponent from '../ApplicantDetail/Comment.component';
-import ApplicantLabelComponent from '../ApplicantDetail/Label.component';
-import ApplicantUserComponent from '../ApplicantDetail/User.component';
-import { applicantPopupBooleanState } from '../../storage/Applicant/Applicant.atom';
+import { applicantPopupBooleanState } from '@/storage/Applicant/Applicant.atom';
 import { useSetAtom } from 'jotai';
+import ApplicantUserComponent from '../ApplicantDetail/User.component';
+import ApplicantLabelComponent from '../ApplicantDetail/Label.component';
+import ApplicantCommentComponent from '../ApplicantDetail/Comment.component';
+import ApplicantApplicationComponent from '../ApplicantDetail/Application.component';
 
 const ApplicantPopupComponent = () => {
   const setIsPopuped = useSetAtom(applicantPopupBooleanState);

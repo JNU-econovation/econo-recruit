@@ -1,6 +1,4 @@
-import { MutableRefObject } from 'react'
-import { KanbanColumnData } from '../../storage/KanbanBoard/Kanban.atoms'
-import { gsap } from 'gsap'
+import { KanbanColumnData } from '@/storage/KanbanBoard/Kanban.atoms'
 import { useParams } from 'react-router'
 
 type KanbanColumnComponentType = {

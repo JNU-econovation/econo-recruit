@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { KanbanMock } from '../../mock/MockData'
+import { KanbanMock } from '@/mock/MockData'
 
 export type KanbanRowData = {
   id: number

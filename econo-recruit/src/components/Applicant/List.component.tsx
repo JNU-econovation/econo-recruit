@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import {
   applicantListState,
   applicantPopupBooleanState,
-} from '../../storage/Applicant/Applicant.atom'
+} from '@/storage/Applicant/Applicant.atom'
 
 const ApplicantListComponent = () => {
   const boardData = useAtomValue(applicantListState)

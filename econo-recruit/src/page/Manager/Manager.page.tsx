@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
-import CommonNavbarComponent from '../../components/Common/Navbar.component';
+import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useSearchParams } from 'react-router-dom';
-import ManagerSearchComponent from '../../components/Manager/Search.component';
-import ManagerSortListComponent from '../../components/Manager/SortList.component';
+import ManagerSearchComponent from '@/components/Manager/Search.component';
+import ManagerSortListComponent from '@/components/Manager/SortList.component';
 import { useEffect } from 'react';
-import { ManagerListMock } from '../../mock/MockData';
-import { managerListState } from '../../storage/Manager/Manager.atom';
-import ManagerListComponent from '../../components/Manager/List.component';
+import { ManagerListMock } from '@/mock/MockData';
+import { managerListState } from '@/storage/Manager/Manager.atom';
+import ManagerListComponent from '@/components/Manager/List.component';
 import { useSetAtom } from 'jotai';
 
 const ManagerPage = () => {

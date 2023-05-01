@@ -1,4 +1,4 @@
-import { deepFreeze } from '../../utils/objectController';
+import { deepFreeze } from '@/utils/objectController';
 
 export const MainNavbar = [
   {

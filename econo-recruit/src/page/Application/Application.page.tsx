@@ -1,27 +1,27 @@
 import { Suspense, lazy } from 'react';
-import ApplicationNavbarComponent from '../../components/Application/Navbar.component';
+import ApplicationNavbarComponent from '@/components/Application/Navbar.component';
 import { useParams } from 'react-router-dom';
-import { ApplicationNavbarIndexState } from '../../storage/Application/Application.atom';
+import { ApplicationNavbarIndexState } from '@/storage/Application/Application.atom';
 import { useAtom } from 'jotai';
 
 const ApplicationQuestionReport0Component = lazy(
-  () => import('../../components/Application/Question/Repost0.component')
+  () => import('@/components/Application/Question/Repost0.component')
 );
 
 const ApplicationQuestionReport1Component = lazy(
-  () => import('../../components/Application/Question/Report1.component')
+  () => import('@/components/Application/Question/Report1.component')
 );
 
 const ApplicationQuestionReport2Component = lazy(
-  () => import('../../components/Application/Question/Report2.component')
+  () => import('@/components/Application/Question/Report2.component')
 );
 
 const ApplicationQuestionReport3Component = lazy(
-  () => import('../../components/Application/Question/Report3.component')
+  () => import('@/components/Application/Question/Report3.component')
 );
 
 const ApplicationQuestion0Component = lazy(
-  () => import('../../components/Application/Question/Question0.component')
+  () => import('@/components/Application/Question/Question0.component')
 );
 
 const ApplicationPage = () => {

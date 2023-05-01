@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
-import { MainNavbar } from '../../data/25/MainNavbar';
-import { userInformationState } from '../../storage/Common/user.atom';
+import { MainNavbar } from '@/data/25/MainNavbar';
+import { userInformationState } from '@/storage/Common/user.atom';
 import CommonNavbarCellComponent from './NavbarCell.component';
 import { useAtomValue } from 'jotai';
 

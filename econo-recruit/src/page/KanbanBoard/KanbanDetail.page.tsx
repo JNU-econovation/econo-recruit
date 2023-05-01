@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
-import { KanbanDataArrayState } from '../../storage/KanbanBoard/Kanban.atoms';
+import { KanbanDataArrayState } from '@/storage/KanbanBoard/Kanban.atoms';
 import { useSearchParams } from 'react-router-dom';
-import KanbanColumnComponent from '../../components/KanbanBoard/Column.components';
-import ApplicantApplicationComponent from '../../components/ApplicantDetail/Application.component';
-import ApplicantUserComponent from '../../components/ApplicantDetail/User.component';
-import ApplicantLabelComponent from '../../components/ApplicantDetail/Label.component';
-import ApplicantCommentComponent from '../../components/ApplicantDetail/Comment.component';
+import KanbanColumnComponent from '@/components/KanbanBoard/Column.components';
+import ApplicantApplicationComponent from '@/components/ApplicantDetail/Application.component';
+import ApplicantUserComponent from '@/components/ApplicantDetail/User.component';
+import ApplicantLabelComponent from '@/components/ApplicantDetail/Label.component';
+import ApplicantCommentComponent from '@/components/ApplicantDetail/Comment.component';
 import { useAtomValue } from 'jotai';
 
 const KanbanDetailPage = () => {

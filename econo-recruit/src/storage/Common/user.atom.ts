@@ -10,7 +10,4 @@ type userInformation = {
 };
 
 export const userInformationState = atom( {
-    name: '임채승',
-    period: 22,
-    authority: 'chairman',
   } as userInformation,);

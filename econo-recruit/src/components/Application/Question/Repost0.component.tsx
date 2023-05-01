@@ -1,9 +1,8 @@
-import { APPLICATION_REPORT, APPLICATION_REPORT_FIELD } from '../../../data/25/Application'
+import { APPLICATION_REPORT, APPLICATION_REPORT_FIELD } from '@/data/25/Application'
 import {
   ApplicationNavbarIndexState,
-  ApplicationResultDataState,
-} from '../../../storage/Application/Application.atom'
-import { useLocalStorage } from '../../../hooks/localstorage.hook'
+} from '@/storage/Application/Application.atom'
+import { useLocalStorage } from '@/hooks/localstorage.hook'
 import { useSetAtom } from 'jotai'
 
 const ApplicationQuestionReport0Component = () => {

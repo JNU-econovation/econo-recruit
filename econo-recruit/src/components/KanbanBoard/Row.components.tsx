@@ -1,8 +1,7 @@
 import { Draggable, Droppable } from '@hello-pangea/dnd'
 import KanbanAddColumnComponent from './AddColumn.component'
 import KanbanColumnComponent from './Column.components'
-import { KanbanColumnData } from '../../storage/KanbanBoard/Kanban.atoms'
-import { MutableRefObject } from 'react'
+import { KanbanColumnData } from '@/storage/KanbanBoard/Kanban.atoms'
 
 type KanbanRowComponent = {
   index: number

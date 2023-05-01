@@ -1,30 +1,31 @@
-import { APPLICATION_QUESTION } from '../../../data/25/Application'
+import { APPLICATION_QUESTION } from '@/data/25/Application';
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '../../../storage/Application/Application.atom'
-import { useEffect, useState } from 'react'
-import { cloneDeep } from 'lodash'
-import { useAtom, useSetAtom } from 'jotai'
+} from '@/storage/Application/Application.atom';
+import { useEffect, useState } from 'react';
+import { useAtom, useSetAtom } from 'jotai';
+import { cloneDeep } from 'lodash-es';
 
 const ApplicationQuestion0Component = () => {
-  const [appData, setAppData] = useAtom(ApplicationResultDataState)
-  const setPage = useSetAtom(ApplicationNavbarIndexState)
-  const data = APPLICATION_QUESTION[0]
-  const nextButtonClassName = 'flex-1 rounded-md flex justify-center items-center p-4'
-  const [canNext, setCanNext] = useState(false)
+  const [appData, setAppData] = useAtom(ApplicationResultDataState);
+  const setPage = useSetAtom(ApplicationNavbarIndexState);
+  const data = APPLICATION_QUESTION[0];
+  const nextButtonClassName =
+    'flex-1 rounded-md flex justify-center items-center p-4';
+  const [canNext, setCanNext] = useState(false);
 
   useEffect(() => {
     if (appData.question[0]) {
-      setCanNext(false)
+      setCanNext(false);
     } else {
-      setCanNext(true)
+      setCanNext(true);
     }
-  }, [appData])
+  }, [appData]);
 
   const onNextPage = () => {
-    setPage(5)
-  }
+    setPage(5);
+  };
 
   return (
     <div className="flex">
@@ -39,10 +40,10 @@ const ApplicationQuestion0Component = () => {
           className="w-full h-[calc(100vh-25rem)] outline-none resize-none border-[#DBDBDB] border-[1px] p-4 rounded-md"
           onChange={(e) => {
             setAppData((v) => {
-              const cv = cloneDeep(v)
-              cv.question[0] = e.target.value
-              return cv
-            })
+              const cv = cloneDeep(v);
+              cv.question[0] = e.target.value;
+              return cv;
+            });
           }}
         />
         <div className="flex gap-2 mt-4">
@@ -65,7 +66,7 @@ const ApplicationQuestion0Component = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationQuestion0Component
+export default ApplicationQuestion0Component;

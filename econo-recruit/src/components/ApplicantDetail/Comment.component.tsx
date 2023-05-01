@@ -1,5 +1,5 @@
+import { ApplicantCommentMock } from '@/mock/MockData';
 import { useState } from 'react';
-import { ApplicantCommentMock } from '../../mock/MockData';
 import CommentDetailComponent from './CommentDetail.component';
 
 const ApplicantCommentComponent = () => {

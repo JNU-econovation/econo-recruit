@@ -2,7 +2,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import {
   managerListState,
   managerPopupBooleanState,
-} from '../../storage/Manager/Manager.atom';
+} from '@/storage/Manager/Manager.atom';
 
 const ManagerListComponent = () => {
   const boardData = useAtomValue(managerListState);
