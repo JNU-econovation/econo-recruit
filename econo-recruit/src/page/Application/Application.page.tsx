@@ -5,7 +5,7 @@ import { ApplicationNavbarIndexState } from '@/storage/Application/Application.a
 import { useAtom } from 'jotai';
 
 const ApplicationQuestionReport0Component = lazy(
-  () => import('@/components/Application/Question/Repost0.component')
+  () => import('@/components/Application/Question/Report0.component')
 );
 
 const ApplicationQuestionReport1Component = lazy(

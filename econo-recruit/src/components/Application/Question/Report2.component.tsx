@@ -3,7 +3,7 @@ import { APPLICATION_REPORT } from '@/data/25/Application'
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '@storage/Application/Application.atom'
+} from '@/storage/Application/Application.atom'
 import { cloneDeep } from 'lodash-es'
 import { useAtom, useSetAtom } from 'jotai'
 
