@@ -16,6 +16,7 @@
     "jotai": "^2.0.4",
     "lodash-es": "^4.17.21",
     "lottie-web": "^5.10.2",
+    "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
