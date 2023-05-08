@@ -15,6 +15,10 @@ const ApplicationQuestionReport0Component = () => {
   const setPage = useSetAtom(ApplicationNavbarIndexState);
 
   const data = APPLICATION_REPORT[0];
+  const checkValueAndSetPage = (v: number) => {
+    if (type === '' || field1 === '' || field2 === '') return;
+    setPage(v);
+  };
 
   return (
     <div className="flex">
@@ -52,23 +56,34 @@ const ApplicationQuestionReport0Component = () => {
             {field1 ? (
               <>
                 <div className="py-8">2 순위</div>
-                <div
-                  className="grid grid-cols-3 gap-2 w-[30rem] font-semibold"
-                  onClick={() => setPage(1)}
-                >
+                <div className="grid grid-cols-3 gap-2 w-[30rem] font-semibold">
                   <RadioButtonsComponent
                     groupName="field2"
                     disabledValue={field1}
+                    onClick={() => {
+                      checkValueAndSetPage(1);
+                    }}
                     radioButtons={APPLICATION_REPORT_FIELD.map((field) => {
                       return { title: field, value: field };
                     })}
-                    radioSelectedStore={[field2, (v) => setField2(v)]}
+                    radioSelectedStore={[
+                      field2,
+                      (v) => {
+                        setField2(v);
+                        checkValueAndSetPage(1);
+                      },
+                    ]}
                   />
                   <div className="col-span-3">
                     <RadioButtonComponent
                       checked={false}
                       name="field2"
-                      onChange={() => setField2('none')}
+                      onChange={() => {
+                        setField2('none');
+                      }}
+                      onClick={() => {
+                        checkValueAndSetPage(1);
+                      }}
                       title="선택없음"
                       value="none"
                     />

@@ -5,6 +5,7 @@ type RadioButtonsComponent = {
   radioSelectedStore: [string, (value: string) => void];
   groupName: string;
   disabledValue?: string;
+  onClick?: () => void;
 };
 
 const RadioButtonsComponent = ({
@@ -12,6 +13,7 @@ const RadioButtonsComponent = ({
   radioSelectedStore,
   groupName,
   disabledValue,
+  onClick,
 }: RadioButtonsComponent) => {
   const [radioSelected, setRadioSelected] = radioSelectedStore;
 
@@ -26,6 +28,7 @@ const RadioButtonsComponent = ({
           value={data.value}
           disabled={disabledValue === data.value}
           onChange={() => setRadioSelected(data.value)}
+          onClick={onClick}
         />
       ))}
     </>
