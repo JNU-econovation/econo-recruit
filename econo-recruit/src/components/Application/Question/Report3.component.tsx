@@ -1,39 +1,41 @@
-import { useAtom, useSetAtom } from 'jotai'
-import { APPLICATION_REPORT } from '@/data/25/Application'
+import { useAtom, useSetAtom } from 'jotai';
+import { APPLICATION_REPORT } from '@/data/25/Application';
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '@/storage/Application/Application.atom'
-import { cloneDeep, find } from 'lodash-es'
-import { useEffect, useState } from 'react'
+} from '@/storage/Application/Application.atom';
+import { cloneDeep, find } from 'lodash-es';
+import { useEffect, useState } from 'react';
 
 const ApplicationQuestionReport3Component = () => {
-  const [appData, setAppData] = useAtom(ApplicationResultDataState)
-  const setPage = useSetAtom(ApplicationNavbarIndexState)
-  const data = APPLICATION_REPORT[3]
-  const [onError, setOnError] = useState(false)
-  const [canNext, setCanNext] = useState(false)
-  const [showEtc, setShowEtc] = useState(appData.supportPathAddtional)
-  const nextButtonClassName = 'flex-1 rounded-md flex justify-center items-center p-4'
-  const workingClassName = 'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md'
+  const [appData, setAppData] = useAtom(ApplicationResultDataState);
+  const setPage = useSetAtom(ApplicationNavbarIndexState);
+  const data = APPLICATION_REPORT[3];
+  const [onError, setOnError] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const [showEtc, setShowEtc] = useState(appData.supportPathAddtional);
+  const nextButtonClassName =
+    'flex-1 rounded-md flex justify-center items-center p-4';
+  const workingClassName =
+    'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
 
   const onNextPage = () => {
     if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
-      setCanNext(false)
-      setOnError(true)
-      return
+      setCanNext(false);
+      setOnError(true);
+      return;
     }
-    setPage(4)
-  }
+    setPage(4);
+  };
 
   useEffect(() => {
     if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
-      setCanNext(false)
+      setCanNext(false);
     } else {
-      setCanNext(true)
-      setOnError(false)
+      setCanNext(true);
+      setOnError(false);
     }
-  }, [appData])
+  }, [appData]);
 
   return (
     <div className="flex">
@@ -49,7 +51,9 @@ const ApplicationQuestionReport3Component = () => {
           <div>
             <div className="pb-4">
               {data.value[0].title}
-              <span className="font-light">(동아리, 연구실, 아르바이트, 스터디, 교환학생 등)</span>
+              <span className="font-light">
+                (동아리, 연구실, 아르바이트, 스터디, 교환학생 등)
+              </span>
             </div>
             <input
               className={workingClassName}
@@ -57,9 +61,9 @@ const ApplicationQuestionReport3Component = () => {
               value={appData.working}
               onChange={(e) =>
                 setAppData((v) => {
-                  const cv = cloneDeep(v)
-                  cv.working = e.target.value
-                  return cv
+                  const cv = cloneDeep(v);
+                  cv.working = e.target.value;
+                  return cv;
                 })
               }
             />
@@ -77,21 +81,29 @@ const ApplicationQuestionReport3Component = () => {
                     className="hidden peer"
                     name="supportPath"
                     checked={
-                      (JSON.parse(appData.supportPath) as string[]).find((fv) => fv === v) !==
-                      undefined
+                      (JSON.parse(appData.supportPath) as string[]).find(
+                        (fv) => fv === v
+                      ) !== undefined
                     }
                     id={`supportPath${i}`}
                     onChange={() => {
-                      const supportPath = JSON.parse(appData.supportPath) as string[]
-                      const supportResultData = supportPath.find((fv) => fv === v)
+                      const supportPath = JSON.parse(
+                        appData.supportPath
+                      ) as string[];
+                      const supportResultData = supportPath.find(
+                        (fv) => fv === v
+                      )
                         ? JSON.stringify(supportPath.filter((fv) => fv !== v))
-                        : JSON.stringify([...supportPath, v])
+                        : JSON.stringify([...supportPath, v]);
                       setAppData((av) => {
-                        const cv = cloneDeep(av)
-                        cv.supportPath = supportResultData
-                        return cv
-                      })
-                      setOnError(supportResultData === '[]' && appData.supportPathAddtional === '')
+                        const cv = cloneDeep(av);
+                        cv.supportPath = supportResultData;
+                        return cv;
+                      });
+                      setOnError(
+                        supportResultData === '[]' &&
+                          appData.supportPathAddtional === ''
+                      );
                     }}
                   />
                   <label
@@ -110,13 +122,13 @@ const ApplicationQuestionReport3Component = () => {
                   checked={showEtc}
                   id={`supportPath100`}
                   onChange={() => {
-                    setShowEtc(!showEtc)
+                    setShowEtc(!showEtc);
                     setAppData((v) => {
-                      const cv = cloneDeep(v)
-                      cv.supportPathAddtional = ''
-                      return cv
-                    })
-                    setOnError(appData.supportPath === '[]')
+                      const cv = cloneDeep(v);
+                      cv.supportPathAddtional = '';
+                      return cv;
+                    });
+                    setOnError(appData.supportPath === '[]');
                   }}
                 />
                 <label
@@ -134,13 +146,14 @@ const ApplicationQuestionReport3Component = () => {
                     value={appData.supportPathAddtional}
                     onChange={(e) => {
                       setAppData((v) => {
-                        const cv = cloneDeep(v)
-                        cv.supportPathAddtional = e.target.value
-                        return cv
-                      })
+                        const cv = cloneDeep(v);
+                        cv.supportPathAddtional = e.target.value;
+                        return cv;
+                      });
                       setOnError(
-                        appData.supportPath === '[]' && appData.supportPathAddtional === ''
-                      )
+                        appData.supportPath === '[]' &&
+                          appData.supportPathAddtional === ''
+                      );
                     }}
                   />
                 ) : (
@@ -151,7 +164,9 @@ const ApplicationQuestionReport3Component = () => {
 
             <div className="h-4 mt-4">
               {onError ? (
-                <div className="w-fit text-[#DC0000] ">지원 경로를 선택해해주세요.</div>
+                <div className="w-fit text-[#DC0000] ">
+                  지원 경로를 선택해해주세요.
+                </div>
               ) : (
                 ''
               )}
@@ -178,7 +193,7 @@ const ApplicationQuestionReport3Component = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationQuestionReport3Component
+export default ApplicationQuestionReport3Component;
