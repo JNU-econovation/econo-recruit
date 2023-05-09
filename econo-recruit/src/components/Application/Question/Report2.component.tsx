@@ -1,37 +1,40 @@
-import { useEffect, useState } from 'react'
-import { APPLICATION_REPORT } from '@/data/25/Application'
+import { useEffect, useState } from 'react';
+import { APPLICATION_REPORT } from '@/data/25/Application';
 import {
   ApplicationNavbarIndexState,
   ApplicationResultDataState,
-} from '@/storage/Application/Application.atom'
-import { cloneDeep } from 'lodash-es'
-import { useAtom, useSetAtom } from 'jotai'
+} from '@/storage/Application/Application.atom';
+import { cloneDeep } from 'lodash-es';
+import { useAtom, useSetAtom } from 'jotai';
+import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
 const ApplicationQuestionReport2Component = () => {
-  const [appData, setAppData] = useAtom(ApplicationResultDataState)
-  const setPage = useSetAtom(ApplicationNavbarIndexState)
-  const data = APPLICATION_REPORT[2]
-  const [onError, setOnError] = useState(false)
-  const [canNext, setCanNext] = useState(false)
-  const majorClassName = 'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md'
-  const nextButtonClassName = 'flex-1 rounded-md flex justify-center items-center p-4'
+  const [appData, setAppData] = useAtom(ApplicationResultDataState);
+  const data = APPLICATION_REPORT[2];
+  const [onError, setOnError] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const { goNextPage, goPrevPage } = useApplicationPageControll();
+  const majorClassName =
+    'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
+  const nextButtonClassName =
+    'flex-1 rounded-md flex justify-center items-center p-4';
 
   useEffect(() => {
-    setOnError(() => appData.major === '')
+    setOnError(() => appData.major === '');
     if (!appData.major) {
-      setCanNext(false)
+      setCanNext(false);
     } else {
-      setCanNext(true)
+      setCanNext(true);
     }
-  }, [appData])
+  }, [appData]);
 
   const onNextPage = () => {
     if (!appData.major) {
-      setOnError(true)
-      return
+      setOnError(true);
+      return;
     }
-    setPage(3)
-  }
+    goNextPage();
+  };
 
   return (
     <div className="flex">
@@ -46,14 +49,16 @@ const ApplicationQuestionReport2Component = () => {
         <div>
           <div className="pb-4">{data.value[0].title} *</div>
           <input
-            className={onError ? '!border-[#DC0000] ' + majorClassName : majorClassName}
+            className={
+              onError ? '!border-[#DC0000] ' + majorClassName : majorClassName
+            }
             type="text"
             value={appData.major}
             onChange={(e) =>
               setAppData((v) => {
-                const cv = cloneDeep(v)
-                cv.major = e.target.value
-                return cv
+                const cv = cloneDeep(v);
+                cv.major = e.target.value;
+                return cv;
               })
             }
           />
@@ -76,9 +81,9 @@ const ApplicationQuestionReport2Component = () => {
               value={appData.doubleMajor}
               onChange={(e) =>
                 setAppData((v) => {
-                  const cv = cloneDeep(v)
-                  cv.doubleMajor = e.target.value
-                  return cv
+                  const cv = cloneDeep(v);
+                  cv.doubleMajor = e.target.value;
+                  return cv;
                 })
               }
             />
@@ -92,9 +97,9 @@ const ApplicationQuestionReport2Component = () => {
               value={appData.minor}
               onChange={(e) =>
                 setAppData((v) => {
-                  const cv = cloneDeep(v)
-                  cv.minor = e.target.value
-                  return cv
+                  const cv = cloneDeep(v);
+                  cv.minor = e.target.value;
+                  return cv;
                 })
               }
             />
@@ -103,7 +108,7 @@ const ApplicationQuestionReport2Component = () => {
           <div className="flex gap-2 mt-4">
             <button
               className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-              onClick={() => setPage(1)}
+              onClick={goPrevPage}
             >
               이전
             </button>
@@ -121,7 +126,7 @@ const ApplicationQuestionReport2Component = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ApplicationQuestionReport2Component
+export default ApplicationQuestionReport2Component;

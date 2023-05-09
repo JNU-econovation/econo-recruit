@@ -1,10 +1,9 @@
 import { cloneDeep } from 'lodash-es';
 import { useEffect, useState } from 'react';
-import { useSetAtom } from 'jotai';
 import { useLocalStorage } from '@/hooks/localstorage.hook';
-import { ApplicationNavbarIndexState } from '@/storage/Application/Application.atom';
 import { APPLICATION_REPORT } from '@/data/25/Application';
 import InputTextWithLabel from '@/components/InputText/InputTextWithLabel.component';
+import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
 const ApplicationQuestionReport1Component = () => {
   const [name, setName] = useLocalStorage('name', '');
@@ -13,7 +12,8 @@ const ApplicationQuestionReport1Component = () => {
   const [grade, setGrade] = useLocalStorage('grade', '');
   const [semister, setSemister] = useLocalStorage('semister', '');
 
-  const setPage = useSetAtom(ApplicationNavbarIndexState);
+  const { goNextPage, goPrevPage } = useApplicationPageControll();
+
   const [canNext, setCanNext] = useState(false);
 
   const [onError, setOnError] = useState({
@@ -97,7 +97,7 @@ const ApplicationQuestionReport1Component = () => {
       });
       return;
     }
-    setPage(2);
+    goNextPage();
   };
 
   return (
@@ -218,7 +218,7 @@ const ApplicationQuestionReport1Component = () => {
         <div className="flex gap-2 mt-4">
           <button
             className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-            onClick={() => setPage(0)}
+            onClick={goPrevPage}
           >
             이전
           </button>

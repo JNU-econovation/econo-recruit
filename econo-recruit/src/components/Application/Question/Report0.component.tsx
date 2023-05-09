@@ -2,22 +2,21 @@ import {
   APPLICATION_REPORT,
   APPLICATION_REPORT_FIELD,
 } from '@/data/25/Application';
-import { ApplicationNavbarIndexState } from '@/storage/Application/Application.atom';
 import { useLocalStorage } from '@/hooks/localstorage.hook';
-import { useSetAtom } from 'jotai';
 import RadioButtonsComponent from '@/components/Button/Radio/RadioButtons.component';
 import RadioButtonComponent from '@/components/Button/Radio/RadioButton.component';
+import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
 const ApplicationQuestionReport0Component = () => {
   const [type, setType] = useLocalStorage('type', '');
   const [field1, setField1] = useLocalStorage('field1', '');
   const [field2, setField2] = useLocalStorage('field2', '');
-  const setPage = useSetAtom(ApplicationNavbarIndexState);
+  const { goNextPage } = useApplicationPageControll();
 
   const data = APPLICATION_REPORT[0];
-  const checkValueAndSetPage = (v: number) => {
+  const checkValueAndSetPage = () => {
     if (type === '' || field1 === '' || field2 === '') return;
-    setPage(v);
+    goNextPage();
   };
 
   return (
@@ -61,18 +60,12 @@ const ApplicationQuestionReport0Component = () => {
                     groupName="field2"
                     disabledValue={field1}
                     onClick={() => {
-                      checkValueAndSetPage(1);
+                      checkValueAndSetPage();
                     }}
                     radioButtons={APPLICATION_REPORT_FIELD.map((field) => {
                       return { title: field, value: field };
                     })}
-                    radioSelectedStore={[
-                      field2,
-                      (v) => {
-                        setField2(v);
-                        checkValueAndSetPage(1);
-                      },
-                    ]}
+                    radioSelectedStore={[field2, (v) => setField2(v)]}
                   />
                   <div className="col-span-3">
                     <RadioButtonComponent
@@ -82,7 +75,7 @@ const ApplicationQuestionReport0Component = () => {
                         setField2('none');
                       }}
                       onClick={() => {
-                        checkValueAndSetPage(1);
+                        checkValueAndSetPage();
                       }}
                       title="선택없음"
                       value="none"

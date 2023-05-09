@@ -1,15 +1,13 @@
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { APPLICATION_REPORT } from '@/data/25/Application';
-import {
-  ApplicationNavbarIndexState,
-  ApplicationResultDataState,
-} from '@/storage/Application/Application.atom';
-import { cloneDeep, find } from 'lodash-es';
+import { ApplicationResultDataState } from '@/storage/Application/Application.atom';
+import { cloneDeep } from 'lodash-es';
 import { useEffect, useState } from 'react';
+import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
 const ApplicationQuestionReport3Component = () => {
   const [appData, setAppData] = useAtom(ApplicationResultDataState);
-  const setPage = useSetAtom(ApplicationNavbarIndexState);
+  const { goNextPage, goPrevPage } = useApplicationPageControll();
   const data = APPLICATION_REPORT[3];
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
@@ -25,7 +23,7 @@ const ApplicationQuestionReport3Component = () => {
       setOnError(true);
       return;
     }
-    setPage(4);
+    goNextPage();
   };
 
   useEffect(() => {
@@ -175,7 +173,7 @@ const ApplicationQuestionReport3Component = () => {
           <div className="flex gap-2 mt-4">
             <button
               className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-              onClick={() => setPage(1)}
+              onClick={goPrevPage}
             >
               이전
             </button>

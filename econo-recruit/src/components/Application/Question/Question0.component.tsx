@@ -1,19 +1,17 @@
 import { APPLICATION_QUESTION } from '@/data/25/Application';
-import {
-  ApplicationNavbarIndexState,
-  ApplicationResultDataState,
-} from '@/storage/Application/Application.atom';
+import { ApplicationResultDataState } from '@/storage/Application/Application.atom';
 import { useEffect, useState } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { cloneDeep } from 'lodash-es';
+import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
 const ApplicationQuestion0Component = () => {
   const [appData, setAppData] = useAtom(ApplicationResultDataState);
-  const setPage = useSetAtom(ApplicationNavbarIndexState);
   const data = APPLICATION_QUESTION[0];
   const nextButtonClassName =
     'flex-1 rounded-md flex justify-center items-center p-4';
   const [canNext, setCanNext] = useState(false);
+  const { goNextPage, goPrevPage } = useApplicationPageControll();
 
   useEffect(() => {
     if (appData.question[0]) {
@@ -22,10 +20,6 @@ const ApplicationQuestion0Component = () => {
       setCanNext(true);
     }
   }, [appData]);
-
-  const onNextPage = () => {
-    setPage(5);
-  };
 
   return (
     <div className="flex">
@@ -49,12 +43,12 @@ const ApplicationQuestion0Component = () => {
         <div className="flex gap-2 mt-4">
           <button
             className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-            onClick={() => setPage(3)}
+            onClick={goPrevPage}
           >
             이전
           </button>
           <button
-            onClick={onNextPage}
+            onClick={goNextPage}
             className={
               canNext
                 ? nextButtonClassName + ' bg-[#303030] text-white'
