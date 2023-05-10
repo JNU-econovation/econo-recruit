@@ -1,14 +1,41 @@
-import { cloneDeep } from 'lodash-es';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useLocalStorage } from '@/hooks/localstorage.hook';
 import { APPLICATION_REPORT } from '@/data/25/Application';
 import InputTextWithLabel from '@/components/InputText/InputTextWithLabel.component';
 import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 
+type Report1Error = {
+  name: boolean;
+  cellphone: boolean;
+  undergrade: boolean;
+  grade: boolean;
+};
+
+type OnErrorAction =
+  | { type: 'name'; results: boolean }
+  | { type: 'cellphone'; results: boolean }
+  | { type: 'grade'; results: boolean }
+  | { type: 'undergrade'; results: boolean };
+
+const onErrorReducer = (state: Report1Error, action: OnErrorAction) => {
+  switch (action.type) {
+    case 'name':
+      return { ...state, name: action.results };
+    case 'cellphone':
+      return { ...state, cellphone: action.results };
+    case 'undergrade':
+      return { ...state, undergrade: action.results };
+    case 'grade':
+      return { ...state, grade: action.results };
+    default:
+      return state;
+  }
+};
+
 const ApplicationQuestionReport1Component = () => {
   const [name, setName] = useLocalStorage('name', '');
   const [cellphone, setCellphone] = useLocalStorage('cellphone', '');
-  const [undergrad, setUndergrad] = useLocalStorage('undergrad', '');
+  const [undergrade, setUndergrade] = useLocalStorage('undergrade', '');
   const [grade, setGrade] = useLocalStorage('grade', '');
   const [semister, setSemister] = useLocalStorage('semister', '');
 
@@ -16,46 +43,21 @@ const ApplicationQuestionReport1Component = () => {
 
   const [canNext, setCanNext] = useState(false);
 
-  const [onError, setOnError] = useState({
+  const [onError, setOnError] = useReducer(onErrorReducer, {
     name: false,
     cellphone: false,
-    undergrad: false,
+    undergrade: false,
     grade: false,
   });
 
   useEffect(() => {
-    setOnError((v) => {
-      const cv = cloneDeep(v);
-      // v.name = false
-      v.cellphone = false;
-      v.undergrad = false;
-      return cv;
-    });
-    return;
-  });
-
-  useEffect(() => {
-    setOnError((v) => {
-      const cv = cloneDeep(v);
-      v.name = name === '';
-      v.cellphone = cellphone === '';
-      v.undergrad = undergrad === '';
-      return cv;
-    });
-    if (
-      name === '' ||
-      cellphone === '' ||
-      cellphone.length !== 13 ||
-      undergrad === '' ||
-      undergrad.length !== 6 ||
-      grade === '' ||
-      semister === ''
-    ) {
-      setCanNext(false);
-    } else {
-      setCanNext(true);
-    }
-  }, [name, cellphone, undergrad, grade, semister]);
+    setOnError({ type: 'name', results: name === '' });
+    setOnError({ type: 'cellphone', results: cellphone === '' });
+    setOnError({ type: 'undergrade', results: undergrade === '' });
+    setCanNext(
+      onError.cellphone || onError.name || onError.undergrade || onError.grade
+    );
+  }, [name, cellphone, undergrade, grade, semister]);
 
   const data = APPLICATION_REPORT[1];
   const nameClassName =
@@ -65,37 +67,17 @@ const ApplicationQuestionReport1Component = () => {
 
   const onNextPage = () => {
     if (!name) {
-      setOnError((v) => {
-        const cv = cloneDeep(v);
-        v.name = true;
-        return cv;
-      });
-      return;
+      setOnError({ type: 'name', results: true });
     }
 
     if (!cellphone || cellphone.length !== 13) {
-      setOnError((v) => {
-        const cv = cloneDeep(v);
-        v.cellphone = true;
-        return cv;
-      });
-      return;
+      setOnError({ type: 'cellphone', results: true });
     }
-    if (!undergrad || undergrad.length !== 6) {
-      setOnError((v) => {
-        const cv = cloneDeep(v);
-        v.undergrad = true;
-        return cv;
-      });
-      return;
+    if (!undergrade || undergrade.length !== 6) {
+      setOnError({ type: 'undergrade', results: true });
     }
     if (!grade || !semister) {
-      setOnError((v) => {
-        const cv = cloneDeep(v);
-        cv.grade = true;
-        return cv;
-      });
-      return;
+      setOnError({ type: 'grade', results: true });
     }
     goNextPage();
   };
@@ -132,11 +114,11 @@ const ApplicationQuestionReport1Component = () => {
           maxTextLength={13}
         />
         <InputTextWithLabel
-          onError={onError.undergrad}
-          onChangeText={(e) => setUndergrad(e.replace(/[^0-9]/g, ''))}
+          onError={onError.undergrade}
+          onChangeText={(e) => setUndergrade(e.replace(/[^0-9]/g, ''))}
           title={data.value[2].title + ' *'}
           placeholder="123456"
-          value={cellphone}
+          value={undergrade}
           maxTextLength={6}
         />
         <div>
@@ -148,11 +130,7 @@ const ApplicationQuestionReport1Component = () => {
                 className="w-full"
                 onClick={() => {
                   setGrade(`${i}`);
-                  setOnError((v) => {
-                    const cv = cloneDeep(v);
-                    cv.grade = false;
-                    return cv;
-                  });
+                  setOnError({ type: 'grade', results: false });
                 }}
               >
                 <input
@@ -180,11 +158,7 @@ const ApplicationQuestionReport1Component = () => {
                     className="w-full"
                     onClick={() => {
                       setSemister(`${i}`);
-                      setOnError((v) => {
-                        const cv = cloneDeep(v);
-                        cv.grade = false;
-                        return cv;
-                      });
+                      setOnError({ type: 'grade', results: false });
                     }}
                   >
                     <input
