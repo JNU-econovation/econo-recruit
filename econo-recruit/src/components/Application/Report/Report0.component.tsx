@@ -56,22 +56,22 @@ const ApplicationQuestionReport0Component = () => {
                   <RadioButtonsComponent
                     groupName="field2"
                     disabledValue={field1}
-                    onChangeCallback={goNextPage}
                     radioButtons={APPLICATION_REPORT_FIELD.map((field) => {
                       return { title: field, value: field };
                     })}
+                    onClick={goNextPage}
                     radioSelectedStore={[field2, (v) => setField2(v)]}
                   />
                   <div className="col-span-3">
                     <RadioButtonComponent
-                      checked={false}
+                      checked={field2 === 'none'}
                       name="field2"
                       onChange={() => {
                         setField2('none');
-                        goNextPage();
                       }}
                       title="선택없음"
                       value="none"
+                      onClick={goNextPage}
                     />
                   </div>
                 </div>

@@ -7,6 +7,7 @@ type commonRadioType = {
   value: string;
   onChange: () => void;
   disabled?: boolean;
+  onClick?: () => void;
 };
 
 const RadioButtonComponent = ({
@@ -16,6 +17,7 @@ const RadioButtonComponent = ({
   value,
   onChange,
   disabled = false,
+  onClick,
 }: commonRadioType) => {
   const checkedClassName = checked ? 'bg-[#303030] text-white' : '';
   const disabledClassName = disabled
@@ -31,9 +33,9 @@ const RadioButtonComponent = ({
         name={name}
         id={uniqueId}
         value={value}
-        checked={checked}
         onChange={onChange}
         disabled={disabled}
+        onClick={onClick}
       />
       <label
         className={

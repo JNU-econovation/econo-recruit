@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import { useLocalStorage } from '@/hooks/localstorage.hook';
 import { APPLICATION_REPORT } from '@/data/25/Application';
 import InputTextWithLabel from '@/components/InputText/InputTextWithLabel.component';
@@ -41,8 +41,6 @@ const ApplicationQuestionReport1Component = () => {
   const [grade, setGrade] = useLocalStorage('grade', '');
   const [semister, setSemister] = useLocalStorage('semister', '');
 
-  const [canNext, setCanNext] = useState(false);
-
   const [onError, setOnError] = useReducer(onErrorReducer, {
     name: false,
     cellphone: false,
@@ -50,25 +48,14 @@ const ApplicationQuestionReport1Component = () => {
     grade: false,
   });
 
-  const beforeCheckCallback = () => {
-    setOnError({ type: 'name', results: name === '' });
-    setOnError({
-      type: 'cellphone',
-      results: cellphone === '' || isCellPhoneNumber(cellphone),
-    });
-    setOnError({
-      type: 'grade',
-      results: grade === '' || semister === '',
-    });
-    setOnError({
-      type: 'undergrade',
-      results: undergrade === '' || isUndergradeNumber(undergrade),
-    });
-
-    return (
-      onError.cellphone || onError.name || onError.undergrade || onError.grade
-    );
-  };
+  const beforeCheckCallback =
+    name !== '' &&
+    cellphone !== '' &&
+    undergrade !== '' &&
+    grade !== '' &&
+    semister !== '' &&
+    isCellPhoneNumber(cellphone) &&
+    isUndergradeNumber(undergrade);
 
   const data = APPLICATION_REPORT[1];
 
@@ -88,9 +75,8 @@ const ApplicationQuestionReport1Component = () => {
             setName(e);
             setOnError({
               type: 'name',
-              results: false,
+              results: e === '',
             });
-            setCanNext(true);
           }}
           title={data.value[0].title + ' *'}
           placeholder="홍길동"
@@ -99,16 +85,14 @@ const ApplicationQuestionReport1Component = () => {
         <InputTextWithLabel
           onError={onError.cellphone}
           onChangeText={(e) => {
-            setCellphone(
-              e
-                .replace(/[^0-9]/g, '')
-                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
-            );
+            const replacedText = e
+              .replace(/[^0-9]/g, '')
+              .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+            setCellphone(replacedText);
             setOnError({
               type: 'cellphone',
-              results: false,
+              results: !isCellPhoneNumber(replacedText),
             });
-            setCanNext(true);
           }}
           title={data.value[1].title + ' *'}
           placeholder="010-1234-5678"
@@ -118,85 +102,40 @@ const ApplicationQuestionReport1Component = () => {
         <InputTextWithLabel
           onError={onError.undergrade}
           onChangeText={(e) => {
-            setUndergrade(e.replace(/[^0-9]/g, ''));
+            const replacedText = e.replace(/[^0-9]/g, '');
+            setUndergrade(replacedText);
             setOnError({
               type: 'undergrade',
-              results: false,
+              results: !isUndergradeNumber(replacedText),
             });
-            setCanNext(true);
           }}
           title={data.value[2].title + ' *'}
           placeholder="123456"
           value={undergrade}
           maxTextLength={6}
         />
-        <div>
-          <div className="pb-4">{data.value[3].title} *</div>
-          <div className="flex gap-2">
+        <div className="pb-4">{data.value[3].title} *</div>
+        <div className="grid grid-cols-4 gap-2">
+          <RadioButtonsComponent
+            groupName="grade"
+            radioButtons={Array.from({ length: 4 }).map((_, i) => {
+              return { title: `${i + 1}학년`, value: `${i + 1}` };
+            })}
+            radioSelectedStore={[grade, (v) => setGrade(v)]}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2 mt-2">
+          {grade ? (
             <RadioButtonsComponent
-              groupName="grade"
-              radioButtons={Array(4).map((_, i) => {
-                return { title: `${i + 1}학년`, value: `${i + 1}` };
+              groupName="semester"
+              radioButtons={Array.from({ length: 2 }).map((_, i) => {
+                return { title: `${i + 1}학기`, value: `${i + 1}` };
               })}
-              radioSelectedStore={[grade, (v) => setGrade(v)]}
+              radioSelectedStore={[semister, (v) => setSemister(v)]}
             />
-            {Array.from({ length: 4 }, (_, i) => i + 1).map((i) => (
-              <div
-                key={`grade${i}`}
-                className="w-full"
-                onClick={() => {
-                  setGrade(`${i}`);
-                  setOnError({ type: 'grade', results: false });
-                }}
-              >
-                <input
-                  type="radio"
-                  name="grade"
-                  id={`grade${i}`}
-                  className={`hidden peer`}
-                  checked={+grade === i}
-                />
-                <label
-                  htmlFor={`grade${i}`}
-                  className="flex-1 p-4 border-[#DBDBDB] border-[1px] rounded-md flex justify-center items-center peer-checked:bg-[#303030] peer-checked:text-white"
-                >
-                  {i}학년
-                </label>
-              </div>
-            ))}
-          </div>
-          <div className="flex gap-2 mt-2">
-            {grade ? (
-              <>
-                {Array.from({ length: 2 }, (_, i) => i + 1).map((i) => (
-                  <div
-                    key={`semister${i}`}
-                    className="w-full"
-                    onClick={() => {
-                      setSemister(`${i}`);
-                      setOnError({ type: 'grade', results: false });
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="semester"
-                      id={`semester${i}`}
-                      className="hidden peer"
-                      checked={+semister === i}
-                    />
-                    <label
-                      htmlFor={`semester${i}`}
-                      className="flex-1 p-4 border-[#DBDBDB] border-[1px] rounded-md flex justify-center items-center peer-checked:bg-[#303030] peer-checked:text-white"
-                    >
-                      {i}학년
-                    </label>
-                  </div>
-                ))}
-              </>
-            ) : (
-              ''
-            )}
-          </div>
+          ) : (
+            ''
+          )}
         </div>
         <div className="h-8 mt-4">
           {onError.grade ? (
@@ -205,10 +144,7 @@ const ApplicationQuestionReport1Component = () => {
             ''
           )}
         </div>
-        <ApplicationNextbuttonComponent
-          canNext={canNext}
-          beforeCheckCallback={beforeCheckCallback}
-        />
+        <ApplicationNextbuttonComponent canNext={beforeCheckCallback} />
       </div>
     </div>
   );
