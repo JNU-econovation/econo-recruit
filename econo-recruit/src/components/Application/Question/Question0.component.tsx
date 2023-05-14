@@ -1,22 +1,12 @@
 import { APPLICATION_QUESTION } from '@/data/25/Application';
-import { ApplicationResultDataState } from '@/storage/Application/Application.atom';
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { cloneDeep } from 'lodash-es';
 import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
 
 const ApplicationQuestion0Component = () => {
-  const [appData, setAppData] = useAtom(ApplicationResultDataState);
   const data = APPLICATION_QUESTION[0];
   const [canNext, setCanNext] = useState(false);
-
-  useEffect(() => {
-    if (appData.question[0]) {
-      setCanNext(false);
-    } else {
-      setCanNext(true);
-    }
-  }, [appData]);
 
   return (
     <div className="flex">
@@ -27,16 +17,7 @@ const ApplicationQuestion0Component = () => {
         </div>
       </div>
       <div className="w-[30rem]">
-        <textarea
-          className="w-full h-[calc(100vh-25rem)] outline-none resize-none border-[#DBDBDB] border-[1px] p-4 rounded-md"
-          onChange={(e) => {
-            setAppData((v) => {
-              const cv = cloneDeep(v);
-              cv.question[0] = e.target.value;
-              return cv;
-            });
-          }}
-        />
+        <textarea className="w-full h-[calc(100vh-25rem)] outline-none resize-none border-[#DBDBDB] border-[1px] p-4 rounded-md" />
         <ApplicationNextbuttonComponent canNext={canNext} />
       </div>
     </div>

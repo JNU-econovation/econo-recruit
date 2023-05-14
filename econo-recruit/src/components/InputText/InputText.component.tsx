@@ -1,6 +1,6 @@
 type InputTextComponent = {
   onError: boolean;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   onChangeText: (e: string) => void;
   maxTextLength?: number;

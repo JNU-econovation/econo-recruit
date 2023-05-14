@@ -19,7 +19,3 @@ type ApplicationResult = {
   supportPathAddtional: string; // 지원 경로 추가
   question: string[];
 };
-
-export const ApplicationResultDataState = atom({
-  supportPath: '[]',
-} as ApplicationResult);

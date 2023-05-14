@@ -1,29 +1,27 @@
 import { useAtom } from 'jotai';
 import { APPLICATION_REPORT } from '@/data/25/Application';
-import { ApplicationResultDataState } from '@/storage/Application/Application.atom';
 import { cloneDeep } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
 
 const ApplicationQuestionReport3Component = () => {
-  const [appData, setAppData] = useAtom(ApplicationResultDataState);
   const { goNextPage, goPrevPage } = useApplicationPageControll();
   const data = APPLICATION_REPORT[3];
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
-  const [showEtc, setShowEtc] = useState(appData.supportPathAddtional);
+  // const [showEtc, setShowEtc] = useState(appData.supportPathAddtional);
   const workingClassName =
     'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
 
-  useEffect(() => {
-    if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
-      setCanNext(false);
-    } else {
-      setCanNext(true);
-      setOnError(false);
-    }
-  }, [appData]);
+  // useEffect(() => {
+  //   if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
+  //     setCanNext(false);
+  //   } else {
+  //     setCanNext(true);
+  //     setOnError(false);
+  //   }
+  // }, [appData]);
 
   return (
     <div className="flex">
@@ -46,14 +44,14 @@ const ApplicationQuestionReport3Component = () => {
             <input
               className={workingClassName}
               type="text"
-              value={appData.working}
-              onChange={(e) =>
-                setAppData((v) => {
-                  const cv = cloneDeep(v);
-                  cv.working = e.target.value;
-                  return cv;
-                })
-              }
+              // value={appData.working}
+              // onChange={(e) =>
+              //   setAppData((v) => {
+              //     const cv = cloneDeep(v);
+              //     cv.working = e.target.value;
+              //     return cv;
+              //   })
+              // }
             />
             <div className="h-4"></div>
           </div>
@@ -68,30 +66,30 @@ const ApplicationQuestionReport3Component = () => {
                     type="checkbox"
                     className="hidden peer"
                     name="supportPath"
-                    checked={
-                      (JSON.parse(appData.supportPath) as string[]).find(
-                        (fv) => fv === v
-                      ) !== undefined
-                    }
+                    // checked={
+                    // (JSON.parse(appData.supportPath) as string[]).find(
+                    //   (fv) => fv === v
+                    // ) !== undefined
+                    // }
                     id={`supportPath${i}`}
                     onChange={() => {
-                      const supportPath = JSON.parse(
-                        appData.supportPath
-                      ) as string[];
-                      const supportResultData = supportPath.find(
-                        (fv) => fv === v
-                      )
-                        ? JSON.stringify(supportPath.filter((fv) => fv !== v))
-                        : JSON.stringify([...supportPath, v]);
-                      setAppData((av) => {
-                        const cv = cloneDeep(av);
-                        cv.supportPath = supportResultData;
-                        return cv;
-                      });
-                      setOnError(
-                        supportResultData === '[]' &&
-                          appData.supportPathAddtional === ''
-                      );
+                      // const supportPath = JSON.parse(
+                      //   appData.supportPath
+                      // ) as string[];
+                      // const supportResultData = supportPath.find(
+                      //   (fv) => fv === v
+                      // )
+                      //   ? JSON.stringify(supportPath.filter((fv) => fv !== v))
+                      //   : JSON.stringify([...supportPath, v]);
+                      // setAppData((av) => {
+                      //   const cv = cloneDeep(av);
+                      //   cv.supportPath = supportResultData;
+                      //   return cv;
+                      // });
+                      // setOnError(
+                      //   supportResultData === '[]' &&
+                      //     appData.supportPathAddtional === ''
+                      // );
                     }}
                   />
                   <label
@@ -107,17 +105,17 @@ const ApplicationQuestionReport3Component = () => {
                   type="checkbox"
                   className="hidden peer"
                   name="supportPath"
-                  checked={showEtc}
+                  // checked={showEtc}
                   id={`supportPath100`}
-                  onChange={() => {
-                    setShowEtc(!showEtc);
-                    setAppData((v) => {
-                      const cv = cloneDeep(v);
-                      cv.supportPathAddtional = '';
-                      return cv;
-                    });
-                    setOnError(appData.supportPath === '[]');
-                  }}
+                  // onChange={() => {
+                  //   setShowEtc(!showEtc);
+                  //   setAppData((v) => {
+                  //     const cv = cloneDeep(v);
+                  //     cv.supportPathAddtional = '';
+                  //     return cv;
+                  //   });
+                  //   setOnError(appData.supportPath === '[]');
+                  // }}
                 />
                 <label
                   htmlFor={`supportPath100`}
@@ -127,7 +125,7 @@ const ApplicationQuestionReport3Component = () => {
                 </label>
               </div>
               <div className="col-span-2">
-                {showEtc ? (
+                {/* {showEtc ? (
                   <input
                     className="p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md"
                     type="text"
@@ -146,7 +144,7 @@ const ApplicationQuestionReport3Component = () => {
                   />
                 ) : (
                   ''
-                )}
+                )} */}
               </div>
             </div>
 
