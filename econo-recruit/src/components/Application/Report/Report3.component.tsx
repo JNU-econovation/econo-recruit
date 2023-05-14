@@ -4,6 +4,7 @@ import { ApplicationResultDataState } from '@/storage/Application/Application.at
 import { cloneDeep } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
+import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
 
 const ApplicationQuestionReport3Component = () => {
   const [appData, setAppData] = useAtom(ApplicationResultDataState);
@@ -12,19 +13,8 @@ const ApplicationQuestionReport3Component = () => {
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const [showEtc, setShowEtc] = useState(appData.supportPathAddtional);
-  const nextButtonClassName =
-    'flex-1 rounded-md flex justify-center items-center p-4';
   const workingClassName =
     'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
-
-  const onNextPage = () => {
-    if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
-      setCanNext(false);
-      setOnError(true);
-      return;
-    }
-    goNextPage();
-  };
 
   useEffect(() => {
     if (appData.supportPath === '[]' && appData.supportPathAddtional === '') {
@@ -170,24 +160,7 @@ const ApplicationQuestionReport3Component = () => {
               )}
             </div>
           </div>
-          <div className="flex gap-2 mt-4">
-            <button
-              className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-              onClick={goPrevPage}
-            >
-              이전
-            </button>
-            <button
-              onClick={onNextPage}
-              className={
-                canNext
-                  ? nextButtonClassName + ' bg-[#303030] text-white'
-                  : nextButtonClassName + ' bg-[#EFEFEF] text-[#C8C8C8]'
-              }
-            >
-              다음
-            </button>
-          </div>
+          <ApplicationNextbuttonComponent canNext={canNext} />
         </div>
       </div>
     </div>

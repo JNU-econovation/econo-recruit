@@ -1,1 +1,2 @@
-export const isCellPhoneNumber = (phoneNumber: string) =>  /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phoneNumber);
+export const isCellPhoneNumber = (phoneNumber: string) =>  /^\(?(\d{3})\)?[- ]?(\d{4})[- ]?(\d{4})$/.test(phoneNumber);
+export const isUndergradeNumber = (isUndergradeNumber: string) => /^[0-9]{6}$/.test(isUndergradeNumber);

@@ -2,7 +2,9 @@ import { useEffect, useReducer, useState } from 'react';
 import { useLocalStorage } from '@/hooks/localstorage.hook';
 import { APPLICATION_REPORT } from '@/data/25/Application';
 import InputTextWithLabel from '@/components/InputText/InputTextWithLabel.component';
-import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
+import RadioButtonsComponent from '@/components/Button/Radio/RadioButtons.component';
+import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
+import { isCellPhoneNumber, isUndergradeNumber } from '@/utils/validator';
 
 type Report1Error = {
   name: boolean;
@@ -39,8 +41,6 @@ const ApplicationQuestionReport1Component = () => {
   const [grade, setGrade] = useLocalStorage('grade', '');
   const [semister, setSemister] = useLocalStorage('semister', '');
 
-  const { goNextPage, goPrevPage } = useApplicationPageControll();
-
   const [canNext, setCanNext] = useState(false);
 
   const [onError, setOnError] = useReducer(onErrorReducer, {
@@ -50,37 +50,27 @@ const ApplicationQuestionReport1Component = () => {
     grade: false,
   });
 
-  useEffect(() => {
+  const beforeCheckCallback = () => {
     setOnError({ type: 'name', results: name === '' });
-    setOnError({ type: 'cellphone', results: cellphone === '' });
-    setOnError({ type: 'undergrade', results: undergrade === '' });
-    setCanNext(
+    setOnError({
+      type: 'cellphone',
+      results: cellphone === '' || isCellPhoneNumber(cellphone),
+    });
+    setOnError({
+      type: 'grade',
+      results: grade === '' || semister === '',
+    });
+    setOnError({
+      type: 'undergrade',
+      results: undergrade === '' || isUndergradeNumber(undergrade),
+    });
+
+    return (
       onError.cellphone || onError.name || onError.undergrade || onError.grade
     );
-  }, [name, cellphone, undergrade, grade, semister]);
+  };
 
   const data = APPLICATION_REPORT[1];
-  const nameClassName =
-    'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
-  const nextButtonClassName =
-    'flex-1 rounded-md flex justify-center items-center p-4';
-
-  const onNextPage = () => {
-    if (!name) {
-      setOnError({ type: 'name', results: true });
-    }
-
-    if (!cellphone || cellphone.length !== 13) {
-      setOnError({ type: 'cellphone', results: true });
-    }
-    if (!undergrade || undergrade.length !== 6) {
-      setOnError({ type: 'undergrade', results: true });
-    }
-    if (!grade || !semister) {
-      setOnError({ type: 'grade', results: true });
-    }
-    goNextPage();
-  };
 
   return (
     <div className="flex">
@@ -94,20 +84,32 @@ const ApplicationQuestionReport1Component = () => {
       <div className="w-[30rem]">
         <InputTextWithLabel
           onError={onError.name}
-          onChangeText={(e) => setName(e)}
+          onChangeText={(e) => {
+            setName(e);
+            setOnError({
+              type: 'name',
+              results: false,
+            });
+            setCanNext(true);
+          }}
           title={data.value[0].title + ' *'}
           placeholder="홍길동"
           value={name}
         />
         <InputTextWithLabel
           onError={onError.cellphone}
-          onChangeText={(e) =>
+          onChangeText={(e) => {
             setCellphone(
               e
                 .replace(/[^0-9]/g, '')
                 .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
-            )
-          }
+            );
+            setOnError({
+              type: 'cellphone',
+              results: false,
+            });
+            setCanNext(true);
+          }}
           title={data.value[1].title + ' *'}
           placeholder="010-1234-5678"
           value={cellphone}
@@ -115,7 +117,14 @@ const ApplicationQuestionReport1Component = () => {
         />
         <InputTextWithLabel
           onError={onError.undergrade}
-          onChangeText={(e) => setUndergrade(e.replace(/[^0-9]/g, ''))}
+          onChangeText={(e) => {
+            setUndergrade(e.replace(/[^0-9]/g, ''));
+            setOnError({
+              type: 'undergrade',
+              results: false,
+            });
+            setCanNext(true);
+          }}
           title={data.value[2].title + ' *'}
           placeholder="123456"
           value={undergrade}
@@ -124,6 +133,13 @@ const ApplicationQuestionReport1Component = () => {
         <div>
           <div className="pb-4">{data.value[3].title} *</div>
           <div className="flex gap-2">
+            <RadioButtonsComponent
+              groupName="grade"
+              radioButtons={Array(4).map((_, i) => {
+                return { title: `${i + 1}학년`, value: `${i + 1}` };
+              })}
+              radioSelectedStore={[grade, (v) => setGrade(v)]}
+            />
             {Array.from({ length: 4 }, (_, i) => i + 1).map((i) => (
               <div
                 key={`grade${i}`}
@@ -189,24 +205,10 @@ const ApplicationQuestionReport1Component = () => {
             ''
           )}
         </div>
-        <div className="flex gap-2 mt-4">
-          <button
-            className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-            onClick={goPrevPage}
-          >
-            이전
-          </button>
-          <button
-            onClick={onNextPage}
-            className={
-              canNext
-                ? nextButtonClassName + ' bg-[#303030] text-white'
-                : nextButtonClassName + ' bg-[#EFEFEF] text-[#C8C8C8]'
-            }
-          >
-            다음
-          </button>
-        </div>
+        <ApplicationNextbuttonComponent
+          canNext={canNext}
+          beforeCheckCallback={beforeCheckCallback}
+        />
       </div>
     </div>
   );

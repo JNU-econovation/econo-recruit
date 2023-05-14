@@ -7,17 +7,15 @@ import {
 import { cloneDeep } from 'lodash-es';
 import { useAtom, useSetAtom } from 'jotai';
 import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
+import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
 
 const ApplicationQuestionReport2Component = () => {
   const [appData, setAppData] = useAtom(ApplicationResultDataState);
   const data = APPLICATION_REPORT[2];
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
-  const { goNextPage, goPrevPage } = useApplicationPageControll();
   const majorClassName =
     'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
-  const nextButtonClassName =
-    'flex-1 rounded-md flex justify-center items-center p-4';
 
   useEffect(() => {
     setOnError(() => appData.major === '');
@@ -27,14 +25,6 @@ const ApplicationQuestionReport2Component = () => {
       setCanNext(true);
     }
   }, [appData]);
-
-  const onNextPage = () => {
-    if (!appData.major) {
-      setOnError(true);
-      return;
-    }
-    goNextPage();
-  };
 
   return (
     <div className="flex">
@@ -105,24 +95,7 @@ const ApplicationQuestionReport2Component = () => {
             />
             <div className="h-4"></div>
           </div>
-          <div className="flex gap-2 mt-4">
-            <button
-              className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-              onClick={goPrevPage}
-            >
-              이전
-            </button>
-            <button
-              onClick={onNextPage}
-              className={
-                canNext
-                  ? nextButtonClassName + ' bg-[#303030] text-white'
-                  : nextButtonClassName + ' bg-[#EFEFEF] text-[#C8C8C8]'
-              }
-            >
-              다음
-            </button>
-          </div>
+          <ApplicationNextbuttonComponent canNext={canNext} />
         </div>
       </div>
     </div>

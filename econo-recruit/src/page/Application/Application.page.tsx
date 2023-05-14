@@ -5,19 +5,19 @@ import { ApplicationNavbarIndexState } from '@/storage/Application/Application.a
 import { useAtomValue } from 'jotai';
 
 const ApplicationQuestionReport0Component = lazy(
-  () => import('@/components/Application/Question/Report0.component')
+  () => import('@/components/Application/Report/Report0.component')
 );
 
 const ApplicationQuestionReport1Component = lazy(
-  () => import('@/components/Application/Question/Report1.component')
+  () => import('@/components/Application/Report/Report1.component')
 );
 
 const ApplicationQuestionReport2Component = lazy(
-  () => import('@/components/Application/Question/Report2.component')
+  () => import('@/components/Application/Report/Report2.component')
 );
 
 const ApplicationQuestionReport3Component = lazy(
-  () => import('@/components/Application/Question/Report3.component')
+  () => import('@/components/Application/Report/Report3.component')
 );
 
 const ApplicationQuestion0Component = lazy(

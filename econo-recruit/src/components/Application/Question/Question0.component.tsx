@@ -3,15 +3,12 @@ import { ApplicationResultDataState } from '@/storage/Application/Application.at
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { cloneDeep } from 'lodash-es';
-import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
+import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
 
 const ApplicationQuestion0Component = () => {
   const [appData, setAppData] = useAtom(ApplicationResultDataState);
   const data = APPLICATION_QUESTION[0];
-  const nextButtonClassName =
-    'flex-1 rounded-md flex justify-center items-center p-4';
   const [canNext, setCanNext] = useState(false);
-  const { goNextPage, goPrevPage } = useApplicationPageControll();
 
   useEffect(() => {
     if (appData.question[0]) {
@@ -40,24 +37,7 @@ const ApplicationQuestion0Component = () => {
             });
           }}
         />
-        <div className="flex gap-2 mt-4">
-          <button
-            className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-            onClick={goPrevPage}
-          >
-            이전
-          </button>
-          <button
-            onClick={goNextPage}
-            className={
-              canNext
-                ? nextButtonClassName + ' bg-[#303030] text-white'
-                : nextButtonClassName + ' bg-[#EFEFEF] text-[#C8C8C8]'
-            }
-          >
-            다음
-          </button>
-        </div>
+        <ApplicationNextbuttonComponent canNext={canNext} />
       </div>
     </div>
   );

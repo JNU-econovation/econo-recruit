@@ -14,10 +14,6 @@ const ApplicationQuestionReport0Component = () => {
   const { goNextPage } = useApplicationPageControll();
 
   const data = APPLICATION_REPORT[0];
-  const checkValueAndSetPage = () => {
-    if (type === '' || field1 === '' || field2 === '') return;
-    goNextPage();
-  };
 
   return (
     <div className="flex">
@@ -46,6 +42,7 @@ const ApplicationQuestionReport0Component = () => {
             <div className="grid grid-cols-3 gap-2 w-[30rem] font-semibold">
               <RadioButtonsComponent
                 groupName="field1"
+                disabledValue={field2}
                 radioButtons={APPLICATION_REPORT_FIELD.map((field) => {
                   return { title: field, value: field };
                 })}
@@ -59,9 +56,7 @@ const ApplicationQuestionReport0Component = () => {
                   <RadioButtonsComponent
                     groupName="field2"
                     disabledValue={field1}
-                    onClick={() => {
-                      checkValueAndSetPage();
-                    }}
+                    onChangeCallback={goNextPage}
                     radioButtons={APPLICATION_REPORT_FIELD.map((field) => {
                       return { title: field, value: field };
                     })}
@@ -73,9 +68,7 @@ const ApplicationQuestionReport0Component = () => {
                       name="field2"
                       onChange={() => {
                         setField2('none');
-                      }}
-                      onClick={() => {
-                        checkValueAndSetPage();
+                        goNextPage();
                       }}
                       title="선택없음"
                       value="none"
