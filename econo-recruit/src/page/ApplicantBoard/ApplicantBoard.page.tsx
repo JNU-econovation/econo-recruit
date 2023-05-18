@@ -8,10 +8,11 @@ import {
 } from '@/storage/Applicant/Applicant.atom';
 import { useEffect } from 'react';
 import ApplicantPopupComponent from '@/components/Applicant/Popup.component';
-import ApplicantSortListComponent from '@/components/Applicant/SortList.component';
 import ApplicantSearchComponent from '@/components/Applicant/Search.component';
 import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useAtomValue, useSetAtom } from 'jotai';
+import PageNavbarComponent from '@/components/Common/PageNavbar.component';
+import SortListComponent from '@/components/Common/SortList.component';
 
 type OrderType = 'resent' | 'name' | 'area';
 
@@ -42,22 +43,14 @@ const ApplicantBoardPage = () => {
         <div className="flex-1 ml-32 min-w-[46rem]">
           <div className="flex w-full justify-end gap-8 my-12">
             <ApplicantSearchComponent />
-            <ApplicantSortListComponent sortList={orderMenu} />
+            <SortListComponent sortList={orderMenu} selected={order} />
           </div>
           <ApplicantListComponent />
-          <div className="flex w-full justify-end gap-2">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <a
-                href={`/applicant/${period}?type=${type}&order=${order}&page=${
-                  i + 1
-                }`}
-                className={i + 1 === +page ? 'p-3' : 'text-[#B6B6B6] p-3'}
-                key={i}
-              >
-                {i + 1}
-              </a>
-            ))}
-          </div>
+          <PageNavbarComponent
+            maxLength={4}
+            page={+page}
+            url={`/applicant/${period}?type=${type}&order=${order}`}
+          />
         </div>
       </div>
     </>

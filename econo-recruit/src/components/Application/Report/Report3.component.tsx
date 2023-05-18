@@ -1,12 +1,10 @@
-import { useAtom } from 'jotai';
 import { APPLICATION_REPORT } from '@/data/25/Application';
-import { cloneDeep } from 'lodash-es';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
+import CheckBoxButtonsComponent from '@/components/Button/CheckBox/CheckBoxButtons.component';
 
 const ApplicationQuestionReport3Component = () => {
-  const { goNextPage, goPrevPage } = useApplicationPageControll();
   const data = APPLICATION_REPORT[3];
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
@@ -60,6 +58,11 @@ const ApplicationQuestionReport3Component = () => {
               {data.value[1].title}* {data.value[1].subtitle}
             </div>
             <div className="grid grid-cols-3 gap-2">
+              {/* <CheckBoxButtonsComponent
+              checkBoxButtons={data.value[1].value?.map((v: string, i) => { 
+                return {title: v,value: v}
+              }
+             /> */}
               {data.value[1].value?.map((v, i) => (
                 <div key={i}>
                   <input

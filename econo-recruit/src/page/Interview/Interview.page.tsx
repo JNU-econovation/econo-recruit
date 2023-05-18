@@ -8,10 +8,11 @@ import {
 } from '@/storage/Interview/Interview.atom';
 import { useEffect } from 'react';
 import InterviewPopupComponent from '@/components/Interview/Popup.component';
-import InterviewSortListComponent from '@/components/Interview/SortList.component';
 import InterviewSearchComponent from '@/components/Interview/Search.component';
 import CommonNavbarComponent from '@/components/Common/Navbar.component';
 import { useAtomValue, useSetAtom } from 'jotai';
+import PageNavbarComponent from '@/components/Common/PageNavbar.component';
+import SortListComponent from '@/components/Common/SortList.component';
 
 const InterviewPage = () => {
   const { period } = useParams();
@@ -41,22 +42,14 @@ const InterviewPage = () => {
         <div className="flex-1 ml-32 min-w-[46rem] mb-48">
           <div className="flex w-full justify-end gap-8 my-12">
             <InterviewSearchComponent />
-            <InterviewSortListComponent sortList={orderMenu} />
+            <SortListComponent sortList={orderMenu} selected={order} />
           </div>
           <InterviewListComponent />
-          <div className="flex w-full justify-end gap-2 absolute bottom-12 right-24">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <a
-                href={`/interview/${period}?type=${type}&order=${order}&page=${
-                  i + 1
-                }`}
-                className={i + 1 === +page ? 'p-3' : 'text-[#B6B6B6] p-3'}
-                key={i}
-              >
-                {i + 1}
-              </a>
-            ))}
-          </div>
+          <PageNavbarComponent
+            maxLength={4}
+            page={+page}
+            url={`/interview/${period}?type=${type}&order=${order}`}
+          />
         </div>
       </div>
     </>
