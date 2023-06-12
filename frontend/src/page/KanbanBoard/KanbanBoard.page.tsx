@@ -1,20 +1,10 @@
 import { useParams } from 'react-router';
 import KanbanNavbarComponent from '@/components/KanbanBoard/Navbar.components';
-import { DropResult } from '@hello-pangea/dnd';
-import { KanbanDataArrayState } from '@/storage/KanbanBoard/Kanban.atoms';
 import CommonNavbarComponent from '@/components/Common/Navbar.component';
-import { getMovedKanbanData } from './kanbanBoardEvent';
-import { useAtom } from 'jotai';
 import KanbanBoardDragDropComponent from '@/components/KanbanBoard/DragDrop.component';
 
 const KanbanBoardPage = () => {
   const { period } = useParams();
-  const [kanbanData, setKanbanData] = useAtom(KanbanDataArrayState);
-  const onDragEnd = (result: DropResult) => {
-    const movedKanbanData = getMovedKanbanData(kanbanData, result);
-    setKanbanData(movedKanbanData);
-  };
-
   return (
     <div className="pt-12 pl-24 w-screen h-screen flex">
       <CommonNavbarComponent isShort={true} />
@@ -27,8 +17,6 @@ const KanbanBoardPage = () => {
         </div>
         <div className="overflow-auto max-h-[calc(100vh-18rem)]">
           <KanbanBoardDragDropComponent
-            onDragEnd={onDragEnd}
-            kanbanData={kanbanData}
           />
         </div>
       </div>

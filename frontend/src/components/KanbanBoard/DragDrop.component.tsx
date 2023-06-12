@@ -2,22 +2,21 @@ import {
   DragDropContext,
   DropResult,
   Droppable,
-  OnDragEndResponder,
 } from '@hello-pangea/dnd';
 import KanbanRowComponent from './Row.components';
 import KanbanAddRowComponent from './AddRow.component';
-import { KanbanRowData } from '@/storage/KanbanBoard/Kanban.atoms';
+import { KanbanDataArrayState, KanbanRowData } from '@/storage/KanbanBoard/Kanban.atoms';
+import { useAtom } from 'jotai';
+import { getMovedKanbanData } from '@/page/KanbanBoard/kanbanBoardEvent';
 
-type KanbanBoardDragDropComponent = {
-  onDragEnd: OnDragEndResponder;
-  kanbanData: KanbanRowData[];
-};
+const KanbanBoardDragDropComponent = () => {
+  const [kanbanData, setKanbanData] = useAtom(KanbanDataArrayState);
+  const onDragEnd = (result: DropResult) => {
+    const movedKanbanData = getMovedKanbanData(kanbanData, result);
+    setKanbanData(movedKanbanData);
+  };
 
-const KanbanBoardDragDropComponent = ({
-  onDragEnd,
-  kanbanData,
-}: KanbanBoardDragDropComponent) => (
-  <DragDropContext onDragEnd={onDragEnd}>
+  return (<DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="droppable" type="COLUMN" direction="horizontal">
       {(provided) => (
         <div
@@ -39,6 +38,6 @@ const KanbanBoardDragDropComponent = ({
         </div>
       )}
     </Droppable>
-  </DragDropContext>
-);
+  </DragDropContext>);
+}
 export default KanbanBoardDragDropComponent;

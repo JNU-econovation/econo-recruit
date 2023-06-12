@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 type KanbanAddRowComponent = {
-  AddRowCallBack: () => {}
+  AddRowCallBack: () => void
 }
 
 const KanbanAddRowComponent = ({ AddRowCallBack }: KanbanAddRowComponent) => {

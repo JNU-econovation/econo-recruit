@@ -15,6 +15,6 @@ export const MAIN_MENU = [
   },
   { title: 'SHARE POINT', subtitle: '신입모집 쉐어포인트', href: '#' },
   { title: 'HISTORY', subtitle: '지난 신입모집', href: '#' },
-];
+] as const;
 
 deepFreeze(MAIN_MENU);

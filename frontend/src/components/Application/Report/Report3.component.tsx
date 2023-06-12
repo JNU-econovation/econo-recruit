@@ -1,13 +1,13 @@
 import { APPLICATION_REPORT } from '@/data/25/Application';
 import { useState } from 'react';
-import useApplicationPageControll from '@/hooks/useApplicationPageControll.hook';
 import ApplicationNextbuttonComponent from '@/components/Button/ApplicationNextButton.component';
-import CheckBoxButtonsComponent from '@/components/Button/CheckBox/CheckBoxButtons.component';
+import InputTextWithLabel from '@/components/InputText/InputTextWithLabel.component';
 
 const ApplicationQuestionReport3Component = () => {
   const data = APPLICATION_REPORT[3];
   const [onError, setOnError] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const [appData, setAppData] = useState('');
   // const [showEtc, setShowEtc] = useState(appData.supportPathAddtional);
   const workingClassName =
     'p-4 w-full outline-none border-[1px] border-[#DBDBDB] rounded-md';
@@ -33,13 +33,13 @@ const ApplicationQuestionReport3Component = () => {
       <div className="w-[30rem]">
         <div>
           <div>
-            <div className="pb-4">
-              {data.value[0].title}
-              <span className="font-light">
-                (동아리, 연구실, 아르바이트, 스터디, 교환학생 등)
-              </span>
-            </div>
-            <input
+            <InputTextWithLabel
+              onChangeText={() => {}}
+              title={data.value[0].title ?? ''}
+              value={appData}
+              subTitle="동아리, 연구실, 아르바이트, 스터디, 교환학생 등"
+            />
+            {/* <input
               className={workingClassName}
               type="text"
               // value={appData.working}
@@ -50,7 +50,7 @@ const ApplicationQuestionReport3Component = () => {
               //     return cv;
               //   })
               // }
-            />
+            /> */}
             <div className="h-4"></div>
           </div>
           <div>

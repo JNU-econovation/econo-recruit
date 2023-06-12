@@ -9,5 +9,4 @@ type userInformation = {
   authority: user_authority;
 };
 
-export const userInformationState = atom( {
-  } as userInformation,);
+export const userInformationState = atom(<userInformation>{});

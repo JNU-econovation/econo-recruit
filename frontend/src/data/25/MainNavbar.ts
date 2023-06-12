@@ -43,6 +43,6 @@ export const MainNavbar = [
     target: '_blank',
     href: '#',
   },
-];
+] as const;
 
 deepFreeze(MainNavbar);

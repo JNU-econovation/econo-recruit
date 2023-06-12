@@ -6,6 +6,6 @@ type managerBoardState = {
   type: string;
 };
 
-export const managerListState = atom([] as managerBoardState[]);
+export const managerListState = atom<managerBoardState[]>([]);
 
 export const managerPopupBooleanState = atom( false );

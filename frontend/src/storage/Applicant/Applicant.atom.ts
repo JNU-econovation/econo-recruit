@@ -7,6 +7,6 @@ type applicantBoardState = {
   registerDate: string
 }
 
-export const applicantListState = atom([] as applicantBoardState[])
+export const applicantListState = atom<applicantBoardState[]>([])
 
 export const applicantPopupBooleanState = atom(false)

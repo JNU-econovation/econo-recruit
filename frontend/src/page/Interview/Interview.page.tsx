@@ -20,9 +20,7 @@ const InterviewPage = () => {
   const type = searchParmas.get('type') ?? 'list';
   const order = searchParmas.get('order') ?? 'newset';
   const page = searchParmas.get('page') ?? '1';
-
   const setInterviewList = useSetAtom(interviewListState);
-  const isPopuped = useAtomValue(interviewPopupBooleanState);
   const orderMenu = [
     { type: 'newset', string: '최신순' },
     { type: 'name', string: '이름순' },
@@ -36,7 +34,7 @@ const InterviewPage = () => {
 
   return (
     <>
-      {isPopuped ? <InterviewPopupComponent /> : ''}
+      <InterviewPopupComponent />
       <div className="px-24 w-screen h-screen flex p-12">
         <CommonNavbarComponent />
         <div className="flex-1 ml-32 min-w-[46rem] mb-48">

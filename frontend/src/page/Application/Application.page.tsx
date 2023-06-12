@@ -24,16 +24,17 @@ const ApplicationQuestion0Component = lazy(
   () => import('@/components/Application/Question/Question0.component')
 );
 
+const page = [
+  <ApplicationQuestionReport0Component />,
+  <ApplicationQuestionReport1Component />,
+  <ApplicationQuestionReport2Component />,
+  <ApplicationQuestionReport3Component />,
+  <ApplicationQuestion0Component />,
+];
+
 const ApplicationPage = () => {
   const { period } = useParams();
   const pageIndex = useAtomValue(ApplicationNavbarIndexState);
-  const page = [
-    <ApplicationQuestionReport0Component />,
-    <ApplicationQuestionReport1Component />,
-    <ApplicationQuestionReport2Component />,
-    <ApplicationQuestionReport3Component />,
-    <ApplicationQuestion0Component />,
-  ];
 
   return (
     <div className="pt-24 flex">

@@ -8,6 +8,6 @@ export const KANBAN_MANUES = [
   '지원자 대응팀',
   'OT담당팀',
   '기타 참고',
-]
+] as const
 
 deepFreeze(KANBAN_MANUES)

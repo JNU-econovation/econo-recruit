@@ -7,6 +7,7 @@ type InputTextWithLabel = {
   onChangeText: (e: string) => void;
   maxTextLength?: number;
   placeholder?: string;
+  subTitle?: string;
 };
 
 const inputTextWithLabel = ({
@@ -16,6 +17,7 @@ const inputTextWithLabel = ({
   onChangeText,
   maxTextLength,
   placeholder = '',
+  subTitle,
 }: InputTextWithLabel) => {
   return (
     <>
@@ -33,6 +35,7 @@ const inputTextWithLabel = ({
             <div className="w-fit text-[#DC0000] -translate-x-[calc(100%+1rem)] -translate-y-10">
               {title.replace(/[*]/g, '').trim()}을 입력해주세요.
             </div>
+            {subTitle ? <span className="font-light">{subTitle}</span> : ''}
           </div>
         ) : (
           ''

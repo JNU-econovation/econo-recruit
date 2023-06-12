@@ -1,10 +1,8 @@
 import { ApplicantCommentMock } from '@/mock/MockData';
-import { useState } from 'react';
 import CommentDetailComponent from './CommentDetail.component';
+import CommentInputForm from './CommentInputForm.component';
 
 const ApplicantCommentComponent = () => {
-  const [isNocomment, setIsNocomment] = useState(false);
-  const [comment, setComment] = useState('');
   const commentData = ApplicantCommentMock;
 
   return (
@@ -18,39 +16,7 @@ const ApplicantCommentComponent = () => {
           <img src="/arrow.forward.circle.fill.svg" alt="" />
         </button>
       </div>
-      <div>
-        <textarea
-          className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 outline-none resize-none text-sm h-24"
-          disabled={isNocomment}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        ></textarea>
-        <div className="font-normal">
-          <div className="flex items-center gap-2 text-sm font-normal my-2">
-            <input
-              className="accent-black"
-              type="checkbox"
-              name="question"
-              id="question"
-            />
-            <label htmlFor="question">질문드립니다.</label>
-          </div>
-          <div className="flex items-center gap-2 text-sm font-normal my-2">
-            <input
-              className="accent-black"
-              type="checkbox"
-              name="nocomment"
-              id="nocomment"
-              checked={isNocomment}
-              onChange={() => {
-                setIsNocomment(!isNocomment);
-                setComment('지인이므로 코멘트 삼가겠습니다.');
-              }}
-            />
-            <label htmlFor="nocomment">지인이므로 코멘트 삼가겠습니다.</label>
-          </div>
-        </div>
-      </div>
+      <CommentInputForm />
       <div className="flex flex-col gap-8 pt-8">
         {commentData.map((comment) => (
           <CommentDetailComponent comment={comment} key={comment.id} />

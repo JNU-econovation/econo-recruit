@@ -7,6 +7,6 @@ type interviewBoardState = {
   registerDate: string;
 };
 
-export const interviewListState = atom( [] as interviewBoardState[]);
+export const interviewListState = atom(<interviewBoardState[]>[] );
 
 export const interviewPopupBooleanState = atom(false);
