@@ -1,35 +1,132 @@
 package com.econovation.recruit.application.utils;
 
-import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.board.Board;
-import com.econovation.recruit.domain.comment.Comment;
-import com.econovation.recruit.domain.dto.*;
-import com.econovation.recruit.domain.interviewer.Interviewer;
-import com.econovation.recruit.domain.record.Record;
-import com.econovation.recruit.domain.resume.Resume;
-import com.econovation.recruit.domain.score.Score;
-import com.econovation.recruit.domain.timetable.TimeTable;
 
+import com.econovation.recruitdomain.domain.applicant.Applicant;
+import com.econovation.recruitdomain.domain.board.Board;
+import com.econovation.recruitdomain.domain.comment.Comment;
+import com.econovation.recruitdomain.domain.dto.*;
+import com.econovation.recruitdomain.domain.interviewer.Interviewer;
+import com.econovation.recruitdomain.domain.interviewer.Role;
+import com.econovation.recruitdomain.domain.record.Record;
+import com.econovation.recruitdomain.domain.score.Score;
+import com.econovation.recruitdomain.domain.timetable.TimeTable;
+import java.util.LinkedList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-public interface EntityMapper {
-    Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto);
-    BoardResponseDto UpdateLocationBoardDtoToEntity(Board board);
-    Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto);
-    List<TimeTable> toTimeTables(List<TimeTableInsertDto> timetable, Integer applicantId);
+@Component
+@RequiredArgsConstructor
+public class EntityMapper {
+    private static final String NO_MATCH_SCORE = "해당하는 SCORE가 없습니다";
 
-    Comment toComment(CommentRegisterDto commentRegisterDto);
+    public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
+        return Applicant.builder()
+                .email(applicantRegisterDto.getEmail())
+                .grade(applicantRegisterDto.getGrade())
+                //                .card()
+                .major(applicantRegisterDto.getMajor())
+                .minor(applicantRegisterDto.getMinor())
+                .doubleMajor(applicantRegisterDto.getDoubleMajor())
+                .firstPriority(applicantRegisterDto.getFirstPriority())
+                .hopeField(applicantRegisterDto.getHopeField())
+                //                .commentCount()
+                //                .likeCount()
+                .semester(applicantRegisterDto.getSemester())
+                .studentId(applicantRegisterDto.getStudentId())
+                .phoneNumber(applicantRegisterDto.getPhoneNumber())
+                .name(applicantRegisterDto.getName())
+                .secondPriority(applicantRegisterDto.getSecondPriority())
+                .portfolio((applicantRegisterDto.getPortfolio()))
+                .supportPath(applicantRegisterDto.getSupportPath())
+                .plan(applicantRegisterDto.getPlan())
+                .build();
+    }
 
-    List<Resume> toResumes(List<ResumeInsertDto> resumesDto);
+    public BoardResponseDto UpdateLocationBoardDtoToEntity(Board board) {
+        return BoardResponseDto.builder().build();
+    }
 
-    List<Interviewer> toInterviewers(List<InterviewerCreateDto> interviewerCreateDto);
+    public Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto, Applicant applicant) {
+        return Comment.builder()
+                .applicant(applicant)
+                .content(commentRegisterDto.getContent())
+                .isDeleted(false)
+                .parentId(commentRegisterDto.getParentId())
+                .build();
+    }
 
-    Score toScore(CreateScoreDto createScoreDto);
+    public List<TimeTable> toTimeTables(List<TimeTableInsertDto> timetable, Applicant applicant) {
+        List<TimeTable> times = new LinkedList();
+        for (TimeTableInsertDto time : timetable) {
+            TimeTable a =
+                    TimeTable.builder()
+                            .endTime(time.getEndTime())
+                            .startTime(time.getStartTime())
+                            .day(time.getDay())
+                            .applicant(applicant)
+                            .build();
+            times.add(a);
+        }
+        return times;
+    }
 
-    Score toScoreByUpdateDto(UpdateScoreDto updateScoreDto);
+    public Comment toComment(CommentRegisterDto commentRegisterDto, Applicant applicant) {
+        return Comment.builder()
+                .parentId(commentRegisterDto.getParentId())
+                .idpId(commentRegisterDto.getIdpId())
+                .applicant(applicant)
+                .content(commentRegisterDto.getContent())
+                .build();
+    }
 
-    Record toRecord(CreateRecordDto createRecordDto);
+//    public List<Resume> toResumes(List<ResumeInsertDto> resumesDto,appl) {
+//        List<Resume> resumes = new LinkedList();
+//        for (ResumeInsertDto resume : resumesDto) {
+//            resumes.add(
+//                    Resume.builder()
+//                            .answer(resume.getAnswer())
+//                            .questionId(resume.getQuestionId())
+//                            .applicant(applicant)
+//                            .build());
+//        }
+//        return resumes;
+//    }
 
-    //    CommentResponseDto toCommentResponseDto(Comment comment);
+    public List<Interviewer> toInterviewers(List<InterviewerCreateDto> interviewerCreateDtos) {
+        List<Interviewer> interviewers = new LinkedList();
+        for (InterviewerCreateDto interviewerCreateDto : interviewerCreateDtos) {
+            interviewers.add(
+                    Interviewer.builder()
+                            .role(Role.getByName(interviewerCreateDto.getRole()))
+                            .id(interviewerCreateDto.getIdpId())
+                            .build());
+        }
+        return interviewers;
+    }
 
+    public Score toScore(CreateScoreDto createScoreDto,Applicant applicant) {
+        return Score.builder()
+                .criteria(createScoreDto.getCriteria())
+                .score(createScoreDto.getScore())
+                .applicant(applicant)
+                .idpId(createScoreDto.getIdpId())
+                .build();
+    }
+
+    public Score toScore(UpdateScoreDto updateScoreDto,Applicant applicant) {
+        return Score.builder()
+                .score(updateScoreDto.getScore())
+                .criteria(updateScoreDto.getCriteria())
+                .applicant(applicant)
+                .build();
+    }
+
+    public Record toRecord(CreateRecordDto createRecordDto,Applicant applicant){
+        return Record.builder()
+                .url(createRecordDto.getUrl())
+                .record(createRecordDto.getRecord())
+                .applicant(applicant)
+                .build();
+    }
 }

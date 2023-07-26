@@ -1,15 +1,15 @@
 package com.econovation.recruit.application.service;
 
+
 import com.econovation.recruit.application.port.in.RecordUseCase;
-import com.econovation.recruit.application.port.out.ApplicantLoadPort;
-import com.econovation.recruit.application.port.out.RecordLoadPort;
-import com.econovation.recruit.application.port.out.RecordRecordPort;
-import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.record.Record;
+import com.econovation.recruitdomain.out.ApplicantLoadPort;
+import com.econovation.recruitdomain.out.RecordLoadPort;
+import com.econovation.recruitdomain.out.RecordRecordPort;
+import com.econovation.recruitdomain.domain.applicant.Applicant;
+import com.econovation.recruitdomain.domain.record.Record;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +18,7 @@ public class RecordService implements RecordUseCase {
     private final RecordLoadPort recordLoadPort;
 
     private final ApplicantLoadPort applicantLoadPort;
+
     @Override
     public Record createRecord(Record record) {
         return recordRecordPort.save(record);

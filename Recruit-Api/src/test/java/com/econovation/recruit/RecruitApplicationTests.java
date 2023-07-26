@@ -1,5 +1,6 @@
 package com.econovation.recruit;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +8,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RecruitApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }

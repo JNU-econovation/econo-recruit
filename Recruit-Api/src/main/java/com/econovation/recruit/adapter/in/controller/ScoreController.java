@@ -1,12 +1,16 @@
 package com.econovation.recruit.adapter.in.controller;
 
+
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.port.in.ScoreUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
-import com.econovation.recruit.domain.dto.CreateScoreDto;
-import com.econovation.recruit.domain.dto.UpdateScoreDto;
-import com.econovation.recruit.domain.record.Record;
-import com.econovation.recruit.domain.score.Score;
+import com.econovation.recruitdomain.domain.dto.CreateScoreDto;
+import com.econovation.recruitdomain.domain.dto.UpdateScoreDto;
+import com.econovation.recruitdomain.domain.record.Record;
+import com.econovation.recruitdomain.domain.score.Score;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -26,6 +26,7 @@ public class ScoreController {
     private final ScoreUseCase scoreUseCase;
     private final RecordUseCase recordUseCase;
     private final EntityMapper entityMapper;
+
     @PostMapping("/scores")
     public ResponseEntity<Score> createScore(CreateScoreDto createScoreDto) {
         Score score = entityMapper.toScore(createScoreDto);
@@ -35,7 +36,7 @@ public class ScoreController {
 
     @PostMapping("/scores/update")
     public ResponseEntity<Score> updateScore(UpdateScoreDto updateScoreDto) {
-        Score score = entityMapper.toScoreByUpdateDto(updateScoreDto);
+        Score score = entityMapper.toScore(updateScoreDto);
         // update를 save와 동일
         score = scoreUseCase.createScore(score);
         return new ResponseEntity<>(score, HttpStatus.OK);
@@ -48,7 +49,8 @@ public class ScoreController {
     }
 
     @GetMapping("/scores/records")
-    public ResponseEntity<Map<String, Object> > getScoresAndRecordsByApplicantId(Integer applicantId) {
+    public ResponseEntity<Map<String, Object>> getScoresAndRecordsByApplicantId(
+            Integer applicantId) {
         List<Score> scores = scoreUseCase.getByApplicantId(applicantId);
         Record record = recordUseCase.findByApplicantId(applicantId);
         Map<String, Object> map = new HashMap<>();
@@ -56,5 +58,4 @@ public class ScoreController {
         map.put("record", record);
         return new ResponseEntity(map, HttpStatus.OK);
     }
-
 }

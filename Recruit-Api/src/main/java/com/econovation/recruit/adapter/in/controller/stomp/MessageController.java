@@ -1,17 +1,13 @@
 package com.econovation.recruit.adapter.in.controller.stomp;
 
 
-import com.econovation.recruit.adapter.in.controller.stomp.Message;
-import com.econovation.recruit.adapter.in.controller.stomp.ResponseMessage;
+import java.security.Principal;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
-
-import java.security.Principal;
 
 @Controller
 @Slf4j
@@ -29,8 +25,11 @@ public class MessageController {
     @SendToUser("/topic/private-messages")
     public ResponseMessage getPrivateMessage(final Message message, Principal principal) {
 
-        return new ResponseMessage(HtmlUtils.htmlEscape("Sending private Message To User"+ principal.getName() + ":"
-                + message.getMessageContent()));
-
+        return new ResponseMessage(
+                HtmlUtils.htmlEscape(
+                        "Sending private Message To User"
+                                + principal.getName()
+                                + ":"
+                                + message.getMessageContent()));
     }
 }

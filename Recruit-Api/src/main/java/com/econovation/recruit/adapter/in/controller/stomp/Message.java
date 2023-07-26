@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller.stomp;
 
-
 public class Message {
     private String messageContent;
 

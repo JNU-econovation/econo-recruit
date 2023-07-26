@@ -1,5 +1,6 @@
 package com.econovation.recruit.adapter.in.controller.stomp;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,9 @@ public class WSService {
 
         messagingTemplate.convertAndSend("/topic/messages", response);
     }
-    public void notifyUser(final String userId,final String message) {
+
+    public void notifyUser(final String userId, final String message) {
         ResponseMessage response = new ResponseMessage(message);
-        messagingTemplate.convertAndSendToUser(userId,"/topic/messages", response);
+        messagingTemplate.convertAndSendToUser(userId, "/topic/messages", response);
     }
 }

@@ -1,7 +1,9 @@
 package com.econovation.recruit.adapter.in.controller;
 
+
 import com.econovation.recruit.application.port.in.LabelUseCase;
-import com.econovation.recruit.domain.label.Label;
+import com.econovation.recruitdomain.domain.label.Label;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,13 +23,15 @@ public class LabelController {
         List<Label> labels = labelUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(labels, HttpStatus.OK);
     }
+
     @PostMapping("/labels")
-    public ResponseEntity<Label> createLabel(Integer applicantId, Integer idpId){
+    public ResponseEntity<Label> createLabel(Integer applicantId, Integer idpId) {
         Label label = labelUseCase.createLabel(applicantId, idpId);
         return new ResponseEntity<>(label, HttpStatus.OK);
     }
+
     @PostMapping("/labels/delete")
-    public ResponseEntity<Boolean> deleteLabel(Integer applicantId, Integer idpId){
+    public ResponseEntity<Boolean> deleteLabel(Integer applicantId, Integer idpId) {
         Boolean isDeleted = labelUseCase.deleteLabel(applicantId, idpId);
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
     }

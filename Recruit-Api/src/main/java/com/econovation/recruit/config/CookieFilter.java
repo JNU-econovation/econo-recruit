@@ -1,21 +1,21 @@
 package com.econovation.recruit.config;
 
-import com.econovation.recruit.application.port.in.InterviewerUseCase;
-import com.econovation.recruit.domain.interviewer.Role;
-import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.econovation.recruit.application.port.in.InterviewerUseCase;
+import com.econovation.recruitdomain.domain.interviewer.Role;
+import io.jsonwebtoken.Jwts;
+import java.io.IOException;
+import java.util.Base64;
 import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Base64;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 @Slf4j
@@ -32,30 +32,42 @@ public class CookieFilter extends OncePerRequestFilter {
     }
 
     public Integer getIdpId(String token) {
-        Integer aLong = Integer.valueOf(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
+        Integer aLong =
+                Integer.valueOf(
+                        Jwts.parser()
+                                .setSigningKey(secretKey)
+                                .parseClaimsJws(token)
+                                .getBody()
+                                .getSubject());
         return aLong;
     }
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String token = resolveToken(request.getHeader("Authorization"));
-        if(request.getRequestURI().startsWith("/swagger") || request.getRequestURI().startsWith("/api-docs") || request.getRequestURI().startsWith("/api/v1/interviewers")){
+        if (request.getRequestURI().startsWith("/swagger")
+                || request.getRequestURI().startsWith("/api-docs")
+                || request.getRequestURI().startsWith("/api/v1/interviewers")) {
             log.info("permisrsion access");
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
             return;
         }
-        if (token == null ) {
+        if (token == null) {
             log.info("token is null");
             return;
         }
         Integer idpId = getIdpId(token);
-        filterChain.doFilter(request,response);
-        if(request.getRequestURI().startsWith("/api/v1/interviewers")){
+        filterChain.doFilter(request, response);
+        if (request.getRequestURI().startsWith("/api/v1/interviewers")) {
             String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
-            if(role.equals(Role.ROLE_PRESIDENT.name()) ||
-//                    role.equals(Role.ROLE_TF.name()) ||
-                    role.equals(Role.ROLE_OPERATION.name())){
+            if (role.equals(Role.ROLE_PRESIDENT.name())
+                    ||
+                    //                    role.equals(Role.ROLE_TF.name()) ||
+                    role.equals(Role.ROLE_OPERATION.name())) {
                 log.info("ADMIN ACCESS");
-                filterChain.doFilter(request,response);
+                filterChain.doFilter(request, response);
             }
             return;
         }
@@ -72,7 +84,7 @@ public class CookieFilter extends OncePerRequestFilter {
         }*/
         // token은 있는데 다른 요청일 경우 넘어가자
         log.info("token은 있는데 다른 요청일 경우 넘어가자");
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     private String resolveToken(String authorization) {

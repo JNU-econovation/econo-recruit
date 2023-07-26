@@ -1,5 +1,6 @@
 package com.econovation.recruitcommon;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,5 +10,4 @@ public class RecruitCommonApplication {
     public static void main(String[] args) {
         SpringApplication.run(RecruitCommonApplication.class, args);
     }
-
 }

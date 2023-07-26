@@ -1,10 +1,9 @@
 package com.econovation.recruit.application.port.in;
 
-import com.econovation.recruit.domain.board.Board;
-import com.econovation.recruit.domain.board.Navigation;
-import com.econovation.recruit.domain.card.Card;
-import com.econovation.recruit.domain.dto.UpdateLocationBoardDto;
 
+import com.econovation.recruitdomain.domain.board.Board;
+import com.econovation.recruitdomain.domain.board.Navigation;
+import com.econovation.recruitdomain.domain.dto.UpdateLocationBoardDto;
 import java.util.List;
 import java.util.Map;
 
@@ -33,8 +32,6 @@ public interface BoardUseCase {
 
     void relocationBetweenStartToEndLowLoc(UpdateLocationBoardDto updateLocationBoardDto);
 
-
-
-//    Navigation getByNavLoc(Integer navLoc);
+    //    Navigation getByNavLoc(Integer navLoc);
 
 }

@@ -1,27 +1,27 @@
-//package com.econovation.recruit;
+// package com.econovation.recruit;
 //
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.web.server.LocalServerPort;
-//import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-//import org.springframework.messaging.simp.stomp.StompSession;
-//import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-//import org.springframework.test.context.junit.jupiter.SpringExtension;
-//import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-//import org.springframework.web.socket.messaging.WebSocketStompClient;
-//import org.springframework.web.socket.sockjs.client.SockJsClient;
-//import org.springframework.web.socket.sockjs.client.WebSocketTransport;
+// import org.junit.jupiter.api.AfterEach;
+// import org.junit.jupiter.api.BeforeEach;
+// import org.junit.jupiter.api.extension.ExtendWith;
+// import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.web.server.LocalServerPort;
+// import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+// import org.springframework.messaging.simp.stomp.StompSession;
+// import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+// import org.springframework.test.context.junit.jupiter.SpringExtension;
+// import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+// import org.springframework.web.socket.messaging.WebSocketStompClient;
+// import org.springframework.web.socket.sockjs.client.SockJsClient;
+// import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 //
-//import java.util.ArrayList;
-//import java.util.concurrent.ExecutionException;
-//import java.util.concurrent.TimeUnit;
-//import java.util.concurrent.TimeoutException;
+// import java.util.ArrayList;
+// import java.util.concurrent.ExecutionException;
+// import java.util.concurrent.TimeUnit;
+// import java.util.concurrent.TimeoutException;
 //
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//public class StompSupport {
+// @ExtendWith(SpringExtension.class)
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// public class StompSupport {
 //
 //    protected StompSession stompSession;
 //
@@ -57,4 +57,4 @@
 //        transports.add(new WebSocketTransport(new StandardWebSocketClient()));
 //        return transports;
 //    }
-//}
+// }

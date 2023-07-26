@@ -1,15 +1,19 @@
 package com.econovation.recruit.application.service;
 
+
 import com.econovation.recruit.application.port.in.CommentUseCase;
-import com.econovation.recruit.application.port.out.*;
-import com.econovation.recruit.domain.applicant.Applicant;
-import com.econovation.recruit.domain.comment.Comment;
-import com.econovation.recruit.domain.comment.CommentLike;
+import com.econovation.recruitdomain.domain.applicant.Applicant;
+import com.econovation.recruitdomain.domain.comment.Comment;
+import com.econovation.recruitdomain.domain.comment.CommentLike;
+import com.econovation.recruitdomain.out.ApplicantLoadPort;
+import com.econovation.recruitdomain.out.CommentLikeLoadPort;
+import com.econovation.recruitdomain.out.CommentLikeRecordPort;
+import com.econovation.recruitdomain.out.CommentLoadPort;
+import com.econovation.recruitdomain.out.CommentRecordPort;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class CommentService implements CommentUseCase {
     private final CommentLikeRecordPort commentLikeRecordPort;
     private final CommentLikeLoadPort commentLikeLoadPort;
     private final ApplicantLoadPort applicantLoadPort;
+
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
@@ -40,11 +45,8 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public void createCommentLike(Comment comment,Integer idpId) {
-        CommentLike commentLike = CommentLike.builder()
-                .comment(comment)
-                .idpId(idpId)
-                .build();
+    public void createCommentLike(Comment comment, Integer idpId) {
+        CommentLike commentLike = CommentLike.builder().comment(comment).idpId(idpId).build();
         commentLikeRecordPort.saveCommentLike(commentLike);
     }
 
