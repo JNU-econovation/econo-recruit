@@ -1,18 +1,18 @@
-import ApplicationNavbar from "@/src/components/application/ApplicationNavbar.component";
+import ApplicationNavbar from "@/components/application/ApplicationNavbar.component";
 import { FC } from "react";
 
 interface ApplicationPageProps {
   params: {
-    period: string;
+    generation: string;
   };
 }
 
 const ApplicationPage: FC<ApplicationPageProps> = ({ params }) => {
-  const { period } = params;
+  const { generation } = params;
 
   return (
     <div>
-      <ApplicationNavbar />
+      <ApplicationNavbar generation={generation} />
     </div>
   );
 };
