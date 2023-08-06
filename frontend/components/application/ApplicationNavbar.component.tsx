@@ -5,27 +5,24 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
 import { APPLICATION } from "@/constants/application/25";
+import Txt from "../common/Txt.component";
 
 interface ApplicationNavbarProps {
-  generation: string;
+  applicationQuestion: ApplicationQuestion[];
+  className?: string;
 }
 
-const ApplicationNavbar: FC<ApplicationNavbarProps> = ({ generation }) => {
+const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
+  applicationQuestion,
+  className,
+}) => {
   const [applicationIndex, setApplicationIndex] = useAtom(applicationIndexAtom);
-  const ApplicationQuestion =
-    require(`@/constants/application/${generation}.ts`)
-      .APPLICATION as ApplicationQuestion[];
 
   return (
-    <section className="pl-12 w-full h-full">
-      {ApplicationQuestion.map((question, index) => (
+    <nav className={classNames("pl-12 w-full h-full", className)}>
+      {applicationQuestion.map((question, index) => (
         <button
-          className={classNames(
-            "text-left block relative p-4 transition-all before:h-2 before:w-2 before:rounded-full before:absolute before:top-1/2 before:-translate-y-1/2 before:-translate-x-4",
-            applicationIndex >= index
-              ? "before:bg-black text-black"
-              : "before:bg-gray-300 text-gray-300"
-          )}
+          className={"text-left p-4 relative"}
           onClick={() => setApplicationIndex(index)}
           key={question.id}
         >
@@ -40,10 +37,19 @@ const ApplicationNavbar: FC<ApplicationNavbarProps> = ({ generation }) => {
               )}
             ></div>
           )}
-          {question.title}
+          <Txt
+            className={classNames(
+              "relative transition-all before:h-2 before:w-2 before:rounded-full before:absolute before:translate-y-full before:-translate-x-4",
+              applicationIndex >= index
+                ? "before:bg-black text-black"
+                : "before:bg-gray-300 text-gray-300"
+            )}
+          >
+            {question.title}
+          </Txt>
         </button>
       ))}
-    </section>
+    </nav>
   );
 };
 

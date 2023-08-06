@@ -1,13 +1,13 @@
 import { FC, PropsWithChildren } from "react";
-import classnames from "classnames";
+import classNames from "classnames";
 
 const typographyType = {
-  h6: "text-4xl font-bold",
-  h5: "text-3xl font-bold",
-  h4: "text-2xl font-bold",
-  h3: "text-xl font-bold",
-  h2: "text-lg font-bold",
-  h1: "text-base font-bold",
+  h1: "text-4xl font-bold",
+  h2: "text-3xl font-bold",
+  h3: "text-2xl font-bold",
+  h4: "text-xl font-bold",
+  h5: "text-lg font-bold",
+  h6: "text-base font-bold",
   p: "text-base",
 };
 
@@ -20,7 +20,7 @@ const colorType = {
 interface TxtProps {
   typography?: keyof typeof typographyType;
   color?: keyof typeof colorType;
-  className: string;
+  className?: string;
 }
 
 const Txt: FC<PropsWithChildren<TxtProps>> = ({
@@ -30,7 +30,7 @@ const Txt: FC<PropsWithChildren<TxtProps>> = ({
   className,
 }) => (
   <span
-    className={classnames(
+    className={classNames(
       className,
       colorType[color],
       typographyType[typography]
