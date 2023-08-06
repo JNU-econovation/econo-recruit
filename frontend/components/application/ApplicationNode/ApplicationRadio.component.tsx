@@ -2,17 +2,17 @@
 
 import RadioGroup from "@/components/common/Radio";
 import Txt from "@/components/common/Txt.component";
+import {
+  ApplicationNode,
+  ApplicationRadio,
+} from "@/constants/application/type";
 import { FC, useState } from "react";
 
 interface ApplicationRadioProps {
   data: ApplicationNode;
-  onlastOneClick?: Function;
 }
 
-const ApplicationRadio: FC<ApplicationRadioProps> = ({
-  data,
-  onlastOneClick,
-}) => {
+const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
   const [value, setValue] = useState<string>("");
   const radioData = data as ApplicationRadio;
 
@@ -36,7 +36,6 @@ const ApplicationRadio: FC<ApplicationRadioProps> = ({
         onChange={(e) => {
           setValue(e.target.value);
         }}
-        onClick={onlastOneClick}
       />
     </div>
   );

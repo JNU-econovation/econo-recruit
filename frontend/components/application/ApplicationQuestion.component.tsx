@@ -6,6 +6,10 @@ import classNames from "classnames";
 import { useAtomValue } from "jotai";
 import { applicationIndexAtom } from "@/stores/application";
 import dynamic from "next/dynamic";
+import {
+  ApplicationNode,
+  ApplicationQuestion,
+} from "@/constants/application/type";
 
 interface ApplicationQuestionProps {
   className?: string;
@@ -20,12 +24,16 @@ const ApplicationRadioByTwoRank = dynamic(
   () => import("./ApplicationNode/ApplicationRadioByTwoRank.component")
 );
 
+const ApplicationText = dynamic(
+  () => import("./ApplicationNode/ApplicationText.component")
+);
+
 const junctionQuestion = (applicationNodeData: ApplicationNode) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
     radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
     radioByLayer: "",
-    text: "",
+    text: <ApplicationText data={applicationNodeData} />,
     textarea: "",
     booleanTextBox: "",
     bar: "",
@@ -65,7 +73,7 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
         <div className="flex-1">
           {applicationQuestion.nodes.map((node, index) => {
             return (
-              <div key={index} className="my-6">
+              <div key={index} className="my-4">
                 {junctionQuestion(node)}
               </div>
             );

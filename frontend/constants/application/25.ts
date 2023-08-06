@@ -1,3 +1,15 @@
+import {
+  ApplicationBar,
+  ApplicationBooleanTextBox,
+  ApplicationCheckboxWithEtcType,
+  ApplicationJustText,
+  ApplicationQuestion,
+  ApplicationRadio,
+  ApplicationRadioByTwoRank,
+  ApplicationText,
+  ApplicationTextarea,
+} from "./type";
+
 export const APPLICATION = [
   {
     id: 1,
@@ -52,14 +64,20 @@ export const APPLICATION = [
         name: "contacted",
         title: "연락처",
         require: true,
+        replace: "cellPhoneNumber",
+        validate: "cellPhoneNumber",
         errorMessages: "연락처를 입력해주세요.",
+        maxLength: 13,
       } as ApplicationText,
       {
         type: "text",
         name: "classOf",
         title: "학번",
-        subtitle: "ex) 123456",
+        subtitle: "(ex) 123456)",
         require: true,
+        replace: "undergradeNumber",
+        validate: "undergradeNumber",
+        maxLength: 6,
         errorMessages: "학번을 입력해주세요.",
       } as ApplicationText,
       {

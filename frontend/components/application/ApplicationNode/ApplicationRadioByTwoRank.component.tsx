@@ -1,6 +1,10 @@
 import RadioGroup from "@/components/common/Radio";
 import Txt from "@/components/common/Txt.component";
-import { FC, Fragment, useState } from "react";
+import {
+  ApplicationNode,
+  ApplicationRadioByTwoRank,
+} from "@/constants/application/type";
+import { FC, useState } from "react";
 
 interface ApplicationRadioByTwoRankProps {
   data: ApplicationNode;

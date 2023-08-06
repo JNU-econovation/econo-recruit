@@ -1,4 +1,7 @@
-interface ApplicationQuestion {
+import { ReplacerType } from "@/functions/replacer";
+import { ValidatorType } from "@/functions/validator";
+
+export interface ApplicationQuestion {
   id: number;
   title?: string;
   subtitle?: string;
@@ -7,7 +10,7 @@ interface ApplicationQuestion {
   nodes: ApplicationNode[];
 }
 
-type ApplicationNodeTypes =
+export type ApplicationNodeTypes =
   | "radio"
   | "radioByTwoRank"
   | "radioByLayer"
@@ -19,11 +22,11 @@ type ApplicationNodeTypes =
   | "checkbox"
   | "checkboxWithEtc";
 
-interface ApplicationNode {
+export interface ApplicationNode {
   type: ApplicationNodeTypes;
 }
 
-interface ApplicationNodeBase extends ApplicationNode {
+export interface ApplicationNodeBase extends ApplicationNode {
   title?: string;
   subtitle?: string;
   require: boolean;
@@ -31,19 +34,19 @@ interface ApplicationNodeBase extends ApplicationNode {
   errorMessages?: string;
 }
 
-interface BaseWithValues extends ApplicationNodeBase {
+export interface BaseWithValues extends ApplicationNodeBase {
   value: string[];
 }
 
-interface ApplicationRadio extends BaseWithValues {
+export interface ApplicationRadio extends BaseWithValues {
   type: "radio";
 }
 
-interface BaseWithValuesWithSplitNumber extends BaseWithValues {
+export interface BaseWithValuesWithSplitNumber extends BaseWithValues {
   splitNumber: number;
 }
 
-interface ApplicationRadioByTwoRank extends ApplicationNode {
+export interface ApplicationRadioByTwoRank extends ApplicationNode {
   type: "radioByTwoRank";
   title?: string;
   subtitle?: string;
@@ -51,20 +54,24 @@ interface ApplicationRadioByTwoRank extends ApplicationNode {
   subNodes: BaseWithValuesWithSplitNumber[];
 }
 
-interface ApplicationRadioByLayer extends ApplicationNode {
+export interface ApplicationRadioByLayer extends ApplicationNode {
   type: "radioByLayer";
   subNodes: BaseWithValues[];
 }
 
-interface ApplicationText extends ApplicationNodeBase {
+export interface ApplicationText extends ApplicationNodeBase {
   type: "text";
+  validate?: ValidatorType;
+  replace?: ReplacerType;
+  maxLength?: number;
+  minLength?: number;
 }
 
-interface ApplicationTextarea extends ApplicationNodeBase {
+export interface ApplicationTextarea extends ApplicationNodeBase {
   type: "textarea";
 }
 
-interface ApplicationBooleanTextBox extends ApplicationNodeBase {
+export interface ApplicationBooleanTextBox extends ApplicationNodeBase {
   type: "booleanTextBox";
   subNodes: {
     type: "true" | "false";
@@ -75,22 +82,22 @@ interface ApplicationBooleanTextBox extends ApplicationNodeBase {
   }[];
 }
 
-interface ApplicationBar extends ApplicationNodeBase {
+export interface ApplicationBar extends ApplicationNodeBase {
   type: "bar";
 }
 
-interface ApplicationJustText extends ApplicationNodeBase {
+export interface ApplicationJustText extends ApplicationNodeBase {
   type: "justText";
   title: string;
   subtitle?: string;
 }
 
-interface ApplicationCheckboxType extends ApplicationNodeBase {
+export interface ApplicationCheckboxType extends ApplicationNodeBase {
   type: "checkbox";
   value: string[];
 }
 
-interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
+export interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
   type: "checkboxWithEtc";
   value: string[];
 }
