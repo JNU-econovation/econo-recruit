@@ -2,9 +2,9 @@ package com.econovation.recruitdomain.common.aop.redissonLock;
 
 
 import com.econovation.recruitcommon.exception.BadLockIdentifierException;
+import com.econovation.recruitcommon.exception.NotAvailableRedissonLockException;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 import com.econovation.recruitcommon.exception.RecruitDynamicException;
-import com.econovation.recruitcommon.exception.NotAvailableRedissonLockException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
@@ -46,8 +46,6 @@ public class RedissonLockAop {
                         signature.getParameterNames());
 
         RLock rLock = redissonClient.getLock(baseKey + ":" + dynamicKey);
-
-        log.info("redisson 키 설정" + baseKey + ":" + dynamicKey);
 
         long waitTime = redissonLock.waitTime();
         long leaseTime = redissonLock.leaseTime();

@@ -2,13 +2,13 @@ package com.econovation.recruit.application.service;
 
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
-import com.econovation.recruitdomain.out.BoardLoadPort;
-import com.econovation.recruitdomain.out.BoardRecordPort;
-import com.econovation.recruitdomain.out.NavigationLoadPort;
 import com.econovation.recruitdomain.domain.board.Board;
 import com.econovation.recruitdomain.domain.board.BoardRepository;
 import com.econovation.recruitdomain.domain.board.Navigation;
 import com.econovation.recruitdomain.domain.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.out.BoardLoadPort;
+import com.econovation.recruitdomain.out.BoardRecordPort;
+import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

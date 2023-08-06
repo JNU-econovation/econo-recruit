@@ -3,13 +3,13 @@ package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
+import com.econovation.recruitdomain.domain.applicant.Applicant;
+import com.econovation.recruitdomain.domain.board.Board;
+import com.econovation.recruitdomain.domain.card.Card;
 import com.econovation.recruitdomain.out.ApplicantRecordPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.card.Card;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
