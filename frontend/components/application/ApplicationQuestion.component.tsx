@@ -16,10 +16,14 @@ const ApplicationRadio = dynamic(
   () => import("./ApplicationNode/ApplicationRadio.component")
 );
 
+const ApplicationRadioByTwoRank = dynamic(
+  () => import("./ApplicationNode/ApplicationRadioByTwoRank.component")
+);
+
 const junctionQuestion = (applicationNodeData: ApplicationNode) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
-    radioByTwoRank: "",
+    radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
     radioByLayer: "",
     text: "",
     textarea: "",
@@ -46,13 +50,14 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
       <div className="my-6 h-1 bg-gray-300 w-full"></div>
       <div className="flex pr-12">
         <div className="flex-1">
-          <div className="mb-4">
-            <Txt typography="h6">{`${applicationQuestion.id}. ${
-              applicationQuestion.title
-            } ${applicationQuestion.require ? "*" : ""}`}</Txt>
+          <div className="mb-4 flex gap-2">
+            <Txt typography="h6">{`${applicationQuestion.id}. `}</Txt>
+            <Txt typography="h6">{`${applicationQuestion.title} ${
+              applicationQuestion.require ? "*" : ""
+            }`}</Txt>
           </div>
           {applicationQuestion.subtitle && (
-            <div className="pl-4">
+            <div className="pl-6">
               <Txt className="text-sm">{applicationQuestion.subtitle}</Txt>
             </div>
           )}

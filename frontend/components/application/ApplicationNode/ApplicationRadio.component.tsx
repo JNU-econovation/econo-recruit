@@ -6,9 +6,13 @@ import { FC, useState } from "react";
 
 interface ApplicationRadioProps {
   data: ApplicationNode;
+  onlastOneClick?: Function;
 }
 
-const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
+const ApplicationRadio: FC<ApplicationRadioProps> = ({
+  data,
+  onlastOneClick,
+}) => {
   const [value, setValue] = useState<string>("");
   const radioData = data as ApplicationRadio;
 
@@ -22,9 +26,7 @@ const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
       )}
       {radioData.subtitle && (
         <div className="mb-2">
-          <Txt typography="p" className="text-gray-400">
-            {radioData.subtitle}
-          </Txt>
+          <Txt className="text-gray-400">{radioData.subtitle}</Txt>
         </div>
       )}
       <RadioGroup
@@ -34,6 +36,7 @@ const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        onClick={onlastOneClick}
       />
     </div>
   );

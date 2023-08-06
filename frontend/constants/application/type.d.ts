@@ -39,12 +39,16 @@ interface ApplicationRadio extends BaseWithValues {
   type: "radio";
 }
 
+interface BaseWithValuesWithSplitNumber extends BaseWithValues {
+  splitNumber: number;
+}
+
 interface ApplicationRadioByTwoRank extends ApplicationNode {
   type: "radioByTwoRank";
   title?: string;
   subtitle?: string;
   require: boolean;
-  subNodes: BaseWithValues[];
+  subNodes: BaseWithValuesWithSplitNumber[];
 }
 
 interface ApplicationRadioByLayer extends ApplicationNode {

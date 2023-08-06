@@ -14,20 +14,23 @@ export const APPLICATION = [
       } as ApplicationRadio,
       {
         type: "radioByTwoRank",
+        require: true,
         subNodes: [
           {
-            subtitle: "1순위",
+            splitNumber: 3,
+            title: "1순위",
             name: "field1",
             require: true,
             value: ["APP", "WEB", "GAME", "AI", "IoT", "AR/VR"],
           },
           {
-            subtitle: "2순위",
+            splitNumber: 3,
+            title: "2순위",
             name: "field2",
             require: true,
             value: ["APP", "WEB", "GAME", "AI", "IoT", "AR/VR", "선택없음"],
           },
-        ] as BaseWithValues[],
+        ],
       } as ApplicationRadioByTwoRank,
     ],
   },
@@ -64,8 +67,18 @@ export const APPLICATION = [
         title: "학년 및 학기",
         require: true,
         subNodes: [
-          { name: "grade", require: true, value: ["1", "2", "3", "4"] },
-          { name: "semester", require: true, value: ["1", "2"] },
+          {
+            splitNumber: 4,
+            name: "grade",
+            require: true,
+            value: ["1학년", "2학년", "3학년", "4학년"],
+          },
+          {
+            splitNumber: 2,
+            name: "semester",
+            require: true,
+            value: ["1학기", "2학기"],
+          },
         ],
       } as ApplicationRadioByTwoRank,
     ],
