@@ -10,19 +10,19 @@ interface ApplicationPageProps {
 
 const ApplicationPage: FC<ApplicationPageProps> = ({ params }) => {
   const { generation } = params;
-  const applicationQuestion =
+  const applicationQuestions =
     require(`@/constants/application/${generation}.ts`)
       .APPLICATION as ApplicationQuestion[];
 
   return (
-    <section className="flex gap-24 mt-24">
+    <section className="flex gap-24 mt-24 min-w-[1600px]">
       <ApplicationNavbar
         className="flex-1"
-        applicationQuestion={applicationQuestion}
+        applicationQuestions={applicationQuestions}
       />
       <ApplicationQuestion
         className="flex-[3_0_0]"
-        applicationQuestion={applicationQuestion}
+        applicationQuestions={applicationQuestions}
       />
     </section>
   );

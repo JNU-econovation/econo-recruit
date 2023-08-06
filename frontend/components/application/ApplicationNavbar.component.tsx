@@ -8,19 +8,19 @@ import { APPLICATION } from "@/constants/application/25";
 import Txt from "../common/Txt.component";
 
 interface ApplicationNavbarProps {
-  applicationQuestion: ApplicationQuestion[];
+  applicationQuestions: ApplicationQuestion[];
   className?: string;
 }
 
 const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
-  applicationQuestion,
+  applicationQuestions,
   className,
 }) => {
   const [applicationIndex, setApplicationIndex] = useAtom(applicationIndexAtom);
 
   return (
     <nav className={classNames("pl-12 w-full h-full", className)}>
-      {applicationQuestion.map((question, index) => (
+      {applicationQuestions.map((question, index) => (
         <button
           className={"text-left p-4 relative"}
           onClick={() => setApplicationIndex(index)}

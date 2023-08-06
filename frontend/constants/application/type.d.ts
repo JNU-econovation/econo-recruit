@@ -7,7 +7,21 @@ interface ApplicationQuestion {
   nodes: ApplicationNode[];
 }
 
-interface ApplicationNode {}
+type ApplicationNodeTypes =
+  | "radio"
+  | "radioByTwoRank"
+  | "radioByLayer"
+  | "text"
+  | "textarea"
+  | "booleanTextBox"
+  | "bar"
+  | "justText"
+  | "checkbox"
+  | "checkboxWithEtc";
+
+interface ApplicationNode {
+  type: ApplicationNodeTypes;
+}
 
 interface ApplicationNodeBase extends ApplicationNode {
   title?: string;
@@ -57,11 +71,11 @@ interface ApplicationBooleanTextBox extends ApplicationNodeBase {
   }[];
 }
 
-interface ApplicationBar {
+interface ApplicationBar extends ApplicationNodeBase {
   type: "bar";
 }
 
-interface ApplicationJustText {
+interface ApplicationJustText extends ApplicationNodeBase {
   type: "justText";
   title: string;
   subtitle?: string;
