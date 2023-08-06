@@ -10,6 +10,7 @@ import {
   ApplicationNode,
   ApplicationQuestion,
 } from "@/constants/application/type";
+import ApplicationNextButton from "./ApplicationNode/ApplicationNextButton.component";
 
 interface ApplicationQuestionProps {
   className?: string;
@@ -78,6 +79,9 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
               </div>
             );
           })}
+          {applicationQuestions.length - 1 > applicationIndex && (
+            <ApplicationNextButton canNext={true} />
+          )}
         </div>
       </div>
     </article>
