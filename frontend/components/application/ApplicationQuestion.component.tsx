@@ -5,46 +5,14 @@ import Txt from "../common/Txt.component";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
 import { applicationIndexAtom } from "@/stores/application";
-import dynamic from "next/dynamic";
-import {
-  ApplicationNode,
-  ApplicationQuestion,
-} from "@/constants/application/type";
+import { ApplicationQuestion } from "@/constants/application/type";
 import ApplicationNextButton from "./ApplicationNode/ApplicationNextButton.component";
+import { junctionQuestion } from "./ApplicationJunction.component";
 
 interface ApplicationQuestionProps {
   className?: string;
   applicationQuestions: ApplicationQuestion[];
 }
-
-const ApplicationRadio = dynamic(
-  () => import("./ApplicationNode/ApplicationRadio.component")
-);
-
-const ApplicationRadioByTwoRank = dynamic(
-  () => import("./ApplicationNode/ApplicationRadioByTwoRank.component")
-);
-
-const ApplicationText = dynamic(
-  () => import("./ApplicationNode/ApplicationText.component")
-);
-
-const junctionQuestion = (applicationNodeData: ApplicationNode) => {
-  const jsxNode = {
-    radio: <ApplicationRadio data={applicationNodeData} />,
-    radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
-    radioByLayer: "",
-    text: <ApplicationText data={applicationNodeData} />,
-    textarea: "",
-    booleanTextBox: "",
-    bar: "",
-    justText: "",
-    checkbox: "",
-    checkboxWithEtc: "",
-  };
-
-  return jsxNode[applicationNodeData.type];
-};
 
 const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
   className,
@@ -61,7 +29,7 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
         <div className="flex-1">
           <div className="mb-4 flex gap-2">
             <Txt typography="h6">{`${applicationQuestion.id}. `}</Txt>
-            <Txt typography="h6">{`${applicationQuestion.title} ${
+            <Txt typography="h6">{`${applicationQuestion.title}${
               applicationQuestion.require ? "*" : ""
             }`}</Txt>
           </div>
@@ -80,7 +48,10 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
             );
           })}
           {applicationQuestions.length - 1 > applicationIndex && (
-            <ApplicationNextButton canNext={true} />
+            <ApplicationNextButton
+              canNext={true}
+              applicationLength={applicationQuestions.length}
+            />
           )}
         </div>
       </div>

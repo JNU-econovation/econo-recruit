@@ -1,18 +1,21 @@
 "use client";
 
-import useApplicationPageControll from "@/hooks/useApplicationPageControll.hook";
+import useApplicationIndexControll from "@/hooks/useApplicationIndexControll.hook";
 import { FC } from "react";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;
+  applicationLength: number;
   beforeCheckCallback?: () => boolean;
 }
 
 const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
   canNext,
   beforeCheckCallback,
+  applicationLength,
 }) => {
-  const { goNextPage, goPrevPage } = useApplicationPageControll();
+  const { applicationIndex, goNextIndex, goPrevIndex } =
+    useApplicationIndexControll();
   const nextButtonClassName =
     "flex-1 rounded-md flex justify-center items-center p-4";
 
@@ -20,7 +23,7 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
     <div className="flex gap-2 mt-4">
       <button
         className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
-        onClick={goPrevPage}
+        onClick={goPrevIndex}
       >
         이전
       </button>
@@ -28,9 +31,9 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
         onClick={
           beforeCheckCallback
             ? () => {
-                if (beforeCheckCallback()) goNextPage();
+                if (beforeCheckCallback()) goNextIndex();
               }
-            : goNextPage
+            : goNextIndex
         }
         disabled={!canNext}
         className={
@@ -39,7 +42,7 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
             : nextButtonClassName + " bg-[#EFEFEF] text-[#C8C8C8]"
         }
       >
-        다음
+        {`다음(${applicationIndex + 1}/${applicationLength})`}
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import RadioGroup from "@/components/common/Radio";
+import RadioGroup from "@/components/common/Radio.component";
 import Txt from "@/components/common/Txt.component";
 import {
   ApplicationNode,
@@ -26,7 +26,7 @@ const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
       )}
       {radioData.subtitle && (
         <div className="mb-2">
-          <Txt className="text-gray-400">{radioData.subtitle}</Txt>
+          <Txt>{radioData.subtitle}</Txt>
         </div>
       )}
       <RadioGroup

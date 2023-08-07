@@ -21,7 +21,7 @@ const ApplicationText: FC<ApplicationTextProps> = ({ data }) => {
     <div className="relative">
       {textData.title && (
         <label>
-          <Txt typography="h6">{`${textData.title} ${
+          <Txt typography="h6">{`${textData.title}${
             textData.require ? "*" : ""
           }`}</Txt>
           {textData.subtitle && <Txt>{` ${textData.subtitle}`}</Txt>}

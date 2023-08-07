@@ -1,4 +1,4 @@
-import RadioGroup from "@/components/common/Radio";
+import RadioGroup from "@/components/common/Radio.component";
 import Txt from "@/components/common/Txt.component";
 import {
   ApplicationNode,
@@ -23,7 +23,7 @@ const ApplicationRadioByTwoRank: FC<ApplicationRadioByTwoRankProps> = ({
     <>
       {radioByTwoRankData.title && (
         <div className="mb-2">
-          <Txt typography="h6">{`${radioByTwoRankData.title} ${
+          <Txt typography="h6">{`${radioByTwoRankData.title}${
             radioByTwoRankData.require ? "*" : ""
           }`}</Txt>
         </div>
@@ -41,18 +41,22 @@ const ApplicationRadioByTwoRank: FC<ApplicationRadioByTwoRankProps> = ({
           setSecondValue("");
         }}
       />
-      <Txt className="my-4 block">{secondNode.title}</Txt>
-      <RadioGroup
-        name={secondNode.name}
-        radioList={secondNode.value}
-        splitNumber={secondNode.splitNumber}
-        value={secondValue}
-        isSpaned={true}
-        disableValue={firstValue}
-        onChange={(e) => {
-          setSecondValue(e.target.value);
-        }}
-      />
+      {firstValue !== "init" && (
+        <>
+          <Txt className="my-4 block">{secondNode.title}</Txt>
+          <RadioGroup
+            name={secondNode.name}
+            radioList={secondNode.value}
+            splitNumber={secondNode.splitNumber}
+            value={secondValue}
+            isSpaned={true}
+            disableValue={firstValue}
+            onChange={(e) => {
+              setSecondValue(e.target.value);
+            }}
+          />
+        </>
+      )}
     </>
   );
 };
