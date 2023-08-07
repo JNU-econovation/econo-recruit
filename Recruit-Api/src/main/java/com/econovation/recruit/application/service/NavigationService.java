@@ -2,9 +2,9 @@ package com.econovation.recruit.application.service;
 
 
 import com.econovation.recruit.application.port.in.NavigationUseCase;
+import com.econovation.recruitdomain.domain.board.Navigation;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import com.econovation.recruitdomain.out.NavigationRecordPort;
-import com.econovation.recruitdomain.domain.board.Navigation;
 import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

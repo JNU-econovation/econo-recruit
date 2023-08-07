@@ -47,7 +47,8 @@ public class EntityMapper {
         return BoardResponseDto.builder().build();
     }
 
-    public Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto, Applicant applicant) {
+    public Comment CommentRegisterDtoToEntity(
+            CommentRegisterDto commentRegisterDto, Applicant applicant) {
         return Comment.builder()
                 .applicant(applicant)
                 .content(commentRegisterDto.getContent())
@@ -80,18 +81,18 @@ public class EntityMapper {
                 .build();
     }
 
-//    public List<Resume> toResumes(List<ResumeInsertDto> resumesDto,appl) {
-//        List<Resume> resumes = new LinkedList();
-//        for (ResumeInsertDto resume : resumesDto) {
-//            resumes.add(
-//                    Resume.builder()
-//                            .answer(resume.getAnswer())
-//                            .questionId(resume.getQuestionId())
-//                            .applicant(applicant)
-//                            .build());
-//        }
-//        return resumes;
-//    }
+    //    public List<Resume> toResumes(List<ResumeInsertDto> resumesDto,appl) {
+    //        List<Resume> resumes = new LinkedList();
+    //        for (ResumeInsertDto resume : resumesDto) {
+    //            resumes.add(
+    //                    Resume.builder()
+    //                            .answer(resume.getAnswer())
+    //                            .questionId(resume.getQuestionId())
+    //                            .applicant(applicant)
+    //                            .build());
+    //        }
+    //        return resumes;
+    //    }
 
     public List<Interviewer> toInterviewers(List<InterviewerCreateDto> interviewerCreateDtos) {
         List<Interviewer> interviewers = new LinkedList();
@@ -105,7 +106,7 @@ public class EntityMapper {
         return interviewers;
     }
 
-    public Score toScore(CreateScoreDto createScoreDto,Applicant applicant) {
+    public Score toScore(CreateScoreDto createScoreDto, Applicant applicant) {
         return Score.builder()
                 .criteria(createScoreDto.getCriteria())
                 .score(createScoreDto.getScore())
@@ -114,7 +115,7 @@ public class EntityMapper {
                 .build();
     }
 
-    public Score toScore(UpdateScoreDto updateScoreDto,Applicant applicant) {
+    public Score toScore(UpdateScoreDto updateScoreDto, Applicant applicant) {
         return Score.builder()
                 .score(updateScoreDto.getScore())
                 .criteria(updateScoreDto.getCriteria())
@@ -122,7 +123,7 @@ public class EntityMapper {
                 .build();
     }
 
-    public Record toRecord(CreateRecordDto createRecordDto,Applicant applicant){
+    public Record toRecord(CreateRecordDto createRecordDto, Applicant applicant) {
         return Record.builder()
                 .url(createRecordDto.getUrl())
                 .record(createRecordDto.getRecord())

@@ -2,12 +2,12 @@ package com.econovation.recruit.application.service;
 
 
 import com.econovation.recruit.application.port.in.TimeTableUseCase;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
-import com.econovation.recruitdomain.out.TimeTableLoadPort;
-import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domain.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domain.timetable.TimeTable;
+import com.econovation.recruitdomain.out.ApplicantLoadPort;
+import com.econovation.recruitdomain.out.TimeTableLoadPort;
+import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -26,7 +26,8 @@ public class TimeTableService implements TimeTableUseCase {
     private final TimeTableRecordPort timeTableRecordPort;
 
     //    @Override
-    //    public List<TimeTableInsertDto> submitTimeTable(HashMap<String, Object> param,Integer applicantId) {
+    //    public List<TimeTableInsertDto> submitTimeTable(HashMap<String, Object> param,Integer
+    // applicantId) {
     //        List<TimeTableInsertDto> timeTableInsertDtos = toList(param);
     //        return timeTableRecordPort.saveAll();
     //    }
