@@ -2,23 +2,27 @@ import { ApplicationNode } from "@/constants/application/type";
 import dynamic from "next/dynamic";
 
 const ApplicationRadio = dynamic(
-  () => import("./ApplicationNode/ApplicationRadio.component")
+  () => import("./ApplicationNode/Radio.component")
 );
 
 const ApplicationRadioByTwoRank = dynamic(
-  () => import("./ApplicationNode/ApplicationRadioByTwoRank.component")
+  () => import("./ApplicationNode/RadioByTwoRank.component")
 );
 
 const ApplicationText = dynamic(
-  () => import("./ApplicationNode/ApplicationText.component")
+  () => import("./ApplicationNode/Text.component")
 );
 
 const ApplicationCheckboxWithEtc = dynamic(
-  () => import("./ApplicationNode/ApplicationCheckboxWithEtc.component")
+  () => import("./ApplicationNode/CheckboxWithEtc.component")
 );
 
 const ApplicationTextarea = dynamic(
-  () => import("./ApplicationNode/ApplicationTextarea.component")
+  () => import("./ApplicationNode/Textarea.component")
+);
+
+const ApplicationBooleanTextarea = dynamic(
+  () => import("./ApplicationNode/BooleanTextarea.component")
 );
 
 export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
@@ -28,7 +32,7 @@ export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
     radioByLayer: "",
     text: <ApplicationText data={applicationNodeData} />,
     textarea: <ApplicationTextarea data={applicationNodeData} />,
-    booleanTextBox: "",
+    booleanTextarea: <ApplicationBooleanTextarea data={applicationNodeData} />,
     bar: "",
     justText: "",
     checkbox: "",

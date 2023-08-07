@@ -1,6 +1,6 @@
 import {
   ApplicationBar,
-  ApplicationBooleanTextBox,
+  ApplicationBooleanTextarea,
   ApplicationCheckboxWithEtcType,
   ApplicationJustText,
   ApplicationQuestion,
@@ -15,7 +15,7 @@ export const APPLICATION = [
     id: 1,
     title: "프로젝트 희망 분야를 선택해주세요.",
     subtitle: "1순위, 2순위 해당 분야를 모두 선택해주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     require: true,
     nodes: [
       {
@@ -49,7 +49,7 @@ export const APPLICATION = [
   {
     id: 2,
     title: "기본 인적 사항을 입력해주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     require: false,
     nodes: [
       {
@@ -105,7 +105,7 @@ export const APPLICATION = [
     id: 3,
     title: "기본 인적 사항을 입력해주세요.",
     subtitle: "복수 전공과 부전공은 선택 입력사항입니다.",
-    direction: "vertical",
+    direction: "horizontal",
     require: false,
     nodes: [
       {
@@ -132,7 +132,7 @@ export const APPLICATION = [
   {
     id: 4,
     title: "기타 질문 사항에 답변해주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     require: false,
     nodes: [
       {
@@ -163,7 +163,7 @@ export const APPLICATION = [
   {
     id: 5,
     title: "에코노베이션에 지원하게 된 계기는 무엇인가요?",
-    direction: "vertical",
+    direction: "horizontal",
     require: true,
     nodes: [
       {
@@ -178,7 +178,7 @@ export const APPLICATION = [
     id: 6,
     title:
       " IT 분야에서 앞으로 도전해 보고 싶은 기획이나 기술 혹은 분야가 있다면 그 이유와 함께 서술해 주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     require: true,
     nodes: [
       {
@@ -199,7 +199,7 @@ export const APPLICATION = [
       {
         name: "experience",
         require: true,
-        type: "booleanTextBox",
+        type: "booleanTextarea",
         subNodes: [
           {
             name: "experienceTrue",
@@ -220,14 +220,14 @@ export const APPLICATION = [
             type: "false",
           },
         ],
-      } as ApplicationBooleanTextBox,
+      } as ApplicationBooleanTextarea,
     ],
   },
   {
     id: 8,
     title:
       "ECONOVATION에 최종 합격시 신입기수로 구성된 팀으로 개발 프로젝트에 참여하고, 목표를 달성하기 위해 스스로 끊임 없이 배우고 노력합니다. ECONOVATION에 들어오게 된다면 어떤 목표와 학습 계획을 바탕으로 활동하고 싶나요?",
-    direction: "vertical",
+    direction: "horizontal",
     nodes: [
       {
         name: "goal",
@@ -243,7 +243,7 @@ export const APPLICATION = [
     title:
       "무언가에 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게  빠져본 적이 있다면 서술해주세요.",
     subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
-    direction: "vertical",
+    direction: "horizontal",
     nodes: [
       {
         name: "deep",
@@ -257,7 +257,7 @@ export const APPLICATION = [
     id: 10,
     title:
       "협업(프로젝트, 팀 활동)에 있어서 가장 중요하다고 생각되는 것은 무엇인지 그 이유와 함께 서술해주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     nodes: [
       {
         name: "collaboration",
@@ -270,7 +270,7 @@ export const APPLICATION = [
   {
     id: 11,
     title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요.",
-    direction: "vertical",
+    direction: "horizontal",
     nodes: [
       {
         name: "portfolio",

@@ -16,7 +16,7 @@ export type ApplicationNodeTypes =
   | "radioByLayer"
   | "text"
   | "textarea"
-  | "booleanTextBox"
+  | "booleanTextarea"
   | "bar"
   | "justText"
   | "checkbox"
@@ -71,8 +71,8 @@ export interface ApplicationTextarea extends ApplicationNodeBase {
   type: "textarea";
 }
 
-export interface ApplicationBooleanTextBox extends ApplicationNodeBase {
-  type: "booleanTextBox";
+export interface ApplicationBooleanTextarea extends ApplicationNodeBase {
+  type: "booleanTextarea";
   subNodes: {
     type: "true" | "false";
     title?: string;
