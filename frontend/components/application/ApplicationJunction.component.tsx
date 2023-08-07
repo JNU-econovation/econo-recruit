@@ -17,13 +17,17 @@ const ApplicationCheckboxWithEtc = dynamic(
   () => import("./ApplicationNode/ApplicationCheckboxWithEtc.component")
 );
 
+const ApplicationTextarea = dynamic(
+  () => import("./ApplicationNode/ApplicationTextarea.component")
+);
+
 export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
     radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
     radioByLayer: "",
     text: <ApplicationText data={applicationNodeData} />,
-    textarea: "",
+    textarea: <ApplicationTextarea data={applicationNodeData} />,
     booleanTextBox: "",
     bar: "",
     justText: "",
