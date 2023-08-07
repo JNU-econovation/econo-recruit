@@ -1,3 +1,5 @@
+"use client";
+
 import CheckboxGroup, {
   Checkbox,
 } from "@/components/common/Checkbox.component";

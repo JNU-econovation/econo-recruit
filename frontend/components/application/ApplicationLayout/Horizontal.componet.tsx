@@ -1,3 +1,5 @@
+"use client";
+
 import Txt from "@/components/common/Txt.component";
 import { ApplicationQuestion } from "@/constants/application/type";
 import { FC } from "react";

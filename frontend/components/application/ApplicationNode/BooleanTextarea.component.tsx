@@ -1,11 +1,12 @@
+"use client";
+
 import RadioGroup from "@/components/common/Radio.component";
 import Txt from "@/components/common/Txt.component";
 import {
   ApplicationBooleanTextarea,
   ApplicationNode,
 } from "@/constants/application/type";
-import classNames from "classnames";
-import { FC, useId, useState } from "react";
+import { FC, useState } from "react";
 
 interface ApplicationBooleanTextareaProps {
   data: ApplicationNode;

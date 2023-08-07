@@ -14,7 +14,6 @@ interface ApplicationTexareaProps {
 
 const ApplicationTexarea: FC<ApplicationTexareaProps> = ({ data }) => {
   const textData = data as ApplicationTextarea;
-  const id = useId();
   const [value, setValue] = useState("");
   return (
     <>
@@ -27,9 +26,8 @@ const ApplicationTexarea: FC<ApplicationTexareaProps> = ({ data }) => {
         </label>
       )}
       <textarea
-        className={classNames("my-2 border rounded-lg p-4 w-full resize-none")}
+        className="my-2 border rounded-lg p-4 w-full resize-none"
         rows={20}
-        id={id}
         name={textData.name}
         value={value}
         onChange={() => setValue(value)}

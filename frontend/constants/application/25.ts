@@ -193,12 +193,13 @@ export const APPLICATION = [
     id: 7,
     title:
       "소프트웨어 프로젝트 관련 개발/기획/디자인 경험이나 주도적으로 교육에 참여한 경험이 있나요?",
-    direction: "vertical",
+    direction: "booleanTextarea",
     require: true,
     nodes: [
       {
         name: "experience",
         require: true,
+        value: ["있다", "없다"],
         type: "booleanTextarea",
         subNodes: [
           {

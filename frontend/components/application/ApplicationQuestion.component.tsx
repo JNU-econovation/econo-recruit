@@ -8,6 +8,8 @@ import { applicationIndexAtom } from "@/stores/application";
 import { ApplicationQuestion } from "@/constants/application/type";
 import ApplicationNextButton from "./ApplicationNode/NextButton.component";
 import ApplicationHorizontalLayout from "./ApplicationLayout/Horizontal.componet";
+import ApplicationVerticalLayout from "./ApplicationLayout/Vertical.component";
+import { applicationLayout } from "./ApplicationLayout.component";
 
 interface ApplicationQuestionProps {
   className?: string;
@@ -26,13 +28,7 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
       <Txt typography="h1">신입모집 신청</Txt>
       <div className="my-6 h-1 bg-gray-300 w-full"></div>
       <div className="flex gap-6 pr-12">
-        {applicationQuestion.direction === "horizontal" ? (
-          <ApplicationHorizontalLayout
-            applicationQuestion={applicationQuestion}
-          />
-        ) : (
-          ""
-        )}
+        {applicationLayout(applicationQuestion.direction, applicationQuestion)}
       </div>
       {applicationQuestions.length - 1 > applicationIndex && (
         <div className="translate-x-[calc(100%+1.5rem)] w-[calc(50%-2.3rem)]">

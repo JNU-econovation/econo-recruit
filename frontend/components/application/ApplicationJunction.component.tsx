@@ -1,3 +1,5 @@
+"use client";
+
 import { ApplicationNode } from "@/constants/application/type";
 import dynamic from "next/dynamic";
 
@@ -29,7 +31,6 @@ export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
     radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
-    radioByLayer: "",
     text: <ApplicationText data={applicationNodeData} />,
     textarea: <ApplicationTextarea data={applicationNodeData} />,
     booleanTextarea: <ApplicationBooleanTextarea data={applicationNodeData} />,

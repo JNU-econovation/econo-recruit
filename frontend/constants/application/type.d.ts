@@ -6,14 +6,13 @@ export interface ApplicationQuestion {
   title?: string;
   subtitle?: string;
   require: boolean;
-  direction: "vertical" | "horizontal";
+  direction: "vertical" | "horizontal" | "booleanTextarea";
   nodes: ApplicationNode[];
 }
 
 export type ApplicationNodeTypes =
   | "radio"
   | "radioByTwoRank"
-  | "radioByLayer"
   | "text"
   | "textarea"
   | "booleanTextarea"
@@ -54,11 +53,6 @@ export interface ApplicationRadioByTwoRank extends ApplicationNode {
   subNodes: BaseWithValuesWithSplitNumber[];
 }
 
-export interface ApplicationRadioByLayer extends ApplicationNode {
-  type: "radioByLayer";
-  subNodes: BaseWithValues[];
-}
-
 export interface ApplicationText extends ApplicationNodeBase {
   type: "text";
   validate?: ValidatorType;
@@ -73,6 +67,7 @@ export interface ApplicationTextarea extends ApplicationNodeBase {
 
 export interface ApplicationBooleanTextarea extends ApplicationNodeBase {
   type: "booleanTextarea";
+  value: string[];
   subNodes: {
     type: "true" | "false";
     title?: string;
