@@ -14,6 +14,7 @@ build/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+.DS_Store
 ./.DS_Store
 **/.DS_Store
 # Package Files #
