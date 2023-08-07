@@ -7,12 +7,14 @@ interface ApplicationNextButtonProps {
   canNext: boolean;
   applicationLength: number;
   beforeCheckCallback?: () => boolean;
+  isLast?: boolean;
 }
 
 const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
   canNext,
   beforeCheckCallback,
   applicationLength,
+  isLast = false,
 }) => {
   const { applicationIndex, goNextIndex, goPrevIndex } =
     useApplicationIndexControll();
@@ -42,7 +44,9 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
             : nextButtonClassName + " bg-[#EFEFEF] text-[#C8C8C8]"
         }
       >
-        {`다음(${applicationIndex + 1}/${applicationLength})`}
+        {isLast
+          ? "제출하기"
+          : `다음(${applicationIndex + 1}/${applicationLength})`}
       </button>
     </div>
   );

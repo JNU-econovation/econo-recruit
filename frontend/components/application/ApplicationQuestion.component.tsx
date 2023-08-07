@@ -30,14 +30,21 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
       <div className="flex gap-6 pr-12">
         {applicationLayout(applicationQuestion.direction, applicationQuestion)}
       </div>
-      {applicationQuestions.length - 1 > applicationIndex && (
-        <div className="translate-x-[calc(100%+1.5rem)] w-[calc(50%-2.3rem)]">
+      <div className="translate-x-[calc(100%+1.5rem)] w-[calc(50%-2.3rem)]">
+        {applicationQuestions.length - 1 > applicationIndex ? (
           <ApplicationNextButton
             canNext={true}
             applicationLength={applicationQuestions.length}
           />
-        </div>
-      )}
+        ) : (
+          <ApplicationNextButton
+            canNext={true}
+            applicationLength={applicationQuestions.length}
+            isLast={true}
+            beforeCheckCallback={() => false}
+          />
+        )}
+      </div>
     </article>
   );
 };

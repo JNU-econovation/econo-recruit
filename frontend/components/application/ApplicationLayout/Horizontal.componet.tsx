@@ -17,7 +17,7 @@ const ApplicationHorizontalLayout: FC<ApplicationHorizontalLayoutProps> = ({
       <div className="flex-1">
         <div className="mb-4 flex gap-2">
           <Txt typography="h6">{`${applicationQuestion.id}. `}</Txt>
-          <Txt typography="h6" className="break-words">{`${
+          <Txt typography="h6" className="break-keep">{`${
             applicationQuestion.title
           }${applicationQuestion.require ? "*" : ""}`}</Txt>
         </div>

@@ -26,13 +26,13 @@ const ApplicationCheckboxWithEtc: FC<ApplicationCheckboxWithEtcProps> = ({
     <>
       {checkboxWithEtcData.title && (
         <div className="mb-2">
-          <Txt typography="h6">{`${checkboxWithEtcData.title}${
-            checkboxWithEtcData.require ? "*" : ""
-          }`}</Txt>
+          <Txt typography="h6" className="break-keep">{`${
+            checkboxWithEtcData.title
+          }${checkboxWithEtcData.require ? "*" : ""}`}</Txt>
         </div>
       )}
       {checkboxWithEtcData.subtitle && (
-        <div className="mb-2">
+        <div className="mb-2 break-keep">
           <Txt>{checkboxWithEtcData.subtitle}</Txt>
         </div>
       )}
