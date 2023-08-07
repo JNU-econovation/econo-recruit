@@ -6,6 +6,7 @@ import {
   ApplicationQuestion,
   ApplicationRadio,
   ApplicationRadioByTwoRank,
+  ApplicationRadioForCheck,
   ApplicationText,
   ApplicationTextarea,
 } from "./type";
@@ -304,6 +305,65 @@ export const APPLICATION = [
         title: "파일 URL",
         subtitle: "(Google Drive 등)",
       } as ApplicationText,
+    ],
+  },
+  {
+    id: -1,
+    title: "ETC",
+    direction: "vertical",
+    nodes: [
+      {
+        id: 12,
+        direction: "horizontal",
+        title: "합격여부 전달을 위하여 이메일을 입력해주세요.",
+        subtitle: "이메일을 기재하지 않을 시, 합격이 취소될 수 있습니다.",
+        require: true,
+        nodes: [
+          {
+            type: "text",
+            name: "email",
+            title: "E-mail",
+            require: false,
+          } as ApplicationText,
+        ],
+      },
+      {
+        id: 13,
+        direction: "horizontal",
+        title:
+          "에코노베이션은 3학기 이상의 활동을 권장하고 있으며 매주 금요일 17시에는 주간발표가 있습니다.\n위 내용을 확인하셨으면 '확인했습니다'를 기입해주세요.",
+        require: true,
+        nodes: [
+          {
+            type: "text",
+            name: "check",
+            require: true,
+          } as ApplicationText,
+        ],
+      },
+      {
+        id: 14,
+        direction: "vertical",
+        title:
+          "개인정보 수집에 관한 안내 및 개인정보 수집에 대한 안내에 동의하시나요?",
+        require: true,
+        nodes: [
+          {
+            type: "radioForCheck",
+            name: "personalInformationAgree",
+            title: "개인정보 수집(공통)에 대한 안내",
+            value: ["동의합니다. 동의하지 않습니다."],
+            require: true,
+          } as ApplicationRadioForCheck,
+          {
+            type: "radioForCheck",
+            name: "personalInformationAgreeForPortfolio",
+            title: "개인정보 수집(포트폴리오)에 대한 안내",
+            value: ["동의합니다. 동의하지 않습니다."],
+            require: true,
+          } as ApplicationRadioForCheck,
+        ],
+      },
     ],
   },
 ] as ApplicationQuestion[];

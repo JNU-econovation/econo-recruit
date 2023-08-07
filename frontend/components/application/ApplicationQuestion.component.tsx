@@ -27,9 +27,7 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
     <article className={classNames(className)}>
       <Txt typography="h1">신입모집 신청</Txt>
       <div className="my-6 h-1 bg-gray-300 w-full"></div>
-      <div className="flex gap-6 pr-12">
-        {applicationLayout(applicationQuestion.direction, applicationQuestion)}
-      </div>
+      {applicationLayout(applicationQuestion.direction, applicationQuestion)}
       <div className="translate-x-[calc(100%+1.5rem)] w-[calc(50%-2.3rem)]">
         {applicationQuestions.length - 1 > applicationIndex ? (
           <ApplicationNextButton

@@ -7,18 +7,18 @@ export interface ApplicationQuestion {
   subtitle?: string;
   require: boolean;
   direction: "vertical" | "horizontal" | "booleanTextarea";
-  nodes: ApplicationNode[];
+  nodes: ApplicationNode[] | ApplicationQuestion[];
 }
 
 export type ApplicationNodeTypes =
   | "radio"
   | "radioByTwoRank"
+  | "radioForCheck"
   | "text"
   | "textarea"
   | "booleanTextarea"
   | "bar"
   | "justText"
-  | "checkbox"
   | "checkboxWithEtc";
 
 export interface ApplicationNode {
@@ -51,6 +51,13 @@ export interface ApplicationRadioByTwoRank extends ApplicationNode {
   subtitle?: string;
   require: boolean;
   subNodes: BaseWithValuesWithSplitNumber[];
+}
+
+export interface ApplicationRadioForCheck extends BaseWithValues {
+  type: "radioForCheck";
+  title?: string;
+  require: boolean;
+  value: string[];
 }
 
 export interface ApplicationText extends ApplicationNodeBase {

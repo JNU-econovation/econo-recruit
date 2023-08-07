@@ -1,9 +1,12 @@
 "use client";
 
 import Txt from "@/components/common/Txt.component";
-import { ApplicationQuestion } from "@/constants/application/type";
+import {
+  ApplicationNode,
+  ApplicationQuestion,
+} from "@/constants/application/type";
 import { FC } from "react";
-import { junctionQuestion } from "../ApplicationJunction.component";
+import { junctinOrLayout } from "../JunctionOrLayout";
 
 interface ApplicationHorizontalLayoutProps {
   applicationQuestion: ApplicationQuestion;
@@ -13,7 +16,7 @@ const ApplicationHorizontalLayout: FC<ApplicationHorizontalLayoutProps> = ({
   applicationQuestion,
 }) => {
   return (
-    <>
+    <div className="flex gap-6 pr-12">
       <div className="flex-1">
         <div className="mb-4 flex gap-2">
           <Txt typography="h6">{`${applicationQuestion.id}. `}</Txt>
@@ -31,12 +34,12 @@ const ApplicationHorizontalLayout: FC<ApplicationHorizontalLayoutProps> = ({
         {applicationQuestion.nodes.map((node, index) => {
           return (
             <div key={index} className="mb-4">
-              {junctionQuestion(node)}
+              {junctinOrLayout(node)}
             </div>
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

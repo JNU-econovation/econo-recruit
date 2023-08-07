@@ -21,7 +21,7 @@ const ApplicationBooleanTextarea: FC<ApplicationBooleanTextareaProps> = ({
   const [textValue, setTextValue] = useState("");
 
   return (
-    <div className="w-full flex-1">
+    <div className="w-full flex-1 pr-12">
       <div className="flex gap-6">
         <div className="flex-1">
           <div className="mb-4 flex gap-2">
