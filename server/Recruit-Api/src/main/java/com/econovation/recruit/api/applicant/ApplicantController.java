@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant;
 
 
+import com.econovation.recruit.api.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruit.application.port.in.ApplicantRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
