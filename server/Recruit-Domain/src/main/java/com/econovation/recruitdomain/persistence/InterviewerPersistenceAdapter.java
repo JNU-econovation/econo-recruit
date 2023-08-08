@@ -1,8 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
 
-import com.econovation.recruitdomain.domain.interviewer.Interviewer;
-import com.econovation.recruitdomain.domain.interviewer.InterviewerRepository;
+import com.econovation.recruitdomain.domains.interviewer.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.InterviewerRepository;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitdomain.out.LoadInterviewerPort;
 import java.util.List;

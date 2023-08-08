@@ -1,8 +1,8 @@
 package com.econovation.recruit.application.port.in;
 
 
-import com.econovation.recruitdomain.domain.dto.TimeTableInsertDto;
-import com.econovation.recruitdomain.domain.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
+import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import java.util.List;
 
 public interface TimeTableUseCase {

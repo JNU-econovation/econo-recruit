@@ -2,7 +2,7 @@ package com.econovation.recruit.config;
 
 
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
-import com.econovation.recruitdomain.domain.interviewer.Role;
+import com.econovation.recruitdomain.domains.interviewer.Role;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.util.Base64;

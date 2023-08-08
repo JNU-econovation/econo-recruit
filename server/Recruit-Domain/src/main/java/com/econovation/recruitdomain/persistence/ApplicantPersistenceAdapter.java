@@ -1,8 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
 
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.applicant.ApplicantRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.applicant.domain.ApplicantRepository;
 import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.ApplicantRecordPort;
 import lombok.RequiredArgsConstructor;

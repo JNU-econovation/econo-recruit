@@ -2,36 +2,48 @@ package com.econovation.recruit.application.service;
 
 
 import com.econovation.recruit.application.port.in.ApplicantRegisterUseCase;
-import com.econovation.recruit.application.port.in.CardRegisterUseCase;
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
-import com.econovation.recruitdomain.out.ApplicantRecordPort;
+import com.econovation.recruitdomain.domains.applicant.adapter.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.adapter.QuestionAdaptor;
+import com.econovation.recruitdomain.domains.applicant.domain.Answer;
+import com.econovation.recruitdomain.domains.applicant.domain.Question;
+import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class ApplicantService implements ApplicantRegisterUseCase {
-    private static final String DUPLICATED_APPLICANT_EXCEPTION = "중복된 지원자입니다.";
-    private final CardRegisterUseCase cardRegisterUseCase;
-    private final ApplicantLoadPort applicantLoadPort;
-    private final ApplicantRecordPort applicantRecordPort;
+    private final QuestionAdaptor questionAdaptor;
+    private final AnswerAdaptor answerAdaptor;
 
     @Override
-    //    @Transactional(rollbackFor = {IllegalStateException.class})
-    public void apply(Applicant applicant) {
-        //  applicant 중복 검사
-        if (isDuplicate(applicant)) {
-            throw new IllegalArgumentException(DUPLICATED_APPLICANT_EXCEPTION);
-        }
-        // 최신 card 생성
-        cardRegisterUseCase.saveApplicantCard(applicant);
-        applicantRecordPort.save(applicant);
-    }
+    public void execute(List<BlockRequestDto> blocks) {
+        List<Question> questions = questionAdaptor.findAll();
 
-    @Transactional(readOnly = true)
-    Boolean isDuplicate(Applicant applicant) {
-        return applicantLoadPort.isDuplicate(applicant);
+        List<Answer> results =
+                blocks.stream()
+                        .map(
+                                block -> {
+                                    Question matchingQuestion =
+                                            questions.stream()
+                                                    .filter(
+                                                            question ->
+                                                                    question.getTitle()
+                                                                            .equals(
+                                                                                    block
+                                                                                            .getName()))
+                                                    .findFirst()
+                                                    .orElse(null);
+
+                                    return Answer.builder()
+                                            .question(matchingQuestion)
+                                            .answer(block.getAnswer())
+                                            .build();
+                                })
+                        .collect(Collectors.toList());
+
+        answerAdaptor.saveAll(results);
     }
 }

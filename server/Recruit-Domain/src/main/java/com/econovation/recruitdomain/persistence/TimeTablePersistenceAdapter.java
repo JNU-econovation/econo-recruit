@@ -1,9 +1,9 @@
 package com.econovation.recruitdomain.persistence;
 
 
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.timetable.TimeTable;
-import com.econovation.recruitdomain.domain.timetable.TimeTableRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.timetable.TimeTableRepository;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import java.util.List;

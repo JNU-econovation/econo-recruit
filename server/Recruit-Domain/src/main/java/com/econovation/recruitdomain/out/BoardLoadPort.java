@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.out;
 
 
-import com.econovation.recruitdomain.domain.board.Board;
+import com.econovation.recruitdomain.domains.board.Board;
 import java.util.List;
 
 public interface BoardLoadPort {

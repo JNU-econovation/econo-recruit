@@ -1,8 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
 
-import com.econovation.recruitdomain.domain.card.Card;
-import com.econovation.recruitdomain.domain.card.CardRepository;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.CardRepository;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;

@@ -3,8 +3,8 @@ package com.econovation.recruit.adapter.in.controller;
 
 import com.econovation.recruit.application.port.in.CommentUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
-import com.econovation.recruitdomain.domain.comment.Comment;
-import com.econovation.recruitdomain.domain.dto.CommentRegisterDto;
+import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

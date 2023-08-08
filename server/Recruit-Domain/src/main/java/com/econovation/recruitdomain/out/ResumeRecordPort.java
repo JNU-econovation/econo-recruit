@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.out;
 
 
-import com.econovation.recruitdomain.domain.resume.Resume;
+import com.econovation.recruitdomain.domains.resume.Resume;
 import java.util.List;
 
 public interface ResumeRecordPort {

@@ -1,9 +1,9 @@
 package com.econovation.recruit.application.port.in;
 
 
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.board.Navigation;
-import com.econovation.recruitdomain.domain.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import java.util.List;
 import java.util.Map;
 

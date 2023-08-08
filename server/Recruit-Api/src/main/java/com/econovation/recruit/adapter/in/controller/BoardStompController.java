@@ -2,9 +2,9 @@ package com.econovation.recruit.adapter.in.controller;
 
 
 import com.econovation.recruit.application.port.in.BoardUseCase;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.card.Card;
-import com.econovation.recruitdomain.domain.model.BoardMessage;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.model.BoardMessage;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

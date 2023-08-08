@@ -2,8 +2,8 @@ package com.econovation.recruit.adapter.in.controller;
 
 
 import com.econovation.recruit.application.port.in.TimeTableUseCase;
-import com.econovation.recruitdomain.domain.dto.TimeTableInsertDto;
-import com.econovation.recruitdomain.domain.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
+import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

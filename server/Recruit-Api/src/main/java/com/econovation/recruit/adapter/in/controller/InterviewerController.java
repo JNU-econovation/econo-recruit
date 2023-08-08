@@ -2,8 +2,8 @@ package com.econovation.recruit.adapter.in.controller;
 
 
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
-import com.econovation.recruitdomain.domain.dto.InterviewerCreateDto;
-import com.econovation.recruitdomain.domain.interviewer.Interviewer;
+import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
+import com.econovation.recruitdomain.domains.interviewer.Interviewer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

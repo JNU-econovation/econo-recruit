@@ -1,8 +1,8 @@
 package com.econovation.recruitdomain.out;
 
 
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.record.Record;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.record.Record;
 import java.util.List;
 
 public interface RecordLoadPort {
