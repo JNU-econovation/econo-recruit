@@ -21,9 +21,6 @@ public class QuestionAdaptor {
     }
 
     public List<Question> findAll() {
-        List<Question> all = questionRepository.findAll();
-        if(all.isEmpty()){
-            throw
-        }
+        return questionRepository.findAll();
     }
 }

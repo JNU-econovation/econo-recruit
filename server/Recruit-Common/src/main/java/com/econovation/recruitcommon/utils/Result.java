@@ -1,4 +1,8 @@
+package com.econovation.recruitcommon.utils;
+
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Result<T> {
     private final T value;
@@ -42,6 +46,26 @@ public class Result<T> {
     public void onFailure(Consumer<Throwable> consumer) {
         if (isFailure()) {
             consumer.accept(error);
+        }
+    }
+
+    public <R> Result<R> map(Function<T, R> mapper) {
+        if (isSuccess()) {
+            try {
+                return Result.success(mapper.apply(value));
+            } catch (Exception e) {
+                return Result.failure(e);
+            }
+        } else {
+            return Result.failure(error);
+        }
+    }
+
+    public Result<T> filter(Predicate<T> predicate) {
+        if (isSuccess() && predicate.test(value)) {
+            return this;
+        } else {
+            return null;
         }
     }
 }
