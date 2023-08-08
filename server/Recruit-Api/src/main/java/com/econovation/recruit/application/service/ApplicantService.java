@@ -9,7 +9,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
-import com.econovation.recruitdomain.domains.applicant.exception.ApplicantErrorCode;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                             .filter(question -> question.getTitle().equals(block.getName()))
                             .findFirst()
                             .map(Result::success)
-                            .orElse(Result.failure(ApplicantDuplicateSubmitException.EXCEPTION));
+                            .orElse(Result.failure(ApplicantNotFoundException.EXCEPTION));
 
                     return matchingQuestionResult
                             .map(question -> Answer.builder()
