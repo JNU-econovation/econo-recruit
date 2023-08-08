@@ -22,7 +22,7 @@ public class ApplicantController {
     private static final String APPLY_SUCCESS_MESSAGE = "성공적으로 지원됐습니다";
     private final ApplicantRegisterUseCase applicantRegisterUseCase;
 
-    @Operation(summary = "상품을 장바구니에 담습니다. 상품에 답변해야하는 응답이 있다면, 응답도 보내주시면 됩니다.")
+    @Operation(summary = "지원자가 지원서를 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
