@@ -4,7 +4,6 @@ import { applicationIndexAtom } from "@/stores/application";
 import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
-import { APPLICATION } from "@/constants/application/25";
 import Txt from "@/components/common/Txt.component";
 import { ApplicationQuestion } from "@/constants/application/type";
 
@@ -18,6 +17,7 @@ const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
   className,
 }) => {
   const [applicationIndex, setApplicationIndex] = useAtom(applicationIndexAtom);
+  const APPLICATION = applicationQuestions;
 
   return (
     <nav className={classNames("pl-12 w-full h-full", className)}>

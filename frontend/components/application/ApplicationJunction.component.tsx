@@ -40,6 +40,7 @@ export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
     bar: <ApplicationBar />,
     justText: <ApplicationJustText data={applicationNodeData} />,
     checkboxWithEtc: <ApplicationCheckboxWithEtc data={applicationNodeData} />,
+    timeline: <></>,
   };
 
   return jsxNode[applicationNodeData.type];
