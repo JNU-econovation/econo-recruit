@@ -8,17 +8,53 @@ import {
 } from "@/constants/application/type";
 import { FC, useState } from "react";
 
+interface TextAreaProps {
+  node: {
+    type: "true" | "false";
+    title?: string;
+    subtitle?: string;
+    require: boolean;
+    name: string;
+  };
+  index: number;
+}
+
+const TextArea: FC<TextAreaProps> = ({ index, node }) => {
+  const [textValue, setTextValue] = useState("");
+
+  return (
+    <div className="flex gap-6">
+      <div className="flex-1">
+        <div className="pl-8">
+          <Txt typography="h6" className="mb-4 block break-keep">
+            {`${index + 1}. ${node.title}`}
+          </Txt>
+          <Txt className="pl-4 block break-keep">{node.subtitle}</Txt>
+        </div>
+      </div>
+      <div className="flex-1">
+        <textarea
+          className="my-2 border rounded-lg p-4 w-full resize-none"
+          rows={20}
+          name={node.name}
+          value={textValue}
+          onChange={(e) => setTextValue(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+};
+
 interface ApplicationBooleanTextareaProps {
   applicationQuestion: ApplicationQuestion;
 }
 
-const ApplicationBooleanTextarea: FC<ApplicationBooleanTextareaProps> = ({
+const ApplicationBooleanTextareaLayout: FC<ApplicationBooleanTextareaProps> = ({
   applicationQuestion,
 }) => {
   const booleanTextareaData = applicationQuestion
     .nodes[0] as ApplicationBooleanTextarea;
   const [selectedValue, setSelectedValue] = useState("init");
-  const [textValue, setTextValue] = useState("");
 
   return (
     <div className="w-full flex-1 pr-12">
@@ -53,30 +89,10 @@ const ApplicationBooleanTextarea: FC<ApplicationBooleanTextareaProps> = ({
         );
         if (findByIndex !== index) return <></>;
 
-        return (
-          <div key={index} className="flex gap-6">
-            <div className="flex-1">
-              <div className="pl-8">
-                <Txt typography="h6" className="mb-4 block break-keep">
-                  {`${index + 1}. ${node.title}`}
-                </Txt>
-                <Txt className="pl-4 block break-keep">{node.subtitle}</Txt>
-              </div>
-            </div>
-            <div className="flex-1">
-              <textarea
-                className="my-2 border rounded-lg p-4 w-full resize-none"
-                rows={20}
-                name={node.name}
-                value={textValue}
-                onChange={(e) => setTextValue(e.target.value)}
-              />
-            </div>
-          </div>
-        );
+        return <TextArea key={index} index={index} node={node} />;
       })}
     </div>
   );
 };
 
-export default ApplicationBooleanTextarea;
+export default ApplicationBooleanTextareaLayout;

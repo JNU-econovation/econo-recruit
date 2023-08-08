@@ -11,8 +11,12 @@ const ApplicationVerticalLayout = dynamic(
   () => import("./ApplicationLayout/Vertical.component")
 );
 
-const ApplicationBooleanTextarea = dynamic(
+const ApplicationBooleanTextareaLayout = dynamic(
   () => import("./ApplicationLayout/BooleanTextarea.component")
+);
+
+const ApplicationRadioForCheckLayout = dynamic(
+  () => import("./ApplicationLayout/RadioForCheck.component")
 );
 
 export const applicationLayout = (
@@ -27,7 +31,14 @@ export const applicationLayout = (
       <ApplicationVerticalLayout applicationQuestion={applicationQuestion} />
     ),
     booleanTextarea: (
-      <ApplicationBooleanTextarea applicationQuestion={applicationQuestion} />
+      <ApplicationBooleanTextareaLayout
+        applicationQuestion={applicationQuestion}
+      />
+    ),
+    radioForCheck: (
+      <ApplicationRadioForCheckLayout
+        applicationQuestion={applicationQuestion}
+      />
     ),
   };
 

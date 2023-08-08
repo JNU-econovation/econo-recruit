@@ -9,6 +9,7 @@ import {
   ApplicationRadioForCheck,
   ApplicationText,
   ApplicationTextarea,
+  ApplicationTimeline,
 } from "./type";
 
 export const APPLICATION = [
@@ -309,7 +310,7 @@ export const APPLICATION = [
   },
   {
     id: -1,
-    title: "ETC",
+    title: "개인정보 수집에 관한 안내 및 개인정보 수집",
     direction: "vertical",
     nodes: [
       {
@@ -343,7 +344,7 @@ export const APPLICATION = [
       },
       {
         id: 14,
-        direction: "vertical",
+        direction: "radioForCheck",
         title:
           "개인정보 수집에 관한 안내 및 개인정보 수집에 대한 안내에 동의하시나요?",
         require: true,
@@ -352,18 +353,31 @@ export const APPLICATION = [
             type: "radioForCheck",
             name: "personalInformationAgree",
             title: "개인정보 수집(공통)에 대한 안내",
-            value: ["동의합니다. 동의하지 않습니다."],
+            value: ["동의합니다.", "동의하지 않습니다."],
             require: true,
           } as ApplicationRadioForCheck,
           {
             type: "radioForCheck",
             name: "personalInformationAgreeForPortfolio",
             title: "개인정보 수집(포트폴리오)에 대한 안내",
-            value: ["동의합니다. 동의하지 않습니다."],
+            value: ["동의합니다.", "동의하지 않습니다."],
             require: true,
           } as ApplicationRadioForCheck,
         ],
       },
+    ],
+  },
+  {
+    id: 15,
+    title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
+    direction: "horizontal",
+    require: false,
+    nodes: [
+      {
+        type: "timeline",
+        name: "timeline",
+        require: true,
+      } as ApplicationTimeline,
     ],
   },
 ] as ApplicationQuestion[];

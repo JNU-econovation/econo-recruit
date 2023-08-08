@@ -33,7 +33,7 @@ export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
     radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,
-    radioForCheck: "",
+    radioForCheck: <></>,
     text: <ApplicationText data={applicationNodeData} />,
     textarea: <ApplicationTextarea data={applicationNodeData} />,
     booleanTextarea: <></>,
