@@ -1,4 +1,3 @@
-import RadioGroup from "@/components/common/Radio.component";
 import Txt from "@/components/common/Txt.component";
 import {
   ApplicationQuestion,

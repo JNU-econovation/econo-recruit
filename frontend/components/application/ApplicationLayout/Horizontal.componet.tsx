@@ -1,10 +1,7 @@
 "use client";
 
 import Txt from "@/components/common/Txt.component";
-import {
-  ApplicationNode,
-  ApplicationQuestion,
-} from "@/constants/application/type";
+import { ApplicationQuestion } from "@/constants/application/type";
 import { FC } from "react";
 import { junctinOrLayout } from "../JunctionOrLayout";
 
@@ -31,13 +28,11 @@ const ApplicationHorizontalLayout: FC<ApplicationHorizontalLayoutProps> = ({
         )}
       </div>
       <div className="flex-1">
-        {applicationQuestion.nodes.map((node, index) => {
-          return (
-            <div key={index} className="mb-4">
-              {junctinOrLayout(node)}
-            </div>
-          );
-        })}
+        {applicationQuestion.nodes.map((node, index) => (
+          <div key={`${applicationQuestion.id} ${index}`} className="mb-4">
+            {junctinOrLayout(node)}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ import {
   ApplicationNode,
 } from "@/constants/application/type";
 import { FC, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import { localStorage } from "@/functions/localstorage";
 
 interface ApplicationCheckboxWithEtcProps {
   data: ApplicationNode;
@@ -18,9 +20,17 @@ const ApplicationCheckboxWithEtc: FC<ApplicationCheckboxWithEtcProps> = ({
   data,
 }) => {
   const checkboxWithEtcData = data as ApplicationCheckboxWithEtcType;
-  const [isOpenEtc, setIsOpenEtc] = useState(false);
-  const [etcValue, setEtcValue] = useState("");
-  const [checkboxValue, setCheckboxValue] = useState<string[]>([]);
+  const [isOpenEtc, setIsOpenEtc] = useState(
+    localStorage.get(checkboxWithEtcData.name + "Etc") !== ""
+  );
+  const [etcValue, setEtcValue] = useLocalStorage<string>(
+    checkboxWithEtcData.name + "Etc",
+    ""
+  );
+  const [checkboxValue, setCheckboxValue] = useLocalStorage<string[]>(
+    checkboxWithEtcData.name,
+    []
+  );
 
   return (
     <>
@@ -57,7 +67,12 @@ const ApplicationCheckboxWithEtc: FC<ApplicationCheckboxWithEtcProps> = ({
             value="기타"
             checked={isOpenEtc}
             label="기타"
-            onChange={() => setIsOpenEtc((prev) => !prev)}
+            onChange={() =>
+              setIsOpenEtc((prev) => {
+                if (prev) setEtcValue("");
+                return !prev;
+              })
+            }
           />
           {isOpenEtc && (
             <input

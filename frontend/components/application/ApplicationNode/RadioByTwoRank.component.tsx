@@ -6,7 +6,8 @@ import {
   ApplicationNode,
   ApplicationRadioByTwoRank,
 } from "@/constants/application/type";
-import { FC, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import { FC } from "react";
 
 interface ApplicationRadioByTwoRankProps {
   data: ApplicationNode;
@@ -18,8 +19,8 @@ const ApplicationRadioByTwoRank: FC<ApplicationRadioByTwoRankProps> = ({
   const radioByTwoRankData = data as ApplicationRadioByTwoRank;
   const firstNode = radioByTwoRankData.subNodes[0];
   const secondNode = radioByTwoRankData.subNodes[1];
-  const [firstValue, setFirstValue] = useState("init");
-  const [secondValue, setSecondValue] = useState("");
+  const [firstValue, setFirstValue] = useLocalStorage(firstNode.name, "init");
+  const [secondValue, setSecondValue] = useLocalStorage(secondNode.name, "");
 
   return (
     <>

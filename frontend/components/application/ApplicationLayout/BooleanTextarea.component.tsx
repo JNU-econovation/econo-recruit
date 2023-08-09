@@ -6,7 +6,8 @@ import {
   ApplicationBooleanTextarea,
   ApplicationQuestion,
 } from "@/constants/application/type";
-import { FC, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import { FC } from "react";
 
 interface TextAreaProps {
   node: {
@@ -20,7 +21,7 @@ interface TextAreaProps {
 }
 
 const TextArea: FC<TextAreaProps> = ({ index, node }) => {
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useLocalStorage(node.name, "");
 
   return (
     <div className="flex gap-6">
@@ -54,7 +55,10 @@ const ApplicationBooleanTextareaLayout: FC<ApplicationBooleanTextareaProps> = ({
 }) => {
   const booleanTextareaData = applicationQuestion
     .nodes[0] as ApplicationBooleanTextarea;
-  const [selectedValue, setSelectedValue] = useState("init");
+  const [selectedValue, setSelectedValue] = useLocalStorage(
+    booleanTextareaData.name,
+    "init"
+  );
 
   return (
     <div className="w-full flex-1 pr-12">
@@ -87,7 +91,7 @@ const ApplicationBooleanTextareaLayout: FC<ApplicationBooleanTextareaProps> = ({
         const findByIndex = booleanTextareaData.value.findIndex(
           (value) => value === selectedValue
         );
-        if (findByIndex !== index) return <></>;
+        if (findByIndex !== index) return;
 
         return <TextArea key={index} index={index} node={node} />;
       })}

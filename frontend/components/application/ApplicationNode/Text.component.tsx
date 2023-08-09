@@ -4,6 +4,7 @@ import Txt from "@/components/common/Txt.component";
 import { ApplicationNode, ApplicationText } from "@/constants/application/type";
 import { replacer } from "@/functions/replacer";
 import { validator } from "@/functions/validator";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
 import classNames from "classnames";
 import { FC, useId, useState } from "react";
 
@@ -14,7 +15,7 @@ interface ApplicationTextProps {
 const ApplicationText: FC<ApplicationTextProps> = ({ data }) => {
   const textData = data as ApplicationText;
   const id = useId();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useLocalStorage(textData.name, "");
   const [isError, setIsError] = useState(false);
 
   return (

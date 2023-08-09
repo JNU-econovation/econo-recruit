@@ -1,9 +1,6 @@
-const ApplicationPage = () => {
-  return (
-    <div>
-      <h1>Application</h1>
-    </div>
-  );
-};
+import { CURRENT_GENERATION } from "@/constants";
+import { redirect } from "next/navigation";
+
+const ApplicationPage = () => redirect(`/application/${CURRENT_GENERATION}`);
 
 export default ApplicationPage;

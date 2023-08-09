@@ -4,29 +4,38 @@ import { ApplicationNode } from "@/constants/application/type";
 import dynamic from "next/dynamic";
 
 const ApplicationRadio = dynamic(
-  () => import("./ApplicationNode/Radio.component")
+  () => import("./ApplicationNode/Radio.component"),
+  { ssr: false }
 );
 
 const ApplicationRadioByTwoRank = dynamic(
-  () => import("./ApplicationNode/RadioByTwoRank.component")
+  () => import("./ApplicationNode/RadioByTwoRank.component"),
+  { ssr: false }
 );
 
 const ApplicationText = dynamic(
-  () => import("./ApplicationNode/Text.component")
+  () => import("./ApplicationNode/Text.component"),
+  { ssr: false }
 );
 
 const ApplicationCheckboxWithEtc = dynamic(
-  () => import("./ApplicationNode/CheckboxWithEtc.component")
+  () => import("./ApplicationNode/CheckboxWithEtc.component"),
+  { ssr: false }
 );
 
 const ApplicationTextarea = dynamic(
-  () => import("./ApplicationNode/Textarea.component")
+  () => import("./ApplicationNode/Textarea.component"),
+  { ssr: false }
 );
 
-const ApplicationBar = dynamic(() => import("./ApplicationNode/Bar.component"));
+const ApplicationBar = dynamic(
+  () => import("./ApplicationNode/Bar.component"),
+  { ssr: false }
+);
 
 const ApplicationJustText = dynamic(
-  () => import("./ApplicationNode/JustText.component")
+  () => import("./ApplicationNode/JustText.component"),
+  { ssr: false }
 );
 
 export const junctionQuestion = (applicationNodeData: ApplicationNode) => {

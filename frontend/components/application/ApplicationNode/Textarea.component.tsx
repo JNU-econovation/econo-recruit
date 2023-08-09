@@ -5,8 +5,8 @@ import {
   ApplicationNode,
   ApplicationTextarea,
 } from "@/constants/application/type";
-import classNames from "classnames";
-import { FC, useId, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import { FC } from "react";
 
 interface ApplicationTexareaProps {
   data: ApplicationNode;
@@ -14,7 +14,8 @@ interface ApplicationTexareaProps {
 
 const ApplicationTexarea: FC<ApplicationTexareaProps> = ({ data }) => {
   const textData = data as ApplicationTextarea;
-  const [value, setValue] = useState("");
+  const [value, setValue] = useLocalStorage(textData.name, "");
+
   return (
     <>
       {textData.title && (
@@ -30,7 +31,7 @@ const ApplicationTexarea: FC<ApplicationTexareaProps> = ({ data }) => {
         rows={20}
         name={textData.name}
         value={value}
-        onChange={() => setValue(value)}
+        onChange={(e) => setValue(e.target.value)}
       />
     </>
   );

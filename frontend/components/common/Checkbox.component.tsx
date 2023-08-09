@@ -1,7 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { ChangeEvent, FC, PropsWithChildren, useId } from "react";
+import { ChangeEvent, FC, useId } from "react";
 
 interface CheckboxProps {
   label: string;

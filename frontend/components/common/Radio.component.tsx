@@ -67,6 +67,8 @@ interface RadioGroupProps {
   onClick?: Function;
 }
 
+const gridCols = ["", "", "grid-cols-2", "grid-cols-3", "grid-cols-4"];
+
 const RadioGroup: FC<RadioGroupProps> = ({
   name,
   value,
@@ -78,7 +80,10 @@ const RadioGroup: FC<RadioGroupProps> = ({
   onClick,
 }) => (
   <div
-    className={`grid gap-2 grid-cols-${splitNumber} col-end-auto font-semibold`}
+    className={classNames(
+      "grid gap-2 col-end-auto font-semibold",
+      gridCols[splitNumber]
+    )}
   >
     {radioList.map((radioData, index) => (
       <Radio

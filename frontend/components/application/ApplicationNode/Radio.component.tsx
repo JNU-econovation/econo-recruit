@@ -6,18 +6,19 @@ import {
   ApplicationNode,
   ApplicationRadio,
 } from "@/constants/application/type";
-import { FC, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import { FC } from "react";
 
 interface ApplicationRadioProps {
   data: ApplicationNode;
 }
 
 const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
-  const [value, setValue] = useState<string>("");
   const radioData = data as ApplicationRadio;
+  const [value, setValue] = useLocalStorage<string>(radioData.name, "");
 
   return (
-    <div>
+    <>
       {radioData.title && (
         <div className="mb-2">
           <Txt typography="h6">{radioData.title}</Txt>
@@ -37,7 +38,7 @@ const ApplicationRadio: FC<ApplicationRadioProps> = ({ data }) => {
           setValue(e.target.value);
         }}
       />
-    </div>
+    </>
   );
 };
 

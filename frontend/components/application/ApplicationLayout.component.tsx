@@ -4,19 +4,23 @@ import { ApplicationQuestion } from "@/constants/application/type";
 import dynamic from "next/dynamic";
 
 const ApplicationHorizontalLayout = dynamic(
-  () => import("./ApplicationLayout/Horizontal.componet")
+  () => import("./ApplicationLayout/Horizontal.componet"),
+  { ssr: false }
 );
 
 const ApplicationVerticalLayout = dynamic(
-  () => import("./ApplicationLayout/Vertical.component")
+  () => import("./ApplicationLayout/Vertical.component"),
+  { ssr: false }
 );
 
 const ApplicationBooleanTextareaLayout = dynamic(
-  () => import("./ApplicationLayout/BooleanTextarea.component")
+  () => import("./ApplicationLayout/BooleanTextarea.component"),
+  { ssr: false }
 );
 
 const ApplicationRadioForCheckLayout = dynamic(
-  () => import("./ApplicationLayout/RadioForCheck.component")
+  () => import("./ApplicationLayout/RadioForCheck.component"),
+  { ssr: false }
 );
 
 export const applicationLayout = (

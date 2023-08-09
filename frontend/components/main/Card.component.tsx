@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useState } from "react";
 import RightArrow from "@/public/icons/right.arrow.svg";
