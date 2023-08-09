@@ -15,7 +15,7 @@ const ApplicationPage: FC<ApplicationPageProps> = ({ params }) => {
       .APPLICATION as ApplicationQuestion[];
 
   return (
-    <section className="flex gap-24 mt-24 min-w-[1600px]">
+    <section className="flex gap-24 mt-24 min-w-[1280px]">
       <ApplicationNavbar
         className="flex-1"
         applicationQuestions={applicationQuestions}

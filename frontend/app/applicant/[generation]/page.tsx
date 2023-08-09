@@ -15,8 +15,8 @@ const ApplicantPage: FC<ApplicantPageProps> = ({ params }) => {
       .APPLICATION as ApplicationQuestion[];
 
   return (
-    <article className="flex">
-      <div className="flex-1">
+    <article className="flex gap-24 mt-24 min-w-[1280px]">
+      <div className="flex-1 pl-12">
         <CommonNavbar generation={generation} />
       </div>
       <section className="flex-[3_0_0] flex gap-24 mt-24 min-w-[1600px]"></section>
