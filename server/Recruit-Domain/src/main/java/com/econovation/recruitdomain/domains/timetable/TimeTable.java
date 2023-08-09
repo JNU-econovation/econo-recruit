@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.timetable;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,19 +16,15 @@ import lombok.NoArgsConstructor;
 public class TimeTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "time_table_id")
+    @Column(name = "timetable_id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+    @Column(name = "applicant_id")
+    private UUID applicantID;
 
     @Column(name = "start_time")
-    private String startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    private String endTime;
-
-    @Column(name = "day")
-    private String day;
+    private LocalDateTime endTime;
 }

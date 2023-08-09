@@ -1,10 +1,9 @@
 package com.econovation.recruit.application.service;
 
-import com.econovation.recruit.application.port.in.TimeTableUseCase;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruit.application.port.in.TimeTableRegisterUseCase;
+import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import com.google.gson.Gson;
@@ -14,37 +13,16 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TimeTableService implements TimeTableUseCase {
-    private final ApplicantLoadPort applicantLoadPort;
+public class TimeTableService implements TimeTableRegisterUseCase {
     private final TimeTableLoadPort timeTableLoadPort;
     private final TimeTableRecordPort timeTableRecordPort;
 
-    //    @Override
-    //    public List<TimeTableInsertDto> submitTimeTable(HashMap<String, Object> param,Integer
-    // applicantId) {
-    //        List<TimeTableInsertDto> timeTableInsertDtos = toList(param);
-    //        return timeTableRecordPort.saveAll();
-    //    }
-
-    @Override
-    public List<TimeTable> submitTimeTable(
-            List<TimeTableInsertDto> timeTable, Integer applicantId) {
-        List<TimeTable> timeTables = timeTable.toTimeTables(timetable, applicantId);
-        return timeTableRecordPort.saveAll(timeTables);
-    }
-
-    @Override
-    public List<TimeTable> getTimeTableByApplicantId(Integer applicantId) {
-        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        return timeTableLoadPort.getTimeTableByApplicantId(applicant);
-    }
-
-    @Override
     public List<TimeTable> findAll() {
         return timeTableLoadPort.findAll();
     }
@@ -69,5 +47,19 @@ public class TimeTableService implements TimeTableUseCase {
                     new TimeTableInsertDto(startTimes.get(i), endTimes.get(i), days.get(i)));
         }
         return chunkTimeTable;
+    }
+
+    @Override
+    public void execute(UUID applicantId, List<TimeTableVo> timeTables) {
+        List<TimeTable> timeTableList = new LinkedList<>();
+        for (TimeTableVo timeTableVo : timeTables) {
+            timeTableList.add(
+                    TimeTable.builder()
+                            .endTime(timeTableVo.getEndTime())
+                            .startTime(timeTableVo.getStartTime())
+                            .applicantID(applicantId)
+                            .build());
+        }
+        timeTableRecordPort.saveAll(timeTableList);
     }
 }
