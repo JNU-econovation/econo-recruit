@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.board;
 
-
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import javax.persistence.*;
 import lombok.*;

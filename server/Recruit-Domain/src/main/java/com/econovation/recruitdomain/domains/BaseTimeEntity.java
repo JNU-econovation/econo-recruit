@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains;
 
-
 import java.time.LocalDateTime;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;

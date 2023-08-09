@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.record.Record;

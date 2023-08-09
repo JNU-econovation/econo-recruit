@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.LabelRepository;

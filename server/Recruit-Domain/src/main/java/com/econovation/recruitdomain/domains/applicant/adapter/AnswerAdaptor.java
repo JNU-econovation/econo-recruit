@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.adapter;
 
-
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.AnswerRepository;

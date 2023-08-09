@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.domainEvent;
 
-
 import java.time.LocalDateTime;
 import lombok.Getter;
 

@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.annotation;
 
-
 import com.econovation.recruitcommon.exception.BaseErrorCode;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

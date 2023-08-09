@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.card.CardRepository;
 import com.econovation.recruitdomain.out.CardLoadPort;

@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.CommentUseCase;
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.comment.Comment;

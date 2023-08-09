@@ -1,6 +1,5 @@
 package com.econovation.recruit.config;
 
-
 import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitcommon.exception.BaseErrorCode;
 import com.econovation.recruitcommon.exception.ErrorReason;

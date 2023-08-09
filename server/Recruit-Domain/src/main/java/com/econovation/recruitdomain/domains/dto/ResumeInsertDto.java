@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;

@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.comment;
 
-
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import javax.persistence.*;

@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;

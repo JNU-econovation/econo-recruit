@@ -1,7 +1,9 @@
 package com.econovation.recruitdomain.domains.applicant.domain;
 
-
+import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +25,12 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(targetEntity = Question.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Question.class)
     private Question question;
 
+    @Column(name = "answer")
     private String answer;
+
+    @Column(name = "applicant_id", length = 36, nullable = false)
+    private UUID applicantId;
 }

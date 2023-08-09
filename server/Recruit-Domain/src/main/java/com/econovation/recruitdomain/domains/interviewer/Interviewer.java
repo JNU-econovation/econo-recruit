@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.interviewer;
 
-
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

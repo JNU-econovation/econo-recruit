@@ -1,11 +1,11 @@
 package com.econovation.recruit.api.applicant;
 
-
 import com.econovation.recruit.api.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruit.application.port.in.ApplicantRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
     private static final String APPLY_SUCCESS_MESSAGE = "성공적으로 지원됐습니다";
     private final ApplicantRegisterUseCase applicantRegisterUseCase;

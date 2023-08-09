@@ -1,6 +1,5 @@
 package com.econovation.recruit.config;
 
-
 import java.sql.Types;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.SQLFunctionTemplate;

@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.comment.CommentLike;
 import com.econovation.recruitdomain.domains.comment.CommentLikeRepository;

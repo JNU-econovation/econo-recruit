@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.board;
 
-
 import javax.persistence.*;
 import lombok.*;
 

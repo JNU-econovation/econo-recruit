@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.elements;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.port.in;
 
-
 import com.econovation.recruitdomain.domains.resume.Resume;
 import java.util.List;
 

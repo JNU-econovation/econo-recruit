@@ -1,6 +1,5 @@
 package com.econovation.recruitinfrastructure.redis;
 
-
 import io.github.bucket4j.distributed.proxy.ProxyManager;
 import io.github.bucket4j.grid.jcache.JCacheProxyManager;
 import javax.cache.Cache;

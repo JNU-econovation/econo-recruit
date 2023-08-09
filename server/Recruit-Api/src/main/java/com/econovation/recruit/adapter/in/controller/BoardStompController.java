@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruitdomain.domains.board.Board;
 import com.econovation.recruitdomain.domains.card.Card;

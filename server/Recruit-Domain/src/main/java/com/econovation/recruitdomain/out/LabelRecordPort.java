@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.out;
 
-
 import com.econovation.recruitdomain.domains.label.Label;
 
 public interface LabelRecordPort {

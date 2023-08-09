@@ -1,6 +1,5 @@
 package com.econovation.recruit.config;
 
-
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

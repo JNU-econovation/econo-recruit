@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.LabelUseCase;
 import com.econovation.recruitdomain.domains.label.Label;
 import java.util.List;

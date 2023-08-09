@@ -1,8 +1,7 @@
 package com.econovation.recruitdomain.domains.card;
 
-
+import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.board.Board;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.annotation;
 
-
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

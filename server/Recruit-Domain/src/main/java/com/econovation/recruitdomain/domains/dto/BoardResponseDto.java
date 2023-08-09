@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.dto;
 
-
 import com.econovation.recruitdomain.domains.board.Navigation;
 import javax.persistence.*;
 import lombok.Builder;

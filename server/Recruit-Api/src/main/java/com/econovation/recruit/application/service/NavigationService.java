@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.NavigationUseCase;
 import com.econovation.recruitdomain.domains.board.Navigation;
 import com.econovation.recruitdomain.out.NavigationLoadPort;

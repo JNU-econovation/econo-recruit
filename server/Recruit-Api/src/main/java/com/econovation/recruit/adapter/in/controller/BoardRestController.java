@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
 import com.econovation.recruit.application.port.in.NavigationUseCase;

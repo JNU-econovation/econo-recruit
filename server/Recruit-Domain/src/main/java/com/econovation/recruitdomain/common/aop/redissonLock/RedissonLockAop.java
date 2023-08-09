@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.redissonLock;
 
-
 import com.econovation.recruitcommon.exception.BadLockIdentifierException;
 import com.econovation.recruitcommon.exception.NotAvailableRedissonLockException;
 import com.econovation.recruitcommon.exception.RecruitCodeException;

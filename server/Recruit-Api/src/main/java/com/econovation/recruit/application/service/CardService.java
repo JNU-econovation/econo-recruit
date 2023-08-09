@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
 import com.econovation.recruitdomain.domains.applicant.Applicant;

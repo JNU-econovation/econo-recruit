@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
 import com.econovation.recruitdomain.domains.interviewer.Interviewer;

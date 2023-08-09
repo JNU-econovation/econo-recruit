@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.blocks;
 
-
 import com.econovation.recruitdomain.domains.applicant.elements.BlockElement;
 import java.util.Arrays;
 import java.util.List;

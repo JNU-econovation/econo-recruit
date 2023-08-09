@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-
 import com.econovation.recruitdomain.domains.board.Board;
 import com.econovation.recruitdomain.domains.board.BoardRepository;
 import com.econovation.recruitdomain.out.BoardLoadPort;

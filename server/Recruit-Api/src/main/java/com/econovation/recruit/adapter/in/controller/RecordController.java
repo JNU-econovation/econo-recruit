@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;

@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.record;
 
-
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;

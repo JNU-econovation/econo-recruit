@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.utils;
 
-
 import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.applicant.domain.ApplicantRepository;
 import com.econovation.recruitdomain.domains.board.Board;

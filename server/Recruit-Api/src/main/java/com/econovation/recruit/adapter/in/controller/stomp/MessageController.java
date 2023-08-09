@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller.stomp;
 
-
 import java.security.Principal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;

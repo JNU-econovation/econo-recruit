@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.exception;
 
-
 import lombok.Builder;
 import lombok.Getter;
 

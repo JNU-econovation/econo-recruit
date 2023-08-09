@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.port.in;
 
-
 import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import java.util.List;

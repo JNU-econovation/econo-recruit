@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.exception;
 
-
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 
 public class ApplicantDuplicateSubmitException extends RecruitCodeException {

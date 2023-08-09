@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.port.in;
 
-
 import com.econovation.recruitdomain.domains.board.Board;
 import com.econovation.recruitdomain.domains.board.Navigation;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;

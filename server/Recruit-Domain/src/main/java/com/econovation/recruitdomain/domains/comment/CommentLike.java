@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.comment;
 
-
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

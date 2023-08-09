@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.interviewer;
 
-
 import lombok.Getter;
 
 @Getter

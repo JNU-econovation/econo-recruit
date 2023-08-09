@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.dto;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

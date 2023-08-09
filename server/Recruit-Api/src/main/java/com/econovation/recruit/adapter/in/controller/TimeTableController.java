@@ -1,6 +1,5 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.TimeTableUseCase;
 import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
