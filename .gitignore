@@ -48,7 +48,8 @@ out/
 .env
 .env.*
 *.Q*
-!**/src/main/**/Q*.java
+**/Q*
+!**/server/src/main/**/Q*.java
 *.xlsx
 Whatnow-Domain/src/main/generated/**/*.java
 
