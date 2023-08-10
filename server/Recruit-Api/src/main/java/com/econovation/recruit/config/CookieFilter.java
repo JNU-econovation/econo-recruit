@@ -1,8 +1,7 @@
 package com.econovation.recruit.config;
 
-
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
-import com.econovation.recruitdomain.domain.interviewer.Role;
+import com.econovation.recruitdomain.domains.interviewer.Role;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.util.Base64;
@@ -73,14 +72,14 @@ public class CookieFilter extends OncePerRequestFilter {
         }
         // 전체 url 체크
         /*if(request.getRequestURI().startsWith("/api/v1/*")){
-            String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
-            if(role.equals(Role.ROLE_PRESIDENT.name()) ||
-                    role.equals(Role.ROLE_TF.name()) ||
-                    role.equals(Role.ROLE_OPERATION.name())){
-                log.info("ADMIN ACCESS");
-                filterChain.doFilter(request,response);
-            }
-            return;
+        				String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
+        				if(role.equals(Role.ROLE_PRESIDENT.name()) ||
+        												role.equals(Role.ROLE_TF.name()) ||
+        												role.equals(Role.ROLE_OPERATION.name())){
+        								log.info("ADMIN ACCESS");
+        								filterChain.doFilter(request,response);
+        				}
+        				return;
         }*/
         // token은 있는데 다른 요청일 경우 넘어가자
         log.info("token은 있는데 다른 요청일 경우 넘어가자");

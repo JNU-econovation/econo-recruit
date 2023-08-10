@@ -1,8 +1,7 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.LabelUseCase;
-import com.econovation.recruitdomain.domain.label.Label;
+import com.econovation.recruitdomain.domains.label.Label;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

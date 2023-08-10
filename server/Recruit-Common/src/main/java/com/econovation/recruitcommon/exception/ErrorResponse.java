@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.exception;
 
-
 import java.time.LocalDateTime;
 import lombok.Getter;
 

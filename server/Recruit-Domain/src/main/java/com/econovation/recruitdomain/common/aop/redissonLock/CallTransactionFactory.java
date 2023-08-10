@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.redissonLock;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

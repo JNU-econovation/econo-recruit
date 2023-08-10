@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.redissonLock;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

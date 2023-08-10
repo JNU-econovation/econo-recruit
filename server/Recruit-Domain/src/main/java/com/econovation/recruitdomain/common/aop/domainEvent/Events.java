@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.domainEvent;
 
-
 import org.springframework.context.ApplicationEventPublisher;
 
 public class Events {

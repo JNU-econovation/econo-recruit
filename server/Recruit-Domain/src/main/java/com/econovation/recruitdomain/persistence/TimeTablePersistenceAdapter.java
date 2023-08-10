@@ -1,12 +1,11 @@
 package com.econovation.recruitdomain.persistence;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.timetable.TimeTable;
-import com.econovation.recruitdomain.domain.timetable.TimeTableRepository;
+import com.econovation.recruitdomain.domains.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.timetable.TimeTableRepository;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,26 +46,12 @@ public class TimeTablePersistenceAdapter implements TimeTableRecordPort, TimeTab
 
     @Override
     public List<TimeTable> saveAll(List<TimeTable> timeTables) {
-        for (TimeTable t : timeTables) {
-            log.info(
-                    t.getDay()
-                            + " / "
-                            + t.getEndTime()
-                            + " / "
-                            + t.getEndTime()
-                            + " / "
-                            + t.getStartTime());
-        }
         return timeTableRepository.saveAll(timeTables);
     }
 
     @Override
-    public List<TimeTable> getTimeTableByApplicantId(Applicant applicant) {
-        List<TimeTable> byApplicant = timeTableRepository.findByApplicant(applicant);
-        if (byApplicant.isEmpty()) {
-            throw new IllegalArgumentException(NO_OBJECT_EXCEPTION);
-        }
-        return byApplicant;
+    public List<TimeTable> getTimeTableByApplicantId(UUID applicantId) {
+        return timeTableRepository.findByApplicantId(applicantId);
     }
 
     @Override

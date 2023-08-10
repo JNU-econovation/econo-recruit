@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.redissonLock;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

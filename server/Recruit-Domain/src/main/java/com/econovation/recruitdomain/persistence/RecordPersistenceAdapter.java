@@ -1,9 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.record.Record;
-import com.econovation.recruitdomain.domain.record.RecordRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.record.Record;
+import com.econovation.recruitdomain.domains.record.RecordRepository;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;

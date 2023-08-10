@@ -1,7 +1,6 @@
 package com.econovation.recruit.application.port.in;
 
-
-import com.econovation.recruitdomain.domain.label.Label;
+import com.econovation.recruitdomain.domains.label.Label;
 import java.util.List;
 
 public interface LabelUseCase {

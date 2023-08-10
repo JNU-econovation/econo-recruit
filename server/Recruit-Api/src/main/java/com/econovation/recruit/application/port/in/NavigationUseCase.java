@@ -1,7 +1,6 @@
 package com.econovation.recruit.application.port.in;
 
-
-import com.econovation.recruitdomain.domain.board.Navigation;
+import com.econovation.recruitdomain.domains.board.Navigation;
 
 public interface NavigationUseCase {
     Navigation createNavigation(String navTitle);

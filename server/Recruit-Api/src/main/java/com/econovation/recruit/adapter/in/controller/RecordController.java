@@ -1,10 +1,9 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
-import com.econovation.recruitdomain.domain.dto.CreateRecordDto;
-import com.econovation.recruitdomain.domain.record.Record;
+import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
+import com.econovation.recruitdomain.domains.record.Record;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

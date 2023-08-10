@@ -1,10 +1,9 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.InterviewerUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
-import com.econovation.recruitdomain.domain.dto.InterviewerCreateDto;
-import com.econovation.recruitdomain.domain.interviewer.Interviewer;
+import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
+import com.econovation.recruitdomain.domains.interviewer.Interviewer;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitdomain.out.LoadInterviewerPort;
 import java.util.List;

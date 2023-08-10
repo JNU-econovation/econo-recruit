@@ -1,10 +1,9 @@
 package com.econovation.recruit.application.service;
 
-
 import com.econovation.recruit.application.port.in.CommentUseCase;
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.comment.Comment;
-import com.econovation.recruitdomain.domain.comment.CommentLike;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.CommentLike;
 import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;

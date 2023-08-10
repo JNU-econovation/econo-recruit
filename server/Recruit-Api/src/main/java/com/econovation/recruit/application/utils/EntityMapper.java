@@ -1,15 +1,14 @@
 package com.econovation.recruit.application.utils;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.comment.Comment;
-import com.econovation.recruitdomain.domain.dto.*;
-import com.econovation.recruitdomain.domain.interviewer.Interviewer;
-import com.econovation.recruitdomain.domain.interviewer.Role;
-import com.econovation.recruitdomain.domain.record.Record;
-import com.econovation.recruitdomain.domain.score.Score;
-import com.econovation.recruitdomain.domain.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.dto.*;
+import com.econovation.recruitdomain.domains.interviewer.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.Role;
+import com.econovation.recruitdomain.domains.record.Record;
+import com.econovation.recruitdomain.domains.score.Score;
+import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

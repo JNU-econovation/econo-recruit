@@ -1,6 +1,5 @@
 package com.econovation.recruit.config.security;
 
-
 import com.econovation.recruitcommon.exception.SecurityContextNotFoundException;
 import java.util.List;
 import org.springframework.security.core.Authentication;

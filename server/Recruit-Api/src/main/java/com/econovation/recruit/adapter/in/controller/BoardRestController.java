@@ -1,14 +1,13 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.BoardUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
 import com.econovation.recruit.application.port.in.NavigationUseCase;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.board.Navigation;
-import com.econovation.recruitdomain.domain.card.Card;
-import com.econovation.recruitdomain.domain.dto.CreateWorkCardDto;
-import com.econovation.recruitdomain.domain.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

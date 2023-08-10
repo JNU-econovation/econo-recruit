@@ -1,10 +1,9 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.BoardUseCase;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.card.Card;
-import com.econovation.recruitdomain.domain.model.BoardMessage;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.model.BoardMessage;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -60,12 +59,12 @@ public class BoardStompController {
     // 업무카드 위치 변경
     /*    @MessageMapping(value = "/boards/message")
     public void createCard(BoardMessage message) {
-        template.convertAndSend("/sub/board", message);
-        System.out.println("들어온 메세지 : "+message);
-        // DB에 채팅내용 저장
-        Map<String, Integer> newestLocationByNavLocAndColLoc = boardUseCase.getNewestLocationByNavLocAndColLoc(message.getNavLoc(), message.getColLoc());
-        Board board = boardUseCase.createWorkBoard(message.getMessage(),message.getNavLoc(),
-                newestLocationByNavLocAndColLoc.get("colLoc"), newestLocationByNavLocAndColLoc.get("lowLoc"));
+    				template.convertAndSend("/sub/board", message);
+    				System.out.println("들어온 메세지 : "+message);
+    				// DB에 채팅내용 저장
+    				Map<String, Integer> newestLocationByNavLocAndColLoc = boardUseCase.getNewestLocationByNavLocAndColLoc(message.getNavLoc(), message.getColLoc());
+    				Board board = boardUseCase.createWorkBoard(message.getMessage(),message.getNavLoc(),
+    												newestLocationByNavLocAndColLoc.get("colLoc"), newestLocationByNavLocAndColLoc.get("lowLoc"));
     }*/
 
 }

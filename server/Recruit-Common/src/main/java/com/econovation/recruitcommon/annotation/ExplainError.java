@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.annotation;
 
-
 import java.lang.annotation.*;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,5 @@
 package com.econovation.recruit.config;
 
-
 import com.sun.security.auth.UserPrincipal;
 import java.security.Principal;
 import java.util.Map;

@@ -1,10 +1,9 @@
 package com.econovation.recruit.adapter.in.controller;
 
-
 import com.econovation.recruit.application.port.in.ResumeUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
-import com.econovation.recruitdomain.domain.dto.ResumeInsertDto;
-import com.econovation.recruitdomain.domain.resume.Resume;
+import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
+import com.econovation.recruitdomain.domains.resume.Resume;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

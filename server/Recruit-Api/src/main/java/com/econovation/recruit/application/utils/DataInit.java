@@ -1,14 +1,13 @@
 package com.econovation.recruit.application.utils;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.applicant.ApplicantRepository;
-import com.econovation.recruitdomain.domain.board.Board;
-import com.econovation.recruitdomain.domain.board.BoardRepository;
-import com.econovation.recruitdomain.domain.board.Navigation;
-import com.econovation.recruitdomain.domain.board.NavigationRepository;
-import com.econovation.recruitdomain.domain.card.Card;
-import com.econovation.recruitdomain.domain.card.CardRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.applicant.domain.ApplicantRepository;
+import com.econovation.recruitdomain.domains.board.Board;
+import com.econovation.recruitdomain.domains.board.BoardRepository;
+import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitdomain.domains.board.NavigationRepository;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.CardRepository;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

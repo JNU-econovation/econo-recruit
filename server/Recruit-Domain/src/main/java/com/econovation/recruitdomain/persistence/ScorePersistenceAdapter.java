@@ -1,9 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.score.Score;
-import com.econovation.recruitdomain.domain.score.ScoreRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.score.Score;
+import com.econovation.recruitdomain.domains.score.ScoreRepository;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
 import java.util.List;

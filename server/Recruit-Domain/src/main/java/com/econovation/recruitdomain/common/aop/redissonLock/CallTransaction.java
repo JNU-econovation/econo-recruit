@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.common.aop.redissonLock;
 
-
 import org.aspectj.lang.ProceedingJoinPoint;
 
 public interface CallTransaction {

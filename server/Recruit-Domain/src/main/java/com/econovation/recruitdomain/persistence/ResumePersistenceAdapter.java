@@ -1,10 +1,9 @@
 package com.econovation.recruitdomain.persistence;
 
-
-import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domain.dto.ResumeInsertDto;
-import com.econovation.recruitdomain.domain.resume.Resume;
-import com.econovation.recruitdomain.domain.resume.ResumeRepository;
+import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
+import com.econovation.recruitdomain.domains.resume.Resume;
+import com.econovation.recruitdomain.domains.resume.ResumeRepository;
 import com.econovation.recruitdomain.out.ResumeLoadPort;
 import com.econovation.recruitdomain.out.ResumeRecordPort;
 import java.sql.PreparedStatement;

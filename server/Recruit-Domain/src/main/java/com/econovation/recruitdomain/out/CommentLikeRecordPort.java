@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.out;
 
-
-import com.econovation.recruitdomain.domain.comment.CommentLike;
+import com.econovation.recruitdomain.domains.comment.CommentLike;
 
 public interface CommentLikeRecordPort {
     CommentLike saveCommentLike(CommentLike commentLike);

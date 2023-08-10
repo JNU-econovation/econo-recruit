@@ -1,10 +1,9 @@
 package com.econovation.recruitdomain.persistence;
 
-
-import com.econovation.recruitdomain.domain.comment.Comment;
-import com.econovation.recruitdomain.domain.comment.CommentLike;
-import com.econovation.recruitdomain.domain.comment.CommentLikeRepository;
-import com.econovation.recruitdomain.domain.comment.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.CommentLike;
+import com.econovation.recruitdomain.domains.comment.CommentLikeRepository;
+import com.econovation.recruitdomain.domains.comment.CommentRepository;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
