@@ -1,8 +1,8 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.applicant.service;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SEPERATOR_LIST;
 
-import com.econovation.recruit.application.port.in.ApplicantRegisterUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.common.events.applicant.SubmitApplicantEvent;

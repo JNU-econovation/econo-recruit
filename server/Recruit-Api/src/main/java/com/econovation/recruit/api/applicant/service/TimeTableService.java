@@ -1,7 +1,10 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.applicant.service;
 
-import com.econovation.recruit.application.port.in.TimeTableRegisterUseCase;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
+import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLICANT_FIELD;
+
+import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
+import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
+import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
@@ -13,18 +16,43 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class TimeTableService implements TimeTableRegisterUseCase {
+public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoadUseCase {
     private final TimeTableLoadPort timeTableLoadPort;
     private final TimeTableRecordPort timeTableRecordPort;
+    private final AnswerService answerService;
 
-    public List<TimeTable> findAll() {
-        return timeTableLoadPort.findAll();
+    @Override
+    public List<TimeTableDto> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<TimeTable> getTimeTableByApplicantId(UUID applicantId) {
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<Integer, Map<String, String>> findAllSimpleApplicantWithTimeTable() {
+        List<TimeTable> timeTables = timeTableLoadPort.findAll();
+        Map<UUID, Map<String, String>> allApplicantVo =
+                answerService.findAllApplicantVo(TIMETABLE_APPLICANT_FIELD);
+        return timeTables.stream()
+                .collect(
+                        Collectors.toMap(
+                                TimeTable::getStartTime,
+                                timeTable -> {
+                                    return allApplicantVo.get(timeTable.getApplicantId());
+                                }));
     }
 
     private List<TimeTableInsertDto> toList(HashMap<String, Object> param) {
@@ -50,15 +78,11 @@ public class TimeTableService implements TimeTableRegisterUseCase {
     }
 
     @Override
-    public void execute(UUID applicantId, List<TimeTableVo> timeTables) {
+    public void execute(UUID applicantId, List<Integer> startTimes) {
         List<TimeTable> timeTableList = new LinkedList<>();
-        for (TimeTableVo timeTableVo : timeTables) {
+        for (Integer startTime : startTimes) {
             timeTableList.add(
-                    TimeTable.builder()
-                            .endTime(timeTableVo.getEndTime())
-                            .startTime(timeTableVo.getStartTime())
-                            .applicantID(applicantId)
-                            .build());
+                    TimeTable.builder().startTime(startTime).applicantId(applicantId).build());
         }
         timeTableRecordPort.saveAll(timeTableList);
     }

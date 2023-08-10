@@ -39,6 +39,7 @@ public class RecruitStatic {
                             new AbstractMap.SimpleEntry<>("부전공", "minor"),
                             new AbstractMap.SimpleEntry<>("지원 경로 * (중복 선택 가능)", "supportPath"),
                             new AbstractMap.SimpleEntry<>("이메일", "email")));
+    public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("name", "hopeField");
     public static final Long NO_START_NUMBER = 1000000L;
     public static final Long MINIMUM_PAYMENT_WON = 1000L;
     public static final Long ZERO = 0L;

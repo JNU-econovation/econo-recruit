@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.port.in;
+package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;

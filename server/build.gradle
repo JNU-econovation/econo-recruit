@@ -117,8 +117,8 @@ spotless {
     java {
         removeUnusedImports()
         trimTrailingWhitespace()
-//        indentWithTabs()
-        indentWithSpaces(4)
+        indentWithTabs(1)
+//        indentWithSpaces(4)
         importOrder()
         target("**/*.java")
         googleJavaFormat().aosp()

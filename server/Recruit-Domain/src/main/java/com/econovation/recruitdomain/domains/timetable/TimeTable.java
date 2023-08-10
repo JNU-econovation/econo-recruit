@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.timetable;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,11 +19,8 @@ public class TimeTable {
     private Integer id;
 
     @Column(name = "applicant_id")
-    private UUID applicantID;
+    private UUID applicantId;
 
     @Column(name = "start_time")
     private Integer startTime;
-
-    @Column(name = "end_time")
-    private Integer endTime;
 }

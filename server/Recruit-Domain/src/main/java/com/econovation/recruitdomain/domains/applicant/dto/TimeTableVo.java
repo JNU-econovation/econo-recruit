@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.dto;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.Getter;
 
@@ -8,5 +7,4 @@ import lombok.Getter;
 @Data
 public class TimeTableVo {
     private Integer startTime;
-    private Integer endTime;
 }

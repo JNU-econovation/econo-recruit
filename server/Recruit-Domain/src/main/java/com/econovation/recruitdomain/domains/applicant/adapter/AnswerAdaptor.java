@@ -4,6 +4,7 @@ import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.AnswerRepository;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -21,5 +22,9 @@ public class AnswerAdaptor {
 
     public List<Answer> findAll() {
         return answerRepository.findAll();
+    }
+
+    public List<Answer> findByAnswerIds(List<UUID> applicantIds) {
+        return answerRepository.findByApplicantIdIn(applicantIds);
     }
 }
