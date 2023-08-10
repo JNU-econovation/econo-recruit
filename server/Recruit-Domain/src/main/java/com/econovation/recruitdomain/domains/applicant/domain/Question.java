@@ -25,6 +25,9 @@ public class Question {
     @Column(name = "question_type")
     private String questionType;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "key")
+    private String key;
+
+    @Column(name = "parent_id")
+    private Integer parentId;
 }

@@ -34,7 +34,6 @@ public class ApplicantService implements ApplicantRegisterUseCase {
     @Override
     public void execute(List<BlockRequestDto> blocks) {
         List<Question> questions = questionAdaptor.findAll();
-
         List<Answer> results =
                 blocks.stream()
                         .map(
@@ -43,7 +42,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             questions.stream()
                                                     .filter(
                                                             question ->
-                                                                    question.getTitle()
+                                                                    question.getKey()
                                                                             .equals(
                                                                                     block
                                                                                             .getName()))
@@ -53,7 +52,6 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                                             Result.failure(
                                                                     ApplicantNotFoundException
                                                                             .EXCEPTION));
-
                                     return matchingQuestionResult
                                             .map(
                                                     question ->
@@ -82,7 +80,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
 
         // 사용자로부터 각 질문에 대한 입력 값을 받음
         for (Answer answer : results) {
-            String question = answer.getQuestion().getTitle();
+            String question = answer.getQuestion().getKey();
             String userInputValue = answer.getAnswer();
             for (Map.Entry<String, String> entry : APPLICANT_SEPERATOR_LIST) {
                 if (question.equals(entry.getKey())) {

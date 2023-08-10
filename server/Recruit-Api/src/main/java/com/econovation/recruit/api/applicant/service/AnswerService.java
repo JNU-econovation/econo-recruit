@@ -23,12 +23,12 @@ public class AnswerService {
     private Map<UUID, Map<String, String>> splitByAnswersInApplicantId(
             List<String> fields, List<Answer> answers) {
         return answers.stream()
-                .filter(answer -> fields.contains(answer.getQuestion().getTitle()))
+                .filter(answer -> fields.contains(answer.getQuestion().getKey()))
                 .collect(
                         Collectors.groupingBy(
                                 Answer::getApplicantId,
                                 Collectors.toMap(
-                                        answer -> answer.getQuestion().getTitle(),
+                                        answer -> answer.getQuestion().getKey(),
                                         Answer::getAnswer,
                                         (existing, replacement) -> existing,
                                         HashMap::new)));

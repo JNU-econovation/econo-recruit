@@ -1,12 +1,14 @@
 package com.econovation.recruit.api.applicant.controller;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
+import com.econovation.recruit.api.applicant.usecase.QuestionRecordUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
+import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +34,7 @@ public class ApplicantController {
     private final ApplicantRegisterUseCase applicantRegisterUseCase;
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
+    private final QuestionRecordUseCase questionRecordUseCase;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -48,6 +51,14 @@ public class ApplicantController {
             @PathVariable(value = "applicant-id") UUID applicantId,
             @RequestBody List<Integer> startTimes) {
         timeTableRegisterUseCase.execute(applicantId, startTimes);
+        return new ResponseEntity<>(APPLY_SUCCESS_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "면접관이 면접 질문을 추가합니다.")
+    @PostMapping("/questions")
+    public ResponseEntity registerInterviewQuestion(
+            @RequestBody List<QuestionRequestDto> questions) {
+        questionRecordUseCase.execute(questions);
         return new ResponseEntity<>(APPLY_SUCCESS_MESSAGE, HttpStatus.OK);
     }
 
