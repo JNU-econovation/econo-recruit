@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @Data
 public class TimeTableVo {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Integer startTime;
+    private Integer endTime;
 }
