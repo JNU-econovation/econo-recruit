@@ -65,8 +65,8 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             .getValue();
                                 })
                         .collect(Collectors.toList());
-        // applicant register
-        answerAdaptor.saveAll(results);
+        // TODO: 추가될지 말지 결정해야 함
+        //        answerAdaptor.saveAll(results);
         applicantRegister(results);
     }
 

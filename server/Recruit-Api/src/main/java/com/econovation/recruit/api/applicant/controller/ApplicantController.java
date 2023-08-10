@@ -65,7 +65,7 @@ public class ApplicantController {
         return new ResponseEntity(timeTables, HttpStatus.OK);
     }
 
-    @Operation(summary = "면접 가능 시간마다 일치하는 지원자의 정보를 조회합니다.")
+    @Operation(summary = "면접 가능 시간마다 일치하는 지원자의 정보(희망분야, 이름)를 조회합니다.")
     @GetMapping("/timetables/applicants")
     public ResponseEntity<Map<Integer, List<String>>> getApplicantsByTimeTable() {
         return new ResponseEntity(
