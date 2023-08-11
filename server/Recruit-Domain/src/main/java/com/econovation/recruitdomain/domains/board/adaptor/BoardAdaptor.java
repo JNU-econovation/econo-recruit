@@ -9,7 +9,6 @@ import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @Adaptor
@@ -49,23 +48,23 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
 
     /*    @Override
     public List<Board> getBoardBetweenLowLoc(Integer startLowLoc, Integer destinationLowLoc) {
-    				List<Board> all = boardRepository.findAll();
-    				if (startLowLoc < destinationLowLoc) {
-    								return all.stream()
-    																.filter(m -> m.getLowLoc() >= startLowLoc && m.getLowLoc() <= destinationLowLoc)
-    																.collect(Collectors.toList());
-    				} else {
-    								return all.stream()
-    																.filter(m -> m.getLowLoc() <= startLowLoc && m.getLowLoc() >= destinationLowLoc)
-    																.collect(Collectors.toList());
-    				}
+                    List<Board> all = boardRepository.findAll();
+                    if (startLowLoc < destinationLowLoc) {
+                                    return all.stream()
+                                                                    .filter(m -> m.getLowLoc() >= startLowLoc && m.getLowLoc() <= destinationLowLoc)
+                                                                    .collect(Collectors.toList());
+                    } else {
+                                    return all.stream()
+                                                                    .filter(m -> m.getLowLoc() <= startLowLoc && m.getLowLoc() >= destinationLowLoc)
+                                                                    .collect(Collectors.toList());
+                    }
     }
     */
 
     //    @Override
-//    public void batchUpdate(List<Board> boards) {
-//        boardRepository.saveAll(boards);
-//    }
+    //    public void batchUpdate(List<Board> boards) {
+    //        boardRepository.saveAll(boards);
+    //    }
 
     @Override
     public Board save(Board board) {
@@ -83,22 +82,22 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     //    }
 
     /*    private void batchUpdate(List<Board> boards, String sql) {
-    				jdbcTemplate.batchUpdate(
-    												sql,
-    												new BatchPreparedStatementSetter() {
-    																@Override
-    																public void setValues(PreparedStatement ps, int i) throws SQLException {
-    																				//                    Board board = boards.get(i);
-    																				ps.setInt(1, boards.get(i).getLowLoc() + 1);
-    																				log.info(String.valueOf(boards.get(i).getLowLoc() + 1));
-    																				//                    ps.setString(2, new Date().toString());
-    																}
+                    jdbcTemplate.batchUpdate(
+                                                    sql,
+                                                    new BatchPreparedStatementSetter() {
+                                                                    @Override
+                                                                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                                                                                    //                    Board board = boards.get(i);
+                                                                                    ps.setInt(1, boards.get(i).getLowLoc() + 1);
+                                                                                    log.info(String.valueOf(boards.get(i).getLowLoc() + 1));
+                                                                                    //                    ps.setString(2, new Date().toString());
+                                                                    }
 
-    																@Override
-    																public int getBatchSize() {
-    																				return boards.size();
-    																}
-    												});
+                                                                    @Override
+                                                                    public int getBatchSize() {
+                                                                                    return boards.size();
+                                                                    }
+                                                    });
     }*/
 
     //

@@ -10,7 +10,6 @@ import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,18 +25,18 @@ public class CardService implements CardRegisterUseCase {
 
     /*    @Override
     public Card saveApplicantCard(Applicant applicant) {
-    				// 지원자 희망 분야 (hope_field) 와 매칭되는  col_loc 조회 ( 새로 들어갈 빈 자리 )
-    				Map<String, Integer> newestLocation =
-    												boardUseCase.getNewestLocation(applicant.getHopeField());
-    				// 그 col_loc 에서 생성될 마지막 low_col 조회
-    				Board board =
-    												boardUseCase.save(
-    																				newestLocation,
-    																				applicant.getHopeField(),
-    																				APPLICANT_REGISTER_NAVIGATION_LOCATION);
-    				Applicant savedApplicant = applicantRecordPort.save(applicant);
-    				Card card = Card.builder().applicant(savedApplicant).workCardInfo("-").board(board).build();
-    				return cardRecordPort.save(card);
+                    // 지원자 희망 분야 (hope_field) 와 매칭되는  col_loc 조회 ( 새로 들어갈 빈 자리 )
+                    Map<String, Integer> newestLocation =
+                                                    boardUseCase.getNewestLocation(applicant.getHopeField());
+                    // 그 col_loc 에서 생성될 마지막 low_col 조회
+                    Board board =
+                                                    boardUseCase.save(
+                                                                                    newestLocation,
+                                                                                    applicant.getHopeField(),
+                                                                                    APPLICANT_REGISTER_NAVIGATION_LOCATION);
+                    Applicant savedApplicant = applicantRecordPort.save(applicant);
+                    Card card = Card.builder().applicant(savedApplicant).workCardInfo("-").board(board).build();
+                    return cardRecordPort.save(card);
     }*/
 
     @Override
@@ -50,29 +49,23 @@ public class CardService implements CardRegisterUseCase {
     @Transactional
     public void deleteById(Integer cardId) {
         Card card = cardLoadPort.findById(cardId);
-        boardRecordPort.delete(card.getBoard());
+        boardRecordPort.delete();
         cardRecordPort.delete(cardId);
     }
 
     @Override
     @Transactional
     public void saveWorkCard(CreateWorkCardDto createWorkCardDto) {
-        Board board =
-                boardRegisterUseCase.createWorkBoard(
-                        createWorkCardDto.getNavigationId(), createWorkCardDto.getColLoc());
         Card card =
                 Card.builder()
                         .title(createWorkCardDto.getTitle())
-                        .boardId(board.getId())
                         .content(createWorkCardDto.getContent())
                         .build();
-        cardRecordPort.save(card);
-    }
-
-    @Override
-    public void saveApplicantCard(UUID applicantId) {
-        Board board = boardRegisterUseCase.createApplicantBoard(applicantId);
-        Card card = Card.builder().applicantId(applicantId).boardId(board.getId()).build();
-        cardRecordPort.save(card);
+        Card savedCard = cardRecordPort.save(card);
+        Board board =
+                boardRegisterUseCase.createWorkBoard(
+                        createWorkCardDto.getNavigationId(),
+                        createWorkCardDto.getColLoc(),
+                        savedCard.getId());
     }
 }

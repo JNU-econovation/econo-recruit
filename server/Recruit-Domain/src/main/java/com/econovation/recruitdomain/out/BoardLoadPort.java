@@ -6,10 +6,10 @@ import java.util.List;
 public interface BoardLoadPort {
     //    List<Board> getByHopeField(String hopeField);
     //
-    //    Board getBoardByLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
-    //
-    //    Board getBoardById(Integer id);
-    //
+    Board getBoardByLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
+
+    Board getBoardById(Integer id);
+
     List<Board> getBoardByNavLavigationIdAndColLoc(Integer navigationId, Integer colLoc);
     //
     //    List<Board> getByNavColAndColLoc(Integer navLoc, Integer colLoc);

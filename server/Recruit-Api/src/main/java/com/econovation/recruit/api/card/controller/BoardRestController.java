@@ -14,7 +14,6 @@ import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
-import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
@@ -50,10 +49,12 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성")
     @PostMapping("/boards/navigation/{navigation-id}/columns")
-    public ResponseEntity<String> createBoardColumn(@PathVariable("navigation-id") Integer navigationId, String title) {
+    public ResponseEntity<String> createBoardColumn(
+            @PathVariable("navigation-id") Integer navigationId, String title) {
         boardRecordUseCase.createColumn(title, navigationId);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
+
     @PostMapping("/boards/location")
     public ResponseEntity<UpdateLocationBoardDto> updateLocationBoard(
             UpdateLocationBoardDto updateLocationBoardDto) {
@@ -81,7 +82,7 @@ public class BoardRestController {
 
     @GetMapping("/boards/cards")
     public List<Card> getCardAll() {
-        return new ArrayList<>(cardRegisterUseCase.findAll());
+        return new ArrayList<>(cardLoadUseCase.findAll());
     }
 
     @PostMapping("/boards/cards/delete")

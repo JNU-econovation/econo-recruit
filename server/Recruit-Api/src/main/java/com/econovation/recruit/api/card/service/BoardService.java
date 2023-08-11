@@ -6,8 +6,9 @@ import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
-import com.econovation.recruitdomain.domains.board.domain.Column;
+import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
+import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
@@ -36,49 +37,47 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private final ColumnLoadPort columnLoadPort;
     private final ColumnRecordPort columnRecordPort;
 
-
     /*    @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
-    				Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
-    				Board board =
-    												Board.builder()
-    																				.colLoc(newestLocation.get("colLoc"))
-    																				.colTitle(hopeField)
-    																				.lowLoc(newestLocation.get("lowLoc"))
-    																				.navigation(navigation)
-    																				.build();
-    				return boardRecordPort.save(board);
+                    Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
+                    Board board =
+                                                    Board.builder()
+                                                                                    .colLoc(newestLocation.get("colLoc"))
+                                                                                    .colTitle(hopeField)
+                                                                                    .lowLoc(newestLocation.get("lowLoc"))
+                                                                                    .navigation(navigation)
+                                                                                    .build();
+                    return boardRecordPort.save(board);
     }*/
 
-    @Override
-    public Map<String, Integer> getNewestLocation(String hopeField) {
-        // hopeField 에 일치하는 board List
-        List<Board> boardsByHopeField = boardLoadPort.getByHopeField(hopeField);
-        Board board =
-                boardsByHopeField.stream()
-                        .max(Comparator.comparing(Board::getLowLoc))
-                        .orElseThrow(NoSuchFieldError::new);
-        Map newestLocation = new HashMap();
-        newestLocation.put("colLoc", board.getColLoc());
-        newestLocation.put("lowLoc", board.getLowLoc() + 1);
-        return newestLocation;
-    }
+    //    @Override
+    //    public Map<String, Integer> getNewestLocation(String hopeField) {
+    //        // hopeField 에 일치하는 board List
+    //        List<Board> boardsByHopeField = boardLoadPort.getByHopeField(hopeField);
+    //        Board board =
+    //                boardsByHopeField.stream()
+    //                        .max(Comparator.comparing(Board::getLowLoc))
+    //                        .orElseThrow(NoSuchFieldError::new);
+    //        Map newestLocation = new HashMap();
+    //        newestLocation.put("colLoc", board.getColLoc());
+    //        newestLocation.put("lowLoc", board.getLowLoc() + 1);
+    //        return newestLocation;
+    //    }
 
     @Override
     @Transactional(readOnly = true)
     public Map<String, Integer> getNewestLocationByNavLocAndColLoc(
             Integer navigationId, Integer colLoc) {
         List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc);
+
         Board board =
                 boards.stream()
-                        .max(Comparator.comparing(Board::getNextColLoc))
+                        .max(Comparator.comparing(Board::getNextLowLoc))
                         .orElseThrow(NoSuchFieldError::new);
 
         Map<String, Integer> newestLocation = new HashMap<>();
-        newestLocation.put("prevLowLoc", board.getPrevLowLoc());
-        newestLocation.put("nextLowLoc", board.getNextLowLoc());
-        newestLocation.put("prevColLoc", board.getPrevColLoc());
-        newestLocation.put("nextColLoc", board.getNextColLoc());
+        newestLocation.put("prevLowLoc", board.getPrevLowLoc() + 1);
+        newestLocation.put("nextLowLoc", board.getNextLowLoc() + 1);
         return newestLocation;
     }
 
@@ -103,17 +102,23 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     //    }
 
     @Override
-    public Board createWorkBoard(Integer navigationId, Integer colLoc) {
+    public Board createWorkBoard(Integer navigationId, Integer colLoc, Integer cardId) {
         Map<String, Integer> newestLocation =
                 getNewestLocationByNavLocAndColLoc(navigationId, colLoc);
+        List<Columns> columnByNavigationId = columnLoadPort.getColumnByNavigationId(navigationId);
+        Integer prevColLoc = colLoc - 1;
+        Integer nextColLoc = colLoc + 1;
+
+        Columns column =
+                columnLoadPort.getColumnByPrevColLocAndNextColLocAndNavigationId(
+                        prevColLoc, nextColLoc, navigationId);
         Board board =
                 Board.builder()
                         .cardType(CardType.WORK_CARD)
                         .nextLowLoc(newestLocation.get("nextLowLoc"))
-                        .nextColLoc(newestLocation.get("nextColLoc"))
                         .prevLowLoc(newestLocation.get("prevLowLoc"))
-                        .prevColLoc(newestLocation.get("prevColLoc"))
-                        .navigationId(navigationId)
+                        .columnId(column.getId())
+                        .cardId(cardId)
                         .build();
         // TODO : 소켓서버로 전송 차후에 주석 제거 예정
         // messagingTemplate.convertAndSend("/sub/boards/message", board);
@@ -121,33 +126,41 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public Board createApplicantBoard(UUID applicantId) {
-        // 지원자의 col을 조회 해야 한다.
-        Map<String, String> applicantAnswer = answerLoadUseCase.findApplicantVoByApplicantId(List.of("hopeField", "name"), applicantId);
-        //TODO colTitle 과 Navigation colLoc 를 매칭시킨 테이블을 뒤져보도록 하자.
-        if(applicantAnswer.get("hopeField").equals("개발자")) {
-            Integer colLoc = 0;
-        } else if (applicantAnswer.get("hopeField").equals("디자이너")) {
-            Integer colLoc = 1;
-        } else if (applicantAnswer.get("hopeField").equals("기획자")) {
-            Integer colLoc = 2;
-        } else{
-            throw new IllegalArgumentException("지원자의 희망 분야가 없습니다.");
+    public void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId) {
+        Integer colLoc = -1;
+        if (hopeField.equals("개발자")) {
+            colLoc = 0;
+        } else if (hopeField.equals("디자이너")) {
+            colLoc = 1;
+        } else if (hopeField.equals("기획자")) {
+            colLoc = 2;
+        } else {
+            throw InvalidHopeFieldException.EXCEPTION;
         }
-        getNewestLocationByNavLocAndColLoc(0,)
-        return null;
+        Map<String, Integer> newestLocationByNavLocAndColLoc =
+                getNewestLocationByNavLocAndColLoc(0, colLoc);
+        Columns column =
+                columnLoadPort.getColumnByPrevColLocAndNextColLocAndNavigationId(
+                        newestLocationByNavLocAndColLoc.get("prevColLoc"),
+                        newestLocationByNavLocAndColLoc.get("nextColLoc"),
+                        0);
+
+        Board board =
+                Board.builder()
+                        .cardType(CardType.APPLICANT)
+                        .nextLowLoc(newestLocationByNavLocAndColLoc.get("nextLowLoc"))
+                        .prevLowLoc(newestLocationByNavLocAndColLoc.get("prevLowLoc"))
+                        .columnId(column.getId())
+                        .cardId(cardId)
+                        .build();
+        boardRecordPort.save(board);
     }
 
     @Override
-    public Column createColumn(String title, Integer navigationId) {
-        List<Column> columns = columnLoadPort.getColumnByNavigationId(navigationId);
-        Column column = Column.builder()
-                .title(title)
-                .navigationId(navigationId)
-                .build();
+    public Columns createColumn(String title, Integer navigationId) {
+        Columns column = Columns.builder().title(title).navigationId(navigationId).build();
         return columnRecordPort.save(column);
     }
-
 
     @Override
     public List<Board> findAllByNavLoc(Integer navLoc) {

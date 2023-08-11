@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.domains.board.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import javax.persistence.*;
+import javax.persistence.Column;
 import lombok.*;
 
 @Entity
@@ -15,15 +16,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_id")
     private Integer id;
 
-    @Column(name = "navigation_id")
-    private Integer navigationId;
-
-    @Column(name = "prev_col_loc")
-    private Integer prevColLoc;
-
-    @Column(name = "next_col_loc")
-    private Integer nextColLoc;
-
     @Column(name = "prev_low_loc")
     private Integer prevLowLoc;
 
@@ -35,4 +27,7 @@ public class Board extends BaseTimeEntity {
 
     @Column(name = "card_id")
     private Integer cardId;
+
+    @Column(name = "column_id")
+    private Integer columnId;
 }

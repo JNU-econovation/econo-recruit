@@ -8,6 +8,9 @@ import java.util.UUID;
 @UseCase
 public interface AnswerLoadUseCase {
     Map<UUID, Map<String, String>> findAllApplicantVo(List<String> fields);
-    Map<UUID, Map<String, String>> findApplicantVoByApplicantId(List<String> fields, List<UUID> applicantIds);
+
+    Map<UUID, Map<String, String>> findApplicantVoByApplicantId(
+            List<String> fields, List<UUID> applicantIds);
+
     Map<String, String> findApplicantVoByApplicantId(List<String> fields, UUID applicantId);
 }

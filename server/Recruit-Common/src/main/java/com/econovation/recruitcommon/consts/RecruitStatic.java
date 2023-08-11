@@ -26,6 +26,11 @@ public class RecruitStatic {
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String BOARD_SUCCESS_REGISTER_MESSAGE = "성공적으로 업무카드가 등록됐습니다";
     public static final String BOARD_SUCCESS_DELETE_MESSAGE = "성공적으로 업무카드가 삭제되었습니다.";
+    public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
+            new ArrayList<Map.Entry<String, String>>(
+                    List.of(
+                            new AbstractMap.SimpleEntry<>("프로젝트 희망 분야를 선택해주세요.", "hopeField"),
+                            new AbstractMap.SimpleEntry<>("이름", "name")));
     public static final List<Map.Entry<String, String>> APPLICANT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

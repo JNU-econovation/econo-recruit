@@ -42,11 +42,10 @@ public class AnswerService implements AnswerLoadUseCase {
         List<Answer> answers = answerAdaptor.findByAnswerIds(applicantIds);
         return splitByAnswersInApplicantId(fields, answers);
     }
+
     @Override
-    public Map<String, String> findApplicantVoByApplicantId(
-            List<String> fields, UUID applicantId) {
+    public Map<String, String> findApplicantVoByApplicantId(List<String> fields, UUID applicantId) {
         List<Answer> answers = answerAdaptor.findByAnswerId(applicantId);
         return splitByAnswersInApplicantId(fields, answers).get(applicantId);
     }
-
 }
