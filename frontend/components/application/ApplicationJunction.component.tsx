@@ -4,37 +4,37 @@ import { ApplicationNode } from "@/constants/application/type";
 import dynamic from "next/dynamic";
 
 const ApplicationRadio = dynamic(
-  () => import("./ApplicationNode/Radio.component"),
+  () => import("./applicationNode/Radio.component"),
   { ssr: false }
 );
 
 const ApplicationRadioByTwoRank = dynamic(
-  () => import("./ApplicationNode/RadioByTwoRank.component"),
+  () => import("./applicationNode/RadioByTwoRank.component"),
   { ssr: false }
 );
 
 const ApplicationText = dynamic(
-  () => import("./ApplicationNode/Text.component"),
+  () => import("./applicationNode/Text.component"),
   { ssr: false }
 );
 
 const ApplicationCheckboxWithEtc = dynamic(
-  () => import("./ApplicationNode/CheckboxWithEtc.component"),
+  () => import("./applicationNode/CheckboxWithEtc.component"),
   { ssr: false }
 );
 
 const ApplicationTextarea = dynamic(
-  () => import("./ApplicationNode/Textarea.component"),
+  () => import("./applicationNode/Textarea.component"),
   { ssr: false }
 );
 
 const ApplicationBar = dynamic(
-  () => import("./ApplicationNode/Bar.component"),
+  () => import("./applicationNode/Bar.component"),
   { ssr: false }
 );
 
 const ApplicationJustText = dynamic(
-  () => import("./ApplicationNode/JustText.component"),
+  () => import("./applicationNode/JustText.component"),
   { ssr: false }
 );
 

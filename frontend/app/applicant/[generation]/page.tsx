@@ -1,5 +1,5 @@
-import ApplicationQuestion from "@/components/application/ApplicationQuestion.component";
-import CommonNavbar from "@/components/common/Navbar.component";
+import ApplicantBoard from "@/components/applicant/Board.component";
+import CommonNavbar from "@/components/common/navbar/Navbar.component";
 import { FC } from "react";
 
 interface ApplicantPageProps {
@@ -10,17 +10,13 @@ interface ApplicantPageProps {
 
 const ApplicantPage: FC<ApplicantPageProps> = ({ params }) => {
   const { generation } = params;
-  const applicationQuestions =
-    require(`@/constants/application/${generation}.ts`)
-      .APPLICATION as ApplicationQuestion[];
-
   return (
-    <article className="flex gap-24 mt-24 min-w-[1280px]">
-      <div className="flex-1 pl-12">
-        <CommonNavbar generation={generation} />
+    <div className="px-24 w-max-[1280px] flex p-12">
+      <CommonNavbar generation={generation} />
+      <div className="flex-1 ml-32 min-w-[46rem]">
+        <ApplicantBoard />
       </div>
-      <section className="flex-[3_0_0] flex gap-24 mt-24 min-w-[1600px]"></section>
-    </article>
+    </div>
   );
 };
 

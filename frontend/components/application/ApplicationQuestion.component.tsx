@@ -6,9 +6,9 @@ import classNames from "classnames";
 import { useAtomValue } from "jotai";
 import { applicationIndexAtom } from "@/stores/application";
 import { ApplicationQuestion } from "@/constants/application/type";
-import ApplicationNextButton from "./ApplicationNode/NextButton.component";
-import ApplicationHorizontalLayout from "./ApplicationLayout/Horizontal.componet";
-import ApplicationVerticalLayout from "./ApplicationLayout/Vertical.component";
+import ApplicationNextButton from "./applicationNode/NextButton.component";
+import ApplicationHorizontalLayout from "./applicationLayout/Horizontal.componet";
+import ApplicationVerticalLayout from "./applicationLayout/Vertical.component";
 import { applicationLayout } from "./ApplicationLayout.component";
 
 interface ApplicationQuestionProps {

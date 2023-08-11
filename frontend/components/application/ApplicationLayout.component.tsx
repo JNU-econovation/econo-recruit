@@ -2,25 +2,25 @@
 
 import { ApplicationQuestion } from "@/constants/application/type";
 import dynamic from "next/dynamic";
-import ApplicationTimelineLayout from "./ApplicationLayout/Timeline.component";
+import ApplicationTimelineLayout from "./applicationLayout/Timeline.component";
 
 const ApplicationHorizontalLayout = dynamic(
-  () => import("./ApplicationLayout/Horizontal.componet"),
+  () => import("./applicationLayout/Horizontal.componet"),
   { ssr: false }
 );
 
 const ApplicationVerticalLayout = dynamic(
-  () => import("./ApplicationLayout/Vertical.component"),
+  () => import("./applicationLayout/Vertical.component"),
   { ssr: false }
 );
 
 const ApplicationBooleanTextareaLayout = dynamic(
-  () => import("./ApplicationLayout/BooleanTextarea.component"),
+  () => import("./applicationLayout/BooleanTextarea.component"),
   { ssr: false }
 );
 
 const ApplicationRadioForCheckLayout = dynamic(
-  () => import("./ApplicationLayout/RadioForCheck.component"),
+  () => import("./applicationLayout/RadioForCheck.component"),
   { ssr: false }
 );
 
