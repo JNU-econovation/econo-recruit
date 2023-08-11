@@ -6,7 +6,8 @@ import lombok.Getter;
 @Data
 @Getter
 public class CreateWorkCardDto {
-    private String workContent;
-    private Integer navLoc;
+    private Integer navigationId;
     private Integer colLoc;
+    private String title;
+    private String content;
 }

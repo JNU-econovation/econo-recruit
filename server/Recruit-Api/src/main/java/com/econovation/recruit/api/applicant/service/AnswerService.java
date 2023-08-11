@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.applicant.service;
 
-import com.econovation.recruitdomain.domains.applicant.adapter.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import java.util.HashMap;
 import java.util.List;

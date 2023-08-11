@@ -1,16 +1,22 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api.card.controller;
 
-import com.econovation.recruit.application.port.in.BoardUseCase;
+import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_DELETE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_REGISTER_MESSAGE;
+
+import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
+import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.application.port.in.CardRegisterUseCase;
 import com.econovation.recruit.application.port.in.NavigationUseCase;
-import com.econovation.recruitdomain.domains.board.Board;
-import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
+import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,49 +29,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Tag(name = "[2.0]. 칸반보드 API", description = "칸반보드 관련 API")
 @Slf4j
 public class BoardRestController {
-    private final BoardUseCase boardUseCase;
+    private final BoardLoadUseCase boardLoadUseCase;
     private final CardRegisterUseCase cardRegisterUseCase;
     private final NavigationUseCase navigationUseCase;
     // 칸반보드 전체 조회 by navLoc
+    @Operation(summary = "업무 칸반보드 생성")
+    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PostMapping("/boards/work-card")
-    public ResponseEntity<Board> createWorkBoard(CreateWorkCardDto createWorkCardDto) {
-        Map<String, Integer> newestLocationByNavLocAndColLoc =
-                boardUseCase.getNewestLocationByNavLocAndColLoc(
-                        createWorkCardDto.getNavLoc(), createWorkCardDto.getColLoc());
-        Board board =
-                boardUseCase.createWorkBoard(
-                        createWorkCardDto.getWorkContent(),
-                        createWorkCardDto.getNavLoc(),
-                        newestLocationByNavLocAndColLoc.get("colLoc"),
-                        newestLocationByNavLocAndColLoc.get("lowLoc"));
-        return new ResponseEntity(board, HttpStatus.OK);
+    public ResponseEntity<String> createWorkBoard(CreateWorkCardDto createWorkCardDto) {
+        cardRegisterUseCase.saveWorkCard(createWorkCardDto);
+        return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @PostMapping("/boards/location")
     public ResponseEntity<UpdateLocationBoardDto> updateLocationBoard(
             UpdateLocationBoardDto updateLocationBoardDto) {
-        // gu
-        //        Board boardByLocation =
-        // boardLoadPort.getBoardByLocation(updateLocationBoardDto.getNavLoc(),
-        // updateLocationBoardDto.getColLoc(), bov);
-        // 기존 위치와 상충되면?
-        if (boardUseCase.isDuplicateLocation(
+        if (boardLoadUseCase.isDuplicateLocation(
                 updateLocationBoardDto.getNavLoc(),
                 updateLocationBoardDto.getColLoc(),
                 updateLocationBoardDto.getLowLoc())) {
             // 현재 위치 와 도착 인덱스 사이를 추출
             // 추출된 데이터의 전체 lowLoc 를 재정렬 한다.
-            boardUseCase.relocationBetweenStartToEndLowLoc(updateLocationBoardDto);
+            boardLoadUseCase.relocationBetweenStartToEndLowLoc(updateLocationBoardDto);
             //            boardUseCase.lagLowColBelowLocation(updateLocationBoardDto.getNavLoc(),
             // updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
             return new ResponseEntity(HttpStatus.OK);
 
         } else {
-            Board board = boardUseCase.findById(updateLocationBoardDto.getId());
+            Board board = boardLoadUseCase.findById(updateLocationBoardDto.getId());
             Board updatedBoard =
-                    boardUseCase.updateLocation(
+                    boardLoadUseCase.updateLocation(
                             board,
                             updateLocationBoardDto.getColLoc(),
                             updateLocationBoardDto.getLowLoc());
@@ -79,31 +75,31 @@ public class BoardRestController {
     }
 
     @PostMapping("/boards/cards/delete")
-    public ResponseEntity deleteCard(Integer cardId) {
+    public ResponseEntity<String> deleteCard(Integer cardId) {
         cardRegisterUseCase.deleteById(cardId);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 
     @PostMapping("/boards/navigation")
-    public ResponseEntity createNavigation(String navTitle) {
+    public ResponseEntity<Navigation> createNavigation(String navTitle) {
         Navigation navigation = navigationUseCase.createNavigation(navTitle);
-        return new ResponseEntity(navigation, HttpStatus.OK);
+        return new ResponseEntity<>(navigation, HttpStatus.OK);
     }
 
     @PostMapping("/boards/navigation/update")
-    public ResponseEntity createNavigation(Integer navLoc, String navTitle) {
+    public ResponseEntity<Navigation> createNavigation(Integer navLoc, String navTitle) {
         Navigation navigation = navigationUseCase.updateNavigationByNavLoc(navLoc, navTitle);
-        return new ResponseEntity(navigation, HttpStatus.OK);
+        return new ResponseEntity<>(navigation, HttpStatus.OK);
     }
 
     @GetMapping("/boards/navigation")
     public Navigation getNavigationByNavLoc(Integer navLoc) {
-        return boardUseCase.getNavigationByNavLoc(navLoc);
+        return boardLoadUseCase.getNavigationByNavLoc(navLoc);
     }
 
     @GetMapping("/boards/navigations")
     public List<Navigation> getAllNavigation() {
-        List<Navigation> navigations = boardUseCase.getAllNavigation();
+        List<Navigation> navigations = boardLoadUseCase.getAllNavigation();
         for (Navigation nav : navigations) {
             log.info(nav.getId().toString() + ":" + nav.getNavTitle() + ":" + nav.getNavTitle());
         }

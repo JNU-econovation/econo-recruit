@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.applicant.adapter;
+package com.econovation.recruitdomain.domains.applicant.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;

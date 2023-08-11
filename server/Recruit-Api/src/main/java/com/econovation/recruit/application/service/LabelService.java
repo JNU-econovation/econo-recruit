@@ -1,9 +1,8 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.LabelUseCase;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domains.label.Label;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class LabelService implements LabelUseCase {
     private final LabelRecordPort labelRecordPort;
     private final LabelLoadPort labelLoadPort;
-    private final ApplicantLoadPort applicantLoadPort;
 
     @Override
     @Transactional

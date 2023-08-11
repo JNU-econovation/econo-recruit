@@ -1,7 +1,9 @@
 package com.econovation.recruit.api.applicant.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
+
 import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
-import com.econovation.recruit.api.applicant.usecase.QuestionRecordUseCase;
+import com.econovation.recruit.api.applicant.usecase.QuestionRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.docs.CreateApplicantExceptionDocs;
@@ -30,18 +32,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
-    private static final String APPLY_SUCCESS_MESSAGE = "성공적으로 지원됐습니다";
     private final ApplicantRegisterUseCase applicantRegisterUseCase;
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
-    private final QuestionRecordUseCase questionRecordUseCase;
+    private final QuestionRegisterUseCase questionRegisterUseCase;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
         applicantRegisterUseCase.execute(blockElements);
-        return new ResponseEntity<>(APPLY_SUCCESS_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
@@ -51,15 +52,15 @@ public class ApplicantController {
             @PathVariable(value = "applicant-id") UUID applicantId,
             @RequestBody List<Integer> startTimes) {
         timeTableRegisterUseCase.execute(applicantId, startTimes);
-        return new ResponseEntity<>(APPLY_SUCCESS_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "면접관이 면접 질문을 추가합니다.")
     @PostMapping("/questions")
     public ResponseEntity registerInterviewQuestion(
             @RequestBody List<QuestionRequestDto> questions) {
-        questionRecordUseCase.execute(questions);
-        return new ResponseEntity<>(APPLY_SUCCESS_MESSAGE, HttpStatus.OK);
+        questionRegisterUseCase.execute(questions);
+        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")

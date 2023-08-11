@@ -1,12 +1,14 @@
-package com.econovation.recruit.application.port.in;
+package com.econovation.recruit.api.card.usecase;
 
-import com.econovation.recruitdomain.domains.board.Board;
-import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitcommon.annotation.UseCase;
+import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import java.util.List;
 import java.util.Map;
 
-public interface BoardUseCase {
+@UseCase
+public interface BoardLoadUseCase {
     Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc);
 
     Map<String, Integer> getNewestLocation(String hopeField);
@@ -18,8 +20,6 @@ public interface BoardUseCase {
     boolean isDuplicateLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
 
     void lagLowColBelowLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
-
-    Board createWorkBoard(String workContent, Integer navLoc, Integer colLoc, Integer lowLoc);
 
     List<Board> findAllByNavLoc(Integer navLoc);
 

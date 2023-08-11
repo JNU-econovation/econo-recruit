@@ -1,9 +1,11 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.card.service;
 
-import com.econovation.recruit.application.port.in.BoardUseCase;
-import com.econovation.recruitdomain.domains.board.Board;
-import com.econovation.recruitdomain.domains.board.BoardRepository;
-import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
+import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
+import com.econovation.recruitdomain.domains.board.domain.CardType;
+import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class BoardService implements BoardUseCase {
+public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private static final String NO_BOARD_MESSAGE = "해당하는 Board가 없습니다";
     private final NavigationLoadPort navigationLoadPort;
     private final BoardRecordPort boardRecordPort;
@@ -26,18 +28,18 @@ public class BoardService implements BoardUseCase {
     private final SimpMessagingTemplate messagingTemplate;
     private final BoardRepository boardRepository;
 
-    @Override
+    /*    @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
-        Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
-        Board board =
-                Board.builder()
-                        .colLoc(newestLocation.get("colLoc"))
-                        .colTitle(hopeField)
-                        .lowLoc(newestLocation.get("lowLoc"))
-                        .navigation(navigation)
-                        .build();
-        return boardRecordPort.save(board);
-    }
+    				Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
+    				Board board =
+    												Board.builder()
+    																				.colLoc(newestLocation.get("colLoc"))
+    																				.colTitle(hopeField)
+    																				.lowLoc(newestLocation.get("lowLoc"))
+    																				.navigation(navigation)
+    																				.build();
+    				return boardRecordPort.save(board);
+    }*/
 
     @Override
     public Map<String, Integer> getNewestLocation(String hopeField) {
@@ -55,18 +57,19 @@ public class BoardService implements BoardUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navLoc, Integer colLoc) {
-        List<Board> boards = boardLoadPort.getByNavColAndColLoc(navLoc, colLoc);
+    public Map<String, Integer> getNewestLocationByNavLocAndColLoc(
+            Integer navigationId, Integer colLoc) {
+        List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc);
         Board board =
                 boards.stream()
-                        .max(Comparator.comparing(Board::getLowLoc))
+                        .max(Comparator.comparing(Board::getNextColLoc))
                         .orElseThrow(NoSuchFieldError::new);
 
-        log.info(String.valueOf(board.getLowLoc()));
-
         Map<String, Integer> newestLocation = new HashMap<>();
-        newestLocation.put("lowLoc", board.getLowLoc() + 1);
-        newestLocation.put("colLoc", board.getColLoc());
+        newestLocation.put("prevLowLoc", board.getPrevLowLoc());
+        newestLocation.put("nextLowLoc", board.getNextLowLoc());
+        newestLocation.put("prevColLoc", board.getPrevColLoc());
+        newestLocation.put("nextColLoc", board.getNextColLoc());
         return newestLocation;
     }
 
@@ -81,36 +84,30 @@ public class BoardService implements BoardUseCase {
         location.put("colLoc", colLoc);
         location.put("lowLoc", lowLoc);
         Board boardByLocation = boardLoadPort.getBoardByLocation(navLoc, colLoc, lowLoc);
-        if (boardByLocation != null) {
-            log.info(
-                    "isDuplicated Location By { "
-                            + boardByLocation.getLowLoc()
-                            + " , "
-                            + boardByLocation.getColLoc()
-                            + "}");
-            return true;
-        }
         return false;
     }
 
-    @Override
-    public void lagLowColBelowLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
-        List<Board> boards = boardLoadPort.getBoardByNavLocAndColLoc(navLoc, colLoc);
-        boardRecordPort.lagUpdateAll(boards);
-    }
+    //    @Override
+    //    public void lagLowColBelowLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
+    //        List<Board> boards = boardLoadPort.getBoardByNavLocAndColLoc(navLoc, colLoc);
+    //        boardRecordPort.lagUpdateAll(boards);
+    //    }
 
     @Override
-    public Board createWorkBoard(
-            String workContent, Integer navLoc, Integer colLoc, Integer lowLoc) {
-        Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
+    public Board createWorkBoard(Integer navigationId, Integer colLoc) {
+        Map<String, Integer> newestLocation =
+                getNewestLocationByNavLocAndColLoc(navigationId, colLoc);
         Board board =
                 Board.builder()
-                        .colTitle(workContent)
-                        .colLoc(colLoc)
-                        .lowLoc(lowLoc)
-                        .navigation(navigation)
+                        .cardType(CardType.WORK_CARD)
+                        .nextLowLoc(newestLocation.get("nextLowLoc"))
+                        .nextColLoc(newestLocation.get("nextColLoc"))
+                        .prevLowLoc(newestLocation.get("prevLowLoc"))
+                        .prevColLoc(newestLocation.get("prevColLoc"))
+                        .navigationId(navigationId)
                         .build();
-        messagingTemplate.convertAndSend("/sub/boards/message", board);
+        // TODO : 소켓서버로 전송 차후에 주석 제거 예정
+        // messagingTemplate.convertAndSend("/sub/boards/message", board);
         return boardRecordPort.save(board);
     }
 
