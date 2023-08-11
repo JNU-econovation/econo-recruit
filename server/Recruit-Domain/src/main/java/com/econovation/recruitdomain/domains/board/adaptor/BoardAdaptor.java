@@ -1,5 +1,6 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.board.adaptor;
 
+import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -10,10 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
+@Adaptor
 @RequiredArgsConstructor
-public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
+public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     private static final String NO_NAVLOC_MESSAGE = "해당하는 메뉴가 존재하지 않습니다";
     private static final String NO_BOARD_MESSAGE = "해당하는 BOARD가 존재하지 않습니다";
     private static final String NOT_MATCH_MESSAGE = "일치하는 Board를 찾을 수 없습니다";
@@ -62,9 +63,9 @@ public class BoardPerstenceAdapter implements BoardLoadPort, BoardRecordPort {
     */
 
     //    @Override
-    public void batchUpdate(List<Board> boards) {
-        boardRepository.saveAll(boards);
-    }
+//    public void batchUpdate(List<Board> boards) {
+//        boardRepository.saveAll(boards);
+//    }
 
     @Override
     public Board save(Board board) {

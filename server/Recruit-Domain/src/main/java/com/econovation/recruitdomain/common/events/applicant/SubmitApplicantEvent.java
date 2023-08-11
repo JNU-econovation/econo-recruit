@@ -11,7 +11,6 @@ import lombok.ToString;
 @Builder
 public class SubmitApplicantEvent extends DomainEvent {
     private UUID applicantId;
-
     public static SubmitApplicantEvent from(UUID applicantId) {
         return SubmitApplicantEvent.builder().applicantId(applicantId).build();
     }

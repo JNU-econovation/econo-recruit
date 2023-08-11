@@ -27,4 +27,8 @@ public class AnswerAdaptor {
     public List<Answer> findByAnswerIds(List<UUID> applicantIds) {
         return answerRepository.findByApplicantIdIn(applicantIds);
     }
+
+    public List<Answer> findByAnswerId(UUID applicantId) {
+        return answerRepository.findByApplicantId(applicantId);
+    }
 }

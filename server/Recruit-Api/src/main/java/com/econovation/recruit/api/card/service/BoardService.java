@@ -1,14 +1,18 @@
 package com.econovation.recruit.api.card.service;
 
+import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
+import com.econovation.recruitdomain.domains.board.domain.Column;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
+import com.econovation.recruitdomain.out.ColumnLoadPort;
+import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +31,11 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private final BoardLoadPort boardLoadPort;
     private final SimpMessagingTemplate messagingTemplate;
     private final BoardRepository boardRepository;
+    private final AnswerLoadUseCase answerLoadUseCase;
+
+    private final ColumnLoadPort columnLoadPort;
+    private final ColumnRecordPort columnRecordPort;
+
 
     /*    @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
@@ -110,6 +119,35 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         // messagingTemplate.convertAndSend("/sub/boards/message", board);
         return boardRecordPort.save(board);
     }
+
+    @Override
+    public Board createApplicantBoard(UUID applicantId) {
+        // 지원자의 col을 조회 해야 한다.
+        Map<String, String> applicantAnswer = answerLoadUseCase.findApplicantVoByApplicantId(List.of("hopeField", "name"), applicantId);
+        //TODO colTitle 과 Navigation colLoc 를 매칭시킨 테이블을 뒤져보도록 하자.
+        if(applicantAnswer.get("hopeField").equals("개발자")) {
+            Integer colLoc = 0;
+        } else if (applicantAnswer.get("hopeField").equals("디자이너")) {
+            Integer colLoc = 1;
+        } else if (applicantAnswer.get("hopeField").equals("기획자")) {
+            Integer colLoc = 2;
+        } else{
+            throw new IllegalArgumentException("지원자의 희망 분야가 없습니다.");
+        }
+        getNewestLocationByNavLocAndColLoc(0,)
+        return null;
+    }
+
+    @Override
+    public Column createColumn(String title, Integer navigationId) {
+        List<Column> columns = columnLoadPort.getColumnByNavigationId(navigationId);
+        Column column = Column.builder()
+                .title(title)
+                .navigationId(navigationId)
+                .build();
+        return columnRecordPort.save(column);
+    }
+
 
     @Override
     public List<Board> findAllByNavLoc(Integer navLoc) {

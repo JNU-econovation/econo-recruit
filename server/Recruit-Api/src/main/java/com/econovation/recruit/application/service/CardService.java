@@ -1,7 +1,7 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
-import com.econovation.recruit.application.port.in.CardRegisterUseCase;
+import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +66,13 @@ public class CardService implements CardRegisterUseCase {
                         .boardId(board.getId())
                         .content(createWorkCardDto.getContent())
                         .build();
+        cardRecordPort.save(card);
+    }
+
+    @Override
+    public void saveApplicantCard(UUID applicantId) {
+        Board board = boardRegisterUseCase.createApplicantBoard(applicantId);
+        Card card = Card.builder().applicantId(applicantId).boardId(board.getId()).build();
         cardRecordPort.save(card);
     }
 }
