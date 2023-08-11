@@ -6,7 +6,12 @@ export interface ApplicationQuestion {
   title?: string;
   subtitle?: string;
   require: boolean;
-  direction: "vertical" | "horizontal" | "booleanTextarea" | "radioForCheck";
+  direction:
+    | "vertical"
+    | "horizontal"
+    | "booleanTextarea"
+    | "radioForCheck"
+    | "timeline";
   nodes: ApplicationNode[] | ApplicationQuestion[];
 }
 
@@ -105,6 +110,18 @@ export interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
   value: string[];
 }
 
-export interface ApplicationTimeline extends ApplicationNodeBase {
+export interface ApplicationTimelineType extends ApplicationNodeBase {
   type: "timeline";
+}
+
+export interface ApplicationTimeline {
+  seperate: number;
+  time: {
+    start_time: Date;
+    end_time: Date;
+  }[];
+  disable_time: {
+    start_time: Date;
+    end_time: Date;
+  }[];
 }

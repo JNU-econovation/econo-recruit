@@ -24,10 +24,14 @@ const ApplicationQuestion: FC<ApplicationQuestionProps> = ({
   const applicationQuestion = applicationQuestions[applicationIndex];
 
   return (
-    <article className={classNames(className)}>
-      <Txt typography="h1">신입모집 신청</Txt>
-      <div className="my-6 h-1 bg-gray-300 w-full"></div>
-      {applicationLayout(applicationQuestion.direction, applicationQuestion)}
+    <article className={classNames("flex flex-col justify-between", className)}>
+      <div>
+        <Txt typography="h1" className="uppercase">
+          ECONOVATION 신입모집 신청
+        </Txt>
+        <div className="my-6 h-1 bg-gray-300 w-full"></div>
+        {applicationLayout(applicationQuestion.direction, applicationQuestion)}
+      </div>
       <div className="translate-x-[calc(100%+1.5rem)] w-[calc(50%-2.3rem)]">
         {applicationQuestions.length - 1 > applicationIndex ? (
           <ApplicationNextButton

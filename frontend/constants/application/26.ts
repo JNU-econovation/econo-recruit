@@ -10,6 +10,7 @@ import {
   ApplicationText,
   ApplicationTextarea,
   ApplicationTimeline,
+  ApplicationTimelineType,
 } from "./type";
 
 export const APPLICATION = [
@@ -370,14 +371,64 @@ export const APPLICATION = [
   {
     id: 15,
     title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
-    direction: "horizontal",
+    direction: "timeline",
     require: false,
     nodes: [
       {
         type: "timeline",
         name: "timeline",
         require: true,
-      } as ApplicationTimeline,
+      } as ApplicationTimelineType,
     ],
   },
 ] as ApplicationQuestion[];
+
+export const APPLICATION_NAVBAR = [
+  { id: 1, title: "프로젝트 희망 분야를 선택해주세요." },
+  { id: 2, title: "기본 인적 사항을 입력해주세요." },
+  { id: 4, title: "기타 질문 사항에 답변해주세요." },
+  { id: 5, title: "에코노베이션에 지원하게 된 계기는 무엇인가요?" },
+  {
+    id: 6,
+    title:
+      "소프트웨어 프로젝트 관련 개발/기획/디자인 경험이나 주도적으로 교육에 참여한 경험이 있나요?",
+  },
+  {
+    id: 7,
+    title:
+      "ECONOVATION에 들어오게 된다면 어떤 목표와 학습 계획을 바탕으로 활동하고 싶나요?",
+  },
+  { id: 8, title: "무언가에 깊게 빠지거나 파고 들어본 적이 있나요?" },
+  {
+    id: 9,
+    title:
+      "협업(프로젝트, 팀 활동)에 있어서 가장 중요하다고 생각되는 것은 무엇인지 그 이유와 함께 서술해주세요. ",
+  },
+  { id: 10, title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요." },
+  { id: 11, title: "개인정보 수집에 관한 안내 및 개인정보 수집" },
+  { id: 12, title: "면접 가능시간을 선택해주세요. (중복 선택 가능)" },
+];
+
+export const APPLICATION_TIMELINE = {
+  seperate: 60,
+  time: [
+    {
+      start_time: new Date(2023, 3, 19, 10, 0, 0),
+      end_time: new Date(2023, 3, 19, 21, 0, 0),
+    },
+    {
+      start_time: new Date(2023, 3, 20, 10, 0, 0),
+      end_time: new Date(2023, 3, 20, 21, 0, 0),
+    },
+    {
+      start_time: new Date(2023, 3, 21, 10, 0, 0),
+      end_time: new Date(2023, 3, 21, 21, 0, 0),
+    },
+  ],
+  disable_time: [
+    {
+      start_time: new Date(2023, 3, 19, 10, 0, 0),
+      end_time: new Date(2023, 3, 19, 13, 0, 0),
+    },
+  ],
+} as ApplicationTimeline;

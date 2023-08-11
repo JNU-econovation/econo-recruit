@@ -2,6 +2,7 @@
 
 import { ApplicationQuestion } from "@/constants/application/type";
 import dynamic from "next/dynamic";
+import ApplicationTimelineLayout from "./ApplicationLayout/Timeline.component";
 
 const ApplicationHorizontalLayout = dynamic(
   () => import("./ApplicationLayout/Horizontal.componet"),
@@ -44,6 +45,7 @@ export const applicationLayout = (
         applicationQuestion={applicationQuestion}
       />
     ),
+    timeline: <ApplicationTimelineLayout />,
   };
 
   return jsxNode[layout];

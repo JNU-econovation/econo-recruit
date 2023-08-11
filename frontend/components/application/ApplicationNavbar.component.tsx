@@ -5,34 +5,37 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
 import Txt from "@/components/common/Txt.component";
-import { ApplicationQuestion } from "@/constants/application/type";
 
 interface ApplicationNavbarProps {
-  applicationQuestions: ApplicationQuestion[];
+  generation: string;
   className?: string;
 }
 
 const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
-  applicationQuestions,
+  generation,
   className,
 }) => {
   const [applicationIndex, setApplicationIndex] = useAtom(applicationIndexAtom);
-  const APPLICATION = applicationQuestions;
+  const applicationNavbar = require(`@/constants/application/${generation}.ts`)
+    .APPLICATION_NAVBAR as {
+    id: number;
+    title: string;
+  }[];
 
   return (
     <nav className={classNames("pl-12 w-full h-full", className)}>
-      {applicationQuestions.map((question, index) => (
+      {applicationNavbar.map((navItem, index) => (
         <button
           className={"text-left p-4 relative"}
-          onClick={() => setApplicationIndex(index)}
-          key={question.id}
+          onClick={() => setApplicationIndex(navItem.id)}
+          key={navItem.id}
         >
           {/* 마지막 선은 그리지 않기 */}
-          {index !== APPLICATION.length - 1 && (
+          {index !== applicationNavbar.length - 1 && (
             <div
               className={classNames(
-                "absolute border-l-2 h-full left-[3px] top-8 -z-10",
-                applicationIndex - 1 >= index
+                "absolute border-l-2 h-full -left-[13px] top-8 -z-10",
+                applicationIndex > navItem.id
                   ? "border-black"
                   : "border-gray-300"
               )}
@@ -40,13 +43,13 @@ const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
           )}
           <Txt
             className={classNames(
-              "relative transition-all before:h-2 before:w-2 before:rounded-full before:absolute before:translate-y-full before:-translate-x-4",
-              applicationIndex >= index
+              "relative transition-all before:h-2 before:w-2 before:rounded-full before:absolute before:translate-y-full before:-translate-x-8",
+              applicationIndex >= navItem.id
                 ? "before:bg-black text-black"
                 : "before:bg-gray-300 text-gray-300"
             )}
           >
-            {question.title}
+            {navItem.title}
           </Txt>
         </button>
       ))}
