@@ -107,30 +107,21 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
     }
 
     @Override
-    public boolean isDuplicateLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
-        Map<String, Integer> location = new HashMap<>();
-        location.put("colLoc", colLoc);
-        location.put("lowLoc", lowLoc);
-        Board boardByLocation = boardLoadPort.getBoardByLocation(navLoc, colLoc, lowLoc);
-        return false;
-    }
+    public void execute(Board board) {
 
-    //    @Override
-    //    public void lagLowColBelowLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
-    //        List<Board> boards = boardLoadPort.getBoardByNavLocAndColLoc(navLoc, colLoc);
-    //        boardRecordPort.lagUpdateAll(boards);
-    //    }
+    }
 
     @Override
     public Board createWorkBoard(Integer columnId, Integer cardId) {
         Columns column = columnLoadPort.findById(columnId);
-        Board board =
+        Board board = boardRecordPort.save(
                 Board.builder()
                         .cardType(CardType.WORK_CARD)
                         .nextBoardId(null)
                         .columnId(column.getId())
                         .cardId(cardId)
-                        .build();
+                        .build()
+        );
         //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
         boardLoadPort.getBoardByNavigationIdAndColumnId(0, columnId).stream()
                 .filter(b -> b.getNextBoardId() == null)
@@ -156,10 +147,8 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
         } else {
             throw InvalidHopeFieldException.EXCEPTION;
         }
-        Columns column =
-                columnLoadPort.getColumnByPrevColLocAndNextColLocAndNavigationId(
-                        nextColId,
-                        0);
+
+        Columns column = columnLoadPort.getColumnById(nextColId);
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
@@ -179,7 +168,10 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
 
     @Override
     public Columns createColumn(String title, Integer navigationId) {
-        Columns column = Columns.builder().title(title).navigationId(navigationId).build();
+        Columns column = Columns.builder()
+                .title(title)
+                .navigationId(navigationId)
+                .build();
         return columnRecordPort.save(column);
     }
 
@@ -198,6 +190,7 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
         return navigationLoadPort.getByNavLoc(navLoc);
     }
 
+/*
     @Override
     public Board updateLocation(Board board, Integer colLoc, Integer lowLoc) {
         Columns columns = columnLoadPort.findById(board.getColumnId());
@@ -237,11 +230,11 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
         messagingTemplate.convertAndSend("/sub/boards/", );
         return save;
     }
+*/
 
     @Override
     @Transactional
     public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
-        //Result find onSuccess -> updateLocation
         // 옮기려는 자리에 카드가 있는지 확인
         Result<Board> boardResult = boardLoadPort.getBoardById(updateLocationBoardDto.getId());
         // 옮기는 자리에 카드가 있으면 그 카드의 위치를 바꿔준다.
@@ -249,13 +242,21 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
                 board -> {
                     updateLocation(board, updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
                 });
-        //Result find onFailure -> throw Exception
         boardResult.onFailure(
                 throwable -> {
                     throw BoardNotFoundException.EXCEPTION;
                 });
-            //            소켓서버로 전송
-            messagingTemplate.convertAndSend("/sub/boards/", boards);
-        }
+            // TODO 소켓서버로 전송
+//            messagingTemplate.convertAndSend("/sub/boards/", boards);
     }
+/*
+    @Override
+    public boolean isDuplicateLocation(Integer navLoc, Integer columnId, Integer boardId) {
+        Map<String, Integer> location = new HashMap<>();
+        location.put("columnId", columnId);
+        location.put("boardId", boardId);
+        Board boardByLocation = boardLoadPort.getBoardByLocation(navLoc, colLoc, boardId);
+        return false;
+    }
+    */
 }

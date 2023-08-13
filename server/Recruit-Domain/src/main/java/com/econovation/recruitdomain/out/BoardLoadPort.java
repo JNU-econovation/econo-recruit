@@ -13,6 +13,8 @@ public interface BoardLoadPort {
 
     List<Board> getBoardByNavLavigationIdAndColLoc(Integer navigationId, Integer colLoc);
     List<Board> getBoardByNavigationIdAndColumnId(Integer navigationId, Integer columnId);
+
+    List<Board> getBoardByNavLoc(Integer navLoc);
     //
     //    List<Board> getByNavColAndColLoc(Integer navLoc, Integer colLoc);
     //
