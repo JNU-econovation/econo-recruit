@@ -4,6 +4,8 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_D
 import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_REGISTER_MESSAGE;
 
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
+import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
+import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
@@ -38,7 +40,7 @@ public class BoardRestController {
     private final CardRegisterUseCase cardRegisterUseCase;
     private final NavigationUseCase navigationUseCase;
     // 칸반보드 전체 조회 by navLoc
-    @Operation(summary = "업무 칸반보드 생성")
+    @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PostMapping("/boards/work-card")
     public ResponseEntity<String> createWorkBoard(CreateWorkCardDto createWorkCardDto) {
@@ -46,7 +48,8 @@ public class BoardRestController {
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "지원서 칸반보드 열(세로줄) 생성")
+    @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
+    @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
     @PostMapping("/boards/navigation/{navigation-id}/columns")
     public ResponseEntity<String> createBoardColumn(
             @PathVariable("navigation-id") Integer navigationId, String title) {
@@ -55,6 +58,7 @@ public class BoardRestController {
     }
 
     @Operation(summary = "지원서 칸반보드 위치 수정")
+    @ApiErrorExceptionsExample(UpdateBoardExceptionDocs.class)
     @PostMapping("/boards/location")
     public ResponseEntity<String> updateLocationBoard(
             UpdateLocationBoardDto updateLocationBoardDto) {
