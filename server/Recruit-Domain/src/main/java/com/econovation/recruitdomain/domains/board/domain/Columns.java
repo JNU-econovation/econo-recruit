@@ -32,4 +32,9 @@ public class Columns extends BaseTimeEntity {
 
     @Column(name = "next_col_loc")
     private Integer nextColLoc;
+
+    public void updateLocation(Integer prevColLoc, Integer nextColLoc) {
+        this.prevColLoc = prevColLoc;
+        this.nextColLoc = nextColLoc;
+    }
 }

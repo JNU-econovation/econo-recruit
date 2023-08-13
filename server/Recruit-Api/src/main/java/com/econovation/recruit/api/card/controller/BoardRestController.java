@@ -55,29 +55,12 @@ public class BoardRestController {
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
+    @Operation(summary = "지원서 칸반보드 위치 수정")
     @PostMapping("/boards/location")
-    public ResponseEntity<UpdateLocationBoardDto> updateLocationBoard(
+    public ResponseEntity<String> updateLocationBoard(
             UpdateLocationBoardDto updateLocationBoardDto) {
-        if (boardLoadUseCase.isDuplicateLocation(
-                updateLocationBoardDto.getNavLoc(),
-                updateLocationBoardDto.getColLoc(),
-                updateLocationBoardDto.getLowLoc())) {
-            // 현재 위치 와 도착 인덱스 사이를 추출
-            // 추출된 데이터의 전체 lowLoc 를 재정렬 한다.
-            boardLoadUseCase.relocationBetweenStartToEndLowLoc(updateLocationBoardDto);
-            //            boardUseCase.lagLowColBelowLocation(updateLocationBoardDto.getNavLoc(),
-            // updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
-            return new ResponseEntity(HttpStatus.OK);
-
-        } else {
-            Board board = boardLoadUseCase.findById(updateLocationBoardDto.getId());
-            Board updatedBoard =
-                    boardLoadUseCase.updateLocation(
-                            board,
-                            updateLocationBoardDto.getColLoc(),
-                            updateLocationBoardDto.getLowLoc());
-            return new ResponseEntity(updatedBoard, HttpStatus.OK);
-        }
+        boardLoadUseCase.relocateCard(updateLocationBoardDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/boards/cards")

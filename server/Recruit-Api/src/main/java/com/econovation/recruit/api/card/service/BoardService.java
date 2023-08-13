@@ -3,11 +3,13 @@ package com.econovation.recruit.api.card.service;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
+import com.econovation.recruitdomain.domains.board.exception.BoardNotFoundException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -64,26 +66,41 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     //        return newestLocation;
     //    }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Map<String, Integer> getNewestLocationByNavLocAndColLoc(
-            Integer navigationId, Integer colLoc) {
-        List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc);
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Map<String, Integer> getNewestLocationByNavLocAndColLoc(
+//            Integer navigationId, Integer colLoc) {
+//        List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc);
+//
+//        Board board =
+//                boards.stream()
+//                        .max(Comparator.comparing(Board::getNextBoardID))
+//                        .orElseThrow(NoSuchFieldError::new);
+//
+//        Map<String, Integer> newestLocation = new HashMap<>();
+//        newestLocation.put("prevLowLoc", board.getPrevLowLoc() + 1);
+//        newestLocation.put("nextLowLoc", board.getNextBoardID() + 1);
+//        return newestLocation;
+//    }
+@Override
+@Transactional(readOnly = true)
+public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigationId, Integer nextColId) {
+    List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, nextColId);
 
-        Board board =
-                boards.stream()
-                        .max(Comparator.comparing(Board::getNextLowLoc))
-                        .orElseThrow(NoSuchFieldError::new);
+    Board board = boards.stream()
+//            .max(Comparator.comparing(Board::getNextBoardID))
+            .filter(b -> b.getNextBoardID() == null).findFirst()
+            .orElseThrow(NoSuchElementException::new);
 
-        Map<String, Integer> newestLocation = new HashMap<>();
-        newestLocation.put("prevLowLoc", board.getPrevLowLoc() + 1);
-        newestLocation.put("nextLowLoc", board.getNextLowLoc() + 1);
-        return newestLocation;
-    }
+    Map<String, Integer> newestLocation = new HashMap<>();
+    newestLocation.put("nextLowLoc", board.getNextLowLoc() + 1);
+    return newestLocation;
+}
+
 
     @Override
     public Board findById(Integer id) {
-        return boardLoadPort.getBoardById(id);
+        return boardLoadPort.getBoardById(id).getValue();
     }
 
     @Override
@@ -127,33 +144,35 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId) {
-        Integer colLoc = -1;
+        Integer nextColId = -1;
         if (hopeField.equals("개발자")) {
-            colLoc = 0;
+            nextColId = 1;
         } else if (hopeField.equals("디자이너")) {
-            colLoc = 1;
+            nextColId = 2;
         } else if (hopeField.equals("기획자")) {
-            colLoc = 2;
+            nextColId = 3;
         } else {
             throw InvalidHopeFieldException.EXCEPTION;
         }
-        Map<String, Integer> newestLocationByNavLocAndColLoc =
-                getNewestLocationByNavLocAndColLoc(0, colLoc);
         Columns column =
                 columnLoadPort.getColumnByPrevColLocAndNextColLocAndNavigationId(
-                        newestLocationByNavLocAndColLoc.get("prevColLoc"),
-                        newestLocationByNavLocAndColLoc.get("nextColLoc"),
+                        nextColId,
                         0);
-
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
-                        .nextLowLoc(newestLocationByNavLocAndColLoc.get("nextLowLoc"))
-                        .prevLowLoc(newestLocationByNavLocAndColLoc.get("prevLowLoc"))
+                        .nextBoardID(null)
                         .columnId(column.getId())
                         .cardId(cardId)
                         .build();
-        boardRecordPort.save(board);
+        Board save = boardRecordPort.save(board);
+//        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
+        boardLoadPort.getBoardByNavLavigationIdAndColLoc(0, nextColId).stream()
+                .filter(b -> b.getNextBoardID() == null)
+                .findFirst()
+                .ifPresent(b -> {
+                    b.updateNextBoardID(save.getId());
+                });
     }
 
     @Override
@@ -179,54 +198,60 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public Board updateLocation(Board board, Integer colLoc, Integer lowLoc) {
-        board.update(colLoc, lowLoc);
-        Board save = boardRecordPort.save(board);
+        Columns columns = columnLoadPort.findById(board.getColumnId());
+        Integer navigationId = columns.getNavigationId();
+        Board destinationBoard = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc).stream()
+                .filter(board1 -> board1.getPrevLowLoc() == lowLoc - 1 && board1.getNextBoardID() == lowLoc + 1).findFirst().get();
+        Columns destinationColumn = columnLoadPort.findById(destinationBoard.getColumnId());
+
+        // 같은 column 에 low 만 다를 경우
+        if(board.getColumnId().equals(destinationBoard.getColumnId()) &&
+                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1))
+        ) {
+            // 1. low 만 수정한다
+            board.updateLocation(lowLoc-1, lowLoc+1);
+            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+        }
+        // 다른 column 에 low 가 같을 경우
+        else if(!board.getColum nId().equals(destinationBoard.getColumnId()) &&
+                board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1)
+        ) {
+            // 1. column 을 바꾼다.
+            columns.updateLocation(colLoc-1, colLoc+1);
+            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+        }
+        // 다른 column 에 low 가 다를 경우
+        else if(!board.getColumnId().equals(destinationBoard.getColumnId()) &&
+                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1))
+        ) {
+            // 1. column 을 수정한다.
+            // 2. low 를 수정한다.
+            board.updateLocation(lowLoc-1, lowLoc+1);
+            columns.updateLocation(colLoc-1, colLoc+1);
+            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+        }
         // 소켓서버로 전송
-        messagingTemplate.convertAndSend("/sub/boards/", save);
+        messagingTemplate.convertAndSend("/sub/boards/", );
         return save;
     }
 
     @Override
     @Transactional
-    public void relocationBetweenStartToEndLowLoc(UpdateLocationBoardDto updateLocationBoardDto) {
-        // 중복되지 않은 경우에  조회를 하려는 것 자체가 문제야
-        // 현재 board의 위치
-        Board board = findById(updateLocationBoardDto.getId());
-        Integer destinationLowLoc = updateLocationBoardDto.getLowLoc();
-        Integer startLowLoc = board.getLowLoc();
-        List<Board> boards =
-                new ArrayList<>(
-                        boardLoadPort.getBoardBetweenLowLoc(startLowLoc, destinationLowLoc));
-        // 위로 올리는 경우
-        if (startLowLoc < destinationLowLoc) {
-            board.setLowLoc(destinationLowLoc);
-            boardRecordPort.save(board);
-            boards.remove(0);
-            for (Board b : boards) {
-                b.setLowLoc(b.getLowLoc() - 1);
-            }
-            boardRecordPort.batchUpdate(boards);
-        } else if (startLowLoc == destinationLowLoc) {
-            throw new IllegalArgumentException("같은 위치는 이동할 수 없습니다.");
-        } else {
-            board.setLowLoc(destinationLowLoc);
-            boardRecordPort.save(board);
-            log.info(String.valueOf(boards.size()));
-            boards.remove(boards.size() - 1);
-            for (Board b : boards) {
-                b.setLowLoc(b.getLowLoc() + 1);
-                log.info(
-                        b.getColTitle()
-                                + " , "
-                                + b.getLowLoc()
-                                + " , "
-                                + b.getColTitle()
-                                + " , "
-                                + b.getColLoc()
-                                + " , "
-                                + b.getLowLoc());
-            }
-            boardRepository.saveAll(boards);
+    public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
+        //Result find onSuccess -> updateLocation
+        // 옮기려는 자리에 카드가 있는지 확인
+        Result<Board> boardResult = boardLoadPort.getBoardById(updateLocationBoardDto.getId());
+        // 옮기는 자리에 카드가 있으면 그 카드의 위치를 바꿔준다.
+        boardResult.onSuccess(
+                board -> {
+                    updateLocation(board, updateLocationBoardDto.getColLoc(), updateLocationBoardDto.getLowLoc());
+                });
+        //Result find onFailure -> throw Exception
+        boardResult.onFailure(
+                throwable -> {
+                    throw BoardNotFoundException.EXCEPTION;
+                });
             //            소켓서버로 전송
             messagingTemplate.convertAndSend("/sub/boards/", boards);
         }

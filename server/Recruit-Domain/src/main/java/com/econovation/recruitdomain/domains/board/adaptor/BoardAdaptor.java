@@ -1,8 +1,10 @@
 package com.econovation.recruitdomain.domains.board.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
+import com.econovation.recruitdomain.domains.board.exception.BoardInvalidLocationException;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
 import java.util.*;
@@ -26,10 +28,10 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
-    public Board getBoardById(Integer id) {
-        return boardRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_MESSAGE));
+    public Result<Board> getBoardById(Integer id) {
+        Optional<Board> board = boardRepository.findById(id);
+        return board.map(Result::success).orElseGet(() ->
+                Result.failure(BoardInvalidLocationException.EXCEPTION));
     }
 
     @Override

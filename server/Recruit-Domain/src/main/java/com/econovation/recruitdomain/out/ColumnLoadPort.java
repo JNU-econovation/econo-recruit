@@ -6,9 +6,10 @@ import java.util.List;
 
 @Port
 public interface ColumnLoadPort {
+    Columns findById(Integer id);
 
     List<Columns> getColumnByNavigationId(Integer navigationId);
 
     Columns getColumnByPrevColLocAndNextColLocAndNavigationId(
-            Integer prevColLoc, Integer nextColLoc, Integer navigationId);
+            Integer nextColLoc, Integer navigationId);
 }

@@ -29,7 +29,7 @@ public interface BoardLoadUseCase {
 
     Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
 
-    void relocationBetweenStartToEndLowLoc(UpdateLocationBoardDto updateLocationBoardDto);
+    void relocateCard(UpdateLocationBoardDto updateLocationBoardDto);
 
     //    Navigation getByNavLoc(Integer navLoc);
 
