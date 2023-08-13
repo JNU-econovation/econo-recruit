@@ -17,7 +17,10 @@ import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.ColumnLoadPort;
 import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -82,20 +85,20 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 //        newestLocation.put("nextLowLoc", board.getNextBoardID() + 1);
 //        return newestLocation;
 //    }
-@Override
+/*@Override
 @Transactional(readOnly = true)
 public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigationId, Integer nextColId) {
     List<Board> boards = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, nextColId);
 
     Board board = boards.stream()
 //            .max(Comparator.comparing(Board::getNextBoardID))
-            .filter(b -> b.getNextBoardID() == null).findFirst()
-            .orElseThrow(NoSuchElementException::new);
+            .filter(b -> b.getNextBoardId() == null).findFirst()
+            .orElseThrow(BoardNotFoundException.EXCEPTION);
 
     Map<String, Integer> newestLocation = new HashMap<>();
     newestLocation.put("nextLowLoc", board.getNextLowLoc() + 1);
     return newestLocation;
-}
+}*/
 
 
     @Override
@@ -119,24 +122,23 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
     //    }
 
     @Override
-    public Board createWorkBoard(Integer navigationId, Integer colLoc, Integer cardId) {
-        Map<String, Integer> newestLocation =
-                getNewestLocationByNavLocAndColLoc(navigationId, colLoc);
-        List<Columns> columnByNavigationId = columnLoadPort.getColumnByNavigationId(navigationId);
-        Integer prevColLoc = colLoc - 1;
-        Integer nextColLoc = colLoc + 1;
-
-        Columns column =
-                columnLoadPort.getColumnByPrevColLocAndNextColLocAndNavigationId(
-                        prevColLoc, nextColLoc, navigationId);
+    public Board createWorkBoard(Integer columnId, Integer cardId) {
+        Columns column = columnLoadPort.findById(columnId);
         Board board =
                 Board.builder()
                         .cardType(CardType.WORK_CARD)
-                        .nextLowLoc(newestLocation.get("nextLowLoc"))
-                        .prevLowLoc(newestLocation.get("prevLowLoc"))
+                        .nextBoardId(null)
                         .columnId(column.getId())
                         .cardId(cardId)
                         .build();
+        //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
+        boardLoadPort.getBoardByNavigationIdAndColumnId(0, columnId).stream()
+                .filter(b -> b.getNextBoardId() == null)
+                .findFirst()
+                .ifPresent(b -> {
+                    b.updateNextBoardID(board.getId());
+                });
+        // board 에서 null
         // TODO : 소켓서버로 전송 차후에 주석 제거 예정
         // messagingTemplate.convertAndSend("/sub/boards/message", board);
         return boardRecordPort.save(board);
@@ -161,14 +163,14 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
-                        .nextBoardID(null)
+                        .nextBoardId(null)
                         .columnId(column.getId())
                         .cardId(cardId)
                         .build();
         Board save = boardRecordPort.save(board);
 //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
         boardLoadPort.getBoardByNavLavigationIdAndColLoc(0, nextColId).stream()
-                .filter(b -> b.getNextBoardID() == null)
+                .filter(b -> b.getNextBoardId() == null)
                 .findFirst()
                 .ifPresent(b -> {
                     b.updateNextBoardID(save.getId());
@@ -201,35 +203,35 @@ public Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navigatio
         Columns columns = columnLoadPort.findById(board.getColumnId());
         Integer navigationId = columns.getNavigationId();
         Board destinationBoard = boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc).stream()
-                .filter(board1 -> board1.getPrevLowLoc() == lowLoc - 1 && board1.getNextBoardID() == lowLoc + 1).findFirst().get();
+                .filter(board1 -> board1.getPrevLowLoc() == lowLoc - 1 && board1.getNextBoardId() == lowLoc + 1).findFirst().get();
         Columns destinationColumn = columnLoadPort.findById(destinationBoard.getColumnId());
 
         // 같은 column 에 low 만 다를 경우
         if(board.getColumnId().equals(destinationBoard.getColumnId()) &&
-                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1))
+                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardId().equals(lowLoc+1))
         ) {
             // 1. low 만 수정한다
             board.updateLocation(lowLoc-1, lowLoc+1);
-            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
         }
         // 다른 column 에 low 가 같을 경우
         else if(!board.getColum nId().equals(destinationBoard.getColumnId()) &&
-                board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1)
+                board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardId().equals(lowLoc+1)
         ) {
             // 1. column 을 바꾼다.
             columns.updateLocation(colLoc-1, colLoc+1);
-            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
         }
         // 다른 column 에 low 가 다를 경우
         else if(!board.getColumnId().equals(destinationBoard.getColumnId()) &&
-                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardID().equals(lowLoc+1))
+                !(board.getPrevLowLoc().equals(lowLoc-1) && board.getNextBoardId().equals(lowLoc+1))
         ) {
             // 1. column 을 수정한다.
             // 2. low 를 수정한다.
             board.updateLocation(lowLoc-1, lowLoc+1);
             columns.updateLocation(colLoc-1, colLoc+1);
-            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
-            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardID());
+            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
+            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
         }
         // 소켓서버로 전송
         messagingTemplate.convertAndSend("/sub/boards/", );

@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface BoardRegisterUseCase {
     void execute(Board board);
 
-    Board createWorkBoard(Integer navigationId, Integer colLoc, Integer cardId);
+    Board createWorkBoard(Integer colLoc, Integer cardId);
 
     void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId);
 

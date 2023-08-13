@@ -20,7 +20,7 @@ public class Board extends BaseTimeEntity {
 //    private Integer prevLowLoc;
 
     @Column(name = "next_low_loc")
-    private Integer nextBoardID;
+    private Integer nextBoardId;
 
     @Enumerated(EnumType.STRING)
     private CardType cardType;
@@ -32,10 +32,10 @@ public class Board extends BaseTimeEntity {
     private Integer columnId;
 
     public void updateLocation(Integer nextLowLoc) {
-        this.nextBoardID = nextLowLoc;
+        this.nextBoardId = nextLowLoc;
     }
 
     public void updateNextBoardID(Integer nextBoardId) {
-        this.nextBoardID = nextBoardId;
+        this.nextBoardId = nextBoardId;
     }
 }

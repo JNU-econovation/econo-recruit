@@ -44,6 +44,11 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
+    public List<Board> getBoardByNavigationIdAndColumnId(Integer navigationId, Integer columnId) {
+        return boardRepository.findByNavigationIdAndColumnId(navigationId, columnId);
+    }
+
+    @Override
     public List<Board> getBoardByNavLoc(Integer navigationId) {
         return boardRepository.findByNavigationId(navigationId);
     }

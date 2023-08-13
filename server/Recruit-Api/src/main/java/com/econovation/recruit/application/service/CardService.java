@@ -2,7 +2,6 @@ package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
-import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -62,10 +61,8 @@ public class CardService implements CardRegisterUseCase {
                         .content(createWorkCardDto.getContent())
                         .build();
         Card savedCard = cardRecordPort.save(card);
-        Board board =
-                boardRegisterUseCase.createWorkBoard(
-                        createWorkCardDto.getNavigationId(),
-                        createWorkCardDto.getColLoc(),
-                        savedCard.getId());
+        boardRegisterUseCase.createWorkBoard(
+                createWorkCardDto.getColLoc(),
+                savedCard.getId());
     }
 }

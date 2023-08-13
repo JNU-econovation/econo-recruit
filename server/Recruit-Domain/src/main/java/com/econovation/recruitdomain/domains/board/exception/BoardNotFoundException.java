@@ -1,8 +1,11 @@
 package com.econovation.recruitdomain.domains.board.exception;
 
 import com.econovation.recruitcommon.exception.RecruitCodeException;
+import java.util.function.Supplier;
+import lombok.Getter;
 
-public class BoardNotFoundException extends RecruitCodeException {
+@Getter
+public class BoardNotFoundException extends RecruitCodeException{
     public static final BoardNotFoundException EXCEPTION =
             new BoardNotFoundException();
 

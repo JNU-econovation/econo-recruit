@@ -35,4 +35,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
             Integer navLoc, Integer prevColLoc, Integer nextColLoc);
 
     List<Board> findByNavigationId(Integer navigationId);
+
+    List<Board> findByNavigationIdAndColumnId(Integer navigationId, Integer columnId);
 }

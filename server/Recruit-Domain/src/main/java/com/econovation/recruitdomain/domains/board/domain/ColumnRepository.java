@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     List<Columns> findByNavigationId(Integer navigationId);
 
-    Optional<Columns> findByPrevColLocAndNextColLocAndNavigationId(
-            Integer prevColLoc, Integer nextColLoc, Integer navigationId);
+    Optional<Columns> findByNextColIdAndNavigationId(
+            Integer nextColLoc, Integer navigationId);
 }

@@ -30,9 +30,9 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
 
     @Override
     public Columns getColumnByPrevColLocAndNextColLocAndNavigationId(
-            Integer prevColLoc, Integer nextColLoc, Integer navigationId) {
+            Integer nextColLoc, Integer navigationId) {
         return columnRepository
-                .findByPrevColLocAndNextColLocAndNavigationId(prevColLoc, nextColLoc, navigationId)
+                .findByNextColIdAndNavigationId(nextColLoc, navigationId)
                 .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
     }
 
