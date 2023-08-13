@@ -23,6 +23,14 @@ public class RecruitStatic {
     public static final int FORBIDDEN = 403;
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
+    public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
+    public static final String BOARD_SUCCESS_REGISTER_MESSAGE = "성공적으로 업무카드가 등록됐습니다";
+    public static final String BOARD_SUCCESS_DELETE_MESSAGE = "성공적으로 업무카드가 삭제되었습니다.";
+    public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
+            new ArrayList<Map.Entry<String, String>>(
+                    List.of(
+                            new AbstractMap.SimpleEntry<>("프로젝트 희망 분야를 선택해주세요.", "hopeField"),
+                            new AbstractMap.SimpleEntry<>("이름", "name")));
     public static final List<Map.Entry<String, String>> APPLICANT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(
@@ -42,6 +50,7 @@ public class RecruitStatic {
     public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("name", "hopeField");
     public static final Long NO_START_NUMBER = 1000000L;
     public static final Long MINIMUM_PAYMENT_WON = 1000L;
+    public static final Integer APPLICANT_REGISTER_NAVIGATION_LOCATION = 0;
     public static final Long ZERO = 0L;
 
     public static final String KAKAO_OAUTH_QUERY_STRING =

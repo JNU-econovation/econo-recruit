@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     List<Answer> findByApplicantIdIn(List<UUID> applicantIds);
+
+    List<Answer> findByApplicantId(UUID applicantId);
 }

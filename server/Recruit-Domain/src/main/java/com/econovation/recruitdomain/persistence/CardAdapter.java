@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CardPersistenceAdapter implements CardLoadPort, CardRecordPort {
+public class CardAdapter implements CardLoadPort, CardRecordPort {
     private static final String NO_MATCH_CARD = "일치하는 Card 가 존재하지 않습니다";
     private final CardRepository cardRepository;
 

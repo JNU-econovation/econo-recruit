@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.board;
+package com.econovation.recruitdomain.domains.board.domain;
 
 import javax.persistence.*;
 import lombok.*;

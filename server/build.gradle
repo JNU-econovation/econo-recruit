@@ -115,12 +115,12 @@ subprojects {
 
 spotless {
     java {
+        target("**/*.java")
         removeUnusedImports()
         trimTrailingWhitespace()
-        indentWithTabs(1)
-//        indentWithSpaces(4)
+//        indentWithTabs()
+        indentWithSpaces(4)
         importOrder()
-        target("**/*.java")
         googleJavaFormat().aosp()
         endWithNewline()
     }

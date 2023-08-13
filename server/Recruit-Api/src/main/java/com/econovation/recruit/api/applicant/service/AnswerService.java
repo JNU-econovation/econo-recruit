@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.service;
 
-import com.econovation.recruitdomain.domains.applicant.adapter.AnswerAdaptor;
+import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
+import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AnswerService {
+public class AnswerService implements AnswerLoadUseCase {
     private final AnswerAdaptor answerAdaptor;
 
+    @Override
     public Map<UUID, Map<String, String>> findAllApplicantVo(List<String> fields) {
         List<Answer> answers = answerAdaptor.findAll();
         return splitByAnswersInApplicantId(fields, answers);
@@ -34,9 +36,16 @@ public class AnswerService {
                                         HashMap::new)));
     }
 
+    @Override
     public Map<UUID, Map<String, String>> findApplicantVoByApplicantId(
             List<String> fields, List<UUID> applicantIds) {
         List<Answer> answers = answerAdaptor.findByAnswerIds(applicantIds);
         return splitByAnswersInApplicantId(fields, answers);
+    }
+
+    @Override
+    public Map<String, String> findApplicantVoByApplicantId(List<String> fields, UUID applicantId) {
+        List<Answer> answers = answerAdaptor.findByAnswerId(applicantId);
+        return splitByAnswersInApplicantId(fields, answers).get(applicantId);
     }
 }

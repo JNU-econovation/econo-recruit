@@ -1,17 +1,13 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.board.Board;
-import java.util.List;
+import com.econovation.recruitdomain.domains.board.domain.Board;
 
 public interface BoardRecordPort {
-
     Board save(Board board);
-
-    List<Board> lagUpdateAll(List<Board> boards);
-
-    void batchUpdate(List<Board> boards);
 
     void delete(Board board);
 
-    //    void update(Board board);
+    //    List<Board> lagUpdateAll(List<Board> boards);
+    //
+    //    void batchUpdate(List<Board> boards);
 }

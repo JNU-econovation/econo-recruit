@@ -1,8 +1,7 @@
 package com.econovation.recruitdomain.domains.card;
 
-import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import com.econovation.recruitdomain.domains.board.Board;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,30 +19,26 @@ public class Card extends BaseTimeEntity {
     @Column(name = "card_id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @Column(name = "applicant_id")
+    private UUID applicantId;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "work_card_info")
-    private String workCardInfo;
+    @Column(name = "content")
+    private String content;
 
-    public Card(Applicant applicant, Board board) {
-        this.applicant = applicant;
-        this.workCardInfo = null;
-        this.board = board;
+    @Column(name = "label_count")
+    private Integer labelCount;
+
+    @Column(name = "comment_count")
+    private Integer commentCount;
+
+    public void plusLabelCount() {
+        this.labelCount++;
     }
-    //    @Override
-    //    public boolean equals(Object o) {
-    //        if (this == o) {
-    //            return true;
-    //        }
-    //        if (!(o instanceof Card)) {
-    //            return false;
-    //        }
-    //        return Objects.equals(id, this.id);
-    //    }
+
+    public void plusCommentCount() {
+        this.commentCount++;
+    }
 }

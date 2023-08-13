@@ -1,20 +1,17 @@
 package com.econovation.recruit.api.applicant.service;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SEPERATOR_LIST;
-
 import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.common.events.applicant.SubmitApplicantEvent;
 import com.econovation.recruitdomain.domain.applicant.Applicant;
-import com.econovation.recruitdomain.domains.applicant.adapter.AnswerAdaptor;
-import com.econovation.recruitdomain.domains.applicant.adapter.ApplicantAdaptor;
-import com.econovation.recruitdomain.domains.applicant.adapter.QuestionAdaptor;
+import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.adaptor.ApplicantAdaptor;
+import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -34,6 +31,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
     @Override
     public void execute(List<BlockRequestDto> blocks) {
         List<Question> questions = questionAdaptor.findAll();
+        UUID applicantId = UUID.randomUUID();
         List<Answer> results =
                 blocks.stream()
                         .map(
@@ -58,38 +56,40 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                                             Answer.builder()
                                                                     .question(question)
                                                                     .answer(block.getAnswer())
-                                                                    .applicantId(UUID.randomUUID())
+                                                                    .applicantId(applicantId)
                                                                     .build())
                                             .getValue();
                                 })
                         .collect(Collectors.toList());
+        answerAdaptor.saveAll(results);
+        Events.raise(
+                SubmitApplicantEvent.of(applicantId, convertToSubmitApplicantEventTitle(results)));
         // TODO: 추가될지 말지 결정해야 함
-        //        answerAdaptor.saveAll(results);
-        applicantRegister(results);
+        //        applicantRegister(results);
     }
 
-    private void applicantRegister(List<Answer> results) {
-        Applicant applicant = convertToApplicant(results);
-        applicantAdaptor.save(applicant);
-        Events.raise(SubmitApplicantEvent.from(applicant.getId()));
-    }
+    private String convertToSubmitApplicantEventTitle(List<Answer> results) {
+        final String HOPE_FIELD_QUESTION_KEY = "hopeField";
+        final String NAME_QUESTION_KEY = "name";
 
-    private Applicant convertToApplicant(List<Answer> results) {
-        // 사용자로부터 입력을 받을 HashMap 생성
-        Map<String, String> userInput = new HashMap<>();
+        StringBuilder titleBuilder = new StringBuilder();
+        String hopeField = "";
+        String name = "";
 
-        // 사용자로부터 각 질문에 대한 입력 값을 받음
         for (Answer answer : results) {
             String question = answer.getQuestion().getKey();
             String userInputValue = answer.getAnswer();
-            for (Map.Entry<String, String> entry : APPLICANT_SEPERATOR_LIST) {
-                if (question.equals(entry.getKey())) {
-                    userInput.put(entry.getValue(), userInputValue);
-                }
+
+            if (question.equals(HOPE_FIELD_QUESTION_KEY)) {
+                hopeField = userInputValue;
+            }
+            if (question.equals(NAME_QUESTION_KEY)) {
+                name = userInputValue;
             }
         }
-        // 사용자 입력 값을 사용하여 Applicant 엔티티를 생성
-        return createApplicantFromUserInput(userInput);
+
+        titleBuilder.append("[").append(hopeField).append("] ").append(name);
+        return titleBuilder.toString();
     }
 
     private Applicant createApplicantFromUserInput(Map<String, String> userInput) {

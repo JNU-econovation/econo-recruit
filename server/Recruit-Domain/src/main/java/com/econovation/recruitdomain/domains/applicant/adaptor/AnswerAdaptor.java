@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.applicant.adapter;
+package com.econovation.recruitdomain.domains.applicant.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
@@ -26,5 +26,9 @@ public class AnswerAdaptor {
 
     public List<Answer> findByAnswerIds(List<UUID> applicantIds) {
         return answerRepository.findByApplicantIdIn(applicantIds);
+    }
+
+    public List<Answer> findByAnswerId(UUID applicantId) {
+        return answerRepository.findByApplicantId(applicantId);
     }
 }

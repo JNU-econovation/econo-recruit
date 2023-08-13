@@ -1,7 +1,7 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.NavigationUseCase;
-import com.econovation.recruitdomain.domains.board.Navigation;
+import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import com.econovation.recruitdomain.out.NavigationRecordPort;
 import java.util.Comparator;

@@ -1,10 +1,8 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.ResumeUseCase;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
 import com.econovation.recruitdomain.domains.resume.Resume;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.ResumeLoadPort;
 import com.econovation.recruitdomain.out.ResumeRecordPort;
 import com.google.gson.Gson;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 public class ResumeService implements ResumeUseCase {
     private final ResumeRecordPort resumeRecordPort;
     private final ResumeLoadPort resumeLoadPort;
-    private final ApplicantLoadPort applicantLoadPort;
 
     //    @Override
     //    public List<ResumeInsertDto> submitResume(HashMap<String, Object> param) {
