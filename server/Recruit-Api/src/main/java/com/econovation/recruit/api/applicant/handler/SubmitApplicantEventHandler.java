@@ -1,15 +1,12 @@
 package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
-import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruitdomain.common.events.applicant.SubmitApplicantEvent;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.persistence.CardAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -23,7 +20,7 @@ public class SubmitApplicantEventHandler {
     @TransactionalEventListener(
             classes = SubmitApplicantEvent.class,
             phase = TransactionPhase.AFTER_COMMIT)
-//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(SubmitApplicantEvent submitApplicantEvent) {
         Card card = createCardFromEvent(submitApplicantEvent);
         cardAdapter.save(card);

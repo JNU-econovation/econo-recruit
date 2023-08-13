@@ -61,8 +61,6 @@ public class CardService implements CardRegisterUseCase {
                         .content(createWorkCardDto.getContent())
                         .build();
         Card savedCard = cardRecordPort.save(card);
-        boardRegisterUseCase.createWorkBoard(
-                createWorkCardDto.getColLoc(),
-                savedCard.getId());
+        boardRegisterUseCase.createWorkBoard(createWorkCardDto.getColLoc(), savedCard.getId());
     }
 }

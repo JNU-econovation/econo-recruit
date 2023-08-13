@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.board.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.board.domain.ColumnRepository;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.exception.ColumnsNotFoundException;
@@ -19,9 +18,7 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
 
     @Override
     public Columns findById(Integer id) {
-        return columnRepository
-                .findById(id)
-                .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
+        return columnRepository.findById(id).orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
     }
 
     @Override
@@ -40,7 +37,8 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     @Override
     public Columns getColumnById(Integer nextColId) {
         return columnRepository
-                .findById(nextColId).orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
+                .findById(nextColId)
+                .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
     }
 
     @Override

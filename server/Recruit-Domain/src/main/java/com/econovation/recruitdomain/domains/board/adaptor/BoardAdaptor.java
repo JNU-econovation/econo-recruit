@@ -1,10 +1,9 @@
 package com.econovation.recruitdomain.domains.board.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
-import com.econovation.recruitdomain.domains.board.exception.BoardInvalidLocationException;
+import com.econovation.recruitdomain.domains.board.exception.BoardNotFoundException;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
 import java.util.*;
@@ -23,15 +22,8 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Board getBoardByLocation(Integer navLoc, Integer colLoc, Integer lowLoc) {
-        return boardRepository.findByNavLocAndColLocAndLowLoc(navLoc, colLoc, lowLoc);
-    }
-
-    @Override
-    public Result<Board> getBoardById(Integer id) {
-        Optional<Board> board = boardRepository.findById(id);
-        return board.map(Result::success).orElseGet(() ->
-                Result.failure(BoardInvalidLocationException.EXCEPTION));
+    public Board getBoardById(Integer id) {
+        return boardRepository.findById(id).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
     }
 
     @Override
@@ -53,20 +45,10 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
         return boardRepository.findByNavigationId(navigationId);
     }
 
-    /*    @Override
-    public List<Board> getBoardBetweenLowLoc(Integer startLowLoc, Integer destinationLowLoc) {
-                    List<Board> all = boardRepository.findAll();
-                    if (startLowLoc < destinationLowLoc) {
-                                    return all.stream()
-                                                                    .filter(m -> m.getLowLoc() >= startLowLoc && m.getLowLoc() <= destinationLowLoc)
-                                                                    .collect(Collectors.toList());
-                    } else {
-                                    return all.stream()
-                                                                    .filter(m -> m.getLowLoc() <= startLowLoc && m.getLowLoc() >= destinationLowLoc)
-                                                                    .collect(Collectors.toList());
-                    }
+    @Override
+    public Board getByNextBoardId(Integer nextBoardId) {
+        return boardRepository.findByNextBoardId(nextBoardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
     }
-    */
 
     //    @Override
     //    public void batchUpdate(List<Board> boards) {

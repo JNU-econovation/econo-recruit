@@ -16,8 +16,8 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_id")
     private Integer id;
 
-//    @Column(name = "prev_low_loc")
-//    private Integer prevLowLoc;
+    //    @Column(name = "prev_low_loc")
+    //    private Integer prevLowLoc;
 
     @Column(name = "next_board_id")
     private Integer nextBoardId;
@@ -30,7 +30,6 @@ public class Board extends BaseTimeEntity {
 
     @Column(name = "column_id")
     private Integer columnId;
-
 
     public void updateNextBoardID(Integer nextBoardId) {
         this.nextBoardId = nextBoardId;

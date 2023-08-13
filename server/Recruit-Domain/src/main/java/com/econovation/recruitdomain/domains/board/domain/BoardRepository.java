@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.board.domain;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,19 +15,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
             nativeQuery = true)
     List<Board> getByHopeField(@Param("hope_field") String hopeField);
 
-    @Query(
-            value =
-                    "SELECT * "
-                            + "FROM Board as b "
-                            + "JOIN Navigation as n "
-                            + "ON n.nav_loc = :nav_loc "
-                            + "WHERE b.col_loc =:col_loc AND b.low_loc =:low_loc",
-            nativeQuery = true)
-    Board findByNavLocAndColLocAndLowLoc(
-            @Param("nav_loc") Integer navLoc,
-            @Param("col_loc") Integer colLoc,
-            @Param("low_loc") Integer lowLoc);
-
     List<Board> findByNavLocAndColLoc();
 
     List<Board> findByNavLoc(Integer navigationId);
@@ -37,4 +25,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByNavigationId(Integer navigationId);
 
     List<Board> findByNavigationIdAndColumnId(Integer navigationId, Integer columnId);
+
+    Optional<Board> findByNextBoardId(Integer nextBoardId);
 }

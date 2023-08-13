@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitcommon.annotation.Port;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import java.util.List;
 

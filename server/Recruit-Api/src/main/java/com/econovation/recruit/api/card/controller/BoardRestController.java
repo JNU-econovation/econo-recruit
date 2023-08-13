@@ -9,7 +9,6 @@ import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.application.port.in.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
-import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
@@ -59,14 +58,14 @@ public class BoardRestController {
     @PostMapping("/boards/location")
     public ResponseEntity<String> updateLocationBoard(
             UpdateLocationBoardDto updateLocationBoardDto) {
-        boardLoadUseCase.relocateCard(updateLocationBoardDto);
+        boardRecordUseCase.relocateCard(updateLocationBoardDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/boards/cards")
-    public List<Card> getCardAll() {
-        return new ArrayList<>(cardLoadUseCase.findAll());
-    }
+//    @GetMapping("/boards/cards")
+//    public List<Card> getCardAll() {
+//        return new ArrayList<>(cardLoadUseCase.findAll());
+//    }
 
     @PostMapping("/boards/cards/delete")
     public ResponseEntity<String> deleteCard(Integer cardId) {
