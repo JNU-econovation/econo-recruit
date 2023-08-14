@@ -206,7 +206,7 @@ export const APPLICATION = [
         type: "booleanTextarea",
         subNodes: [
           {
-            name: "experienceTrue",
+            name: "experienceTextarea",
             title:
               "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
             subtitle:
@@ -215,7 +215,7 @@ export const APPLICATION = [
             type: "true",
           },
           {
-            name: "experienceFalse",
+            name: "experienceTextarea",
             title:
               "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
             subtitle:

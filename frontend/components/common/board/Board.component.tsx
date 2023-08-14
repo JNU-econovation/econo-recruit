@@ -1,22 +1,30 @@
+"use client";
+
 import { FC } from "react";
-import Txt from "../Txt.component";
+import BoardCell from "./BoardCell.component";
 
 interface BoardProps {
-  // TODO: Add props
   baseUrl: string;
 }
 
 const Board: FC<BoardProps> = ({ baseUrl }) => {
-  const boardData = [
-    {
-      title: "title",
-      subElements: ["APP", "WEB", "1학년 1학기"],
-      time: "2023.03.31",
-    },
-  ];
+  const boardData = Array.from({ length: 10 }).map((_, i) => ({
+    id: i,
+    title: "[개발자]임채승",
+    subElements: ["APP", "WEB", "1학년 1학기"],
+    time: new Date(),
+  }));
+
   return (
-    <section>
-      <Txt>{boardData[0].title}</Txt>
+    <section className="flex flex-col">
+      {boardData.map((item, index) => (
+        <BoardCell
+          key={index}
+          title={item.title}
+          subElements={item.subElements}
+          time={item.time}
+        />
+      ))}
     </section>
   );
 };

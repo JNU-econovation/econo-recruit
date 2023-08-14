@@ -1,7 +1,7 @@
 "use client";
 
 import { MainNavbar } from "@/constants";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import CommonNavbarCellComponent from "./NavbarCell.component";
 
 interface CommonNavbarProps {
@@ -14,8 +14,12 @@ const CommonNavbar: FC<CommonNavbarProps> = ({
   isShort = false,
 }) => {
   const userData = { authority: "" };
-  const currentUrl = document.location.pathname;
-  const currentPath = currentUrl.split("/")[1];
+  const [currentPath, setCurrcurrentPath] = useState("");
+
+  useEffect(() => {
+    const currentUrl = document.location.pathname;
+    setCurrcurrentPath(currentUrl.split("/")[1]);
+  }, []);
 
   return (
     <nav className="flex flex-col">
