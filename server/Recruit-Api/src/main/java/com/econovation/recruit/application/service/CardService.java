@@ -1,11 +1,10 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
-import com.econovation.recruitdomain.out.BoardLoadPort;
-import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
@@ -15,11 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CardService implements CardRegisterUseCase {
+public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final CardRecordPort cardRecordPort;
     private final CardLoadPort cardLoadPort;
-    private final BoardLoadPort boardLoadPort;
-    private final BoardRecordPort boardRecordPort;
     private final BoardRegisterUseCase boardRegisterUseCase;
 
     /*    @Override
@@ -47,8 +44,6 @@ public class CardService implements CardRegisterUseCase {
     @Override
     @Transactional
     public void deleteById(Integer cardId) {
-        Card card = cardLoadPort.findById(cardId);
-        boardRecordPort.delete();
         cardRecordPort.delete(cardId);
     }
 
