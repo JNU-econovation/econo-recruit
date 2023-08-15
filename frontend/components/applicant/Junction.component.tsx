@@ -5,6 +5,10 @@ const ApplicantCustomField = dynamic(
   () => import("./applicantNode/CustomField.component")
 );
 
+const ApplicantCustomHuman = dynamic(
+  () => import("./applicantNode/CustomHuman.component")
+);
+
 export const junctionApplicant = (
   applicantNodeData: ApplicantNode,
   applicantData: ApplicantReq[]
@@ -13,7 +17,9 @@ export const junctionApplicant = (
     customField: (
       <ApplicantCustomField nodeData={applicantNodeData} data={applicantData} />
     ),
-    customHuman: <></>,
+    customHuman: (
+      <ApplicantCustomHuman nodeData={applicantNodeData} data={applicantData} />
+    ),
     shortSplit: <></>,
     textarea: <></>,
     booleanTextarea: <></>,
