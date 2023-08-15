@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.score.Score;
 import com.econovation.recruitdomain.domains.score.ScoreRepository;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
@@ -20,7 +19,7 @@ public class ScorePersistenceAdapter implements ScoreLoadPort, ScoreRecordPort {
     }
 
     @Override
-    public List<Score> findByApplicant(Applicant applicant) {
-        return scoreRepository.findByApplicant(applicant);
+    public List<Score> findByApplicantId(Integer applicantId) {
+        return scoreRepository.findByApplicantId(applicantId);
     }
 }

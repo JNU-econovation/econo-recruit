@@ -6,7 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TimeTableInsertDto {
-    private String startTime;
-    private String endTime;
-    private String day;
+    private Integer startTime;
 }

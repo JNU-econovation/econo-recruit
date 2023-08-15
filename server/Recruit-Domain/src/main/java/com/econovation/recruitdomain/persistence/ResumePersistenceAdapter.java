@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
 import com.econovation.recruitdomain.domains.resume.Resume;
 import com.econovation.recruitdomain.domains.resume.ResumeRepository;
@@ -65,7 +64,7 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
     }
 
     @Override
-    public List<Resume> findByApplicant(Applicant applicant) {
-        return resumeRepository.findByApplicant(applicant);
+    public List<Resume> findByApplicantId(Integer applicantId) {
+        return resumeRepository.findByApplicantId(applicantId);
     }
 }

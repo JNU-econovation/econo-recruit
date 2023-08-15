@@ -1,7 +1,6 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.LabelUseCase;
-import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
@@ -19,24 +18,21 @@ public class LabelService implements LabelUseCase {
     @Override
     @Transactional
     public Label createLabel(Integer applicantId, Integer idpId) {
-        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        Label label = Label.builder().idpId(idpId).applicant(applicant).build();
+        Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
         labelRecordPort.save(label);
-        applicant.plusLabelCount();
+        // TODO: Card LabelCount 증가
         return label;
     }
 
     @Override
     public List<Label> findByApplicantId(Integer applicantId) {
-        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        return labelLoadPort.loadLabelByApplicant(applicant);
+        return labelLoadPort.loadLabelByApplicantId(applicantId);
     }
 
     @Override
     public Boolean deleteLabel(Integer applicantId, Integer idpId) {
-        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        Label label = labelLoadPort.loadLabelByApplicantAndIdpId(applicant, idpId);
-        applicant.minusLabelCount();
+        Label label = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
+        // TODO: Card LabelCount 감소
         return labelRecordPort.delete(label);
     }
 }

@@ -1,6 +1,5 @@
 package com.econovation.recruit.application.utils;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.dto.*;
@@ -11,6 +10,7 @@ import com.econovation.recruitdomain.domains.score.Score;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class EntityMapper {
     private static final String NO_MATCH_SCORE = "해당하는 SCORE가 없습니다";
 
-    public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
+    /*    public Applicant toApplicant(ApplicantRegisterDto applicantRegisterDto) {
         return Applicant.builder()
                 .email(applicantRegisterDto.getEmail())
                 .grade(applicantRegisterDto.getGrade())
@@ -36,46 +36,41 @@ public class EntityMapper {
                 .phoneNumber(applicantRegisterDto.getPhoneNumber())
                 .name(applicantRegisterDto.getName())
                 .secondPriority(applicantRegisterDto.getSecondPriority())
-                .portfolio((applicantRegisterDto.getPortfolio()))
                 .supportPath(applicantRegisterDto.getSupportPath())
-                .plan(applicantRegisterDto.getPlan())
                 .build();
-    }
+    }*/
 
     public BoardResponseDto UpdateLocationBoardDtoToEntity(Board board) {
         return BoardResponseDto.builder().build();
     }
 
-    public Comment CommentRegisterDtoToEntity(
-            CommentRegisterDto commentRegisterDto, Applicant applicant) {
+    public Comment CommentRegisterDtoToEntity(CommentRegisterDto commentRegisterDto) {
         return Comment.builder()
-                .applicant(applicant)
+                .applicantId(commentRegisterDto.getApplicantId())
                 .content(commentRegisterDto.getContent())
                 .isDeleted(false)
                 .parentId(commentRegisterDto.getParentId())
                 .build();
     }
 
-    public List<TimeTable> toTimeTables(List<TimeTableInsertDto> timetable, Applicant applicant) {
+    public List<TimeTable> toTimeTables(List<TimeTableInsertDto> timetable, UUID applicantId) {
         List<TimeTable> times = new LinkedList();
         for (TimeTableInsertDto time : timetable) {
             TimeTable a =
                     TimeTable.builder()
-                            .endTime(time.getEndTime())
                             .startTime(time.getStartTime())
-                            .day(time.getDay())
-                            .applicant(applicant)
+                            .applicantId(applicantId)
                             .build();
             times.add(a);
         }
         return times;
     }
 
-    public Comment toComment(CommentRegisterDto commentRegisterDto, Applicant applicant) {
+    public Comment toComment(CommentRegisterDto commentRegisterDto) {
         return Comment.builder()
                 .parentId(commentRegisterDto.getParentId())
                 .idpId(commentRegisterDto.getIdpId())
-                .applicant(applicant)
+                .applicantId(commentRegisterDto.getApplicantId())
                 .content(commentRegisterDto.getContent())
                 .build();
     }
@@ -105,28 +100,28 @@ public class EntityMapper {
         return interviewers;
     }
 
-    public Score toScore(CreateScoreDto createScoreDto, Applicant applicant) {
+    public Score toScore(CreateScoreDto createScoreDto) {
         return Score.builder()
                 .criteria(createScoreDto.getCriteria())
                 .score(createScoreDto.getScore())
-                .applicant(applicant)
+                .applicantId(createScoreDto.getApplicantId())
                 .idpId(createScoreDto.getIdpId())
                 .build();
     }
 
-    public Score toScore(UpdateScoreDto updateScoreDto, Applicant applicant) {
+    public Score toScore(UpdateScoreDto updateScoreDto) {
         return Score.builder()
                 .score(updateScoreDto.getScore())
                 .criteria(updateScoreDto.getCriteria())
-                .applicant(applicant)
+                .applicantId(updateScoreDto.getApplicantId())
                 .build();
     }
 
-    public Record toRecord(CreateRecordDto createRecordDto, Applicant applicant) {
+    public Record toRecord(CreateRecordDto createRecordDto) {
         return Record.builder()
                 .url(createRecordDto.getUrl())
                 .record(createRecordDto.getRecord())
-                .applicant(applicant)
+                .applicantId(createRecordDto.getApplicantId())
                 .build();
     }
 }
