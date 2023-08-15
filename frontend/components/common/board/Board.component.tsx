@@ -5,16 +5,19 @@ import BoardCell from "./BoardCell.component";
 import Modal from "react-modal";
 import Image from "next/image";
 import CloseImage from "/public/icons/ellipsis.multiply.svg";
+import classNames from "classnames";
 
 interface BoardProps {
   baseUrl: string;
   onClick?: () => void;
+  wapperClassname?: string;
 }
 
 const Board: FC<PropsWithChildren<BoardProps>> = ({
   baseUrl,
   children,
   onClick,
+  wapperClassname,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,12 +45,37 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           onClick={openModel}
         />
       ))}
-      <Modal isOpen={isOpen} onRequestClose={closeModel} ariaHideApp={false}>
-        <div className="relative">
-          <button className="absoltue" onClick={closeModel}>
-            <Image src={CloseImage} alt="close" />
-          </button>
-          <div className="w-full h-full">{children}</div>
+      <Modal
+        style={{
+          content: {
+            width: "calc(100% - 12rem)",
+            height: "calc(100%)",
+            margin: "3rem 6rem 0 6rem",
+            minWidth: "1280px",
+            boxShadow: "0px 0px 6px 1px rgba(0, 0, 0, 0.14)",
+            border: "none",
+            position: "relative",
+            inset: "0",
+            padding: "2.5rem 3rem",
+          },
+          overlay: {
+            padding: "0",
+          },
+        }}
+        isOpen={isOpen}
+        onRequestClose={closeModel}
+        ariaHideApp={false}
+      >
+        <button className="fixed z-10" onClick={closeModel}>
+          <Image src={CloseImage} alt="close" />
+        </button>
+        <div
+          className={classNames(
+            "flex pt-8 absolute h-[calc(100%-2.5rem)] w-[calc(100%-6rem)]",
+            wapperClassname
+          )}
+        >
+          {children}
         </div>
       </Modal>
     </section>
