@@ -2,6 +2,7 @@ import { getApplicant } from "@/src/apis/applicant";
 import { APPLICANT } from "@/src/constants/applicant/26";
 import { FC, Fragment } from "react";
 import { junctionApplicant } from "./Junction.component";
+import Txt from "../common/Txt.component";
 
 interface ApplicantDetailProps {
   applicantId: string;
@@ -18,7 +19,15 @@ const ApplicantDetail: FC<ApplicantDetailProps> = async ({ applicantId }) => {
   return (
     <>
       {APPLICANT.map((node, index) => {
-        return <Fragment key={index}>{junctionApplicant(node, data)}</Fragment>;
+        return (
+          <Fragment key={index}>
+            <div className="flex gap-2">
+              <Txt typography="h5">{`${node.id}. `}</Txt>
+              <Txt typography="h5">{node.title}</Txt>
+            </div>
+            {junctionApplicant(node, data)}
+          </Fragment>
+        );
       })}
     </>
   );

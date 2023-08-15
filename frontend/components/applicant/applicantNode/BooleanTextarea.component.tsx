@@ -20,16 +20,15 @@ const ApplicantBooleanTextarea: FC<ApplicantBooleanTextareaProps> = ({
 
   return (
     <>
-      <Txt typography="h5">{booleantextareaData.title}</Txt>
-      <Txt typography="h5" className="block font-normal m-4">
+      <Txt typography="h5" className="block font-normal m-6">
         {selectedValue ? "있다" : "없다"}
       </Txt>
-      <Txt typography="h6" className="m-4">
+      <Txt typography="h6" className="m-6">
         {selectedValue
           ? booleantextareaData.subtitle[0]
           : booleantextareaData.subtitle[1]}
       </Txt>
-      <Txt className="block pt-6 pb-12 ml-4">
+      <Txt className="block pt-6 pb-12 ml-6">
         {applicantDataFinder(data, booleantextareaData.value.name)}
       </Txt>
     </>

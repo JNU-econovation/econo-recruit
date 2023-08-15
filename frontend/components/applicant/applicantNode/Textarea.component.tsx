@@ -13,8 +13,7 @@ const ApplicantTextarea: FC<ApplicantTextareaProps> = ({ nodeData, data }) => {
 
   return (
     <>
-      <Txt typography="h6">{textareaData.title}</Txt>
-      <Txt className="block pt-6 pb-12 ml-4">
+      <Txt className="block pt-6 pb-12 ml-6">
         {applicantDataFinder(data, textareaData.value.name)}
       </Txt>
     </>

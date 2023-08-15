@@ -9,6 +9,7 @@ type ApplicantNodeType =
 interface ApplicantNode {
   type: ApplicantNodeType;
   title: string;
+  id: number;
 }
 
 interface ApplicantValue {

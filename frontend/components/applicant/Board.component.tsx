@@ -1,4 +1,4 @@
-import Board from "../common/board/Board.component";
+import Board from "@/components/common/board/Board.component";
 import ApplicantDetail from "./Detail.component";
 
 const ApplicantBoard = () => {

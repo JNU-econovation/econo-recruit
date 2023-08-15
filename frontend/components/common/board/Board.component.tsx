@@ -71,7 +71,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
         </button>
         <div
           className={classNames(
-            "flex pt-8 absolute h-[calc(100%-2.5rem)] w-[calc(100%-6rem)]",
+            "flex pt-8 absolute h-[calc(100%-6rem)] w-[calc(100%-6rem)]",
             wapperClassname
           )}
         >
