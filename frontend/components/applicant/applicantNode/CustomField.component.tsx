@@ -17,7 +17,7 @@ const ApplicantCustomField: FC<ApplicantCustomFieldProps> = ({
   return (
     <>
       <Txt typography="h6">{customFieldData.title}</Txt>
-      <div className="flex items-center py-6">
+      <div className="flex items-center pt-6 pb-12">
         <Txt typography="h1" className="px-6">
           {applicantDataFinder(data, customFieldData.value.name)}
         </Txt>

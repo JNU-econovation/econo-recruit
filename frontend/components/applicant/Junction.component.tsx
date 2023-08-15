@@ -9,6 +9,10 @@ const ApplicantCustomHuman = dynamic(
   () => import("./applicantNode/CustomHuman.component")
 );
 
+const ApplicantShortSplit = dynamic(
+  () => import("./applicantNode/ShortSplit.component")
+);
+
 export const junctionApplicant = (
   applicantNodeData: ApplicantNode,
   applicantData: ApplicantReq[]
@@ -20,7 +24,9 @@ export const junctionApplicant = (
     customHuman: (
       <ApplicantCustomHuman nodeData={applicantNodeData} data={applicantData} />
     ),
-    shortSplit: <></>,
+    shortSplit: (
+      <ApplicantShortSplit nodeData={applicantNodeData} data={applicantData} />
+    ),
     textarea: <></>,
     booleanTextarea: <></>,
     timeline: <></>,
