@@ -2,7 +2,7 @@ import Txt from "@/components/common/Txt.component";
 import {
   ApplicationQuestion,
   ApplicationRadioForCheck,
-} from "@/constants/application/type";
+} from "@/src/constants/application/type";
 import classNames from "classnames";
 import { FC } from "react";
 

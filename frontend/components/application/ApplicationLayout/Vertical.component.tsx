@@ -1,7 +1,7 @@
 "use client";
 
 import Txt from "@/components/common/Txt.component";
-import { ApplicationQuestion } from "@/constants/application/type";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 import { junctinOrLayout } from "../JunctionOrLayout";
 import classNames from "classnames";
 

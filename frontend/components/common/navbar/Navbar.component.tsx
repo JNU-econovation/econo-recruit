@@ -1,6 +1,6 @@
 "use client";
 
-import { MainNavbar } from "@/constants";
+import { MainNavbar } from "@/src/constants";
 import { FC, useEffect, useState } from "react";
 import CommonNavbarCellComponent from "./NavbarCell.component";
 

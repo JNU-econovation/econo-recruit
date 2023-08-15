@@ -2,7 +2,7 @@ import Txt from "@/components/common/Txt.component";
 import {
   ApplicationJustText,
   ApplicationNode,
-} from "@/constants/application/type";
+} from "@/src/constants/application/type";
 import { FC } from "react";
 
 interface ApplicationJustTextProps {

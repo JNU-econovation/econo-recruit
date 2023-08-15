@@ -1,6 +1,6 @@
 "use client";
 
-import { ApplicationQuestion } from "@/constants/application/type";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 import dynamic from "next/dynamic";
 import ApplicationTimelineLayout from "./applicationLayout/Timeline.component";
 

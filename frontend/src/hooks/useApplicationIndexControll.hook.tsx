@@ -1,4 +1,4 @@
-import { applicationIndexAtom } from "@/stores/application";
+import { applicationIndexAtom } from "@/src/stores/application";
 import { useAtom } from "jotai";
 
 const useApplicationIndexControll = () => {

@@ -1,7 +1,7 @@
-import { ReplacerType } from "@/functions/replacer";
-import { ValidatorType } from "@/functions/validator";
+import { ReplacerType } from "@/src/functions/replacer";
+import { ValidatorType } from "@/src/functions/validator";
 
-export interface ApplicationQuestion {
+interface ApplicationQuestion {
   id: number;
   title?: string;
   subtitle?: string;
@@ -15,7 +15,7 @@ export interface ApplicationQuestion {
   nodes: ApplicationNode[] | ApplicationQuestion[];
 }
 
-export type ApplicationNodeTypes =
+type ApplicationNodeTypes =
   | "radio"
   | "radioByTwoRank"
   | "radioForCheck"
@@ -27,11 +27,11 @@ export type ApplicationNodeTypes =
   | "checkboxWithEtc"
   | "timeline";
 
-export interface ApplicationNode {
+interface ApplicationNode {
   type: ApplicationNodeTypes;
 }
 
-export interface ApplicationNodeBase extends ApplicationNode {
+interface ApplicationNodeBase extends ApplicationNode {
   title?: string;
   subtitle?: string;
   require: boolean;
@@ -39,19 +39,19 @@ export interface ApplicationNodeBase extends ApplicationNode {
   errorMessages?: string;
 }
 
-export interface BaseWithValues extends ApplicationNodeBase {
+interface BaseWithValues extends ApplicationNodeBase {
   value: string[];
 }
 
-export interface ApplicationRadio extends BaseWithValues {
+interface ApplicationRadio extends BaseWithValues {
   type: "radio";
 }
 
-export interface BaseWithValuesWithSplitNumber extends BaseWithValues {
+interface BaseWithValuesWithSplitNumber extends BaseWithValues {
   splitNumber: number;
 }
 
-export interface ApplicationRadioByTwoRank extends ApplicationNode {
+interface ApplicationRadioByTwoRank extends ApplicationNode {
   type: "radioByTwoRank";
   title?: string;
   subtitle?: string;
@@ -59,14 +59,14 @@ export interface ApplicationRadioByTwoRank extends ApplicationNode {
   subNodes: BaseWithValuesWithSplitNumber[];
 }
 
-export interface ApplicationRadioForCheck extends BaseWithValues {
+interface ApplicationRadioForCheck extends BaseWithValues {
   type: "radioForCheck";
   title?: string;
   require: boolean;
   value: string[];
 }
 
-export interface ApplicationText extends ApplicationNodeBase {
+interface ApplicationText extends ApplicationNodeBase {
   type: "text";
   validate?: ValidatorType;
   replace?: ReplacerType;
@@ -74,11 +74,11 @@ export interface ApplicationText extends ApplicationNodeBase {
   minLength?: number;
 }
 
-export interface ApplicationTextarea extends ApplicationNodeBase {
+interface ApplicationTextarea extends ApplicationNodeBase {
   type: "textarea";
 }
 
-export interface ApplicationBooleanTextarea extends ApplicationNodeBase {
+interface ApplicationBooleanTextarea extends ApplicationNodeBase {
   type: "booleanTextarea";
   value: string[];
   subNodes: {
@@ -90,31 +90,31 @@ export interface ApplicationBooleanTextarea extends ApplicationNodeBase {
   }[];
 }
 
-export interface ApplicationBar extends ApplicationNodeBase {
+interface ApplicationBar extends ApplicationNodeBase {
   type: "bar";
 }
 
-export interface ApplicationJustText extends ApplicationNodeBase {
+interface ApplicationJustText extends ApplicationNodeBase {
   type: "justText";
   title: string;
   subtitle?: string;
 }
 
-export interface ApplicationCheckboxType extends ApplicationNodeBase {
+interface ApplicationCheckboxType extends ApplicationNodeBase {
   type: "checkbox";
   value: string[];
 }
 
-export interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
+interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
   type: "checkboxWithEtc";
   value: string[];
 }
 
-export interface ApplicationTimelineType extends ApplicationNodeBase {
+interface ApplicationTimelineType extends ApplicationNodeBase {
   type: "timeline";
 }
 
-export interface ApplicationTimeline {
+interface ApplicationTimeline {
   seperate: number;
   time: {
     start_time: Date;

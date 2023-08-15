@@ -42,7 +42,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           onClick={openModel}
         />
       ))}
-      <Modal isOpen={isOpen} onRequestClose={closeModel}>
+      <Modal isOpen={isOpen} onRequestClose={closeModel} ariaHideApp={false}>
         <div className="relative">
           <button className="absoltue" onClick={closeModel}>
             <Image src={CloseImage} alt="close" />

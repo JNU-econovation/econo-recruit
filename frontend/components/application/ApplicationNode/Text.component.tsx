@@ -1,10 +1,13 @@
 "use client";
 
 import Txt from "@/components/common/Txt.component";
-import { ApplicationNode, ApplicationText } from "@/constants/application/type";
-import { replacer } from "@/functions/replacer";
-import { validator } from "@/functions/validator";
-import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+import {
+  ApplicationNode,
+  ApplicationText,
+} from "@/src/constants/application/type";
+import { replacer } from "@/src/functions/replacer";
+import { validator } from "@/src/functions/validator";
+import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
 import classNames from "classnames";
 import { FC, useId, useState } from "react";
 

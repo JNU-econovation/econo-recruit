@@ -5,8 +5,8 @@ import Txt from "@/components/common/Txt.component";
 import {
   ApplicationNode,
   ApplicationRadioByTwoRank,
-} from "@/constants/application/type";
-import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
+} from "@/src/constants/application/type";
+import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
 import { FC } from "react";
 
 interface ApplicationRadioByTwoRankProps {

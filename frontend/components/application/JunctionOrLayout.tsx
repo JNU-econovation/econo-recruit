@@ -1,9 +1,9 @@
 import {
   ApplicationNode,
   ApplicationQuestion,
-} from "@/constants/application/type";
-import { junctionQuestion } from "./ApplicationJunction.component";
-import { applicationLayout } from "./ApplicationLayout.component";
+} from "@/src/constants/application/type";
+import { junctionQuestion } from "./Junction.component";
+import { applicationLayout } from "./Layout.component";
 
 const checkQuestion = (node: any): node is ApplicationQuestion => {
   return "id" in node;

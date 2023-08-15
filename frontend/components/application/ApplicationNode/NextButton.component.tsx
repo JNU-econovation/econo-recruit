@@ -1,6 +1,6 @@
 "use client";
 
-import useApplicationIndexControll from "@/hooks/useApplicationIndexControll.hook";
+import useApplicationIndexControll from "@/src/hooks/useApplicationIndexControll.hook";
 import { FC } from "react";
 
 interface ApplicationNextButtonProps {

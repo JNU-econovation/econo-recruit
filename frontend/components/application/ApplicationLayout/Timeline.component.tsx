@@ -1,6 +1,6 @@
 "use client";
 
-import { ApplicationTimeline } from "@/constants/application/type";
+import { ApplicationTimeline } from "@/src/constants/application/type";
 import { useParams } from "next/navigation";
 import { FC } from "react";
 
@@ -15,7 +15,7 @@ const TimelineRow: FC<TimelineRowProps> = ({ start_time, end_time }) => {
 
 const ApplicationTimelineLayout = () => {
   const params = useParams();
-  const data = require(`@/constants/application/${params.generation}.ts`);
+  const data = require(`@/src/constants/application/${params.generation}.ts`);
   const { disable_time, time, seperate } =
     data.APPLICATION_TIMELINE as ApplicationTimeline;
 

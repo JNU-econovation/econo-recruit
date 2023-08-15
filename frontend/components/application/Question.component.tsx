@@ -4,12 +4,10 @@ import { FC } from "react";
 import Txt from "../common/Txt.component";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
-import { applicationIndexAtom } from "@/stores/application";
-import { ApplicationQuestion } from "@/constants/application/type";
+import { applicationIndexAtom } from "@/src/stores/application";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 import ApplicationNextButton from "./applicationNode/NextButton.component";
-import ApplicationHorizontalLayout from "./applicationLayout/Horizontal.componet";
-import ApplicationVerticalLayout from "./applicationLayout/Vertical.component";
-import { applicationLayout } from "./ApplicationLayout.component";
+import { applicationLayout } from "./Layout.component";
 
 interface ApplicationQuestionProps {
   className?: string;

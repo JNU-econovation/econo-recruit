@@ -1,6 +1,6 @@
 import Txt from "@/components/common/Txt.component";
 import HomeCardComponent from "@/components/main/Card.component";
-import { MAIN_MENU, CURRENT_GENERATION } from "@/constants";
+import { MAIN_MENU, CURRENT_GENERATION } from "@/src/constants";
 
 const HomePage = () => {
   let currentRecruitAfterString =

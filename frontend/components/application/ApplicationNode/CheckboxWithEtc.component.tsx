@@ -7,10 +7,10 @@ import Txt from "@/components/common/Txt.component";
 import {
   ApplicationCheckboxWithEtcType,
   ApplicationNode,
-} from "@/constants/application/type";
+} from "@/src/constants/application/type";
 import { FC, useState } from "react";
-import { useLocalStorage } from "@/hooks/useLocalstorage.hook";
-import { localStorage } from "@/functions/localstorage";
+import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
+import { localStorage } from "@/src/functions/localstorage";
 
 interface ApplicationCheckboxWithEtcProps {
   data: ApplicationNode;

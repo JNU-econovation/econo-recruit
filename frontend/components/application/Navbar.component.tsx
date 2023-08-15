@@ -1,6 +1,6 @@
 "use client";
 
-import { applicationIndexAtom } from "@/stores/application";
+import { applicationIndexAtom } from "@/src/stores/application";
 import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
@@ -16,11 +16,12 @@ const ApplicationNavbar: FC<ApplicationNavbarProps> = ({
   className,
 }) => {
   const [applicationIndex, setApplicationIndex] = useAtom(applicationIndexAtom);
-  const applicationNavbar = require(`@/constants/application/${generation}.ts`)
-    .APPLICATION_NAVBAR as {
-    id: number;
-    title: string;
-  }[];
+  const applicationNavbar =
+    require(`@/src/constants/application/${generation}.ts`)
+      .APPLICATION_NAVBAR as {
+      id: number;
+      title: string;
+    }[];
 
   return (
     <nav className={classNames("pl-12 w-full h-full", className)}>

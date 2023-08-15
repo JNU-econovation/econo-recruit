@@ -1,5 +1,5 @@
-import ApplicationNavbar from "@/components/application/ApplicationNavbar.component";
-import ApplicationQuestion from "@/components/application/ApplicationQuestion.component";
+import ApplicationNavbar from "@/components/application/Navbar.component";
+import ApplicationQuestion from "@/components/application/Question.component";
 import { FC } from "react";
 
 interface ApplicationPageProps {
@@ -11,7 +11,7 @@ interface ApplicationPageProps {
 const ApplicationPage: FC<ApplicationPageProps> = ({ params }) => {
   const { generation } = params;
   const applicationQuestions =
-    require(`@/constants/application/${generation}.ts`)
+    require(`@/src/constants/application/${generation}.ts`)
       .APPLICATION as ApplicationQuestion[];
 
   return (

@@ -15,7 +15,7 @@ export const APPLICANT = [
     type: "customHuman",
     value: {
       hunamName: { name: "name" },
-      humanEmail: { name: "" },
+      humanEmail: { name: "email" },
       humanPhone: { name: "contacted" },
       humanEtc: [
         { name: "classOf" },
