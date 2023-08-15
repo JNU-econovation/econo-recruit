@@ -13,6 +13,10 @@ const ApplicantShortSplit = dynamic(
   () => import("./applicantNode/ShortSplit.component")
 );
 
+const ApplicantTextarea = dynamic(
+  () => import("./applicantNode/Textarea.component")
+);
+
 export const junctionApplicant = (
   applicantNodeData: ApplicantNode,
   applicantData: ApplicantReq[]
@@ -27,7 +31,9 @@ export const junctionApplicant = (
     shortSplit: (
       <ApplicantShortSplit nodeData={applicantNodeData} data={applicantData} />
     ),
-    textarea: <></>,
+    textarea: (
+      <ApplicantTextarea nodeData={applicantNodeData} data={applicantData} />
+    ),
     booleanTextarea: <></>,
     timeline: <></>,
   };
