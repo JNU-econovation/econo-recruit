@@ -18,6 +18,8 @@ public interface BoardLoadUseCase {
 
     Navigation getNavigationByNavLoc(Integer navLoc);
 
+    List<Board> getBoardByColumnsIds(List<Integer> columnsIds);
+
     //    Navigation getByNavLoc(Integer navLoc);
 
 }

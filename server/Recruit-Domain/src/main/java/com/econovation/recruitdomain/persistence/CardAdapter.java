@@ -36,4 +36,9 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
                 .findById(cardId)
                 .orElseThrow(() -> new IllegalStateException(NO_MATCH_CARD));
     }
+
+    @Override
+    public List<Card> findAllByBoardIdIn(List<Integer> boardIds) {
+        return cardRepository.findAllByBoardIdIn(boardIds);
+    }
 }

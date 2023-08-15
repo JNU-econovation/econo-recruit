@@ -1,5 +1,7 @@
 package com.econovation.recruit.api.card.service;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
+
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
@@ -135,18 +137,18 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId) {
-        Integer nextColId = -1;
+        Integer columnsId = -1;
         if (hopeField.equals("개발자")) {
-            nextColId = 1;
+            columnsId = DEVELOPER_COLUMNS_ID;
         } else if (hopeField.equals("디자이너")) {
-            nextColId = 2;
+            columnsId = DESIGNER_COLUMNS_ID;
         } else if (hopeField.equals("기획자")) {
-            nextColId = 3;
+            columnsId = PLANNER_COLUMNS_ID;
         } else {
             throw InvalidHopeFieldException.EXCEPTION;
         }
 
-        Columns column = columnLoadPort.getColumnById(nextColId);
+        Columns column = columnLoadPort.getColumnByNextColumnsId(columnsId);
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
@@ -156,7 +158,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .build();
         Board save = boardRecordPort.save(board);
         //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
-        boardLoadPort.getBoardByNavLavigationIdAndColLoc(0, nextColId).stream()
+        boardLoadPort.getBoardByNavigationIdAndColumnsId(0, columnsId).stream()
                 .filter(b -> b.getNextBoardId() == null)
                 .findFirst()
                 .ifPresent(
@@ -189,6 +191,11 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public Navigation getNavigationByNavLoc(Integer navLoc) {
         return navigationLoadPort.getByNavLoc(navLoc);
+    }
+
+    @Override
+    public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
+        return boardLoadPort.getBoardByColumnsIds(columnsIds);
     }
 
     //    @Override

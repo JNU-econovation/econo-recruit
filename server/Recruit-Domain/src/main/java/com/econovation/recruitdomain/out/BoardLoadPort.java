@@ -6,11 +6,13 @@ import java.util.List;
 public interface BoardLoadPort {
     Board getBoardById(Integer id);
 
-    List<Board> getBoardByNavLavigationIdAndColLoc(Integer navigationId, Integer colLoc);
+    List<Board> getBoardByNavigationIdAndColumnsId(Integer navigationId, Integer colLoc);
 
     List<Board> getBoardByNavigationIdAndColumnId(Integer navigationId, Integer columnId);
 
     List<Board> getBoardByNavLoc(Integer navLoc);
 
     Board getByNextBoardId(Integer id);
+
+    List<Board> getBoardByColumnsIds(List<Integer> columnsIds);
 }

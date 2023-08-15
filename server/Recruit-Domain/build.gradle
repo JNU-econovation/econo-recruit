@@ -8,8 +8,8 @@ dependencies {
     implementation project(':Recruit-Common')
     implementation project(':Recruit-Infrastructure')
     //queryDsl 설정 부분
-    api ("com.querydsl:querydsl-core") // querydsl
-    api ("com.querydsl:querydsl-jpa") // querydsl
+//    api ("com.querydsl:querydsl-core") // querydsl
+//    api ("com.querydsl:querydsl-jpa") // querydsl
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa" // querydsl JPAAnnotationProcessor 사용 지정
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")

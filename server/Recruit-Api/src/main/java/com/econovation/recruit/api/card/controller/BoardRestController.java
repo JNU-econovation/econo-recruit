@@ -9,10 +9,13 @@ import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
 import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.application.port.in.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
+import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +42,7 @@ public class BoardRestController {
     private final BoardLoadUseCase boardLoadUseCase;
     private final BoardRegisterUseCase boardRecordUseCase;
     private final CardRegisterUseCase cardRegisterUseCase;
+    private final CardLoadUseCase cardLoadUseCase;
     private final NavigationUseCase navigationUseCase;
     private final AnswerLoadUseCase answerLoadUseCase;
     // 칸반보드 전체 조회 by navLoc
@@ -79,6 +83,15 @@ public class BoardRestController {
     @GetMapping("/applicants")
     public ResponseEntity<Map<UUID, Map<String, String>>> getApplicants() {
         return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "지원서 칸반보드 조회 by navigationId",
+            description = "navigationId에 해당하는 모든 칸반을 조회합니다.")
+    @GetMapping("/boards/navigation/{navigation-id}")
+    public ResponseEntity<List<Map<ColumnsResponseDto, CardResponseDto>>> getBoardByNavigationId(
+            @PathVariable("navigation-id") Integer navigationId) {
+        return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
     }
 
     //    @GetMapping("/boards/cards")

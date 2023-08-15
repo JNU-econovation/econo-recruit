@@ -1,13 +1,22 @@
 package com.econovation.recruit.application.service;
 
+import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
+import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
+import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.domain.Columns;
+import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +27,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final CardRecordPort cardRecordPort;
     private final CardLoadPort cardLoadPort;
     private final BoardRegisterUseCase boardRegisterUseCase;
+    private final BoardLoadUseCase boardLoadUseCase;
+    private final ColumnsLoadUseCase columnsLoadUseCase;
 
     /*    @Override
     public Card saveApplicantCard(Applicant applicant) {
@@ -39,6 +50,45 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     @Transactional(readOnly = true)
     public List<Card> findAll() {
         return cardLoadPort.findAll();
+    }
+
+    @Override
+    public List<Map<ColumnsResponseDto, CardResponseDto>> getByNavigationId(Integer navigationId) {
+        List<Columns> columns = columnsLoadUseCase.getByNavigationId(navigationId);
+        List<ColumnsResponseDto> columnsResponseDtos =
+                columns.stream().map(ColumnsResponseDto::from).collect(Collectors.toList());
+
+        List<Integer> columnsIds =
+                columns.stream().map(Columns::getId).collect(Collectors.toList());
+
+        List<Board> boards = boardLoadUseCase.getBoardByColumnsIds(columnsIds);
+        List<Card> cards =
+                cardLoadPort.findAllByBoardIdIn(
+                        boards.stream().map(Board::getId).collect(Collectors.toList()));
+
+        Map<Integer, Card> cardByBoardIdMap =
+                cards.stream().collect(Collectors.toMap(Card::getId, card -> card));
+
+        List<Map<ColumnsResponseDto, CardResponseDto>> result = new LinkedList<>();
+
+        for (Board board : boards) {
+            Card card = cardByBoardIdMap.get(board.getCardId());
+            if (card != null) {
+                CardResponseDto cardDto = CardResponseDto.from(card, board);
+
+                ColumnsResponseDto columnsResponseDto =
+                        columnsResponseDtos.stream()
+                                .filter(dto -> dto.getColumnsId().equals(board.getColumnId()))
+                                .findFirst()
+                                .orElse(null);
+
+                if (columnsResponseDto != null) {
+                    result.add(Map.of(columnsResponseDto, cardDto));
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override

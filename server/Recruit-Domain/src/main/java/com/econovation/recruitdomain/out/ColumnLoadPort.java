@@ -13,5 +13,5 @@ public interface ColumnLoadPort {
     Columns getColumnByPrevColLocAndNextColLocAndNavigationId(
             Integer nextColId, Integer navigationId);
 
-    Columns getColumnById(Integer nextColId);
+    Columns getColumnByNextColumnsId(Integer nextColId);
 }
