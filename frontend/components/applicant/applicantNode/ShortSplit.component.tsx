@@ -16,8 +16,8 @@ const ApplicantShortSplit: FC<ApplicantShortSplitProps> = ({
 
   return (
     <>
-      <Txt typography="h6">{shortSplitData.title}</Txt>
-      <div className="flex items-center pt-6 pb-12 gap-12">
+      <Txt typography="h5">{shortSplitData.title}</Txt>
+      <div className="flex items-center pt-6 pb-12 gap-12 ml-4">
         {shortSplitData.value.map((value, index) => (
           <div key={index}>
             <Txt typography="h6" className="block mb-2">

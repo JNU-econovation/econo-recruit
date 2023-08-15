@@ -17,6 +17,10 @@ const ApplicantTextarea = dynamic(
   () => import("./applicantNode/Textarea.component")
 );
 
+const ApplicantBooleanTextarea = dynamic(
+  () => import("./applicantNode/BooleanTextarea.component")
+);
+
 export const junctionApplicant = (
   applicantNodeData: ApplicantNode,
   applicantData: ApplicantReq[]
@@ -34,7 +38,12 @@ export const junctionApplicant = (
     textarea: (
       <ApplicantTextarea nodeData={applicantNodeData} data={applicantData} />
     ),
-    booleanTextarea: <></>,
+    booleanTextarea: (
+      <ApplicantBooleanTextarea
+        nodeData={applicantNodeData}
+        data={applicantData}
+      />
+    ),
     timeline: <></>,
   };
 
