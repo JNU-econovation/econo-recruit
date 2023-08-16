@@ -1,19 +1,16 @@
-'use client';
+"use client";
 
-import { KanbanColumnData } from '@/src/stores/kanban/Kanban.atoms';
+import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
+import { useParams } from "next/navigation";
 
 type KanbanColumnComponentType = {
   data: KanbanColumnData;
   row: number;
-  generation: string;
 };
 
-function KanbanColumnComponent({
-  data,
-  row,
-  generation,
-}: KanbanColumnComponentType) {
+function KanbanColumnComponent({ data, row }: KanbanColumnComponentType) {
   const { major, title, apply, comment, isHearted, heart, id } = data;
+  const { generation } = useParams();
 
   const onClickDetail = () => {
     window.location.href = `/kanban/${generation}/detail?id=${id}&row=${row}`;
@@ -27,7 +24,7 @@ function KanbanColumnComponent({
       <div className="text-xs text-[#666666]">{major}</div>
       <div className="font-bold">{title}</div>
       <div className="mt-2 flex justify-between items-center text-sm text-[#666666]">
-        <div className="text-sm">{apply.join(' / ')}</div>
+        <div className="text-sm">{apply.join(" / ")}</div>
         <div className="flex gap-3">
           <div className="flex">
             <img src="/icons/bubble.right.svg" alt="comment" />
