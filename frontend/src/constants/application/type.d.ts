@@ -3,7 +3,7 @@ interface ApplicationQuestion {
   title?: string;
   subtitle?: string;
   require: boolean;
-  direction: "vertical" | "horizontal";
+  direction: 'vertical' | 'horizontal';
   nodes: ApplicationNode[];
 }
 
@@ -22,11 +22,11 @@ interface BaseWithValues extends ApplicationNodeBase {
 }
 
 interface ApplicationRadio extends BaseWithValues {
-  type: "radio";
+  type: 'radio';
 }
 
 interface ApplicationRadioByTwoRank extends ApplicationNode {
-  type: "radioByTwoRank";
+  type: 'radioByTwoRank';
   title?: string;
   subtitle?: string;
   require: boolean;
@@ -34,22 +34,22 @@ interface ApplicationRadioByTwoRank extends ApplicationNode {
 }
 
 interface ApplicationRadioByLayer extends ApplicationNode {
-  type: "radioByLayer";
+  type: 'radioByLayer';
   subNodes: BaseWithValues[];
 }
 
 interface ApplicationText extends ApplicationNodeBase {
-  type: "text";
+  type: 'text';
 }
 
 interface ApplicationTextarea extends ApplicationNodeBase {
-  type: "textarea";
+  type: 'textarea';
 }
 
 interface ApplicationBooleanTextBox extends ApplicationNodeBase {
-  type: "booleanTextBox";
+  type: 'booleanTextBox';
   subNodes: {
-    type: "true" | "false";
+    type: 'true' | 'false';
     title?: string;
     subtitle?: string;
     require: boolean;
@@ -58,21 +58,21 @@ interface ApplicationBooleanTextBox extends ApplicationNodeBase {
 }
 
 interface ApplicationBar {
-  type: "bar";
+  type: 'bar';
 }
 
 interface ApplicationJustText {
-  type: "justText";
+  type: 'justText';
   title: string;
   subtitle?: string;
 }
 
 interface ApplicationCheckboxType extends ApplicationNodeBase {
-  type: "checkbox";
+  type: 'checkbox';
   value: string[];
 }
 
 interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
-  type: "checkboxWithEtc";
+  type: 'checkboxWithEtc';
   value: string[];
 }
