@@ -2,7 +2,6 @@
 
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import dynamic from "next/dynamic";
-import ApplicationTimelineLayout from "./applicationLayout/Timeline.component";
 
 const ApplicationHorizontalLayout = dynamic(
   () => import("./applicationLayout/Horizontal.componet"),
@@ -10,18 +9,19 @@ const ApplicationHorizontalLayout = dynamic(
 );
 
 const ApplicationVerticalLayout = dynamic(
-  () => import("./applicationLayout/Vertical.component"),
-  { ssr: false }
+  () => import("./applicationLayout/Vertical.component")
 );
 
 const ApplicationBooleanTextareaLayout = dynamic(
-  () => import("./applicationLayout/BooleanTextarea.component"),
-  { ssr: false }
+  () => import("./applicationLayout/BooleanTextarea.component")
 );
 
 const ApplicationRadioForCheckLayout = dynamic(
-  () => import("./applicationLayout/RadioForCheck.component"),
-  { ssr: false }
+  () => import("./applicationLayout/RadioForCheck.component")
+);
+
+const ApplicationTimelineLayout = dynamic(
+  () => import("./applicationLayout/timeline/Timeline.component")
 );
 
 export const applicationLayout = (
@@ -45,7 +45,9 @@ export const applicationLayout = (
         applicationQuestion={applicationQuestion}
       />
     ),
-    timeline: <ApplicationTimelineLayout />,
+    timeline: (
+      <ApplicationTimelineLayout applicationQuestion={applicationQuestion} />
+    ),
   };
 
   return jsxNode[layout];

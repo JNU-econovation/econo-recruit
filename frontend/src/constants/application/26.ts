@@ -413,22 +413,22 @@ export const APPLICATION_TIMELINE = {
   seperate: 60,
   time: [
     {
-      start_time: new Date(2023, 3, 19, 10, 0, 0),
-      end_time: new Date(2023, 3, 19, 21, 0, 0),
+      startTime: new Date(2023, 3, 19, 10, 0, 0),
+      endTime: new Date(2023, 3, 19, 21, 0, 0),
     },
     {
-      start_time: new Date(2023, 3, 20, 10, 0, 0),
-      end_time: new Date(2023, 3, 20, 21, 0, 0),
+      startTime: new Date(2023, 3, 20, 10, 0, 0),
+      endTime: new Date(2023, 3, 20, 21, 0, 0),
     },
     {
-      start_time: new Date(2023, 3, 21, 10, 0, 0),
-      end_time: new Date(2023, 3, 21, 21, 0, 0),
+      startTime: new Date(2023, 3, 21, 10, 0, 0),
+      endTime: new Date(2023, 3, 21, 21, 0, 0),
     },
   ],
-  disable_time: [
+  disableTime: [
     {
-      start_time: new Date(2023, 3, 19, 10, 0, 0),
-      end_time: new Date(2023, 3, 19, 13, 0, 0),
+      startTime: new Date(2023, 3, 19, 10, 0, 0),
+      endTime: new Date(2023, 3, 19, 13, 0, 0),
     },
   ],
 } as ApplicationTimeline;

@@ -6,6 +6,12 @@ const cellPhoneNumberReplacer = (value: string) =>
 const undergradeNumberReplacer = (value: string) =>
   value.replace(/[^0-9]/g, "");
 
+export const minimumIntegerDigits = (value: number, digits: number) =>
+  value.toLocaleString("ko-KR", {
+    minimumIntegerDigits: digits,
+    useGrouping: false,
+  });
+
 export type ReplacerType = "cellPhoneNumber" | "undergradeNumber";
 
 export const replacer = (value: string, type: ReplacerType) => {

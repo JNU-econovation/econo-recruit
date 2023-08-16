@@ -117,11 +117,11 @@ interface ApplicationTimelineType extends ApplicationNodeBase {
 interface ApplicationTimeline {
   seperate: number;
   time: {
-    start_time: Date;
-    end_time: Date;
+    startTime: Date;
+    endTime: Date;
   }[];
-  disable_time: {
-    start_time: Date;
-    end_time: Date;
+  disableTime: {
+    startTime: Date;
+    endTime: Date;
   }[];
 }
