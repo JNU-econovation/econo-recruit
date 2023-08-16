@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 type KanbanAddColumnComponent = {
   AddColumnCallBack: () => {};
@@ -22,10 +22,10 @@ function KanbanAddColumnComponent({
           />
           <div className="flex gap-3 justify-end">
             <button type="button" onClick={() => setIsOpenAddCard(false)}>
-              <img src="/ellipsis.multiply.svg" alt="" />
+              <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
             <button type="submit" onClick={AddColumnCallBack}>
-              <img src="/arrow.forward.circle.fill.svg" alt="" />
+              <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
         </div>
@@ -37,7 +37,7 @@ function KanbanAddColumnComponent({
             setIsOpenAddCard(true);
           }}
         >
-          <img src="/ellipsis.plus.svg" alt="AddColumn" />
+          <img src="/icons/ellipsis.plus.svg" alt="AddColumn" />
           Add a card
         </button>
       )}

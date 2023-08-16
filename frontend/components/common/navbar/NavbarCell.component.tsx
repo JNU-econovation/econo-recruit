@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import LtIcon from '@/public/icons/lt.icon.svg';
-import LtIconWhite from '@/public/icons/lt.icon.white.svg';
+import Image from "next/image";
+import LtIcon from "@/public/icons/lt.icon.svg";
+import LtIconWhite from "@/public/icons/lt.icon.white.svg";
 
 type CommonNavbarCellComponent = {
   currentPath: string;
@@ -20,7 +20,7 @@ const CommonNavbarCellComponent = ({
   isShort,
 }: CommonNavbarCellComponent) => {
   const linkButtonClassName =
-    'flex justify-between p-4 hover:bg-[#B9B9B9] hover:text-white rounded-lg';
+    "flex justify-between p-4 hover:bg-[#B9B9B9] hover:text-white rounded-lg";
   return (
     <a
       className={
@@ -29,7 +29,7 @@ const CommonNavbarCellComponent = ({
           : linkButtonClassName
       }
       href={item.href}
-      target={item.target === '_blank' ? '_blank' : ''}
+      target={item.target === "_blank" ? "_blank" : ""}
       key={item.type}
     >
       {isShort ? item.short_title : item.title}

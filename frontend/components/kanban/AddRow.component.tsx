@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 type KanbanAddRowComponent = {
   AddRowCallBack: () => void;
@@ -20,10 +20,10 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
           />
           <div className="flex gap-3 justify-end">
             <button type="button" onClick={() => setIsOpenAddCard(false)}>
-              <img src="/ellipsis.multiply.svg" alt="" />
+              <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
             <button type="submit" onClick={AddRowCallBack}>
-              <img src="/arrow.forward.circle.fill.svg" alt="" />
+              <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
         </div>
@@ -33,7 +33,7 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
           className="w-[17rem] flex gap-2 justify-start items-center text-[#828282] py-4 px-8 bg-[#EFEFEF] h-fit rounded-lg"
           onClick={() => setIsOpenAddCard(true)}
         >
-          <img src="/ellipsis.plus.svg" alt="AddColumn" />
+          <img src="/icons/ellipsis.plus.svg" alt="AddColumn" />
           Add another list
         </button>
       )}

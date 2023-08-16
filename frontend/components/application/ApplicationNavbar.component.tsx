@@ -1,10 +1,10 @@
 "use client";
 
-import { applicationIndexAtom } from "@/stores/application";
+import { applicationIndexAtom } from "@/src/stores/application";
 import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
-import { APPLICATION } from "@/constants/application/25";
+import { APPLICATION } from "@/src/constants/application/25";
 import Txt from "../common/Txt.component";
 
 interface ApplicationNavbarProps {

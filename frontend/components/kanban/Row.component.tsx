@@ -1,7 +1,7 @@
-import { Draggable, Droppable } from '@hello-pangea/dnd';
-import { KanbanColumnData } from '@/src/stores/kanban/Kanban.atoms';
-import KanbanAddColumnComponent from './AddColumn.component';
-import KanbanColumnComponent from './Column.component';
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
+import KanbanAddColumnComponent from "./AddColumn.component";
+import KanbanColumnComponent from "./Column.component";
 
 type KanbanRowComponent = {
   index: number;
@@ -33,7 +33,7 @@ const KanbanRowComponent = ({
               </div>
             </div>
             <button type="button">
-              <img src="/ellipsis.bubble.svg" alt="RowDetail" />
+              <img src="/icons/ellipsis.bubble.svg" alt="RowDetail" />
             </button>
           </div>
           <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
@@ -73,7 +73,7 @@ const KanbanRowComponent = ({
               )}
             </Droppable>
           </div>
-          <KanbanAddColumnComponent AddColumnCallBack={() => ''} />
+          <KanbanAddColumnComponent AddColumnCallBack={() => ""} />
         </div>
       )}
     </Draggable>
