@@ -68,4 +68,7 @@ public class Result<T> {
             return null;
         }
     }
+    public static <T> Result<T> of(T value) {
+        return value == null ? Result.failure(new IllegalArgumentException("value is null")) : Result.success(value);
+    }
 }

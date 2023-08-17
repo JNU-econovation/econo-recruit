@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.card;
 
+import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;
 import javax.annotation.Nullable;

@@ -1,7 +1,9 @@
 package com.econovation.recruitdomain.persistence;
 
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.LabelRepository;
+import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
@@ -16,12 +18,10 @@ public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
     private final LabelRepository labelRepository;
 
     @Override
-    public Label save(Label label) {
+    public Result<Label> save(Label label) {
         Label loadLabel = labelRepository.save(label);
-        if (loadLabel.equals(null)) {
-            throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
-        }
-        return loadLabel;
+        Result<Label> result = Result.of(loadLabel);
+        return result;
     }
 
     @Override

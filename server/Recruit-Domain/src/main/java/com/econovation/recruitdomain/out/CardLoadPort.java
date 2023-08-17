@@ -10,4 +10,6 @@ public interface CardLoadPort {
     Card findById(Integer cardId);
 
     List<Card> findAllByBoardIdIn(List<Integer> collect);
+
+    Card findByApplicantId(Integer applicantId);
 }
