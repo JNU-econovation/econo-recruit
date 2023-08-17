@@ -8,5 +8,6 @@ export interface ApplicantReq {
 
 export const getApplicant = async (id: string) => {
   const { data } = await https.get<ApplicantReq[]>(`/applicants/${id}`);
+
   return data;
 };

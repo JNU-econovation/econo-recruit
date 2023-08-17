@@ -1,6 +1,6 @@
 import { ApplicantReq } from "../apis/applicant";
 
 export const applicantDataFinder = (
-  applicnatData: ApplicantReq[],
+  applicantData: ApplicantReq[],
   name: string
-) => applicnatData.find((req) => req.name === name)?.answer ?? "";
+) => applicantData.find((req) => req.name === name)?.answer ?? "";
