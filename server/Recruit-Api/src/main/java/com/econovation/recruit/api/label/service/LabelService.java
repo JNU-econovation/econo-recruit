@@ -1,6 +1,6 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.label.service;
 
-import com.econovation.recruit.application.port.in.LabelUseCase;
+import com.econovation.recruit.api.label.usecase.LabelUseCase;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.Card;

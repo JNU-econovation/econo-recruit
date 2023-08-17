@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Comment extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Integer id;
 

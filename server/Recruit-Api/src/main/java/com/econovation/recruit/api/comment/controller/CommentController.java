@@ -1,9 +1,10 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api.comment.controller;
 
-import com.econovation.recruit.application.port.in.CommentUseCase;
-import com.econovation.recruit.application.utils.EntityMapper;
+import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_SUCCESS_REGISTER_MESSAGE;
+
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "Comment 관련 API", description = "댓글(Comment) API")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentUseCase commentUseCase;
-    private final EntityMapper entityMapper;
 
+    @Operation(summary = "댓글 등록")
     @PostMapping("/comments")
-    public ResponseEntity<Comment> createComment(CommentRegisterDto commentRegisterDto) {
-        Comment comment = commentUseCase.saveComment(entityMapper.toComment(commentRegisterDto));
-        return new ResponseEntity(comment, HttpStatus.OK);
+    public ResponseEntity createComment(CommentRegisterDto commentRegisterDto) {
+        commentUseCase.saveComment(CommentRegisterDto.from(commentRegisterDto));
+        return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @GetMapping("/comments")
@@ -33,13 +37,13 @@ public class CommentController {
     }
 
     @PostMapping("/comments/is/likes")
-    public ResponseEntity<Boolean> isCheckedLike(Integer commentId, Integer idpId) {
+    public ResponseEntity<Boolean> isCheckedLike(Comment commentId, Comment idpId) {
         Boolean isCheck = commentUseCase.isCheckedLike(commentId, idpId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 
     @PostMapping("/comments/delete")
-    public ResponseEntity<Integer> deleteComment(Integer commentId) {
+    public ResponseEntity<Comment> deleteComment(Comment commentId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면
@@ -55,7 +59,7 @@ public class CommentController {
     // 댓글 수정
 
     @PostMapping("/comments/likes/plus")
-    public ResponseEntity plusLikeCount(Integer commentId, Integer idpId) {
+    public ResponseEntity plusLikeCount(Comment commentId, Comment idpId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면
@@ -67,7 +71,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments/likes/minus")
-    public ResponseEntity minusLikeCount(Integer commentId) {
+    public ResponseEntity minusLikeCount(Comment commentId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentLikeRepository extends JpaRepository<CommentLike, Long> {
-    Optional<CommentLike> findByComment(Comment comment);
+    Optional<CommentLike> findByCommentId(Comment commentId);
 
-    Boolean existsByIdpId(Integer idpId);
+    Boolean existsByIdpId(Comment idpId);
 }

@@ -1,9 +1,9 @@
-package com.econovation.recruit.api.label;
+package com.econovation.recruit.api.label.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.LABEL_SUCCESS_DELETE_MESSAGE;
 
 import com.econovation.recruit.api.label.docs.LabelExceptionDocs;
-import com.econovation.recruit.application.port.in.LabelUseCase;
+import com.econovation.recruit.api.label.usecase.LabelUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.label.Label;
 import io.swagger.v3.oas.annotations.Operation;

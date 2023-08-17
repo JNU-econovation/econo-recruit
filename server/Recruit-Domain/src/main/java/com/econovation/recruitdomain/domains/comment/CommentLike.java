@@ -13,12 +13,11 @@ public class CommentLike {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_like_id")
-    private Integer id;
+    private Comment id;
 
-    @ManyToOne
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @Column(name = "comment_id")
+    private Comment commentId;
 
     @Column(name = "idp_id")
-    private Integer idpId;
+    private Comment idpId;
 }

@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.persistence;
 
+import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.comment.CommentLike;
 import com.econovation.recruitdomain.domains.comment.CommentLikeRepository;
@@ -10,32 +11,27 @@ import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
+import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENTLIKE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENT_MESSAGE;
+
+@Adaptor
 @RequiredArgsConstructor
-public class CommentPersistencAdapter
+public class CommentAdapter
         implements CommentRecordPort, CommentLoadPort, CommentLikeRecordPort, CommentLikeLoadPort {
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
 
-    private final String NO_MATCH_COMMENT_MESSAGE = "조회된 Comment가 존재하지 않습니다";
-    private final String NO_MATCH_COMMENTLIKE_MESSAGE = "조회된 Comment가 존재하지 않습니다";
-
     @Override
     public Comment saveComment(Comment comment) {
-        comment = commentRepository.save(comment);
-        if (comment.equals(null)) {
-            throw new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE);
-        }
-        return comment;
+        return commentRepository.save(comment);
     }
 
     @Override
-    public Comment findById(Integer commentId) {
-        return commentRepository
-                .findById(Long.valueOf(commentId))
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE));
+    public Comment findById(Comment commentId) {
+//        return commentRepository
+//                .findById(integerId)
+//                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE));
     }
 
     @Override
@@ -58,14 +54,14 @@ public class CommentPersistencAdapter
     }
 
     @Override
-    public CommentLike getByComment(Comment comment) {
+    public CommentLike getByCommentId(Comment comment) {
         return commentLikeRepository
-                .findByComment(comment)
+                .findByCommentId(comment)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENTLIKE_MESSAGE));
     }
 
     @Override
-    public Boolean getByIdpId(Integer idpId) {
+    public Boolean getByIdpId(Comment idpId) {
         return commentLikeRepository.existsByIdpId(idpId);
     }
 }

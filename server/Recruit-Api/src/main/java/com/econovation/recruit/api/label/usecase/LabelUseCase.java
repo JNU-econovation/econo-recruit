@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.port.in;
+package com.econovation.recruit.api.label.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.label.Label;
