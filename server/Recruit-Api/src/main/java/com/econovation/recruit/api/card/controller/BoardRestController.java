@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,7 +50,8 @@ public class BoardRestController {
     @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PostMapping("/boards/work-card")
-    public ResponseEntity<String> createWorkBoard(CreateWorkCardDto createWorkCardDto) {
+    public ResponseEntity<String> createWorkBoard(
+            @RequestBody CreateWorkCardDto createWorkCardDto) {
         cardRegisterUseCase.saveWorkCard(createWorkCardDto);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }

@@ -1,7 +1,7 @@
 package com.econovation.recruit.config;
 
-import com.econovation.recruit.application.port.in.InterviewerUseCase;
-import com.econovation.recruitdomain.domains.interviewer.Role;
+import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
+import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.util.Base64;
@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 @RequiredArgsConstructor
 public class CookieFilter extends OncePerRequestFilter {
-    @Value("${spring.jwt.secret-key}")
+    @Value("${auth.jwt.secret}")
     private String secretKey;
 
     private final InterviewerUseCase interviewerUseCase;
