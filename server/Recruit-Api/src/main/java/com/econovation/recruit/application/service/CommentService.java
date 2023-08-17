@@ -1,10 +1,8 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.CommentUseCase;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.comment.CommentLike;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
@@ -21,15 +19,13 @@ public class CommentService implements CommentUseCase {
     private final CommentLoadPort commentLoadPort;
     private final CommentLikeRecordPort commentLikeRecordPort;
     private final CommentLikeLoadPort commentLikeLoadPort;
-    private final ApplicantLoadPort applicantLoadPort;
 
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
         Comment loadedComment = commentRecordPort.saveComment(comment);
-        // Applcant의 comment_count 추가
-        Applicant applicant = applicantLoadPort.loadApplicantById(comment.getApplicant().getId());
-        applicant.plusCommentCount();
+        // applicant.plusCommentCount();
+        // TODO : Card comment 증가
         return loadedComment;
     }
 

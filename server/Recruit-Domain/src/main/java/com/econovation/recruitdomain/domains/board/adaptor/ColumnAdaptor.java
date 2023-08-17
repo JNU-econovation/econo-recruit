@@ -17,8 +17,10 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     private final ColumnRepository columnRepository;
 
     @Override
-    public Columns findById(Integer id) {
-        return columnRepository.findById(id).orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
+    public Columns findById(Integer columnsId) {
+        return columnRepository
+                .findById(columnsId)
+                .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
     }
 
     @Override
@@ -28,14 +30,14 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
 
     @Override
     public Columns getColumnByPrevColLocAndNextColLocAndNavigationId(
-            Integer nextColLoc, Integer navigationId) {
+            Integer nextColumnsId, Integer navigationId) {
         return columnRepository
-                .findByNextColIdAndNavigationId(nextColLoc, navigationId)
+                .findByNextColumnsIdAndNavigationId(nextColumnsId, navigationId)
                 .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
     }
 
     @Override
-    public Columns getColumnById(Integer nextColId) {
+    public Columns getColumnByNextColumnsId(Integer nextColId) {
         return columnRepository
                 .findById(nextColId)
                 .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);

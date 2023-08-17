@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.record.Record;
 import com.econovation.recruitdomain.domains.record.RecordRepository;
 import com.econovation.recruitdomain.out.RecordLoadPort;
@@ -26,9 +25,9 @@ public class RecordPersistenceAdapter implements RecordLoadPort, RecordRecordPor
     }
 
     @Override
-    public Record findByApplicant(Applicant applicant) {
+    public Record findByApplicantId(Integer applicantId) {
         return recordRepository
-                .findByApplicant(applicant)
+                .findByApplicantId(applicantId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_RECORD));
     }
 }

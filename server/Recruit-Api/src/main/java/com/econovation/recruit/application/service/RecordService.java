@@ -1,9 +1,7 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.RecordUseCase;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.record.Record;
-import com.econovation.recruitdomain.out.ApplicantLoadPort;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
@@ -15,8 +13,6 @@ import org.springframework.stereotype.Service;
 public class RecordService implements RecordUseCase {
     private final RecordRecordPort recordRecordPort;
     private final RecordLoadPort recordLoadPort;
-
-    private final ApplicantLoadPort applicantLoadPort;
 
     @Override
     public Record createRecord(Record record) {
@@ -30,7 +26,6 @@ public class RecordService implements RecordUseCase {
 
     @Override
     public Record findByApplicantId(Integer applicantId) {
-        Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        return recordLoadPort.findByApplicant(applicant);
+        return recordLoadPort.findByApplicantId(applicantId);
     }
 }

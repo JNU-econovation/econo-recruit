@@ -47,7 +47,7 @@ public class CommentController {
             // 코멘트의 isDeleted false -> true
             comment.delete();
             // 코멘트와 연결된 Applicant 테이블 조회
-            comment.getApplicant().minusCommentCount();
+            // comment.getApplicantId().minusCommentCount();
             // Applicant Comment_Count 1--
         }
         return new ResponseEntity<>(commentId, HttpStatus.OK);

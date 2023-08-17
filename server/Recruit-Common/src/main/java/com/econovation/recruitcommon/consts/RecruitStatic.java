@@ -16,6 +16,9 @@ public class RecruitStatic {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
     public static final String KR_YES = "예";
     public static final String KR_NO = "아니요";
+    public static final Integer DEVELOPER_COLUMNS_ID = 0;
+    public static final Integer DESIGNER_COLUMNS_ID = 1;
+    public static final Integer PLANNER_COLUMNS_ID = 2;
 
     public static final int MILLI_TO_SECOND = 1000;
     public static final int BAD_REQUEST = 400;
@@ -24,6 +27,7 @@ public class RecruitStatic {
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
+    public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";
     public static final String BOARD_SUCCESS_REGISTER_MESSAGE = "성공적으로 업무카드가 등록됐습니다";
     public static final String BOARD_SUCCESS_DELETE_MESSAGE = "성공적으로 업무카드가 삭제되었습니다.";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =

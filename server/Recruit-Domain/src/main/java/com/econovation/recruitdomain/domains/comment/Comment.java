@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.comment;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +18,8 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "comment_id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "applicant_id")
-    private Applicant applicant;
+    @Column(name = "applicant_id")
+    private Integer applicantId;
 
     @Column(name = "parent_id")
     private Long parentId;
@@ -40,10 +38,6 @@ public class Comment extends BaseTimeEntity {
 
     public void delete() {
         this.isDeleted = true;
-    }
-
-    public Applicant getApplicant() {
-        return applicant;
     }
 
     @PrePersist

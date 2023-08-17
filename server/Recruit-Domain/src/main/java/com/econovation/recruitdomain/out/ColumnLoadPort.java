@@ -1,10 +1,8 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitcommon.annotation.Port;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import java.util.List;
 
-@Port
 public interface ColumnLoadPort {
     Columns findById(Integer id);
 
@@ -13,5 +11,5 @@ public interface ColumnLoadPort {
     Columns getColumnByPrevColLocAndNextColLocAndNavigationId(
             Integer nextColId, Integer navigationId);
 
-    Columns getColumnById(Integer nextColId);
+    Columns getColumnByNextColumnsId(Integer nextColId);
 }

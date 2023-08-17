@@ -5,15 +5,9 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLI
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
-import com.econovation.recruitdomain.domains.dto.TimeTableInsertDto;
 import com.econovation.recruitdomain.domains.timetable.TimeTable;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +49,7 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
                                 }));
     }
 
-    private List<TimeTableInsertDto> toList(HashMap<String, Object> param) {
+    /*    private List<TimeTableInsertDto> toList(HashMap<String, Object> param) {
         List<TimeTableInsertDto> chunkTimeTable = new LinkedList<>();
         Gson gson = new Gson();
         // JsonParser Deprecated -> JsonParser static import 변경
@@ -72,10 +66,10 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
 
         for (int i = 0; i < startTimes.size(); i++) {
             chunkTimeTable.add(
-                    new TimeTableInsertDto(startTimes.get(i), endTimes.get(i), days.get(i)));
+                    new TimeTableInsertDto(startTimes.get(i)));
         }
         return chunkTimeTable;
-    }
+    }*/
 
     @Override
     public void execute(UUID applicantId, List<Integer> startTimes) {

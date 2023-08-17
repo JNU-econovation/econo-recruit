@@ -27,12 +27,8 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
-    public List<Board> getBoardByNavLavigationIdAndColLoc(Integer navigationId, Integer colLoc) {
-        //        input colLoc 이 prevColLoc 보다 크고 nextColLoc 보다 작은 board 들을 가져온다
-        Integer prevColLoc = colLoc - 1;
-        Integer nextColLoc = colLoc + 1;
-        return boardRepository.findByNavLocAndPrevColLocAndNextColLoc(
-                navigationId, prevColLoc, nextColLoc);
+    public List<Board> getBoardByNavigationIdAndColumnsId(Integer navigationId, Integer columnsId) {
+        return boardRepository.findByNavigationIdAndColumnsId(navigationId, columnsId);
     }
 
     @Override
@@ -47,7 +43,14 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
 
     @Override
     public Board getByNextBoardId(Integer nextBoardId) {
-        return boardRepository.findByNextBoardId(nextBoardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        return boardRepository
+                .findByNextBoardId(nextBoardId)
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+    }
+
+    @Override
+    public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
+        return boardRepository.findByColumnsIdIn(columnsIds);
     }
 
     //    @Override

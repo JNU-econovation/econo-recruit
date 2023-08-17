@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Columns extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "columns_id")
     private Integer id;
 
     @Column(name = "title")
@@ -27,14 +28,10 @@ public class Columns extends BaseTimeEntity {
     @Column(name = "navigation_id")
     private Integer navigationId;
 
-    @Column(name = "prev_col_loc")
-    private Integer prevColLoc;
+    @Column(name = "next_Columns_id")
+    private Integer nextColumnsId;
 
-    @Column(name = "next_col_loc")
-    private Integer nextColLoc;
-
-    public void updateLocation(Integer prevColLoc, Integer nextColLoc) {
-        this.prevColLoc = prevColLoc;
-        this.nextColLoc = nextColLoc;
+    public void updateLocation(Integer nextColumnsId) {
+        this.nextColumnsId = nextColumnsId;
     }
 }

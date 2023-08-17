@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.persistence;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.LabelRepository;
 import com.econovation.recruitdomain.out.LabelLoadPort;
@@ -32,8 +31,8 @@ public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public List<Label> loadLabelByApplicant(Applicant applicant) {
-        List<Label> labels = labelRepository.findByApplicant(applicant);
+    public List<Label> loadLabelByApplicantId(Integer applicantId) {
+        List<Label> labels = labelRepository.findByApplicantId(applicantId);
         if (labels.isEmpty()) {
             throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
         }
@@ -41,8 +40,8 @@ public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public Label loadLabelByApplicantAndIdpId(Applicant applicant, Integer idpId) {
-        labelRepository.findByApplicantAndIdpId(applicant, idpId);
+    public Label loadLabelByApplicantIdAndIdpId(Integer applicantId, Integer idpId) {
+        labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         return null;
     }
 }

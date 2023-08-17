@@ -19,12 +19,13 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     List<Board> findByNavLoc(Integer navigationId);
 
-    List<Board> findByNavLocAndPrevColLocAndNextColLoc(
-            Integer navLoc, Integer prevColLoc, Integer nextColLoc);
+    List<Board> findByNavigationIdAndColumnsId(Integer navigationId, Integer columnsId);
 
     List<Board> findByNavigationId(Integer navigationId);
 
     List<Board> findByNavigationIdAndColumnId(Integer navigationId, Integer columnId);
 
     Optional<Board> findByNextBoardId(Integer nextBoardId);
+
+    List<Board> findByColumnsIdIn(List<Integer> columnsIds);
 }

@@ -1,18 +1,6 @@
+/*
 package com.econovation.recruit.application.utils;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
-import com.econovation.recruitdomain.domains.applicant.domain.ApplicantRepository;
-import com.econovation.recruitdomain.domains.board.domain.Board;
-import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
-import com.econovation.recruitdomain.domains.board.domain.Navigation;
-import com.econovation.recruitdomain.domains.board.domain.NavigationRepository;
-import com.econovation.recruitdomain.domains.card.Card;
-import com.econovation.recruitdomain.domains.card.CardRepository;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
@@ -76,3 +64,4 @@ public class DataInit {
         Card c1 = cardRepository.save(card2);
     }
 }
+*/

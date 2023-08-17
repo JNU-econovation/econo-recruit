@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.persistence;
 
-import com.econovation.recruitdomain.domains.applicant.Applicant;
+import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
 import com.econovation.recruitdomain.domains.resume.Resume;
 import com.econovation.recruitdomain.domains.resume.ResumeRepository;
@@ -10,9 +10,8 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
-@Component
+@Adaptor
 @RequiredArgsConstructor
 public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPort {
     private static final String NO_OBJECT_EXCEPTION = "데이터가 존재하지 않습니다.";
@@ -65,7 +64,7 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
     }
 
     @Override
-    public List<Resume> findByApplicant(Applicant applicant) {
-        return resumeRepository.findByApplicant(applicant);
+    public List<Resume> findByApplicantId(Integer applicantId) {
+        return resumeRepository.findByApplicantId(applicantId);
     }
 }

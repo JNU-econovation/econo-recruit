@@ -1,19 +1,6 @@
+/*
 package com.econovation.recruit.application.service;
 
-import com.econovation.recruit.application.port.in.ResumeUseCase;
-import com.econovation.recruitdomain.domains.dto.ResumeInsertDto;
-import com.econovation.recruitdomain.domains.resume.Resume;
-import com.econovation.recruitdomain.out.ResumeLoadPort;
-import com.econovation.recruitdomain.out.ResumeRecordPort;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +32,7 @@ public class ResumeService implements ResumeUseCase {
     @Override
     public List<Resume> findByApplicantId(Integer applicantId) {
         Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
-        return resumeLoadPort.findByApplicant(applicant);
+        return resumeLoadPort.findByApplicantId(applicant);
     }
 
     private List<ResumeInsertDto> toList(HashMap<String, Object> param) {
@@ -71,3 +58,4 @@ public class ResumeService implements ResumeUseCase {
         return chunkResume;
     }
 }
+*/

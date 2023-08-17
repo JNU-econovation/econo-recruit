@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.domains.card;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public class Card extends BaseTimeEntity {
     private Integer id;
 
     @Column(name = "applicant_id")
+    @Nullable
     private UUID applicantId;
 
     @Column(name = "title")
@@ -33,6 +35,12 @@ public class Card extends BaseTimeEntity {
 
     @Column(name = "comment_count")
     private Integer commentCount;
+
+    @PrePersist
+    public void prePersist() {
+        this.labelCount = 0;
+        this.commentCount = 0;
+    }
 
     public void plusLabelCount() {
         this.labelCount++;
