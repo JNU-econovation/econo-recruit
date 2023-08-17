@@ -1,10 +1,13 @@
 package com.econovation.recruit.api.label;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.LABEL_SUCCESS_DELETE_MESSAGE;
+
 import com.econovation.recruit.api.label.docs.LabelExceptionDocs;
 import com.econovation.recruit.application.port.in.LabelUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.label.Label;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "[3.0] 라벨 API", description = "라벨 관련 (카드 좋아요) API")
 @RequestMapping("/api/v1")
 public class LabelController {
     private final LabelUseCase labelUseCase;
@@ -37,11 +41,11 @@ public class LabelController {
         return new ResponseEntity<>(label, HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 라벨을 삭제합니다.")
+    @Operation(summary = "지원자의 라벨을 취소합니다.")
     @DeleteMapping("/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
-    public ResponseEntity<Boolean> deleteLabel(Integer applicantId, Integer idpId) {
-        Boolean isDeleted = labelUseCase.deleteLabel(applicantId, idpId);
-        return new ResponseEntity<>(isDeleted, HttpStatus.OK);
+    public ResponseEntity<String> deleteLabel(Integer applicantId, Integer idpId) {
+        labelUseCase.deleteLabel(applicantId, idpId);
+        return new ResponseEntity<>(LABEL_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }

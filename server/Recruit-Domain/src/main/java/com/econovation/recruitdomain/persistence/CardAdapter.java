@@ -49,7 +49,7 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
         Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);
         if (applicant.isEmpty()) {
             throw CardNotFoundException.EXCEPTION;
-        } else{
+        } else {
             return applicant.get();
         }
     }

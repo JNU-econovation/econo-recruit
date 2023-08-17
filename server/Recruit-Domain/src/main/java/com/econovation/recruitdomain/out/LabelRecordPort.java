@@ -6,5 +6,5 @@ import com.econovation.recruitdomain.domains.label.Label;
 public interface LabelRecordPort {
     Result<Label> save(Label label);
 
-    Boolean delete(Label label);
+    void delete(Label label);
 }

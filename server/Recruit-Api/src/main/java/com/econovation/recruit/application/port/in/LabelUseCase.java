@@ -11,5 +11,5 @@ public interface LabelUseCase {
 
     List<String> findByApplicantId(Integer applicantId);
 
-    Boolean deleteLabel(Integer applicantId, Integer idpId);
+    void deleteLabel(Integer applicantId, Integer idpId);
 }

@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.card;
 
-import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;
 import javax.annotation.Nullable;
@@ -47,7 +46,15 @@ public class Card extends BaseTimeEntity {
         this.labelCount++;
     }
 
+    public void minusLabelCount() {
+        this.labelCount--;
+    }
+
     public void plusCommentCount() {
         this.commentCount++;
+    }
+
+    public void minusCommentCount() {
+        this.commentCount--;
     }
 }

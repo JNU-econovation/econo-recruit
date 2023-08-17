@@ -35,9 +35,10 @@ public class LabelService implements LabelUseCase {
         Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
         Result<Label> result = labelRecordPort.save(label);
         result.onSuccess(label1 -> card.plusLabelCount());
-        result.onFailure(e -> {
-            throw LabelNotFoundException.EXCEPTION;
-        });
+        result.onFailure(
+                e -> {
+                    throw LabelNotFoundException.EXCEPTION;
+                });
         return label;
     }
 
@@ -63,9 +64,14 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
-    public Boolean deleteLabel(Integer applicantId, Integer idpId) {
+    @Transactional
+    @RedissonLock(LockName = "라벨", identifier = "applicantId")
+    public void deleteLabel(Integer applicantId, Integer idpId) {
         Label label = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
-        // TODO: Card LabelCount 감소
-        return labelRecordPort.delete(label);
+
+        // Card LabelCount 감소
+        cardLoadPort.findByApplicantId(applicantId).minusLabelCount();
+
+        labelRecordPort.delete(label);
     }
 }
