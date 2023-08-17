@@ -21,6 +21,11 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_INTERVIEWER_MESSAGE));
     }
 
+    @Override
+    public List<Interviewer> loadInterviewerByIdpIds(List<Integer> idpIds) {
+        return interviewerRepository.findAllById(idpIds);
+    }
+
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {
         return interviewerRepository.saveAll(interviewer);
     }

@@ -17,12 +17,14 @@ public class InterviewersService implements InterviewerUseCase {
     private InterviewerLoadPort interviewerLoadPort;
     private InterviewerRecordPort interviewerRecordPort;
 
-
     @Override
-    public List<Interviewer> createInterviewers(@NotNull List<InterviewerCreateDto> interviewerCreateDto) {
-                List<Interviewer> interviewers = interviewerCreateDto.stream()
-                    .map(InterviewerCreateDto::from).collect(Collectors.toList());
-                return interviewerRecordPort.saveAll(interviewers);
+    public List<Interviewer> createInterviewers(
+            @NotNull List<InterviewerCreateDto> interviewerCreateDto) {
+        List<Interviewer> interviewers =
+                interviewerCreateDto.stream()
+                        .map(InterviewerCreateDto::from)
+                        .collect(Collectors.toList());
+        return interviewerRecordPort.saveAll(interviewers);
     }
 
     @Override

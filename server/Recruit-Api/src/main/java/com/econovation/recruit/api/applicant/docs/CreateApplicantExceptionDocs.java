@@ -1,4 +1,4 @@
-package com.econovation.recruit.api.docs;
+package com.econovation.recruit.api.applicant.docs;
 
 import com.econovation.recruitcommon.annotation.ExceptionDoc;
 import com.econovation.recruitcommon.annotation.ExplainError;

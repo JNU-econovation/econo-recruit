@@ -1,10 +1,16 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.LabelUseCase;
+import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.label.Label;
+import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
+import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LabelService implements LabelUseCase {
     private final LabelRecordPort labelRecordPort;
     private final LabelLoadPort labelLoadPort;
+    private final InterviewerLoadPort interviewerLoadPort;
 
     @Override
     @Transactional
@@ -25,8 +32,24 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
-    public List<Label> findByApplicantId(Integer applicantId) {
-        return labelLoadPort.loadLabelByApplicantId(applicantId);
+    public List<String> findByApplicantId(Integer applicantId) {
+        List<Label> labels = labelLoadPort.loadLabelByApplicantId(applicantId);
+
+        if (labels.isEmpty()) {
+            throw LabelNotFoundException.EXCEPTION;
+        }
+
+        List<Integer> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+
+        Map<Integer, String> interviewerMap =
+                interviewers.stream()
+                        .collect(Collectors.toMap(Interviewer::getId, Interviewer::getName));
+
+        return labels.stream()
+                .map(label -> interviewerMap.get(label.getIdpId()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Override
