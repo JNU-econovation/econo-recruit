@@ -2,9 +2,11 @@ package com.econovation.recruitdomain.persistence;
 
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.card.CardRepository;
+import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -40,5 +42,15 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     @Override
     public List<Card> findAllByBoardIdIn(List<Integer> boardIds) {
         return cardRepository.findAllByBoardIdIn(boardIds);
+    }
+
+    @Override
+    public Card findByApplicantId(Integer applicantId) {
+        Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);
+        if (applicant.isEmpty()) {
+            throw CardNotFoundException.EXCEPTION;
+        } else {
+            return applicant.get();
+        }
     }
 }

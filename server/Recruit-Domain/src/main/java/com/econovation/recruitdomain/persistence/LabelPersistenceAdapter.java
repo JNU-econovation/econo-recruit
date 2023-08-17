@@ -1,10 +1,13 @@
 package com.econovation.recruitdomain.persistence;
 
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.LabelRepository;
+import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,18 +19,14 @@ public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
     private final LabelRepository labelRepository;
 
     @Override
-    public Label save(Label label) {
+    public Result<Label> save(Label label) {
         Label loadLabel = labelRepository.save(label);
-        if (loadLabel.equals(null)) {
-            throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
-        }
-        return loadLabel;
+        return Result.of(loadLabel);
     }
 
     @Override
-    public Boolean delete(Label label) {
+    public void delete(Label label) {
         labelRepository.delete(label);
-        return true;
     }
 
     @Override
@@ -41,7 +40,10 @@ public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
 
     @Override
     public Label loadLabelByApplicantIdAndIdpId(Integer applicantId, Integer idpId) {
-        labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
-        return null;
+        Optional<Label> label = labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
+        if (label.isEmpty()) {
+            throw LabelNotFoundException.EXCEPTION;
+        }
+        return label.get();
     }
 }

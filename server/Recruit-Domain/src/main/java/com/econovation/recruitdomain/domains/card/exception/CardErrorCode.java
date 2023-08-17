@@ -1,6 +1,7 @@
-package com.econovation.recruitdomain.domains.board.exception;
+package com.econovation.recruitdomain.domains.card.exception;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.BAD_REQUEST;
+import static com.econovation.recruitcommon.consts.RecruitStatic.NOT_FOUND;
 
 import com.econovation.recruitcommon.annotation.ExplainError;
 import com.econovation.recruitcommon.exception.BaseErrorCode;
@@ -14,6 +15,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CardErrorCode implements BaseErrorCode {
     CARD_DUPLICATE_CREATED(BAD_REQUEST, "CARD_400_1", "중복된 카드를 생성했습니다."),
+    CARD_NOT_FOUND(NOT_FOUND, "CARD_404_1", "존재하지 않는 카드입니다."),
     ;
 
     private Integer status;

@@ -46,7 +46,15 @@ public class Card extends BaseTimeEntity {
         this.labelCount++;
     }
 
+    public void minusLabelCount() {
+        this.labelCount--;
+    }
+
     public void plusCommentCount() {
         this.commentCount++;
+    }
+
+    public void minusCommentCount() {
+        this.commentCount--;
     }
 }
