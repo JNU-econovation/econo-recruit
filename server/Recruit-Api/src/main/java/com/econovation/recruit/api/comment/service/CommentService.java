@@ -2,10 +2,10 @@ package com.econovation.recruit.api.comment.service;
 
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruit.config.security.SecurityUtils;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
+import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
@@ -40,8 +40,17 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public Boolean deleteComment() {
-        return null;
+    @Transactional
+    public void deleteComment(Long commentId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        Comment comment = commentLoadPort.findById(commentId);
+        // 본인이 만든 댓글만 삭제가 가능하다
+        if(comment.isHost(idpId)){
+            commentRecordPort.deleteComment(comment);
+            // 관련된 commentLike 삭제 처리
+            List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
+            commentLikeRecordPort.deleteAll(commentLikes);
+        }
     }
 
     @Override
@@ -59,6 +68,8 @@ public class CommentService implements CommentUseCase {
     public void deleteCommentLike(Long commentId) {
         CommentLike commentLike = commentLikeLoadPort.getByCommentId(commentId);
         commentLikeRecordPort.deleteCommentLike(commentLike);
+        // commentLikeCount -감
+
     }
 
     @Override
@@ -72,30 +83,34 @@ public class CommentService implements CommentUseCase {
         Card card = cardLoadPort.findById(cardId);
         List<Comment> comments = commentLoadPort.findByCardId(card.getId());
 
-        List<Long> commentIdpIds = comments.stream()
-                .map(Comment::getIdpId)
-                .collect(Collectors.toList());
+        List<Long> commentIdpIds =
+                comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIdpIds);
 
         return comments.stream()
-                .map(comment -> {
-                    boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
-                    String interviewerName = interviewers.stream()
-                            .filter(interviewer -> interviewer.getId().equals(comment.getIdpId()))
-                            .findFirst()
-                            .map(Interviewer::getName)
-                            .orElse("");
+                .map(
+                        comment -> {
+                            boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
+                            String interviewerName =
+                                    interviewers.stream()
+                                            .filter(
+                                                    interviewer ->
+                                                            interviewer
+                                                                    .getId()
+                                                                    .equals(comment.getIdpId()))
+                                            .findFirst()
+                                            .map(Interviewer::getName)
+                                            .orElse("");
 
-                    return CommentPairVo.of(comment, isLiked, interviewerName);
-                })
+                            return CommentPairVo.of(comment, isLiked, interviewerName);
+                        })
                 .collect(Collectors.toList());
     }
 
     @Override
     public Boolean isCheckedLike(Long commentId) {
         Long idpId = SecurityUtils.getCurrentUserId();
-        return commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId)
-                .isSuccess();
+        return commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId).isSuccess();
     }
 }

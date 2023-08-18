@@ -1,5 +1,8 @@
 package com.econovation.recruitdomain.domains.comment.adaptor;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENTLIKE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENT_MESSAGE;
+
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
@@ -14,9 +17,6 @@ import com.econovation.recruitdomain.out.CommentRecordPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENTLIKE_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENT_MESSAGE;
-
 @Adaptor
 @RequiredArgsConstructor
 public class CommentAdapter
@@ -27,6 +27,11 @@ public class CommentAdapter
     @Override
     public Comment saveComment(Comment comment) {
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class CommentAdapter
     @Override
     public List<Comment> findByCardId(Long cardId) {
         List<Comment> comments = commentRepository.findByCardId(cardId);
-        if(comments.isEmpty()){
+        if (comments.isEmpty()) {
             throw CardNotFoundException.EXCEPTION;
         }
         return comments;
@@ -65,10 +70,14 @@ public class CommentAdapter
     }
 
     @Override
-    public CommentLike getByCommentId(Long commentId) {
+    public void deleteAll(List<CommentLike> commentLikes) {
+        commentLikeRepository.deleteAll(commentLikes);
+    }
+
+    @Override
+    public List<CommentLike> getByCommentId(Long commentId) {
         return commentLikeRepository
-                .findByCommentId(commentId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENTLIKE_MESSAGE));
+                .findByCommentId(commentId);
     }
 
     @Override
@@ -78,9 +87,6 @@ public class CommentAdapter
 
     @Override
     public Result<CommentLike> getByCommentIdAndIdpId(Long commentId, Long idpId) {
-        return Result.of(commentLikeRepository
-                .findByCommentIdAndIdpId(commentId, idpId).get());
-
+        return Result.of(commentLikeRepository.findByCommentIdAndIdpId(commentId, idpId).get());
     }
-
 }

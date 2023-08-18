@@ -32,12 +32,11 @@ public class CookieFilter extends OncePerRequestFilter {
 
     public Long getIdpId(String token) {
         return Long.valueOf(
-                    Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject()
-        );
+                Jwts.parser()
+                        .setSigningKey(secretKey)
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .getSubject());
     }
 
     @Override

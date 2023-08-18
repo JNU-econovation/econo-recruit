@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_SUCCESS
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Comment 관련 API", description = "댓글(Comment) API")
+@Tag(name = "[3.0] Comment 관련 API", description = "댓글(Comment) API")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentUseCase commentUseCase;
@@ -45,18 +46,10 @@ public class CommentController {
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 
-    @PostMapping("/comments/delete")
+    @Operation(summary = "댓글 삭제")
+    @DeleteMapping("/comments")
     public ResponseEntity<Long> deleteComment(Long commentId) {
-        // 코멘트가 있는지 확인
-        Comment comment = commentUseCase.findById(commentId);
-        // 코멘트가 있으면
-        if (!comment.equals(null)) {
-            // 코멘트의 isDeleted false -> true
-            comment.delete();
-            // 코멘트와 연결된 Applicant 테이블 조회
-            // comment.getApplicantId().minusCommentCount();
-            // Applicant Comment_Count 1--
-        }
+        commentUseCase.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     // 댓글 수정
@@ -69,13 +62,7 @@ public class CommentController {
 
     @PostMapping("/comments/likes/minus")
     public ResponseEntity minusLikeCount(Long commentId) {
-        // 코멘트가 있는지 확인
-        Comment comment = commentUseCase.findById(commentId);
-        // 코멘트가 있으면
-        if (!comment.equals(null)) {
-            comment.minusLikeCount();
-            commentUseCase.deleteCommentLike(comment);
-        }
+        commentUseCase.deleteCommentLike(commentId);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 }

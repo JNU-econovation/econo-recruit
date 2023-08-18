@@ -11,6 +11,7 @@ public class CommentRegisterDto {
     private Long parentId;
     private Integer applicantId;
     private Integer idpId;
+
     public static Comment from(CommentRegisterDto commentRegisterDto) {
         return Comment.builder()
                 .content(commentRegisterDto.getContent())

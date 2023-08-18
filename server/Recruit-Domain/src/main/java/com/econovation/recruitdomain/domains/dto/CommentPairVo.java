@@ -13,13 +13,14 @@ public class CommentPairVo {
     private String content;
     private Boolean isLike;
     private Integer likeCount;
+
     public static CommentPairVo of(Comment comment, Boolean isLike, String interviewerName) {
         return CommentPairVo.builder()
-            .createdAt(comment.getCreatedAt())
-            .content(comment.getContent())
-            .isLike(isLike)
-            .likeCount(comment.getLikeCount())
-            .interviewerName(interviewerName)
-            .build();
+                .createdAt(comment.getCreatedAt())
+                .content(comment.getContent())
+                .isLike(isLike)
+                .likeCount(comment.getLikeCount())
+                .interviewerName(interviewerName)
+                .build();
     }
 }

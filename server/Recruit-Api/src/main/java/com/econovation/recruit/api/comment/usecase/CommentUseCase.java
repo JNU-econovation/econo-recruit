@@ -9,15 +9,16 @@ import java.util.List;
 public interface CommentUseCase {
     Comment saveComment(Comment comment);
 
-    Boolean deleteComment();
+    void deleteComment(Long commentId);
 
     Comment findById(Long commentId);
 
     void createCommentLike(Long commentId, Long idpId);
 
-    void deleteCommentLike(Comment comment);
+    void deleteCommentLike(Long commentId);
 
     List<Comment> findAll();
+
     List<CommentPairVo> findByCardId(Long cardId);
 
     Boolean isCheckedLike(Long commentId);
