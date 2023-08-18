@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_SUCCESS_REGISTER_MESSAGE;
 
 @RestController
@@ -39,8 +40,14 @@ public class CommentController {
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
+    @Operation(summary = "댓글 좋아요")
+    @PostMapping("/comments/likes")
+    public ResponseEntity plusLikeCount(Long commentId) {
+        commentUseCase.createCommentLike(commentId);
+        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    }
     @Operation(summary = "댓글 좋아요 눌렀는지 확인")
-    @PostMapping("/comments/is/likes")
+    @GetMapping("/comments/is-like")
     public ResponseEntity<Boolean> isCheckedLike(Long commentId) {
         Boolean isCheck = commentUseCase.isCheckedLike(commentId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
@@ -52,8 +59,8 @@ public class CommentController {
         commentUseCase.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    // 댓글 수정
 
+    // 댓글 수정
 //    @PostMapping("/comments/likes")
 //    public ResponseEntity plusLikeCount(Long commentId, Long idpId) {
 //            commentUseCase.createCommentLike(commentId, idpId);

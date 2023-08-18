@@ -2,10 +2,11 @@ package com.econovation.recruit.api.comment.service;
 
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruit.config.security.SecurityUtils;
+import com.econovation.recruitcommon.utils.Result;
+import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
-import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
@@ -59,11 +60,32 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public void createCommentLike(Long commentId, Long idpId) {
-        CommentLike commentLike = CommentLike.builder().commentId(commentId).idpId(idpId).build();
-        commentLikeRecordPort.saveCommentLike(commentLike);
+    @RedissonLock(LockName="댓글좋아요", identifier = "commentId")
+    public void createCommentLike(Long commentId) {
+        // 기존에 눌렀으면 취소 처리
+        Long idpId = SecurityUtils.getCurrentUserId();
+        Result<CommentLike> commentLikeResult = commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId);
+        Comment comment = commentLoadPort.findById(commentId);
+        if (commentLikeResult.isSuccess()) {
+            updateCommentLikeAndDelete(comment, commentLikeResult.getValue());
+        } else {
+            updateCommentLikeAndSave(comment, idpId);
+        }
     }
 
+    private void updateCommentLikeAndDelete(Comment comment, CommentLike commentLike) {
+        comment.minusLikeCount();
+        commentLikeRecordPort.deleteCommentLike(commentLike);
+    }
+
+    private void updateCommentLikeAndSave(Comment comment, Long idpId) {
+        comment.plusLikeCount();
+        CommentLike newCommentLike = CommentLike.builder()
+                .commentId(comment.getId())
+                .idpId(idpId)
+                .build();
+        commentLikeRecordPort.saveCommentLike(newCommentLike);
+    }
     @Override
     public void deleteCommentLike(Long commentId) {
         CommentLike commentLike = commentLikeLoadPort.getByCommentId(commentId);

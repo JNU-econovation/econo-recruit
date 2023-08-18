@@ -13,7 +13,7 @@ public interface CommentUseCase {
 
     Comment findById(Long commentId);
 
-    void createCommentLike(Long commentId, Long idpId);
+    void createCommentLike(Long commentId);
 
     void deleteCommentLike(Long commentId);
 
