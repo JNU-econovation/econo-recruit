@@ -1,6 +1,8 @@
 package com.econovation.recruitdomain.persistence;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
 import com.econovation.recruitdomain.domains.comment.Comment;
 import com.econovation.recruitdomain.domains.comment.CommentLike;
 import com.econovation.recruitdomain.domains.comment.CommentLikeRepository;
@@ -28,10 +30,10 @@ public class CommentAdapter
     }
 
     @Override
-    public Comment findById(Comment commentId) {
-//        return commentRepository
-//                .findById(integerId)
-//                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE));
+    public Comment findById(Long commentId) {
+        return commentRepository
+                .findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE));
     }
 
     @Override
@@ -41,6 +43,15 @@ public class CommentAdapter
             throw new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE);
         }
         return all;
+    }
+
+    @Override
+    public List<Comment> findByCardId(Long cardId) {
+        List<Comment> comments = commentRepository.findByCardId(cardId);
+        if(comments.isEmpty()){
+            throw CardNotFoundException.EXCEPTION;
+        }
+        return comments;
     }
 
     @Override
@@ -54,14 +65,14 @@ public class CommentAdapter
     }
 
     @Override
-    public CommentLike getByCommentId(Comment comment) {
+    public CommentLike getByCommentId(Long commentId) {
         return commentLikeRepository
-                .findByCommentId(comment)
+                .findByCommentId(commentId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENTLIKE_MESSAGE));
     }
 
     @Override
-    public Boolean getByIdpId(Comment idpId) {
+    public Boolean getByIdpId(Long idpId) {
         return commentLikeRepository.existsByIdpId(idpId);
     }
 }

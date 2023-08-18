@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_like_id")
-    private Comment id;
+    private Long id;
 
     @Column(name = "comment_id")
-    private Comment commentId;
+    private Long commentId;
 
     @Column(name = "idp_id")
-    private Comment idpId;
+    private Long idpId;
 }

@@ -21,5 +21,5 @@ public class Label {
     private Integer applicantId;
 
     @Column(name = "idpId")
-    private Integer idpId;
+    private Long idpId;
 }

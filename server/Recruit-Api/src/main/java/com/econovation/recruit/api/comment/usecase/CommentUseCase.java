@@ -2,6 +2,7 @@ package com.econovation.recruit.api.comment.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import java.util.List;
 
 @UseCase
@@ -10,13 +11,14 @@ public interface CommentUseCase {
 
     Boolean deleteComment();
 
-    Comment findById(Comment commentId);
+    Comment findById(Long commentId);
 
-    void createCommentLike(Comment comment, Comment idpId);
+    void createCommentLike(Long commentId, Long idpId);
 
     void deleteCommentLike(Comment comment);
 
     List<Comment> findAll();
+    List<CommentPairVo> findByCardId(Long cardId);
 
-    Boolean isCheckedLike(Comment commentId, Comment idpId);
+    Boolean isCheckedLike(Long commentId, Long idpId);
 }

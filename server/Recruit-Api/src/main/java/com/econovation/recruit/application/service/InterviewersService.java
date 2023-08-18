@@ -28,7 +28,7 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
-    public Interviewer getById(Integer idpId) {
+    public Interviewer getById(Long idpId) {
         return interviewerLoadPort.loadInterviewById(idpId);
     }
 }

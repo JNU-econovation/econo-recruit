@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.label.service;
 
 import com.econovation.recruit.api.label.usecase.LabelUseCase;
+import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.Card;
@@ -30,7 +31,8 @@ public class LabelService implements LabelUseCase {
     @Override
     @RedissonLock(LockName = "라벨", identifier = "applicantId")
     @Transactional
-    public Label createLabel(Integer applicantId, Integer idpId) {
+    public Label createLabel(Integer applicantId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findByApplicantId(applicantId);
         Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
         Result<Label> result = labelRecordPort.save(label);
@@ -50,7 +52,7 @@ public class LabelService implements LabelUseCase {
             throw LabelNotFoundException.EXCEPTION;
         }
 
-        List<Integer> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
+        List<Long> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
 
         Map<Integer, String> interviewerMap =

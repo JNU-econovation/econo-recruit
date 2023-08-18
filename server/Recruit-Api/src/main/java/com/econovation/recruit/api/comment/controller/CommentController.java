@@ -2,6 +2,7 @@ package com.econovation.recruit.api.comment.controller;
 
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,20 +31,21 @@ public class CommentController {
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @GetMapping("/comments")
-    public ResponseEntity<List<Comment>> findAll() {
-        List<Comment> comments = commentUseCase.findAll();
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+    @Operation(summary = "댓글 조회")
+    @GetMapping("/comments/{cardId}")
+    public ResponseEntity<List<Comment>> findByCardId(Long cardId) {
+        List<CommentPairVo> comments = commentUseCase.findByCardId(cardId);
+        return new ResponseEntity(comments, HttpStatus.OK);
     }
 
     @PostMapping("/comments/is/likes")
-    public ResponseEntity<Boolean> isCheckedLike(Comment commentId, Comment idpId) {
+    public ResponseEntity<Boolean> isCheckedLike(Long commentId, Long idpId) {
         Boolean isCheck = commentUseCase.isCheckedLike(commentId, idpId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 
     @PostMapping("/comments/delete")
-    public ResponseEntity<Comment> deleteComment(Comment commentId) {
+    public ResponseEntity<Long> deleteComment(Long commentId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면
@@ -54,24 +56,18 @@ public class CommentController {
             // comment.getApplicantId().minusCommentCount();
             // Applicant Comment_Count 1--
         }
-        return new ResponseEntity<>(commentId, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     // 댓글 수정
 
-    @PostMapping("/comments/likes/plus")
-    public ResponseEntity plusLikeCount(Comment commentId, Comment idpId) {
-        // 코멘트가 있는지 확인
-        Comment comment = commentUseCase.findById(commentId);
-        // 코멘트가 있으면
-        if (!comment.equals(null)) {
-            comment.plusLikeCount();
-            commentUseCase.createCommentLike(comment, idpId);
-        }
-        return new ResponseEntity<>(comment, HttpStatus.OK);
-    }
+//    @PostMapping("/comments/likes")
+//    public ResponseEntity plusLikeCount(Long commentId, Long idpId) {
+//            commentUseCase.createCommentLike(commentId, idpId);
+//        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+//    }
 
     @PostMapping("/comments/likes/minus")
-    public ResponseEntity minusLikeCount(Comment commentId) {
+    public ResponseEntity minusLikeCount(Long commentId) {
         // 코멘트가 있는지 확인
         Comment comment = commentUseCase.findById(commentId);
         // 코멘트가 있으면

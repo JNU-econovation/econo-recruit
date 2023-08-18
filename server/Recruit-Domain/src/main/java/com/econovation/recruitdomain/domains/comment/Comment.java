@@ -16,7 +16,10 @@ public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Integer id;
+    private Long id;
+
+    @Column(name = "card_id")
+    private Long cardId;
 
     @Column(name = "applicant_id")
     private Integer applicantId;
@@ -34,7 +37,7 @@ public class Comment extends BaseTimeEntity {
     private Integer likeCount;
 
     @Column(name = "idp_id")
-    private Integer idpId;
+    private Long idpId;
 
     public void delete() {
         this.isDeleted = true;

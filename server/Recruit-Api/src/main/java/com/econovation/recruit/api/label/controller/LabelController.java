@@ -36,8 +36,8 @@ public class LabelController {
     @Operation(summary = "지원자의 라벨을 생성합니다.")
     @PostMapping("/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
-    public ResponseEntity<Label> createLabel(Integer applicantId, Integer idpId) {
-        Label label = labelUseCase.createLabel(applicantId, idpId);
+    public ResponseEntity<Label> createLabel(Integer applicantId) {
+        Label label = labelUseCase.createLabel(applicantId);
         return new ResponseEntity<>(label, HttpStatus.OK);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 @UseCase
 public interface LabelUseCase {
 
-    Label createLabel(Integer applicantId, Integer idpId);
+    Label createLabel(Integer applicantId);
 
     List<String> findByApplicantId(Integer applicantId);
 

@@ -6,7 +6,7 @@ import com.econovation.recruitdomain.domains.comment.CommentLike;
 public interface CommentLikeLoadPort {
     void deleteCommentLike(CommentLike commentLike);
 
-    CommentLike getByCommentId(Comment commentId);
+    CommentLike getByCommentId(Long commentId);
 
-    Boolean getByIdpId(Comment idpId);
+    Boolean getByIdpId(Long idpId);
 }
