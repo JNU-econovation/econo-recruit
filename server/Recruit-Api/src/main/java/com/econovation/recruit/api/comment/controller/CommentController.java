@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.comment.controller;
 
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
-import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,9 +38,10 @@ public class CommentController {
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
+    @Operation(summary = "댓글 좋아요 눌렀는지 확인")
     @PostMapping("/comments/is/likes")
-    public ResponseEntity<Boolean> isCheckedLike(Long commentId, Long idpId) {
-        Boolean isCheck = commentUseCase.isCheckedLike(commentId, idpId);
+    public ResponseEntity<Boolean> isCheckedLike(Long commentId) {
+        Boolean isCheck = commentUseCase.isCheckedLike(commentId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 

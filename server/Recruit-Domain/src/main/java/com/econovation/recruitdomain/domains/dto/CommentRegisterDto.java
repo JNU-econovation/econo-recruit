@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.domains.dto;
 
-import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import lombok.Data;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.comment;
+package com.econovation.recruitdomain.domains.comment.domain;
 
 import javax.persistence.*;
 import lombok.AllArgsConstructor;

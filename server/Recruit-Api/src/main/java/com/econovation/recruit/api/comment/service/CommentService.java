@@ -2,9 +2,10 @@ package com.econovation.recruit.api.comment.service;
 
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruit.config.security.SecurityUtils;
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.card.Card;
-import com.econovation.recruitdomain.domains.comment.Comment;
-import com.econovation.recruitdomain.domains.comment.CommentLike;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
@@ -13,7 +14,6 @@ import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
-import java.security.Security;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +93,9 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    public Boolean isCheckedLike(Long commentId, Long idpId) {
-        return commentLikeLoadPort.getByIdpId(idpId);
+    public Boolean isCheckedLike(Long commentId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        return commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId)
+                .isSuccess();
     }
 }

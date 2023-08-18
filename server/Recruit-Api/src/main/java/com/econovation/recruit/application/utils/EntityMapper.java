@@ -1,7 +1,7 @@
 package com.econovation.recruit.application.utils;
 
 import com.econovation.recruitdomain.domains.board.domain.Board;
-import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.*;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;

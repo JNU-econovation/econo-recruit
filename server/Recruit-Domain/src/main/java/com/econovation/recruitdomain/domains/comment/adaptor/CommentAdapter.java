@@ -1,12 +1,12 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.comment.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
-import com.econovation.recruitdomain.domains.comment.Comment;
-import com.econovation.recruitdomain.domains.comment.CommentLike;
-import com.econovation.recruitdomain.domains.comment.CommentLikeRepository;
-import com.econovation.recruitdomain.domains.comment.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
+import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
+import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
@@ -75,4 +75,12 @@ public class CommentAdapter
     public Boolean getByIdpId(Long idpId) {
         return commentLikeRepository.existsByIdpId(idpId);
     }
+
+    @Override
+    public Result<CommentLike> getByCommentIdAndIdpId(Long commentId, Long idpId) {
+        return Result.of(commentLikeRepository
+                .findByCommentIdAndIdpId(commentId, idpId).get());
+
+    }
+
 }
