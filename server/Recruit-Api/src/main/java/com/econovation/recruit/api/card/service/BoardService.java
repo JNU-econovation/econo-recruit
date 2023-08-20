@@ -111,7 +111,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public Board createWorkBoard(Integer columnId, Integer cardId) {
+    public Board createWorkBoard(Integer columnId, Long cardId) {
         Columns column = columnLoadPort.findById(columnId);
         Board board =
                 boardRecordPort.save(
@@ -136,7 +136,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId) {
+    public void createApplicantBoard(UUID applicantId, String hopeField, Long cardId) {
         Integer columnsId = -1;
         if (hopeField.equals("개발자")) {
             columnsId = DEVELOPER_COLUMNS_ID;

@@ -26,7 +26,7 @@ public class Board extends BaseTimeEntity {
     private CardType cardType;
 
     @Column(name = "card_id")
-    private Integer cardId;
+    private Long cardId;
 
     @Column(name = "column_id")
     private Integer columnId;

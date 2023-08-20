@@ -10,9 +10,9 @@ import java.util.UUID;
 public interface BoardRegisterUseCase {
     void execute(Board board);
 
-    Board createWorkBoard(Integer colLoc, Integer cardId);
+    Board createWorkBoard(Integer columnId, Long cardId);
 
-    void createApplicantBoard(UUID applicantId, String hopeField, Integer cardId);
+    void createApplicantBoard(UUID applicantId, String hopeField, Long cardId);
 
     Columns createColumn(String title, Integer navigationId);
     //    void execute(CreateWorkCardDto createWorkCardDto, CardType cardType);

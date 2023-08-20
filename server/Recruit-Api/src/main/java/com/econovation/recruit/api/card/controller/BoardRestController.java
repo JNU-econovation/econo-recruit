@@ -101,12 +101,16 @@ public class BoardRestController {
     //        return new ArrayList<>(cardLoadUseCase.findAll());
     //    }
 
-    @PostMapping("/boards/cards/delete")
-    public ResponseEntity<String> deleteCard(Integer cardId) {
+    @Operation(summary = "카드 생성", description = "카드를 삭제합니다")
+    @PostMapping("/boards/cards/{card-id}/delete")
+    public ResponseEntity<String> deleteCard(Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 
+
+
+//    ---------- Navigation ----------
     @PostMapping("/boards/navigation")
     public ResponseEntity<Navigation> createNavigation(String navTitle) {
         Navigation navigation = navigationUseCase.createNavigation(navTitle);
