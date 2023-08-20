@@ -71,7 +71,8 @@ public class CommentController {
 //        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
 //    }
 
-    @PostMapping("/comments/likes/minus")
+    @Operation(summary = "댓글 좋아요 취소")
+    @DeleteMapping("/comments/likes")
     public ResponseEntity minusLikeCount(Long commentId) {
         commentUseCase.deleteCommentLike(commentId);
         return new ResponseEntity<>( HttpStatus.OK);

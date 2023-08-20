@@ -92,17 +92,17 @@ public class CommentService implements CommentUseCase {
         commentLikeRecordPort.saveCommentLike(newCommentLike);
     }
     @Override
+    @RedissonLock(LockName="댓글좋아요", identifier = "commentId")
     public void deleteCommentLike(Long commentId) {
-
-        List<CommentLike> byCommentId = commentLikeLoadPort.getByCommentId(commentId);
-        commentLikeRecordPort.deleteCommentLike(commentLike);
-        // commentLikeCount -감
-
-    }
-
-    @Override
-    public List<Comment> findAll() {
-        return commentLoadPort.findAll();
+        // 현재 내가 눌렀던 댓글만 삭제할 수 있다.
+        Long idpId = SecurityUtils.getCurrentUserId();
+        Comment comment = commentLoadPort.findById(commentId);
+        commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId).onSuccess(
+                commentLike -> {
+                    commentLikeRecordPort.deleteCommentLike(commentLike);
+                    comment.minusLikeCount();
+                }
+        );
     }
 
     @Override

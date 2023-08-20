@@ -17,7 +17,6 @@ public interface CommentUseCase {
 
     void deleteCommentLike(Long commentId);
 
-    List<Comment> findAll();
 
     List<CommentPairVo> findByCardId(Long cardId);
 
