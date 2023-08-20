@@ -22,7 +22,7 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     }
 
     @Override
-    public List<Interviewer> loadInterviewerByIdpIds(List<Integer> idpIds) {
+    public List<Interviewer> loadInterviewerByIdpIds(List<Long> idpIds) {
         return interviewerRepository.findAllById(idpIds);
     }
 

@@ -9,5 +9,5 @@ import java.util.List;
 public interface InterviewerUseCase {
     List<Interviewer> createInterviewers(List<InterviewerCreateDto> interviewerCreateDto);
 
-    Interviewer getById(Integer idpId);
+    Interviewer getById(Long idpId);
 }

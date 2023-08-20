@@ -1,10 +1,12 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.comment.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import java.util.List;
 
 public interface CommentLoadPort {
-    Comment findById(Integer commentId);
+    Comment findById(Long commentId);
 
     List<Comment> findAll();
+
+    List<Comment> findByCardId(Long cardId);
 }

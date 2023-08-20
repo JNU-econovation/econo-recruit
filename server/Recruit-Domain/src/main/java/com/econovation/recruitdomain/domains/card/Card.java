@@ -18,7 +18,7 @@ public class Card extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "card_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "applicant_id")
     @Nullable

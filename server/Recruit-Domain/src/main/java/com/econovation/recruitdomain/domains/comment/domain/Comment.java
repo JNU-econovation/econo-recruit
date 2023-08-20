@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.comment;
+package com.econovation.recruitdomain.domains.comment.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import javax.persistence.*;
@@ -6,17 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
+@SQLDelete(sql = "UPDATE comment SET is_deleted = true WHERE comment_id = ?")
+@Where(clause = "is_deleted = false")
 public class Comment extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Integer id;
+    private Long id;
+
+    @Column(name = "card_id")
+    private Long cardId;
 
     @Column(name = "applicant_id")
     private Integer applicantId;
@@ -34,7 +41,7 @@ public class Comment extends BaseTimeEntity {
     private Integer likeCount;
 
     @Column(name = "idp_id")
-    private Integer idpId;
+    private Long idpId;
 
     public void delete() {
         this.isDeleted = true;
@@ -52,5 +59,13 @@ public class Comment extends BaseTimeEntity {
 
     public void minusLikeCount() {
         this.likeCount++;
+    }
+
+    public boolean isHost(Long idpId) {
+        return this.idpId.equals(idpId);
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
     }
 }

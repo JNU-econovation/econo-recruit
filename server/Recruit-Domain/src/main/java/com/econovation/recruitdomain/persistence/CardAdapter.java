@@ -22,9 +22,10 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     }
 
     @Override
-    public void delete(Integer cardId) {
+    public void delete(Long cardId) {
         cardRepository.deleteById(cardId);
     }
+
 
     @Override
     public List<Card> findAll() {
@@ -33,7 +34,7 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     }
 
     @Override
-    public Card findById(Integer cardId) {
+    public Card findById(Long cardId) {
         return cardRepository
                 .findById(cardId)
                 .orElseThrow(() -> new IllegalStateException(NO_MATCH_CARD));

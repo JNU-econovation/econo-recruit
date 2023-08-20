@@ -7,7 +7,7 @@ public interface CardLoadPort {
 
     List<Card> findAll();
 
-    Card findById(Integer cardId);
+    Card findById(Long cardId);
 
     List<Card> findAllByBoardIdIn(List<Integer> collect);
 

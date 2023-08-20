@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.comment;
+package com.econovation.recruitdomain.domains.comment.domain;
 
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,14 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_like_id")
-    private Integer id;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @Column(name = "comment_id")
+    private Long commentId;
 
     @Column(name = "idp_id")
-    private Integer idpId;
+    private Long idpId;
 }

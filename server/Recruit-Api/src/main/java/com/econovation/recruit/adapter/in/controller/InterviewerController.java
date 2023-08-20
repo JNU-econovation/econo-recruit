@@ -16,7 +16,7 @@ public class InterviewerController {
     private final InterviewerUseCase interviewerUseCase;
 
     @GetMapping("/interviewers")
-    public ResponseEntity<Interviewer> findByApplicantId(Integer idpId) {
+    public ResponseEntity<Interviewer> findByApplicantId(Long idpId) {
         Interviewer interviewer = interviewerUseCase.getById(idpId);
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }

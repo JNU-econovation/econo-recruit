@@ -30,15 +30,13 @@ public class CookieFilter extends OncePerRequestFilter {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public Integer getIdpId(String token) {
-        Integer aLong =
-                Integer.valueOf(
-                        Jwts.parser()
-                                .setSigningKey(secretKey)
-                                .parseClaimsJws(token)
-                                .getBody()
-                                .getSubject());
-        return aLong;
+    public Long getIdpId(String token) {
+        return Long.valueOf(
+                Jwts.parser()
+                        .setSigningKey(secretKey)
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .getSubject());
     }
 
     @Override
@@ -57,10 +55,10 @@ public class CookieFilter extends OncePerRequestFilter {
             log.info("token is null");
             return;
         }
-        Integer idpId = getIdpId(token);
+        Long idpId = getIdpId(token);
         filterChain.doFilter(request, response);
         if (request.getRequestURI().startsWith("/api/v1/interviewers")) {
-            String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
+            String role = interviewerUseCase.getById(idpId).getRole().name();
             if (role.equals(Role.ROLE_PRESIDENT.name())
                     ||
                     //                    role.equals(Role.ROLE_TF.name()) ||

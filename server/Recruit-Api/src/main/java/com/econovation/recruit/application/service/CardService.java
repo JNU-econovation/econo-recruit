@@ -5,6 +5,7 @@ import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
+import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
@@ -66,7 +67,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 cardLoadPort.findAllByBoardIdIn(
                         boards.stream().map(Board::getId).collect(Collectors.toList()));
 
-        Map<Integer, Card> cardByBoardIdMap =
+        Map<Long, Card> cardByBoardIdMap =
                 cards.stream().collect(Collectors.toMap(Card::getId, card -> card));
 
         List<Map<ColumnsResponseDto, CardResponseDto>> result = new LinkedList<>();
@@ -93,7 +94,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
     @Override
     @Transactional
-    public void deleteById(Integer cardId) {
+    public void deleteById(Long cardId) {
+        // 본인 댓글만 삭제할 수 있다.
         cardRecordPort.delete(cardId);
     }
 
@@ -106,6 +108,6 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                         .content(createWorkCardDto.getContent())
                         .build();
         Card savedCard = cardRecordPort.save(card);
-        boardRegisterUseCase.createWorkBoard(createWorkCardDto.getColLoc(), savedCard.getId());
+        boardRegisterUseCase.createWorkBoard(createWorkCardDto.getColumnId(), savedCard.getId());
     }
 }
