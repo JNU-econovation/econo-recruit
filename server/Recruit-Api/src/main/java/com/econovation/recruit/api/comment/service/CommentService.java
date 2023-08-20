@@ -47,14 +47,13 @@ public class CommentService implements CommentUseCase {
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
         // 본인이 만든 댓글만 삭제가 가능하다
-        if(comment.isHost(idpId)){
+        if (comment.isHost(idpId)) {
             commentRecordPort.deleteComment(comment);
             // 관련된 commentLike 삭제 처리
             // TODO : Event 처리로 변경
             List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
             commentLikeRecordPort.deleteAll(commentLikes);
-        }
-        else {
+        } else {
             throw CommentNotHostException.EXCEPTION;
         }
     }
@@ -65,11 +64,12 @@ public class CommentService implements CommentUseCase {
     }
 
     @Override
-    @RedissonLock(LockName="댓글좋아요", identifier = "commentId")
+    @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
     public void createCommentLike(Long commentId) {
         // 기존에 눌렀으면 취소 처리
         Long idpId = SecurityUtils.getCurrentUserId();
-        Result<CommentLike> commentLikeResult = commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId);
+        Result<CommentLike> commentLikeResult =
+                commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId);
         Comment comment = commentLoadPort.findById(commentId);
         if (commentLikeResult.isSuccess()) {
             updateCommentLikeAndDelete(comment, commentLikeResult.getValue());
@@ -85,24 +85,24 @@ public class CommentService implements CommentUseCase {
 
     private void updateCommentLikeAndSave(Comment comment, Long idpId) {
         comment.plusLikeCount();
-        CommentLike newCommentLike = CommentLike.builder()
-                .commentId(comment.getId())
-                .idpId(idpId)
-                .build();
+        CommentLike newCommentLike =
+                CommentLike.builder().commentId(comment.getId()).idpId(idpId).build();
         commentLikeRecordPort.saveCommentLike(newCommentLike);
     }
+
     @Override
-    @RedissonLock(LockName="댓글좋아요", identifier = "commentId")
+    @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
     public void deleteCommentLike(Long commentId) {
         // 현재 내가 눌렀던 댓글만 삭제할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
-        commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId).onSuccess(
-                commentLike -> {
-                    commentLikeRecordPort.deleteCommentLike(commentLike);
-                    comment.minusLikeCount();
-                }
-        );
+        commentLikeLoadPort
+                .getByCommentIdAndIdpId(commentId, idpId)
+                .onSuccess(
+                        commentLike -> {
+                            commentLikeRecordPort.deleteCommentLike(commentLike);
+                            comment.minusLikeCount();
+                        });
     }
 
     @Override
@@ -140,5 +140,18 @@ public class CommentService implements CommentUseCase {
     public Boolean isCheckedLike(Long commentId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         return commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId).isSuccess();
+    }
+
+    @Override
+    @Transactional
+    public void updateCommentContent(Long commentId, String content) {
+        // 내가 작성한 comment 만 수정할 수 있다.
+        Long idpId = SecurityUtils.getCurrentUserId();
+        Comment comment = commentLoadPort.findById(commentId);
+        if (comment.getIdpId().equals(idpId)) {
+            comment.updateContent(content);
+        } else {
+            throw CommentNotHostException.EXCEPTION;
+        }
     }
 }

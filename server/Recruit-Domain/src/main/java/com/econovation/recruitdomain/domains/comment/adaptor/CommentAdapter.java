@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.comment.adaptor;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENTLIKE_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMENT_MESSAGE;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
@@ -76,8 +75,7 @@ public class CommentAdapter
 
     @Override
     public List<CommentLike> getByCommentId(Long commentId) {
-        return commentLikeRepository
-                .findByCommentId(commentId);
+        return commentLikeRepository.findByCommentId(commentId);
     }
 
     @Override

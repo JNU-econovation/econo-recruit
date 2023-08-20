@@ -36,6 +36,7 @@ public class RecruitStatic {
     public static final String NO_MATCH_COMMENTLIKE_MESSAGE = "조회된 Comment가 존재하지 않습니다";
     public static final String COMMENT_SUCCESS_REGISTER_MESSAGE = "성공적으로 댓글이 등록됐습니다";
     public static final String COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE = "성공적으로 댓글 좋아요를 등록됐습니다";
+    public static final String COMMENT_LIKE_SUCCESS_DELETE_MESSAGE = "성공적으로 댓글 좋아요가 삭제되었습니다.";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

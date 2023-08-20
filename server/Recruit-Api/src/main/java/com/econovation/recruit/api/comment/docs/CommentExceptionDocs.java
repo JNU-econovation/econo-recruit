@@ -4,8 +4,6 @@ import com.econovation.recruitcommon.annotation.ExceptionDoc;
 import com.econovation.recruitcommon.annotation.ExplainError;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 import com.econovation.recruitcommon.interfaces.SwaggerExampleExceptions;
-import com.econovation.recruitdomain.domains.board.exception.BoardInvalidLocationException;
-import com.econovation.recruitdomain.domains.board.exception.CardDuplicateCreatedException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 

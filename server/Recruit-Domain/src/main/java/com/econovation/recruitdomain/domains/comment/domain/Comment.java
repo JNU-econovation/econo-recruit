@@ -64,4 +64,8 @@ public class Comment extends BaseTimeEntity {
     public boolean isHost(Long idpId) {
         return this.idpId.equals(idpId);
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

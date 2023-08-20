@@ -1,9 +1,10 @@
 package com.econovation.recruit.api.comment.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
+
 import com.econovation.recruit.api.comment.docs.CommentExceptionDocs;
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
-import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,12 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.COMMENT_SUCCESS_REGISTER_MESSAGE;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -64,17 +64,19 @@ public class CommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 댓글 수정
-//    @PostMapping("/comments/likes")
-//    public ResponseEntity plusLikeCount(Long commentId, Long idpId) {
-//            commentUseCase.createCommentLike(commentId, idpId);
-//        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
-//    }
+    @Operation(summary = "댓글 수정")
+    @PutMapping("/comments/{comment-id}")
+    public ResponseEntity updateComment(
+            @PathVariable(name = "comment-id") Long commentId, String content) {
+        commentUseCase.updateCommentContent(commentId, content);
+
+        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    }
 
     @Operation(summary = "댓글 좋아요 취소")
     @DeleteMapping("/comments/likes")
     public ResponseEntity minusLikeCount(Long commentId) {
         commentUseCase.deleteCommentLike(commentId);
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }

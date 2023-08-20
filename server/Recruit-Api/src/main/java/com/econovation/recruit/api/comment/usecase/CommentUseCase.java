@@ -17,8 +17,9 @@ public interface CommentUseCase {
 
     void deleteCommentLike(Long commentId);
 
-
     List<CommentPairVo> findByCardId(Long cardId);
 
     Boolean isCheckedLike(Long commentId);
+
+    void updateCommentContent(Long commentId, String content);
 }
