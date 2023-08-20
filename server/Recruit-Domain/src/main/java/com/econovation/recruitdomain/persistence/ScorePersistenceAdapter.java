@@ -5,6 +5,7 @@ import com.econovation.recruitdomain.domains.score.ScoreRepository;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,12 @@ public class ScorePersistenceAdapter implements ScoreLoadPort, ScoreRecordPort {
     }
 
     @Override
-    public List<Score> findByApplicantId(Integer applicantId) {
+    public List<Score> save(List<Score> scores) {
+        return scoreRepository.saveAll(scores);
+    }
+
+    @Override
+    public List<Score> findByApplicantId(UUID applicantId) {
         return scoreRepository.findByApplicantId(applicantId);
     }
 }

@@ -5,7 +5,6 @@ import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
-import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;

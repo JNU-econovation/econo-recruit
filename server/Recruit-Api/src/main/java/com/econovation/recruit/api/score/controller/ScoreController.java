@@ -1,12 +1,15 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api.score.controller;
+
+import static com.econovation.recruitcommon.consts.RecruitStatic.SCORE_SUCCESS_REGISTER_MESSAGE;
 
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.port.in.ScoreUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
-import com.econovation.recruitdomain.domains.dto.UpdateScoreDto;
 import com.econovation.recruitdomain.domains.record.Record;
 import com.econovation.recruitdomain.domains.score.Score;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,26 +23,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "[5.0] Score 평가 API", description = "Score 평가 API")
 @RequiredArgsConstructor
 public class ScoreController {
     private final ScoreUseCase scoreUseCase;
     private final RecordUseCase recordUseCase;
     private final EntityMapper entityMapper;
 
+    @Operation(description = "Score 평가 생성")
     @PostMapping("/scores")
-    public ResponseEntity<Score> createScore(CreateScoreDto createScoreDto) {
-        Score score = entityMapper.toScore(createScoreDto);
-        score = scoreUseCase.createScore(score);
-        return new ResponseEntity<>(score, HttpStatus.OK);
+    public ResponseEntity<String> createScore(CreateScoreDto createScoreDto) {
+        scoreUseCase.createScore(createScoreDto);
+        return new ResponseEntity<>(SCORE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @PostMapping("/scores/update")
-    public ResponseEntity<Score> updateScore(UpdateScoreDto updateScoreDto) {
-        Score score = entityMapper.toScore(updateScoreDto);
-        // update를 save와 동일
-        score = scoreUseCase.createScore(score);
-        return new ResponseEntity<>(score, HttpStatus.OK);
-    }
+    //    @Operation(description = "Score 평가 수정")
+    //    @PutMapping("/scores")
+    //    public ResponseEntity<Score> updateScore(UpdateScoreDto updateScoreDto) {
+    ////        score = scoreUseCase.createScore(score);
+    //        return new ResponseEntity<>(score, HttpStatus.OK);
+    //    }
 
     @GetMapping("/scores")
     public ResponseEntity<List<Score>> getScoresByApplicantId(Integer applicantId) {

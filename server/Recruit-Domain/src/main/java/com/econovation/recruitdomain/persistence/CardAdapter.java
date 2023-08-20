@@ -26,7 +26,6 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
         cardRepository.deleteById(cardId);
     }
 
-
     @Override
     public List<Card> findAll() {
         List<Card> all = cardRepository.findAll();

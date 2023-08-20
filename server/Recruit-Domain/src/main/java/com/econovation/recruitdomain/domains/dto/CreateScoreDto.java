@@ -1,13 +1,13 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import java.util.List;
+import java.util.UUID;
 import lombok.Data;
 import lombok.Getter;
 
 @Data
 @Getter
 public class CreateScoreDto {
-    private Integer applicantId;
-    private String criteria;
-    private Float score;
-    private Integer idpId;
+    private UUID applicantId;
+    private List<ScoreVo> scoreVo;
 }

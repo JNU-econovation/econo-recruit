@@ -1,6 +1,8 @@
 package com.econovation.recruit.application.service;
 
 import com.econovation.recruit.application.port.in.ScoreUseCase;
+import com.econovation.recruit.config.security.SecurityUtils;
+import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.score.Score;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
@@ -15,8 +17,20 @@ public class ScoreService implements ScoreUseCase {
     private final ScoreLoadPort scoreLoadPort;
 
     @Override
-    public Score createScore(Score score) {
-        return scoreRecordPort.save(score);
+    public void createScore(CreateScoreDto scoreDto) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        List<Score> scores =
+                scoreDto.getScoreVo().stream()
+                        .map(
+                                scoreVo ->
+                                        Score.builder()
+                                                .applicantId(scoreDto.getApplicantId())
+                                                .score(scoreVo.getScore())
+                                                .criteria(scoreVo.getCreteria())
+                                                .idpId(idpId)
+                                                .build())
+                        .collect(java.util.stream.Collectors.toList());
+        scoreRecordPort.save(scores);
     }
 
     @Override
