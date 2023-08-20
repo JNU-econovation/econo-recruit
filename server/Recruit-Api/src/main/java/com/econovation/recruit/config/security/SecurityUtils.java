@@ -18,13 +18,13 @@ public class SecurityUtils {
         if (authentication == null) {
             throw SecurityContextNotFoundException.EXCEPTION;
         }
+        // 스웨거 유저일시 익명 유저 취급
 
         if (authentication.isAuthenticated()
                 && !CollectionUtils.containsAny(
                         authentication.getAuthorities(), notUserAuthority)) {
             return Long.valueOf(authentication.getName());
         }
-        // 스웨거 유저일시 익명 유저 취급
         // 익명유저시 userId 0 반환
         return 0L;
     }

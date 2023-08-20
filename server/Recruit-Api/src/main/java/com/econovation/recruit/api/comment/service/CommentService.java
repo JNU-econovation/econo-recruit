@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
+import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
@@ -49,8 +50,12 @@ public class CommentService implements CommentUseCase {
         if(comment.isHost(idpId)){
             commentRecordPort.deleteComment(comment);
             // 관련된 commentLike 삭제 처리
+            // TODO : Event 처리로 변경
             List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
             commentLikeRecordPort.deleteAll(commentLikes);
+        }
+        else {
+            throw CommentNotHostException.EXCEPTION;
         }
     }
 
@@ -88,7 +93,8 @@ public class CommentService implements CommentUseCase {
     }
     @Override
     public void deleteCommentLike(Long commentId) {
-        CommentLike commentLike = commentLikeLoadPort.getByCommentId(commentId);
+
+        List<CommentLike> byCommentId = commentLikeLoadPort.getByCommentId(commentId);
         commentLikeRecordPort.deleteCommentLike(commentLike);
         // commentLikeCount -감
 

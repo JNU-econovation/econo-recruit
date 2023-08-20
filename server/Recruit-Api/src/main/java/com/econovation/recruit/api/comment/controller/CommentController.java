@@ -1,6 +1,8 @@
 package com.econovation.recruit.api.comment.controller;
 
+import com.econovation.recruit.api.comment.docs.CommentExceptionDocs;
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
+import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
@@ -27,6 +29,7 @@ public class CommentController {
     private final CommentUseCase commentUseCase;
 
     @Operation(summary = "댓글 등록")
+    @ApiErrorExceptionsExample(CommentExceptionDocs.class)
     @PostMapping("/comments")
     public ResponseEntity createComment(CommentRegisterDto commentRegisterDto) {
         commentUseCase.saveComment(CommentRegisterDto.from(commentRegisterDto));
@@ -35,7 +38,7 @@ public class CommentController {
 
     @Operation(summary = "댓글 조회")
     @GetMapping("/comments/{cardId}")
-    public ResponseEntity<List<Comment>> findByCardId(Long cardId) {
+    public ResponseEntity<List<CommentPairVo>> findByCardId(Long cardId) {
         List<CommentPairVo> comments = commentUseCase.findByCardId(cardId);
         return new ResponseEntity(comments, HttpStatus.OK);
     }
@@ -46,6 +49,7 @@ public class CommentController {
         commentUseCase.createCommentLike(commentId);
         return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
+
     @Operation(summary = "댓글 좋아요 눌렀는지 확인")
     @GetMapping("/comments/is-like")
     public ResponseEntity<Boolean> isCheckedLike(Long commentId) {
@@ -70,6 +74,6 @@ public class CommentController {
     @PostMapping("/comments/likes/minus")
     public ResponseEntity minusLikeCount(Long commentId) {
         commentUseCase.deleteCommentLike(commentId);
-        return new ResponseEntity<>(comment, HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }
