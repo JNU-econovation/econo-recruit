@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.card.service;
 
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;

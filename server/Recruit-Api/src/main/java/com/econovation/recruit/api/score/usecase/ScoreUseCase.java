@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.port.in;
+package com.econovation.recruit.api.score.usecase;
 
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;

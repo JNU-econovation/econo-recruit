@@ -11,7 +11,7 @@ import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
-import com.econovation.recruit.application.port.in.NavigationUseCase;
+import com.econovation.recruit.api.card.usecase.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
