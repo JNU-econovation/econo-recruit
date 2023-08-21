@@ -3,6 +3,7 @@ package com.econovation.recruit.api.score.controller;
 import static com.econovation.recruitcommon.consts.RecruitStatic.SCORE_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.SCORE_SUCCESS_UPDATE_MESSAGE;
 
+import com.econovation.recruit.api.score.docs.ScoreExceptionDocs;
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.port.in.ScoreUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
@@ -43,6 +44,7 @@ public class ScoreController {
     }
 
     @Operation(description = "Score 평가 조회")
+    @ApiErrorExceptionsExample(ScoreExceptionDocs.class)
     @GetMapping("/scores")
     public ResponseEntity<ScoreAverageDto> getScoresByApplicantId(UUID applicantId) {
         ScoreAverageDto scores = scoreUseCase.getApplicantScoreWithAverage(applicantId);
