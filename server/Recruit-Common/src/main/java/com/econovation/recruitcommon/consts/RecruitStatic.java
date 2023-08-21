@@ -2,8 +2,11 @@ package com.econovation.recruitcommon.consts;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RecruitStatic {
     public static final String AUTH_HEADER = "Authorization";
@@ -26,6 +29,9 @@ public class RecruitStatic {
     public static final int FORBIDDEN = 403;
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
+    public static String[] CRETERIA = {"학력", "경력", "연봉", "연차", "기술"};
+    public static Set<String> CRETERIA_SET = new HashSet<>(Arrays.asList("학력", "경력", "연봉", "연차", "기술"));
+
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";
     public static final String BOARD_SUCCESS_REGISTER_MESSAGE = "성공적으로 업무카드가 등록됐습니다";
@@ -37,6 +43,7 @@ public class RecruitStatic {
     public static final String COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE = "성공적으로 댓글 좋아요를 등록됐습니다";
     public static final String COMMENT_LIKE_SUCCESS_DELETE_MESSAGE = "성공적으로 댓글 좋아요가 삭제되었습니다.";
     public static final String SCORE_SUCCESS_REGISTER_MESSAGE = "성공적으로 점수가 등록됐습니다";
+    public static final String SCORE_SUCCESS_UPDATE_MESSAGE = "성공적으로 점수가 수정됐습니다";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

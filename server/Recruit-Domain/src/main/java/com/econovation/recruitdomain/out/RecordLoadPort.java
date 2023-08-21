@@ -2,9 +2,10 @@ package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitdomain.domains.record.Record;
 import java.util.List;
+import java.util.UUID;
 
 public interface RecordLoadPort {
     List<Record> findAll();
 
-    Record findByApplicantId(Integer applicantId);
+    Record findByApplicantId(UUID applicantId);
 }

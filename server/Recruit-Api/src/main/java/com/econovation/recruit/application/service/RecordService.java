@@ -5,6 +5,7 @@ import com.econovation.recruitdomain.domains.record.Record;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class RecordService implements RecordUseCase {
     }
 
     @Override
-    public Record findByApplicantId(Integer applicantId) {
+    public Record findByApplicantId(UUID applicantId) {
         return recordLoadPort.findByApplicantId(applicantId);
     }
 }

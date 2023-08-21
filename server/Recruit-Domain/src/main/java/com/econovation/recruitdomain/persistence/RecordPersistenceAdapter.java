@@ -5,6 +5,7 @@ import com.econovation.recruitdomain.domains.record.RecordRepository;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class RecordPersistenceAdapter implements RecordLoadPort, RecordRecordPor
     }
 
     @Override
-    public Record findByApplicantId(Integer applicantId) {
+    public Record findByApplicantId(UUID applicantId) {
         return recordRepository
                 .findByApplicantId(applicantId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_RECORD));

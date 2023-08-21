@@ -4,12 +4,14 @@ import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 @Table(name = "score")
 public class Score {
     @Id
@@ -33,5 +35,9 @@ public class Score {
         this.criteria = criteria;
         this.score = score;
         return this;
+    }
+
+    public void updateScore(Float score) {
+        this.score = score;
     }
 }
