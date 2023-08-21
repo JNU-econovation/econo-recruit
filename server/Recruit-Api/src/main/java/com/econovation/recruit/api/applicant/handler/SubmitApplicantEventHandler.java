@@ -2,8 +2,8 @@ package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruitdomain.common.events.applicant.SubmitApplicantEvent;
-import com.econovation.recruitdomain.domains.card.Card;
-import com.econovation.recruitdomain.persistence.CardAdapter;
+import com.econovation.recruitdomain.domains.card.adaptor.CardAdapter;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

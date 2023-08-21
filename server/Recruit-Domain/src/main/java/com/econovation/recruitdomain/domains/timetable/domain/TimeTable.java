@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.timetable;
+package com.econovation.recruitdomain.domains.timetable.domain;
 
 import java.util.UUID;
 import javax.persistence.*;

@@ -4,7 +4,7 @@ import com.econovation.recruit.api.label.usecase.LabelUseCase;
 import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;

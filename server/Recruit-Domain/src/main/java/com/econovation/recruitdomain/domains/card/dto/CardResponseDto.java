@@ -2,7 +2,7 @@ package com.econovation.recruitdomain.domains.card.dto;
 
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

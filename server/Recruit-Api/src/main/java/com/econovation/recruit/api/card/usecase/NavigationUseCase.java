@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.port.in;
+package com.econovation.recruit.api.card.usecase;
 
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 

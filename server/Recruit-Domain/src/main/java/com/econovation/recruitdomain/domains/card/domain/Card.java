@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.card;
+package com.econovation.recruitdomain.domains.card.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;

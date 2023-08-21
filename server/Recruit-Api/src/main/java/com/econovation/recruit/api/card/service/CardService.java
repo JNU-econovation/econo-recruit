@@ -1,15 +1,14 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.card.service;
 
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
-import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.out.CardLoadPort;

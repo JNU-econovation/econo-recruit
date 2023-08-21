@@ -11,7 +11,7 @@ import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
-import com.econovation.recruit.application.port.in.NavigationUseCase;
+import com.econovation.recruit.api.card.usecase.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
@@ -108,9 +108,7 @@ public class BoardRestController {
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 
-
-
-//    ---------- Navigation ----------
+    //    ---------- Navigation ----------
     @PostMapping("/boards/navigation")
     public ResponseEntity<Navigation> createNavigation(String navTitle) {
         Navigation navigation = navigationUseCase.createNavigation(navTitle);

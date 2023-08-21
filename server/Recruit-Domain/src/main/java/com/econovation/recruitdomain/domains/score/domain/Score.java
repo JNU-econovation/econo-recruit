@@ -1,14 +1,17 @@
-package com.econovation.recruitdomain.domains.score;
+package com.econovation.recruitdomain.domains.score.domain;
 
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 @Table(name = "score")
 public class Score {
     @Id
@@ -17,7 +20,7 @@ public class Score {
     private Long id;
 
     @Column(name = "applicant_id")
-    private Integer applicantId;
+    private UUID applicantId;
 
     @Column(name = "criteria")
     private String criteria;
@@ -26,11 +29,15 @@ public class Score {
     private Float score;
 
     @Column(name = "idp_id")
-    private Integer idpId;
+    private Long idpId;
 
     public Score updateScore(String criteria, Float score) {
         this.criteria = criteria;
         this.score = score;
         return this;
+    }
+
+    public void updateScore(Float score) {
+        this.score = score;
     }
 }

@@ -1,7 +1,7 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.card.adaptor;
 
-import com.econovation.recruitdomain.domains.card.Card;
-import com.econovation.recruitdomain.domains.card.CardRepository;
+import com.econovation.recruitdomain.domains.card.domain.Card;
+import com.econovation.recruitdomain.domains.card.domain.CardRepository;
 import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
@@ -25,7 +25,6 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     public void delete(Long cardId) {
         cardRepository.deleteById(cardId);
     }
-
 
     @Override
     public List<Card> findAll() {

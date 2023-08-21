@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import java.util.List;
 
 public interface CardLoadPort {

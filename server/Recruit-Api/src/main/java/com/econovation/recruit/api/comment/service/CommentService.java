@@ -4,7 +4,7 @@ import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
