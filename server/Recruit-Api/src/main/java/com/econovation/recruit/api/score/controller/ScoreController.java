@@ -6,14 +6,11 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.SCORE_SUCCESS_U
 import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.port.in.ScoreUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
+import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
-import com.econovation.recruitdomain.domains.record.Record;
-import com.econovation.recruitdomain.domains.score.Score;
+import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ScoreController {
     private final ScoreUseCase scoreUseCase;
-    private final RecordUseCase recordUseCase;
-    private final EntityMapper entityMapper;
 
     @Operation(description = "Score 평가 생성")
     @PostMapping("/scores")
@@ -47,19 +42,21 @@ public class ScoreController {
         return new ResponseEntity<>(SCORE_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 
+    @Operation(description = "Score 평가 조회")
     @GetMapping("/scores")
-    public ResponseEntity<List<Score>> getScoresByApplicantId(UUID applicantId) {
-        List<Score> scores = scoreUseCase.getByApplicantId(applicantId);
+    public ResponseEntity<ScoreAverageDto> getScoresByApplicantId(UUID applicantId) {
+        ScoreAverageDto scores = scoreUseCase.getApplicantScoreWithAverage(applicantId);
         return new ResponseEntity<>(scores, HttpStatus.OK);
     }
 
-    @GetMapping("/scores/records")
-    public ResponseEntity<Map<String, Object>> getScoresAndRecordsByApplicantId(UUID applicantId) {
-        List<Score> scores = scoreUseCase.getByApplicantId(applicantId);
-        Record record = recordUseCase.findByApplicantId(applicantId);
-        Map<String, Object> map = new HashMap<>();
-        map.put("scores", scores);
-        map.put("record", record);
-        return new ResponseEntity(map, HttpStatus.OK);
-    }
+    //    @GetMapping("/scores/records")
+    //    public ResponseEntity<Map<String, Object>> getScoresAndRecordsByApplicantId(UUID
+    // applicantId) {
+    //        List<Score> scores = scoreUseCase.getByApplicantId(applicantId);
+    //        Record record = recordUseCase.findByApplicantId(applicantId);
+    //        Map<String, Object> map = new HashMap<>();
+    //        map.put("scores", scores);
+    //        map.put("record", record);
+    //        return new ResponseEntity(map, HttpStatus.OK);
+    //    }
 }

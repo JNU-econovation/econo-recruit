@@ -1,8 +1,10 @@
 package com.econovation.recruit.application.port.in;
 
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
-import com.econovation.recruitdomain.domains.score.Score;
+import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
+import com.econovation.recruitdomain.domains.dto.ScoreVo;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface ScoreUseCase {
@@ -10,5 +12,7 @@ public interface ScoreUseCase {
 
     void updateScore(CreateScoreDto scoreDto);
 
-    List<Score> getByApplicantId(UUID applicantId);
+    Map<String, List<ScoreVo>> getByApplicantId(UUID applicantId);
+
+    ScoreAverageDto getApplicantScoreWithAverage(UUID applicantId);
 }
