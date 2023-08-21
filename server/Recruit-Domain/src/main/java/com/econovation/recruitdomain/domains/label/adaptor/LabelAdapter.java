@@ -1,5 +1,6 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.label.adaptor;
 
+import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.label.Label;
 import com.econovation.recruitdomain.domains.label.LabelRepository;
@@ -9,11 +10,10 @@ import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Adaptor
 @RequiredArgsConstructor
-public class LabelPersistenceAdapter implements LabelRecordPort, LabelLoadPort {
+public class LabelAdapter implements LabelRecordPort, LabelLoadPort {
     private static final String NO_MATCH_LABEL_MESSAGE = "";
     private final String EMPTY_LABEL_MESSAGE = "해당 지원자는 라벨이 존재하지 않습니다.";
     private final LabelRepository labelRepository;

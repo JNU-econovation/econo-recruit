@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.card;
+package com.econovation.recruitdomain.domains.card.domain;
 
 import java.util.List;
 import java.util.Optional;

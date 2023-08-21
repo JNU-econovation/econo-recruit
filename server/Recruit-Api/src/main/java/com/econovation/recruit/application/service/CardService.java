@@ -8,7 +8,7 @@ import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.out.CardLoadPort;

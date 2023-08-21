@@ -5,7 +5,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLI
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
-import com.econovation.recruitdomain.domains.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
 import java.util.LinkedList;
@@ -31,7 +31,7 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
 
     @Override
     public List<TimeTable> getTimeTableByApplicantId(UUID applicantId) {
-        return null;
+        return timeTableLoadPort.getTimeTableByApplicantId(applicantId);
     }
 
     @Override

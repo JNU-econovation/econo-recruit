@@ -2,7 +2,7 @@ package com.econovation.recruit.api.card.controller;
 
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
-import com.econovation.recruitdomain.domains.card.Card;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.model.BoardMessage;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;

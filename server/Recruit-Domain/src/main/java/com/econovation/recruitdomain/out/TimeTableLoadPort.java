@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import java.util.List;
 import java.util.UUID;
 

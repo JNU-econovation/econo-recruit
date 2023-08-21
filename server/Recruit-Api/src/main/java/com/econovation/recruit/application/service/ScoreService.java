@@ -8,7 +8,7 @@ import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import com.econovation.recruitdomain.domains.dto.ScoreVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
-import com.econovation.recruitdomain.domains.score.Score;
+import com.econovation.recruitdomain.domains.score.domain.Score;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;

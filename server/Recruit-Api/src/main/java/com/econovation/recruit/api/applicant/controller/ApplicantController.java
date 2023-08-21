@@ -11,7 +11,7 @@ import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
-import com.econovation.recruitdomain.domains.timetable.TimeTable;
+import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;

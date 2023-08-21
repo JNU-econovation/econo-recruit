@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.score;
+package com.econovation.recruitdomain.domains.score.domain;
 
 import java.util.UUID;
 import javax.persistence.*;

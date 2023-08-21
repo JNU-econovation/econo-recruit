@@ -11,7 +11,7 @@ import com.econovation.recruitdomain.domains.score.exception.ScoreNotFoundExcept
 public class ScoreExceptionDocs implements SwaggerExampleExceptions {
     @ExplainError("유효하지 않은 평가 항복에 대한 점수입니다.")
     public RecruitCodeException 카드_중복_생성 = ScoreInvalidFieldException.EXCEPTION;
+
     @ExplainError("해당 점수를 찾을 수 없습니다.")
     public RecruitCodeException 카드_위치_변경_불가 = ScoreNotFoundException.EXCEPTION;
-
 }

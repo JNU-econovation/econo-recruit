@@ -1,17 +1,17 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.score.adaptor;
 
-import com.econovation.recruitdomain.domains.score.Score;
-import com.econovation.recruitdomain.domains.score.ScoreRepository;
+import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitdomain.domains.score.domain.Score;
+import com.econovation.recruitdomain.domains.score.domain.ScoreRepository;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Adaptor
 @RequiredArgsConstructor
-public class ScorePersistenceAdapter implements ScoreLoadPort, ScoreRecordPort {
+public class ScoreAdapter implements ScoreLoadPort, ScoreRecordPort {
     private final ScoreRepository scoreRepository;
 
     @Override
