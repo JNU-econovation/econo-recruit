@@ -49,11 +49,11 @@ public class ScoreService implements ScoreUseCase {
         Long idpId = SecurityUtils.getCurrentUserId();
         Map<String, Float> scoreVoMap = scoreDto.getScoreVo().stream()
                 .collect(Collectors.toMap(ScoreVo::getCreteria, ScoreVo::getScore));
+
         scoreLoadPort.findByApplicantId(scoreDto.getApplicantId()).stream()
-                .filter(score -> {
-                    scoreDto.getApplicantId().equals(score.getApplicantId());
-                    return CRETERIA_SET.contains(score.getCriteria()) && score.getIdpId().equals(idpId);
-                })
+                .filter(score ->
+                        CRETERIA_SET.contains(score.getCriteria()) && score.getIdpId().equals(idpId)
+                )
                 .forEach(score -> {
                     Float matchingScore = scoreVoMap.get(score.getCriteria());
                     if (matchingScore != null) {
