@@ -1,4 +1,4 @@
-package com.econovation.recruit.api.interviewer.helper;
+package com.econovation.recruitinfrastructure.idp.client;
 
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
