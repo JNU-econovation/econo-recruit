@@ -1,5 +1,7 @@
 package com.econovation.recruitdomain.domains.interviewer.exception;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
+
 import com.econovation.recruitcommon.annotation.ExplainError;
 import com.econovation.recruitcommon.exception.BaseErrorCode;
 import com.econovation.recruitcommon.exception.ErrorReason;
@@ -7,8 +9,6 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 @Getter
 @AllArgsConstructor

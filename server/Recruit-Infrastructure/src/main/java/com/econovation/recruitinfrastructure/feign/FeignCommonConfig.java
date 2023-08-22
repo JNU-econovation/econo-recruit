@@ -1,6 +1,5 @@
 package com.econovation.recruitinfrastructure.feign;
 
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -24,6 +23,7 @@ public class FeignCommonConfig {
 
     /**
      * 타임관련( 유닛 디코더 yyyy-MM-dd HH:mm:ss )
+     *
      * @return
      */
     public ObjectMapper customObjectMapper() {
