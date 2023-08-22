@@ -1,7 +1,11 @@
+"use client";
+
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddColumnComponent from "./AddColumn.component";
 import KanbanColumnComponent from "./Column.component";
+import { useState } from "react";
+import KanbanRowDetailComponent from "./RowDetail.compontent";
 
 type KanbanRowComponent = {
   index: number;
@@ -16,6 +20,7 @@ const KanbanRowComponent = ({
   title,
   columnCount,
 }: KanbanRowComponent) => {
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   return (
     <Draggable draggableId={`${index}`} index={index}>
       {(provided) => (
@@ -25,16 +30,21 @@ const KanbanRowComponent = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="flex justify-between">
+          <div className="flex justify-between relative">
             <div className="flex gap-2 items-center">
               <div className="font-bold text-lg">{title}</div>
               <div className="flex justify-center items-center px-3 rounded-full bg-[#E8EFFF] text-xs text-[#2160FF] h-4">
                 {columnCount}
               </div>
             </div>
-            <button type="button">
+            <button type="button" onClick={() => setIsDetailOpen(true)}>
               <img src="/icons/ellipsis.bubble.svg" alt="RowDetail" />
             </button>
+            {isDetailOpen ? (
+              <KanbanRowDetailComponent setIsDetailOpen={setIsDetailOpen} />
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
             <Droppable droppableId={`${index}`} key={index}>
