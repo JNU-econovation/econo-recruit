@@ -2,6 +2,7 @@ import { FC, PropsWithChildren } from "react";
 import classNames from "classnames";
 
 const typographyType = {
+  head: "text-6xl",
   h1: "text-4xl font-bold",
   h2: "text-3xl font-bold",
   h3: "text-2xl font-bold",
@@ -13,8 +14,9 @@ const typographyType = {
 
 const colorType = {
   black: "text-black",
-  gray: "text-gray-500",
+  gray: "text-[#666]",
   white: "text-white",
+  blue: "text-[#2160FF]",
 };
 
 interface TxtProps {
@@ -31,9 +33,9 @@ const Txt: FC<PropsWithChildren<TxtProps>> = ({
 }) => (
   <span
     className={classNames(
-      className,
       colorType[color],
-      typographyType[typography]
+      typographyType[typography],
+      className
     )}
   >
     {children}
