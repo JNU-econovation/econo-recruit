@@ -42,7 +42,7 @@ const CommonNavbar: FC<CommonNavbarProps> = ({
             currentPath={currentPath}
             isShort={isShort}
             item={{
-              href: "/manager/" + generation,
+              href: `/manager/${generation}`,
               short_title: "관리자",
               title: "관리자 페이지",
               target: "_self",

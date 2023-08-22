@@ -25,7 +25,7 @@ const CommonNavbarCellComponent = ({
     <a
       className={
         currentPath === item.type
-          ? linkButtonClassName + " !bg-black !text-white"
+          ? `${linkButtonClassName} !bg-black !text-white`
           : linkButtonClassName
       }
       href={item.href}

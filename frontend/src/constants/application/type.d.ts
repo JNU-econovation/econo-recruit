@@ -89,7 +89,6 @@ interface ApplicationBooleanTextarea extends ApplicationNodeBase {
     name: string;
   }[];
 }
-
 interface ApplicationBar extends ApplicationNodeBase {
   type: "bar";
 }
