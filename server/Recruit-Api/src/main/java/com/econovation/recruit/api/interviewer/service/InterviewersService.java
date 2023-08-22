@@ -1,4 +1,4 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.interviewer.service;
 
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
@@ -31,4 +31,7 @@ public class InterviewersService implements InterviewerUseCase {
     public Interviewer getById(Long idpId) {
         return interviewerLoadPort.loadInterviewById(idpId);
     }
+
+    @Override
+    public void updateRole(Long idpId, String role) {}
 }

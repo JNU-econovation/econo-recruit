@@ -10,4 +10,6 @@ public interface InterviewerUseCase {
     List<Interviewer> createInterviewers(List<InterviewerCreateDto> interviewerCreateDto);
 
     Interviewer getById(Long idpId);
+
+    void updateRole(Long idpId, String role);
 }
