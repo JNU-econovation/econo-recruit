@@ -30,7 +30,7 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
       ) : (
         <button
           type="button"
-          className="w-[17rem] flex gap-2 justify-start items-center text-[#828282] py-4 px-8 bg-[#EFEFEF] h-fit rounded-lg"
+          className="w-[17rem] flex gap-6 justify-start items-center text-[#828282] py-4 px-6 bg-[#EFEFEF] h-fit rounded-lg text-lg"
           onClick={() => setIsOpenAddCard(true)}
         >
           <img src="/icons/ellipsis.plus.svg" alt="AddColumn" />
