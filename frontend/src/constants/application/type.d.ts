@@ -1,13 +1,35 @@
+import { ReplacerType } from "@/src/functions/replacer";
+import { ValidatorType } from "@/src/functions/validator";
+
 interface ApplicationQuestion {
   id: number;
   title?: string;
   subtitle?: string;
   require: boolean;
-  direction: 'vertical' | 'horizontal';
-  nodes: ApplicationNode[];
+  direction:
+    | "vertical"
+    | "horizontal"
+    | "booleanTextarea"
+    | "radioForCheck"
+    | "timeline";
+  nodes: ApplicationNode[] | ApplicationQuestion[];
 }
 
-interface ApplicationNode {}
+type ApplicationNodeTypes =
+  | "radio"
+  | "radioByTwoRank"
+  | "radioForCheck"
+  | "text"
+  | "textarea"
+  | "booleanTextarea"
+  | "bar"
+  | "justText"
+  | "checkboxWithEtc"
+  | "timeline";
+
+interface ApplicationNode {
+  type: ApplicationNodeTypes;
+}
 
 interface ApplicationNodeBase extends ApplicationNode {
   title?: string;
@@ -22,57 +44,83 @@ interface BaseWithValues extends ApplicationNodeBase {
 }
 
 interface ApplicationRadio extends BaseWithValues {
-  type: 'radio';
+  type: "radio";
+}
+
+interface BaseWithValuesWithSplitNumber extends BaseWithValues {
+  splitNumber: number;
 }
 
 interface ApplicationRadioByTwoRank extends ApplicationNode {
-  type: 'radioByTwoRank';
+  type: "radioByTwoRank";
   title?: string;
   subtitle?: string;
   require: boolean;
-  subNodes: BaseWithValues[];
+  subNodes: BaseWithValuesWithSplitNumber[];
 }
 
-interface ApplicationRadioByLayer extends ApplicationNode {
-  type: 'radioByLayer';
-  subNodes: BaseWithValues[];
+interface ApplicationRadioForCheck extends BaseWithValues {
+  type: "radioForCheck";
+  title?: string;
+  require: boolean;
+  value: string[];
 }
 
 interface ApplicationText extends ApplicationNodeBase {
-  type: 'text';
+  type: "text";
+  validate?: ValidatorType;
+  replace?: ReplacerType;
+  maxLength?: number;
+  minLength?: number;
 }
 
 interface ApplicationTextarea extends ApplicationNodeBase {
-  type: 'textarea';
+  type: "textarea";
 }
 
-interface ApplicationBooleanTextBox extends ApplicationNodeBase {
-  type: 'booleanTextBox';
+interface ApplicationBooleanTextarea extends ApplicationNodeBase {
+  type: "booleanTextarea";
+  value: string[];
   subNodes: {
-    type: 'true' | 'false';
+    type: "true" | "false";
     title?: string;
     subtitle?: string;
     require: boolean;
     name: string;
   }[];
 }
-
-interface ApplicationBar {
-  type: 'bar';
+interface ApplicationBar extends ApplicationNodeBase {
+  type: "bar";
 }
 
-interface ApplicationJustText {
-  type: 'justText';
+interface ApplicationJustText extends ApplicationNodeBase {
+  type: "justText";
   title: string;
   subtitle?: string;
 }
 
 interface ApplicationCheckboxType extends ApplicationNodeBase {
-  type: 'checkbox';
+  type: "checkbox";
   value: string[];
 }
 
 interface ApplicationCheckboxWithEtcType extends ApplicationNodeBase {
-  type: 'checkboxWithEtc';
+  type: "checkboxWithEtc";
   value: string[];
+}
+
+interface ApplicationTimelineType extends ApplicationNodeBase {
+  type: "timeline";
+}
+
+interface ApplicationTimeline {
+  seperate: number;
+  time: {
+    startTime: Date;
+    endTime: Date;
+  }[];
+  disableTime: {
+    startTime: Date;
+    endTime: Date;
+  }[];
 }

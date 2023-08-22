@@ -14,8 +14,9 @@ const typographyType = {
 
 const colorType = {
   black: "text-black",
-  gray: "text-gray-500",
+  gray: "text-[#666]",
   white: "text-white",
+  blue: "text-[#2160FF]",
 };
 
 interface TxtProps {
