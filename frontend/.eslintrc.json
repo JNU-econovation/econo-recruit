@@ -7,31 +7,26 @@
     "project": "./tsconfig.json",
     "createDefaultProgram": true
   },
-  "env": { // 전역객체를 eslint가 인식하는 구간
-    "browser": true, // document나 window 인식되게 함
+  "env": {
+    "browser": true,
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["node_modules/"], // eslint 미적용될 폴더나 파일 명시
+  "ignorePatterns": ["node_modules/", "tailwind.config.js"],
   "extends": [
-    "airbnb",
-    "airbnb-typescript",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended", // ts 권장
-    "plugin:prettier/recommended", // eslint의 포매팅을 prettier로 사용.
-    "prettier" // eslint-config-prettier prettier와 중복된 eslint 규칙 제거
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "rules": {
     "@typescript-eslint/no-redeclare" : "off",
     "@next/next/no-img-element": "off",
-    "react/react-in-jsx-scope": "off", // react 17부턴 import 안해도돼서 기능 끔
-    // 경고표시, 파일 확장자를 .ts나 .tsx 모두 허용함
+    "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-var-requires": "off",
     "react/function-component-definition":"off",
-    "import/no-dynamic-require":"off",
     "global-require":"off",
     "react/jsx-props-no-spreading":"off",
-    "import/prefer-default-export":"off",
     "react/no-array-index-key":"off",
     "jsx-a11y/no-static-element-interactions":"off",
     "no-shadow": "off",
@@ -40,7 +35,7 @@
     "jsx-a11y/click-events-have-key-events":"off",
     "react/button-has-type":"off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
-    "no-useless-catch": "off", // 불필요한 catch 못쓰게 하는 기능 끔
+    "no-useless-catch": "off",
     "@typescript-eslint/ban-types": [
       "error",
       {
