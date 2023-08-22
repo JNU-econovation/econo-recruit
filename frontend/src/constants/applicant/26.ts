@@ -89,34 +89,3 @@ export const APPLICANT = [
     type: "timeline",
   } as ApplicantTimelineNode,
 ] as ApplicantNode[];
-
-export const APPLICANT_RESOURCES = [
-  {
-    value: [
-      {
-        name: "field",
-      },
-      {
-        name: "field1",
-      },
-      {
-        name: "field2",
-      },
-      {
-        name: "field",
-      },
-      {
-        name: "name",
-      },
-      {
-        name: "major",
-      },
-      {
-        name: "portfolio",
-      },
-      {
-        name: "fileUrl",
-      },
-    ],
-  },
-];

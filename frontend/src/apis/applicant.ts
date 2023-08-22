@@ -11,3 +11,16 @@ export const getApplicant = async (id: string) => {
 
   return data;
 };
+
+export interface ApplicnatLabelReq {
+  name: string;
+  active: boolean;
+}
+
+export const getApplicantLabel = async (id: string) => {
+  const { data } = await https.get<ApplicnatLabelReq[]>(
+    `/applicants/${id}/label`
+  );
+
+  return data;
+};
