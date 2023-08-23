@@ -7,9 +7,9 @@ import java.util.List;
 @UseCase
 public interface LabelUseCase {
 
-    Label createLabel(Integer applicantId);
+    Label createLabel(UUID applicantId);
 
-    List<String> findByApplicantId(Integer applicantId);
+    List<String> findByApplicantId(UUID applicantId);
 
-    void deleteLabel(Integer applicantId, Integer idpId);
+    void deleteLabel(UUID applicantId, Integer idpId);
 }

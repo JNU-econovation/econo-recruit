@@ -15,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoadPort {
     private final InterviewerRepository interviewerRepository;
 
-    public Interviewer loadInterviewById(Integer idpId) {
+    @Override
+    public Interviewer loadInterviewById(Long idpId) {
         return interviewerRepository
                 .findById(idpId)
                 .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_INTERVIEWER_MESSAGE));
@@ -24,6 +25,11 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     @Override
     public List<Interviewer> loadInterviewerByIdpIds(List<Long> idpIds) {
         return interviewerRepository.findAllById(idpIds);
+    }
+
+    @Override
+    public List<Interviewer> findAll() {
+        return interviewerRepository.findAll();
     }
 
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {

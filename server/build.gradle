@@ -29,7 +29,7 @@ sonarqube {
 }
 
 subprojects {
-    group = 'com.recruit'
+    group = 'com.econovation'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '11'
 

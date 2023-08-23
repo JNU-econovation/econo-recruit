@@ -27,6 +27,7 @@ public class RecruitStatic {
     public static final int BAD_REQUEST = 400;
     public static final int UNAUTHORIZED = 401;
     public static final int FORBIDDEN = 403;
+
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
     public static String[] CRETERIA = {"학력", "경력", "연봉", "연차", "기술"};
@@ -45,6 +46,8 @@ public class RecruitStatic {
     public static final String COMMENT_LIKE_SUCCESS_DELETE_MESSAGE = "성공적으로 댓글 좋아요가 삭제되었습니다.";
     public static final String SCORE_SUCCESS_REGISTER_MESSAGE = "성공적으로 점수가 등록됐습니다";
     public static final String SCORE_SUCCESS_UPDATE_MESSAGE = "성공적으로 점수가 수정됐습니다";
+    public static final String INTERVIEWER_SUCCESS_REGISTER_MESSAGE = "성공적으로 면접관이 등록됐습니다";
+
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

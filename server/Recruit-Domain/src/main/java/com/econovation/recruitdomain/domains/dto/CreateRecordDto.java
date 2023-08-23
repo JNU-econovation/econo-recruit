@@ -6,7 +6,7 @@ import lombok.Getter;
 @Data
 @Getter
 public class CreateRecordDto {
-    private Integer applicantId;
+    private UUID applicantId;
     private String url;
     private String record;
 }

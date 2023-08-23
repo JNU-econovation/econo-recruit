@@ -31,7 +31,7 @@ public class LabelService implements LabelUseCase {
     @Override
     @RedissonLock(LockName = "라벨", identifier = "applicantId")
     @Transactional
-    public Label createLabel(Integer applicantId) {
+    public Label createLabel(UUID applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findByApplicantId(applicantId);
         Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
@@ -45,7 +45,7 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
-    public List<String> findByApplicantId(Integer applicantId) {
+    public List<String> findByApplicantId(UUID applicantId) {
         List<Label> labels = labelLoadPort.loadLabelByApplicantId(applicantId);
 
         if (labels.isEmpty()) {
@@ -68,7 +68,7 @@ public class LabelService implements LabelUseCase {
     @Override
     @Transactional
     @RedissonLock(LockName = "라벨", identifier = "applicantId")
-    public void deleteLabel(Integer applicantId, Integer idpId) {
+    public void deleteLabel(UUID applicantId, Integer idpId) {
         Label label = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
 
         // Card LabelCount 감소

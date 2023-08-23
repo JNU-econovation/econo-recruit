@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.interviewer.domain;
 
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerInvalidRoleException;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +22,8 @@ public enum Role {
         for (Role os : Role.values()) {
             if (os.getRole().equals(name)) {
                 return os;
+            } else {
+                throw InterviewerInvalidRoleException.EXCEPTION;
             }
         }
         return null;

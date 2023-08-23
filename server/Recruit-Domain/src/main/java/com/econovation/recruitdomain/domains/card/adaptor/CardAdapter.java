@@ -45,7 +45,7 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     }
 
     @Override
-    public Card findByApplicantId(Integer applicantId) {
+    public Card findByApplicantId(UUID applicantId) {
         Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);
         if (applicant.isEmpty()) {
             throw CardNotFoundException.EXCEPTION;

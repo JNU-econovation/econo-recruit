@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LabelRepository extends JpaRepository<Label, Long> {
-    List<Label> findByApplicantId(Integer applicantId);
+    List<Label> findByApplicantId(UUID applicantId);
 
-    Optional<Label> findByApplicantIdAndIdpId(Integer applicantId, Integer idpId);
+    Optional<Label> findByApplicantIdAndIdpId(UUID applicantId, Integer idpId);
 }

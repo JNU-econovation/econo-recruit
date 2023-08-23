@@ -7,4 +7,6 @@ public interface InterviewerLoadPort {
     Interviewer loadInterviewById(Long idpId);
 
     List<Interviewer> loadInterviewerByIdpIds(List<Long> idpIds);
+
+    List<Interviewer> findAll();
 }
