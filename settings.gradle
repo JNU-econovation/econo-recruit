@@ -1,5 +1,0 @@
-rootProject.name = 'Recruit'
-include 'Recruit-Api'
-include 'Recruit-Common'
-include 'Recruit-Domain'
-include 'Recruit-Infrastructure'

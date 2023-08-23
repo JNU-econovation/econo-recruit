@@ -4,12 +4,7 @@ import { applicationIndexAtom } from "@/src/stores/application";
 import { useAtom } from "jotai";
 import { FC } from "react";
 import classNames from "classnames";
-<<<<<<< HEAD:frontend/components/application/ApplicationNavbar.component.tsx
-import { APPLICATION } from "@/src/constants/application/25";
-import Txt from "../common/Txt.component";
-=======
 import Txt from "@/components/common/Txt.component";
->>>>>>> 53f55f8e1ac8cac70e463a946d77a65fb8cf1d58:frontend/components/application/Navbar.component.tsx
 
 interface ApplicationNavbarProps {
   generation: string;
