@@ -18,7 +18,7 @@ const TimelineRow: FC<TimelineRowProps> = ({ date, isLast }) => {
       <Txt className="-translate-x-1/2 block w-fit -translate-y-6 h-2">
         {dateString}
       </Txt>
-      {isLast ? (
+      {isLast && (
         <>
           <input
             type="checkbox"
@@ -31,8 +31,6 @@ const TimelineRow: FC<TimelineRowProps> = ({ date, isLast }) => {
             className="h-8 block peer-checked:bg-[#2160FF] bg-[#EFEFEF]"
           ></label>
         </>
-      ) : (
-        ""
       )}
     </span>
   );
