@@ -24,3 +24,18 @@ export const getApplicantLabel = async (id: string) => {
 
   return data;
 };
+
+export interface ApplicantCommentReq {
+  interviewerName: string;
+  content: string;
+  isLike: boolean;
+  likeCount: number;
+  createAt: number;
+  canEdit: boolean;
+}
+
+export const getApplicantComment = async (id: string) => {
+  const { data } = await https.get<ApplicantCommentReq[]>(`/comments/${id}`);
+
+  return data;
+};
