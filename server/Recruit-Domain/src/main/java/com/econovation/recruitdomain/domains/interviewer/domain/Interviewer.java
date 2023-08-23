@@ -26,7 +26,7 @@ public class Interviewer {
     @Column(name = "role")
     private Role role;
 
-    public void changeRole(Role role) {
+    public void updateRole(Role role) {
         this.role = role;
     }
 }

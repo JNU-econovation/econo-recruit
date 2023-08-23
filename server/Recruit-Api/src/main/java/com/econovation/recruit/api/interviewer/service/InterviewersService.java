@@ -5,12 +5,14 @@ import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
 import com.econovation.recruitdomain.domains.dto.InterviewerResponse;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +34,11 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
-    public void updateRole(Long idpId, String role) {}
+    @Transactional
+    public void updateRole(Long idpId, String role) {
+        Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
+        interviewer.updateRole(Role.getByName(role));
+    }
 
     @Override
     public void createInterviewersByName(List<String> names) {
