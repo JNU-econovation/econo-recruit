@@ -30,7 +30,7 @@ public class LabelAdapter implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public List<Label> loadLabelByApplicantId(Integer applicantId) {
+    public List<Label> loadLabelByApplicantId(UUID applicantId) {
         List<Label> labels = labelRepository.findByApplicantId(applicantId);
         if (labels.isEmpty()) {
             throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
@@ -39,7 +39,7 @@ public class LabelAdapter implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public Label loadLabelByApplicantIdAndIdpId(Integer applicantId, Integer idpId) {
+    public Label loadLabelByApplicantIdAndIdpId(UUID applicantId, Integer idpId) {
         Optional<Label> label = labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         if (label.isEmpty()) {
             throw LabelNotFoundException.EXCEPTION;

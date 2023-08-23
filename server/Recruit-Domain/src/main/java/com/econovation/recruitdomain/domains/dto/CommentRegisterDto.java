@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import java.util.UUID;
 import lombok.Data;
 import lombok.Getter;
 
@@ -9,8 +10,8 @@ import lombok.Getter;
 public class CommentRegisterDto {
     private String content;
     private Long parentId;
-    private Integer applicantId;
-    private Integer idpId;
+    private UUID applicantId;
+    private Long idpId;
 
     public static Comment from(CommentRegisterDto commentRegisterDto) {
         return Comment.builder()

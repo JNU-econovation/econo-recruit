@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.comment.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class Comment extends BaseTimeEntity {
     private Long cardId;
 
     @Column(name = "applicant_id")
-    private Integer applicantId;
+    private UUID applicantId;
 
     @Column(name = "parent_id")
     private Long parentId;

@@ -28,7 +28,7 @@ public class LabelController {
     @Operation(summary = "지원자의 라벨을 조회합니다.")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
     @GetMapping("/labels")
-    public ResponseEntity<List<String>> findByApplicantId(Integer applicantId) {
+    public ResponseEntity<List<String>> findByApplicantId(UUID applicantId) {
         List<String> interviewerNames = labelUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(interviewerNames, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class LabelController {
     @Operation(summary = "지원자의 라벨을 생성합니다.")
     @PostMapping("/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
-    public ResponseEntity<Label> createLabel(Integer applicantId) {
+    public ResponseEntity<Label> createLabel(UUID applicantId) {
         Label label = labelUseCase.createLabel(applicantId);
         return new ResponseEntity<>(label, HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class LabelController {
     @Operation(summary = "지원자의 라벨을 취소합니다.")
     @DeleteMapping("/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
-    public ResponseEntity<String> deleteLabel(Integer applicantId, Integer idpId) {
+    public ResponseEntity<String> deleteLabel(UUID applicantId, Integer idpId) {
         labelUseCase.deleteLabel(applicantId, idpId);
         return new ResponseEntity<>(LABEL_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }

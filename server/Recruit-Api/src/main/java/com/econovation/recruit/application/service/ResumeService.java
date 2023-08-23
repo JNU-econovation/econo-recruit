@@ -30,7 +30,7 @@ public class ResumeService implements ResumeUseCase {
     }
 
     @Override
-    public List<Resume> findByApplicantId(Integer applicantId) {
+    public List<Resume> findByApplicantId(UUID applicantId) {
         Applicant applicant = applicantLoadPort.loadApplicantById(applicantId);
         return resumeLoadPort.findByApplicantId(applicant);
     }

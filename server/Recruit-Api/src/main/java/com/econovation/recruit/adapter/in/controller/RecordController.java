@@ -4,6 +4,7 @@ import com.econovation.recruit.application.port.in.RecordUseCase;
 import com.econovation.recruit.application.utils.EntityMapper;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
 import com.econovation.recruitdomain.domains.record.Record;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class RecordController {
     //        List<Record> records = recordUseCase.findAll();
     //    }
     @GetMapping("/records")
-    public ResponseEntity<Record> findByApplicantId(Integer applicantId) {
+    public ResponseEntity<Record> findByApplicantId(UUID applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(record, HttpStatus.OK);
     }

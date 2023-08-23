@@ -38,7 +38,7 @@
 //    }
 //
 //    @GetMapping("/resumes/applicant")
-//    public ResponseEntity<List<Resume>> findByApplicantId(Integer applicantId) {
+//    public ResponseEntity<List<Resume>> findByApplicantId(UUID applicantId) {
 //        List<Resume> all = resumeUseCase.findByApplicantId(applicantId);
 //        return new ResponseEntity<>(all, HttpStatus.OK);
 //    }

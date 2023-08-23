@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Interviewer {
     @Id
     @Column(name = "idp_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

@@ -19,6 +19,7 @@ dependencies {
     api 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
     api 'com.sun.mail:javax.mail:1.6.2'
+    api project(':Recruit-Domain')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5"

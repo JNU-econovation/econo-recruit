@@ -6,14 +6,17 @@ import lombok.Getter;
 
 @Data
 @Getter
-public class InterviewerCreateDto {
-    private Integer idpId;
-    private String role;
+public class InterviewerResponse {
+    private Long idpId;
+    private String name;
+    private String email;
+    private Integer year;
 
     public static Interviewer from(InterviewerResponse interviewerResponse) {
         return Interviewer.builder()
                 .id(interviewerResponse.getIdpId())
                 .name(interviewerResponse.getName())
+                //                .email(interviewerResponse.getEmail())
                 .year(interviewerResponse.getYear())
                 .build();
     }

@@ -8,5 +8,5 @@ public interface ResumeLoadPort {
 
     Resume findById(Integer resumeId);
 
-    List<Resume> findByApplicantId(Integer applicantId);
+    List<Resume> findByApplicantId(UUID applicantId);
 }

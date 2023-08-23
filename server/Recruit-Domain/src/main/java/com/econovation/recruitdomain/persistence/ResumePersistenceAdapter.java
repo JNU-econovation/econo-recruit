@@ -64,7 +64,7 @@ public class ResumePersistenceAdapter implements ResumeRecordPort, ResumeLoadPor
     }
 
     @Override
-    public List<Resume> findByApplicantId(Integer applicantId) {
+    public List<Resume> findByApplicantId(UUID applicantId) {
         return resumeRepository.findByApplicantId(applicantId);
     }
 }

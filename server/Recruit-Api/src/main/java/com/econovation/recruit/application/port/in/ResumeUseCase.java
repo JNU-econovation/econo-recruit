@@ -11,5 +11,5 @@ public interface ResumeUseCase {
 
     Resume findById(Integer resumeId);
 
-    List<Resume> findByApplicantId(Integer applicantId);
+    List<Resume> findByApplicantId(UUID applicantId);
 }

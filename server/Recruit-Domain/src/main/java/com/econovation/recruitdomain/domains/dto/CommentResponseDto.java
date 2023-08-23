@@ -9,5 +9,5 @@ public class CommentResponseDto {
     private Integer id;
     private String content;
     private Long parentId;
-    private Integer applicantId;
+    private UUID applicantId;
 }

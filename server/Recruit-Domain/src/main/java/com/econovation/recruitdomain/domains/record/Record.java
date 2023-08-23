@@ -16,7 +16,7 @@ public class Record {
     private Integer id;
 
     @Column(name = "applicant_id")
-    private Integer applicantId;
+    private UUID applicantId;
 
     @Column(name = "url")
     private String url;
