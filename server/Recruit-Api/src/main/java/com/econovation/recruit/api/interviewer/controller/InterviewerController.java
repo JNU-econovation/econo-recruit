@@ -29,18 +29,19 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
-    @PostMapping("/interviewers")
+    @Operation(description = "idpId로 Interviewer 등록", summary = "면접관 등록")
+    @PostMapping("/interviewers/idp-id")
     public ResponseEntity<String> createInterviewers(@RequestBody List<Integer> idpIds) {
         interviewerUseCase.createInterviewers(idpIds);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
+    @Operation(description = "name으로 Interviewer 등록", summary = "면접관 등록")
     @PostMapping("/interviewers/name")
     public ResponseEntity<String> createInterviewersByName(@RequestBody List<String> names) {
         interviewerUseCase.createInterviewersByName(names);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
-    // IDP를 다 뒤져서 동기화 하기 -> idpId, name, year
 
     @Operation(description = "Interviewer Role 변경")
     @PutMapping("/interviewers/{idp-id}/roles")
