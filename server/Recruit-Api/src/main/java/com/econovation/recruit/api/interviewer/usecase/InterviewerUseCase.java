@@ -13,4 +13,6 @@ public interface InterviewerUseCase {
     void updateRole(Long idpId, String role);
 
     void createInterviewersByName(List<String> names);
+
+    List<Interviewer> findAll();
 }

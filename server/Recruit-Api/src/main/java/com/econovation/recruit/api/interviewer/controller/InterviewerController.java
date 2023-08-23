@@ -29,6 +29,14 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
+    @Operation(description = "Interviewer 전체 조회", summary = "면접관 전체 조회")
+    @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
+    @GetMapping("/interviewers/all")
+    public ResponseEntity<List<Interviewer>> findAll() {
+        List<Interviewer> interviewers = interviewerUseCase.findAll();
+        return new ResponseEntity(interviewers, HttpStatus.OK);
+    }
+
     @Operation(description = "idpId로 Interviewer 등록", summary = "면접관 등록")
     @PostMapping("/interviewers/idp-id")
     public ResponseEntity<String> createInterviewers(@RequestBody List<Integer> idpIds) {

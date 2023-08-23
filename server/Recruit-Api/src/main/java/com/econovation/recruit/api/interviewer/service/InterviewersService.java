@@ -46,4 +46,9 @@ public class InterviewersService implements InterviewerUseCase {
         interviewerRecordPort.saveAll(
                 interviewers.stream().map(InterviewerCreateDto::from).collect(Collectors.toList()));
     }
+
+    @Override
+    public List<Interviewer> findAll() {
+        return interviewerLoadPort.findAll();
+    }
 }
