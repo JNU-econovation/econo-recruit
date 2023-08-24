@@ -1,7 +1,8 @@
-package com.econovation.recruit.application.service;
+package com.econovation.recruit.api.record.service;
 
-import com.econovation.recruit.application.port.in.RecordUseCase;
-import com.econovation.recruitdomain.domains.record.Record;
+import com.econovation.recruit.api.record.usecase.RecordUseCase;
+import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
+import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
@@ -16,7 +17,8 @@ public class RecordService implements RecordUseCase {
     private final RecordLoadPort recordLoadPort;
 
     @Override
-    public Record createRecord(Record record) {
+    public Record createRecord(CreateRecordDto recordDto) {
+        Record record = CreateRecordDto.toRecord(recordDto);
         return recordRecordPort.save(record);
     }
 

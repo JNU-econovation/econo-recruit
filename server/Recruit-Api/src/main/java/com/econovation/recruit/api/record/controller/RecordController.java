@@ -1,9 +1,10 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api.record.controller;
 
-import com.econovation.recruit.application.port.in.RecordUseCase;
-import com.econovation.recruit.application.utils.EntityMapper;
+import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
-import com.econovation.recruitdomain.domains.record.Record;
+import com.econovation.recruitdomain.domains.record.domain.Record;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,23 +14,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_CREATE_MESSAGE;
+
 @RestController
 @RequestMapping("/api/v1/")
+@Tag(name = "[6.0] Record API", description = "면접 기록 Record API")
 @RequiredArgsConstructor
 public class RecordController {
     private final RecordUseCase recordUseCase;
-    private final EntityMapper entityMapper;
 
+    @Operation(summary = "지원자의 면접기록을 생성합니다")
     @PostMapping("/records")
-    public ResponseEntity<Record> createRecord(CreateRecordDto createRecordDto) {
-        Record record = entityMapper.toRecord(createRecordDto);
-        return new ResponseEntity(recordUseCase.createRecord(record), HttpStatus.OK);
+    public ResponseEntity<String> createRecord(CreateRecordDto createRecordDto) {
+        recordUseCase.createRecord(createRecordDto);
+        return new ResponseEntity(RECORD_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);
     }
-
-    //    @GetMapping("/records")
-    //    public ResponseEntity<List<Record>> findAll() {
-    //        List<Record> records = recordUseCase.findAll();
-    //    }
+    @Operation(summary = "지원자의 면접기록을 조회합니다")
     @GetMapping("/records")
     public ResponseEntity<Record> findByApplicantId(UUID applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);

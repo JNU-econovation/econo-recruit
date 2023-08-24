@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import java.util.List;
+import java.util.UUID;
 
 public interface CardLoadPort {
 

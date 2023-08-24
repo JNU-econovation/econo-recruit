@@ -1,7 +1,8 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.record.adaptor;
 
-import com.econovation.recruitdomain.domains.record.Record;
-import com.econovation.recruitdomain.domains.record.RecordRepository;
+import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitdomain.domains.record.domain.Record;
+import com.econovation.recruitdomain.domains.record.domain.RecordRepository;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
@@ -9,10 +10,11 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
+import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_RECORD;
+
+@Adaptor
 @RequiredArgsConstructor
-public class RecordPersistenceAdapter implements RecordLoadPort, RecordRecordPort {
-    private static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
+public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
     private final RecordRepository recordRepository;
 
     @Override

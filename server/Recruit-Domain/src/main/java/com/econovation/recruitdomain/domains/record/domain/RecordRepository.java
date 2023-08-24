@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domains.record;
+package com.econovation.recruitdomain.domains.record.domain;
 
 import java.util.Optional;
 import java.util.UUID;
