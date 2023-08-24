@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "[4.0] 라벨 API", description = "라벨 관련 (카드 좋아요) API")
+@Tag(name = "[5.0] 라벨 API", description = "라벨 관련 (카드 좋아요) API")
 @RequestMapping("/api/v1")
 public class LabelController {
     private final LabelUseCase labelUseCase;

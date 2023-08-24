@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "[6.0] Interviewer 면접관 API", description = "Interviewer 면접관 API")
+@Tag(name = "[4.0] Interviewer 면접관 API", description = "Interviewer 면접관 API")
 @RequestMapping("/api/v1")
 public class InterviewerController {
     private final InterviewerUseCase interviewerUseCase;
