@@ -5,10 +5,11 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.LABEL_SUCCESS_D
 import com.econovation.recruit.api.label.docs.LabelExceptionDocs;
 import com.econovation.recruit.api.label.usecase.LabelUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
-import com.econovation.recruitdomain.domains.label.Label;
+import com.econovation.recruitdomain.domains.label.domain.Label;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "[4.0] 라벨 API", description = "라벨 관련 (카드 좋아요) API")
+@Tag(name = "[5.0] 라벨 API", description = "라벨 관련 (카드 좋아요) API")
 @RequestMapping("/api/v1")
 public class LabelController {
     private final LabelUseCase labelUseCase;

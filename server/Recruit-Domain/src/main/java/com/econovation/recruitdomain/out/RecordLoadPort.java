@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.record.Record;
+import com.econovation.recruitdomain.domains.record.domain.Record;
 import java.util.List;
 import java.util.UUID;
 

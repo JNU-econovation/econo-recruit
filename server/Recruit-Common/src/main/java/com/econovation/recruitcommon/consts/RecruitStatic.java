@@ -47,6 +47,8 @@ public class RecruitStatic {
     public static final String SCORE_SUCCESS_REGISTER_MESSAGE = "성공적으로 점수가 등록됐습니다";
     public static final String SCORE_SUCCESS_UPDATE_MESSAGE = "성공적으로 점수가 수정됐습니다";
     public static final String INTERVIEWER_SUCCESS_REGISTER_MESSAGE = "성공적으로 면접관이 등록됐습니다";
+    public static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
+    public static final String RECORD_SUCCESS_CREATE_MESSAGE = "성공적으로 지원자의 면접 기록이 생성됐습니다";
 
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(

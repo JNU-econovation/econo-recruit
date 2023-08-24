@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "[5.0] Score 평가 API", description = "Score 평가 API")
+@Tag(name = "[7.0] Score 평가 API", description = "Score 평가 API")
 @RequiredArgsConstructor
 public class ScoreController {
     private final ScoreUseCase scoreUseCase;

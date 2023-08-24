@@ -1,5 +1,6 @@
-package com.econovation.recruitdomain.domains.label;
+package com.econovation.recruitdomain.domains.label.domain;
 
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -2,8 +2,8 @@ package com.econovation.recruitdomain.domains.label.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
-import com.econovation.recruitdomain.domains.label.Label;
-import com.econovation.recruitdomain.domains.label.LabelRepository;
+import com.econovation.recruitdomain.domains.label.domain.Label;
+import com.econovation.recruitdomain.domains.label.domain.LabelRepository;
 import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;

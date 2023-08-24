@@ -1,18 +1,18 @@
-package com.econovation.recruitdomain.persistence;
+package com.econovation.recruitdomain.domains.record.adaptor;
 
-import com.econovation.recruitdomain.domains.record.Record;
-import com.econovation.recruitdomain.domains.record.RecordRepository;
+import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitdomain.domains.record.domain.Record;
+import com.econovation.recruitdomain.domains.record.domain.RecordRepository;
+import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundException;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Adaptor
 @RequiredArgsConstructor
-public class RecordPersistenceAdapter implements RecordLoadPort, RecordRecordPort {
-    private static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
+public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
     private final RecordRepository recordRepository;
 
     @Override
@@ -29,6 +29,6 @@ public class RecordPersistenceAdapter implements RecordLoadPort, RecordRecordPor
     public Record findByApplicantId(UUID applicantId) {
         return recordRepository
                 .findByApplicantId(applicantId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_RECORD));
+                .orElseThrow(() -> RecordNotFoundException.EXCEPTION);
     }
 }

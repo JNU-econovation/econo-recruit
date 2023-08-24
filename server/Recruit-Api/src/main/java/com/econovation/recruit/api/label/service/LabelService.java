@@ -6,7 +6,7 @@ import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
-import com.econovation.recruitdomain.domains.label.Label;
+import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
@@ -15,6 +15,7 @@ import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class LabelService implements LabelUseCase {
         List<Long> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
 
-        Map<Integer, String> interviewerMap =
+        Map<Long, String> interviewerMap =
                 interviewers.stream()
                         .collect(Collectors.toMap(Interviewer::getId, Interviewer::getName));
 

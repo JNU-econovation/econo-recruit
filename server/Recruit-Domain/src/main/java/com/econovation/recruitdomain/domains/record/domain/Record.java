@@ -1,5 +1,6 @@
-package com.econovation.recruitdomain.domains.record;
+package com.econovation.recruitdomain.domains.record.domain;
 
+import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Record {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")
     private Integer id;
 
@@ -21,6 +22,7 @@ public class Record {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "record")
+    // Long text 제한을 해제
+    @Column(name = "record", columnDefinition = "TEXT")
     private String record;
 }
