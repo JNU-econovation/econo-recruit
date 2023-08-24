@@ -3,9 +3,11 @@ package com.econovation.recruitdomain.domains.record.adaptor;
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.domains.record.domain.RecordRepository;
+import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundException;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,8 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
     @Override
     public Record findByApplicantId(UUID applicantId) {
         return recordRepository
-                .findByApplicantId(applicantId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_RECORD));
+                .findByApplicantId(applicantId).orElseThrow(
+                        () -> RecordNotFoundException.EXCEPTION
+                );
     }
 }

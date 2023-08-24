@@ -13,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Builder
 public class Record {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")
     private Integer id;
 
