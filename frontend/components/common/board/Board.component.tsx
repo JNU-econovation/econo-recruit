@@ -8,13 +8,11 @@ import CloseImage from "/public/icons/ellipsis.multiply.svg";
 import classNames from "classnames";
 
 interface BoardProps {
-  baseUrl: string;
   onClick?: () => void;
   wapperClassname?: string;
 }
 
 const Board: FC<PropsWithChildren<BoardProps>> = ({
-  baseUrl,
   children,
   onClick,
   wapperClassname,

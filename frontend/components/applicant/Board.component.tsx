@@ -16,7 +16,7 @@ const ApplicantBoard: FC<ApplicantBoardProps> = async ({ generation }) => {
   const data = await getApplicantDetailData("22");
 
   return (
-    <Board baseUrl={""} wapperClassname="divide-x">
+    <Board wapperClassname="divide-x">
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
           <ApplicantDetailLeft data={data} postId={"22"} />
