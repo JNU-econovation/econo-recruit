@@ -17,6 +17,7 @@ const colorType = {
   gray: "text-[#666]",
   white: "text-white",
   blue: "text-[#2160FF]",
+  light_gray: "text-[#8C8C8C]",
 };
 
 interface TxtProps {

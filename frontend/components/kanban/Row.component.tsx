@@ -46,7 +46,7 @@ const KanbanRowComponent = ({
               ""
             )}
           </div>
-          <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
+          <div className="flex flex-col justify-between overflow-auto h-fit">
             <Droppable droppableId={`${index}`} key={index}>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>

@@ -20,9 +20,9 @@ const SortListComponent = ({ sortList, selected }: SortListComponent) => {
   };
 
   return (
-    <div className="relative z-10">
+    <div className="relative">
       <button
-        className="flex items-center bg-[#F9FBFF] p-4 gap-2 rounded-2xl text-[#7E7E7E]"
+        className="flex items-center bg-[#F9FBFF] p-4 gap-2 rounded-2xl text-[#7E7E7E] z-20"
         onClick={(e) => {
           e.preventDefault();
           setIsOpen((prev) => !prev);
@@ -33,7 +33,7 @@ const SortListComponent = ({ sortList, selected }: SortListComponent) => {
         <img src="/icons/chevron-down.svg" alt="drop_down"></img>
       </button>
       {isOpen ? (
-        <div className="flex flex-col absolute w-full border-[#F0F0F0] rounded-xl border-[1px] bg-white p-6 font-semibold -mt-4 -z-10 text-[#3D3C42]">
+        <div className="flex flex-col absolute w-full border-[#F0F0F0] rounded-xl border-[1px] bg-white p-6 font-semibold -mt-4 text-[#3D3C42]">
           {sortList.map((sort) => (
             <button
               key={sort.type}

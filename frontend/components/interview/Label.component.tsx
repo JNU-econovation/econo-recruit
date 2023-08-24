@@ -1,5 +1,5 @@
 import { InterviewScoreMock } from "@/mock/MockData";
-import { getScoreAverage } from "@/src/utils/calculator";
+import { getScoreAverage } from "@/src/functions/calculator";
 
 const InterviewLabelComponent = () => {
   const interviewScoreList = InterviewScoreMock;
@@ -10,17 +10,20 @@ const InterviewLabelComponent = () => {
   );
 
   return (
-    <div className="flex w-full justify-between items-center mt-8">
-      <div className="relative w-[6.7rem] h-[3.5rem]">
-        <div className="absolute w-[6.7rem] h-5 bg-[#A6BFFF] top-8"></div>
-        <span className="absolute text-5xl font-extrabold z-30 text-[#333333]">
+    <div className="flex w-full items-center mt-10 gap-[6%]">
+      <div className="w-[6.7rem]">
+        <span className="text-5xl font-extrabold text-[#333333] relative">
+          <div className="absolute w-[6.7rem] h-5 bg-[#A6BFFF] top-9 -z-10"></div>
           {scoreAverage}
         </span>
       </div>
-      <div className="flex gap-8">
+      <div className="flex w-full gap-[3%]">
         {interviewScoreList.map((score) => (
-          <div key={score.type} className="flex flex-col items-center gap-1">
-            <span className="text-[1.6875rem] font-semibold text-[#4E4E4E]">
+          <div
+            key={score.type}
+            className="flex flex-col items-center justify-center gap-1 min-w-[4.1rem]"
+          >
+            <span className="text-2xl font-semibold text-[#4E4E4E] max-w-full">
               {score.score}
             </span>
             <span className="text-sm text-[#4F4F4F]">{score.string}</span>

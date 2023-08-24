@@ -4,7 +4,7 @@ type InterviewUserComponent = {
 
 const InterviewUserComponent = ({ src }: InterviewUserComponent) => {
   return (
-    <div className="w-full h-[24rem]">
+    <div className="w-full aspect-video">
       <video src={src} className="w-full h-full bg-[#D9D9D9]" />
     </div>
   );
