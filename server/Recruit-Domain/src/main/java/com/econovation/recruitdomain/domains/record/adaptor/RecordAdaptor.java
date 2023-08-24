@@ -7,12 +7,8 @@ import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundExce
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_RECORD;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -32,8 +28,7 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
     @Override
     public Record findByApplicantId(UUID applicantId) {
         return recordRepository
-                .findByApplicantId(applicantId).orElseThrow(
-                        () -> RecordNotFoundException.EXCEPTION
-                );
+                .findByApplicantId(applicantId)
+                .orElseThrow(() -> RecordNotFoundException.EXCEPTION);
     }
 }

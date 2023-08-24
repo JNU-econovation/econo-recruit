@@ -1,5 +1,7 @@
 package com.econovation.recruit.api.record.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_CREATE_MESSAGE;
+
 import com.econovation.recruit.api.record.docs.RecordExceptionDocs;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_CREATE_MESSAGE;
-
 @RestController
 @RequestMapping("/api/v1/")
 @Tag(name = "[6.0] Record API", description = "면접 기록 Record API")
@@ -33,6 +33,7 @@ public class RecordController {
         recordUseCase.createRecord(createRecordDto);
         return new ResponseEntity(RECORD_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);
     }
+
     @Operation(summary = "지원자의 면접기록을 조회합니다")
     @ApiErrorExceptionsExample(RecordExceptionDocs.class)
     @GetMapping("/records")

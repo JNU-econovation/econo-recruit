@@ -4,8 +4,6 @@ import com.econovation.recruitcommon.annotation.ExceptionDoc;
 import com.econovation.recruitcommon.annotation.ExplainError;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 import com.econovation.recruitcommon.interfaces.SwaggerExampleExceptions;
-import com.econovation.recruitdomain.domains.label.exception.LabelDuplicateCreatedException;
-import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.domains.record.exception.RecordDuplicateCreatedException;
 import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundException;
 

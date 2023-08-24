@@ -13,7 +13,7 @@ throttle:
   overdraft: ${THROTTLE_OVERDRAFT:10}
 auth:
   jwt:
-    secret: ${JWT_SECRET:secret}
+    secret: ${JWT_SECRET:secretkeysecretkeysecretkeysecretkey}
     blacklist:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
 login:

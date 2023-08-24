@@ -60,9 +60,8 @@ public class CookieFilter extends OncePerRequestFilter {
         if (request.getRequestURI().startsWith("/api/v1/interviewers")) {
             String role = interviewerUseCase.getById(idpId).getRole().name();
             if (role.equals(Role.ROLE_PRESIDENT.name())
-                    ||
-                    //                    role.equals(Role.ROLE_TF.name()) ||
-                    role.equals(Role.ROLE_OPERATION.name())) {
+                    || role.equals(Role.ROLE_TF.name())
+                    || role.equals(Role.ROLE_OPERATION.name())) {
                 log.info("ADMIN ACCESS");
                 filterChain.doFilter(request, response);
             }
