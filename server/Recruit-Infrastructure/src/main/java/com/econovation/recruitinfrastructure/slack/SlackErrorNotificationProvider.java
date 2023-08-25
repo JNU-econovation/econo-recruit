@@ -1,5 +1,6 @@
-package com.econovation.recruitinfrastructure.slack.config;
+package com.econovation.recruitinfrastructure.slack;
 
+import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import com.slack.api.model.block.LayoutBlock;
 import java.util.Arrays;
 import java.util.List;

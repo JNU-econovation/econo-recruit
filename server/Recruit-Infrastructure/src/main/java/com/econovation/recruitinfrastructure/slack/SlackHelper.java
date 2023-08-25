@@ -1,4 +1,4 @@
-package com.econovation.recruitinfrastructure.slack.config;
+package com.econovation.recruitinfrastructure.slack;
 
 import com.econovation.recruitcommon.annotation.Helper;
 import com.econovation.recruitcommon.helper.SpringEnvironmentHelper;
