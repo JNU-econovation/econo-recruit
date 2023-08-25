@@ -1,4 +1,4 @@
-package com.econovation.recruit.config;
+package com.econovation.recruit.api.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

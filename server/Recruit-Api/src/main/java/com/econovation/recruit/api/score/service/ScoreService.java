@@ -2,8 +2,8 @@ package com.econovation.recruit.api.score.service;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.CRETERIA_SET;
 
+import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.score.usecase.ScoreUseCase;
-import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import com.econovation.recruitdomain.domains.dto.ScoreVo;

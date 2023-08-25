@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.label.service;
 
+import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.label.usecase.LabelUseCase;
-import com.econovation.recruit.config.security.SecurityUtils;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.domain.Card;

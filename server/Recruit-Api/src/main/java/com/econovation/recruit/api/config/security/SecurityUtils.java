@@ -1,4 +1,4 @@
-package com.econovation.recruit.config.security;
+package com.econovation.recruit.api.config.security;
 
 import com.econovation.recruitcommon.exception.SecurityContextNotFoundException;
 import java.util.List;

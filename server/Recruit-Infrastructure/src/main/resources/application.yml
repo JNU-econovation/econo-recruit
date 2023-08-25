@@ -7,9 +7,15 @@ slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
     id: ${SLACK_WEBHOOK_ID:}
-    service-alarm-channel :  ${SLACK_SERVICE_CHANNEL_ID:}
-    username: ${SLACK_WEBHOOK_USERNAME:}
+    channel :  ${SLACK_SERVICE_CHANNEL_ID:}
+    username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}
     icon-url: ${SLACK_WEBHOOK_ICON_URL:}
+  tf:
+    token: ${SLACK_TF_WEBHOOK_TOKEN:}
+    id: ${SLACK_TF_WEBHOOK_ID:}
+    channel: ${SLACK_TF_SERVICE_CHANNEL_ID:}
+    username: ${SLACK_TF_WEBHOOK_USERNAME:Recruit_알림요정}
+    icon-url: ${SLACK_TF_WEBHOOK_ICON_URL:}
 
 ncp:
   service-id: ${NCP_SERVICE_ID:}

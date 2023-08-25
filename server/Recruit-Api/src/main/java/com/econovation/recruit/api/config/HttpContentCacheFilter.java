@@ -1,4 +1,4 @@
-package com.econovation.recruit.config;
+package com.econovation.recruit.api.config;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

@@ -6,4 +6,4 @@ import org.springframework.context.annotation.Configuration;
 
 @EnableConfigurationProperties({IdpProperties.class})
 @Configuration
-public class ConfigurationPropertiesConfig {}
+public class ConfigurationCommonPropertiesConfig {}
