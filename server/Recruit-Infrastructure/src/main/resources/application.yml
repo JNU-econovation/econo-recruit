@@ -7,8 +7,8 @@ slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
     id: ${SLACK_WEBHOOK_ID:}
-    service-alarm-channel :  ${SLACK_SERVICE_CHANNEL_ID:}
-    username: ${SLACK_WEBHOOK_USERNAME:}
+    channel :  ${SLACK_SERVICE_CHANNEL_ID:}
+    username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}
     icon-url: ${SLACK_WEBHOOK_ICON_URL:}
 
 ncp:
