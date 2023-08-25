@@ -12,8 +12,6 @@ throttle:
   greedyRefill: ${THROTTLE_GREEDY_REFILL:10}
   overdraft: ${THROTTLE_OVERDRAFT:10}
 auth:
-  jwt:
-    secret: ${JWT_SECRET:secretkeysecretkeysecretkeysecretkey}
     blacklist:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
 login:
@@ -48,7 +46,7 @@ springdoc:
 swagger:
   user: ${SWAGGER_USER:user}
   password: ${SWAGGER_PASSWORD:password}
-  version: ${WHATNOW_VERSION:0.0.1-SNAPSHOT}
+  version: ${RECRUIT_SWAGGER_VERSION:0.0.1-SNAPSHOT}
 mail:
   destination:
     url: ${MAIL_DESTINATION_URL:http://localhost:8080}
