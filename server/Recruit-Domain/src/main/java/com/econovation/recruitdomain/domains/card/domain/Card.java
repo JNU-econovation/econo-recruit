@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Card extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private Long id;
 

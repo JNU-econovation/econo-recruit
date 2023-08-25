@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 

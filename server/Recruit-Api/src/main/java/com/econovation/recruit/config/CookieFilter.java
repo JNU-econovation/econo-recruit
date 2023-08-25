@@ -43,7 +43,7 @@ public class CookieFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String token = resolveToken(request.getHeader("Authorization"));
+/*        String token = resolveToken(request.getHeader("Authorization"));
         if (request.getRequestURI().startsWith("/swagger")
                 || request.getRequestURI().startsWith("/api-docs")
                 || request.getRequestURI().startsWith("/api/v1/interviewers")) {
@@ -66,7 +66,7 @@ public class CookieFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
             return;
-        }
+        }*/
         // 전체 url 체크
         /*if(request.getRequestURI().startsWith("/api/v1/*")){
                         String role = interviewerUseCase.getById(Math.toIntExact(idpId)).getRole().name();
@@ -79,7 +79,7 @@ public class CookieFilter extends OncePerRequestFilter {
                         return;
         }*/
         // token은 있는데 다른 요청일 경우 넘어가자
-        log.info("token은 있는데 다른 요청일 경우 넘어가자");
+//        log.info("token은 있는데 다른 요청일 경우 넘어가자");
         filterChain.doFilter(request, response);
     }
 

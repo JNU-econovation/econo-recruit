@@ -2,7 +2,7 @@ package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruitdomain.common.events.applicant.SubmitApplicantEvent;
-import com.econovation.recruitdomain.domains.card.adaptor.CardAdapter;
+import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 @Slf4j
 public class SubmitApplicantEventHandler {
-    private final CardAdapter cardAdapter;
+    private final CardAdaptor cardAdaptor;
     private final BoardRegisterUseCase boardRegisterUseCase;
 
     @Async
@@ -23,7 +23,7 @@ public class SubmitApplicantEventHandler {
     //    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(SubmitApplicantEvent submitApplicantEvent) {
         Card card = createCardFromEvent(submitApplicantEvent);
-        cardAdapter.save(card);
+        cardAdaptor.save(card);
 
         String hopeField = extractHopeField(submitApplicantEvent.getTitle());
 

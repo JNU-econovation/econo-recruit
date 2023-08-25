@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class CardResponseDto {
     private Integer boardId;
     private Integer nextBoardId;
-    private Integer cardId;
+    private Long cardId;
     private CardType cardType;
     private String title;
     private String content;

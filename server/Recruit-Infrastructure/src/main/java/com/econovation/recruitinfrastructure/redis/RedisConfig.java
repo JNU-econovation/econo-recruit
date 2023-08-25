@@ -1,7 +1,9 @@
 package com.econovation.recruitinfrastructure.redis;
 
 import java.time.Duration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -15,24 +17,26 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
         basePackages = "com.econovation",
         enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
 @Configuration
+@RequiredArgsConstructor
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
+/*    @Value("${spring.redis.host}")
     private String redisHost;
 
     @Value("${spring.redis.port}")
     private int redisPort;
 
     @Value("${spring.redis.password}")
-    private String redisPassword;
+    private String redisPassword;*/
 
+    private final RedisProperties redisProperties;
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig =
-                new RedisStandaloneConfiguration(redisHost, redisPort);
+                new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
 
-        if (redisPassword != null && !redisPassword.isBlank())
-            redisConfig.setPassword(redisPassword);
+//        if (redisPassword != null && !redisPassword.isBlank())
+        redisConfig.setPassword(redisProperties.getPassword());
 
         LettuceClientConfiguration clientConfig =
                 LettuceClientConfiguration.builder()

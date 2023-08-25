@@ -1,4 +1,4 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.MethodArgumentNotValidException;

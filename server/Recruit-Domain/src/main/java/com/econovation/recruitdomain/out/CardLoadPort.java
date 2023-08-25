@@ -10,7 +10,8 @@ public interface CardLoadPort {
 
     Card findById(Long cardId);
 
-    List<Card> findAllByBoardIdIn(List<Integer> collect);
 
     Card findByApplicantId(UUID applicantId);
+
+    List<Card> findByIdIn(List<Long> cardIds);
 }

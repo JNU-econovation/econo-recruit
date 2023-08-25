@@ -17,8 +17,7 @@ public class NavigationService implements NavigationUseCase {
 
     @Override
     public Navigation createNavigation(String navTitle) {
-        Integer navLoc = getNewestNavLoc();
-        Navigation navigation = Navigation.builder().navTitle(navTitle).navLoc(navLoc).build();
+        Navigation navigation = Navigation.builder().navTitle(navTitle).build();
         return navigationRecordPort.save(navigation);
     }
 
@@ -32,15 +31,5 @@ public class NavigationService implements NavigationUseCase {
         Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
         navigation.setNavTitle(navTitle);
         return navigationRecordPort.save(navigation);
-    }
-
-    private Integer getNewestNavLoc() {
-        // hopeField 에 일치하는 board List
-        List<Navigation> navigations = navigationLoadPort.getAllNavigation();
-        Navigation navigation =
-                navigations.stream()
-                        .max(Comparator.comparing(Navigation::getNavLoc))
-                        .orElseThrow(NoSuchFieldError::new);
-        return navigation.getNavLoc();
     }
 }

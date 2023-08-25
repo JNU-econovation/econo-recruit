@@ -30,15 +30,14 @@ springdoc:
   version: v1
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
-  packages-to-scan: com.econovation.recruit
+#  packages-to-scan: com.econovation.recruit
   path-to-match: /api/**
   swagger-ui:
-    path: /swagger-ui.html
+#    path: /swagger-ui.html
     tags-sorter: alpha
-    url: /swagger-ui.html
+#    url: /swagger-ui.html
     display-query-params: true
-    groups:
-      enabled: true
+    version: ${SWAGGER_VERSION:0.0.1-SNAPSHOT}
   api-docs:
     path: /api-docs
     groups:

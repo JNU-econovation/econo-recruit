@@ -9,17 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
-    // hope_field 와 board.col_title
-    @Query(
-            value = "SELECT * " + "FROM Board as b " + "WHERE b.col_title = :hope_field",
-            nativeQuery = true)
-    List<Board> getByHopeField(@Param("hope_field") String hopeField);
-
-    List<Board> findByNavLocAndColLoc();
-
-    List<Board> findByNavLoc(Integer navigationId);
-
-    List<Board> findByNavigationIdAndColumnsId(Integer navigationId, Integer columnsId);
 
     List<Board> findByNavigationId(Integer navigationId);
 
@@ -27,5 +16,5 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     Optional<Board> findByNextBoardId(Integer nextBoardId);
 
-    List<Board> findByColumnsIdIn(List<Integer> columnsIds);
+    List<Board> findByColumnIdIn(List<Integer> columnsIds);
 }

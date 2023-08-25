@@ -1,8 +1,8 @@
 package com.econovation.recruit.api.interviewer.helper;
 
 import com.econovation.recruitcommon.annotation.Helper;
-import com.econovation.recruitdomain.domains.dto.InterviewerResponse;
 import com.econovation.recruitinfrastructure.idp.client.IdpClient;
+import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class IdpHelper {
     private final IdpClient idpClient;
 
-    public List<InterviewerResponse> createInterviewers(List<Integer> idpIds) {
+    public List<InterviewerResponse> createInterviewers(List<Long> idpIds) {
         return idpIds.stream().map(idpClient::loadById).collect(Collectors.toList());
     }
 

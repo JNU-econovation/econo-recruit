@@ -1,7 +1,6 @@
-package com.econovation.recruit.adapter.in.controller;
+package com.econovation.recruit.api.example;
 
 import com.econovation.recruitcommon.annotation.ApiErrorCodeExample;
-import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantErrorCode;
 import com.econovation.recruitdomain.domains.card.exception.CardErrorCode;
 import com.econovation.recruitdomain.domains.comment.exception.CommentErrorCode;
@@ -35,6 +34,7 @@ public class ExampleController {
     @Operation(summary = "댓글 등록 관련 에러코드 나열")
     @ApiErrorCodeExample(CommentErrorCode.class)
     public void getCommentErrorCode() {}
+
     @GetMapping("/interviewer")
     @Operation(summary = "면접관 등록 관련 에러코드 나열")
     @ApiErrorCodeExample(InterviewerErrorCode.class)
@@ -54,5 +54,4 @@ public class ExampleController {
     @Operation(summary = "면접점수 등록 관련 에러코드 나열")
     @ApiErrorCodeExample(ScoreErrorCode.class)
     public void getScoreErrorCode() {}
-
 }

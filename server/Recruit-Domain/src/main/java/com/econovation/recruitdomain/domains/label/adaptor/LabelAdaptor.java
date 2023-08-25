@@ -9,11 +9,12 @@ import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
 @RequiredArgsConstructor
-public class LabelAdapter implements LabelRecordPort, LabelLoadPort {
+public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     private static final String NO_MATCH_LABEL_MESSAGE = "";
     private final String EMPTY_LABEL_MESSAGE = "해당 지원자는 라벨이 존재하지 않습니다.";
     private final LabelRepository labelRepository;
