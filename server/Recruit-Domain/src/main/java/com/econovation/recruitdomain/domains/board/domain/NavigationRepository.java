@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NavigationRepository extends JpaRepository<Navigation, Integer> {
     Optional<Navigation> findById(Integer id);
-
-    Optional<Navigation> findNavigationByNavLoc(Integer navLoc);
 }

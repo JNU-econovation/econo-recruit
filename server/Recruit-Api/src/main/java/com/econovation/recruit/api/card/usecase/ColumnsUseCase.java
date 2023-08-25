@@ -5,6 +5,6 @@ import com.econovation.recruitdomain.domains.board.domain.Columns;
 import java.util.List;
 
 @UseCase
-public interface ColumnsLoadUseCase {
+public interface ColumnsUseCase {
     List<Columns> getByNavigationId(Integer navigationId);
 }

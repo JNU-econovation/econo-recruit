@@ -6,6 +6,7 @@ import com.econovation.recruit.api.record.docs.RecordExceptionDocs;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
+import com.econovation.recruitdomain.domains.dto.RecordResponseDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,8 +38,8 @@ public class RecordController {
     @Operation(summary = "지원자의 면접기록을 조회합니다")
     @ApiErrorExceptionsExample(RecordExceptionDocs.class)
     @GetMapping("/records")
-    public ResponseEntity<Record> findByApplicantId(@RequestParam UUID applicantId) {
+    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam UUID applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
-        return new ResponseEntity(record, HttpStatus.OK);
+        return new ResponseEntity(RecordResponseDto.from(record), HttpStatus.OK);
     }
 }

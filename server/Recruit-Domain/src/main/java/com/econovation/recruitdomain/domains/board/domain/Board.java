@@ -31,6 +31,9 @@ public class Board extends BaseTimeEntity {
     @Column(name = "column_id")
     private Integer columnId;
 
+    @Column(name = "navigation_id")
+    private Integer navigationId;
+
     public void updateNextBoardID(Integer nextBoardId) {
         this.nextBoardId = nextBoardId;
     }

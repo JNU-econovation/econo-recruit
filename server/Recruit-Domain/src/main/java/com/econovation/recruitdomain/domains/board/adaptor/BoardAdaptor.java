@@ -28,7 +28,7 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
 
     @Override
     public List<Board> getBoardByNavigationIdAndColumnsId(Integer navigationId, Integer columnsId) {
-        return boardRepository.findByNavigationIdAndColumnsId(navigationId, columnsId);
+        return boardRepository.findByNavigationIdAndColumnId(navigationId, columnsId);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
 
     @Override
     public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
-        return boardRepository.findByColumnsIdIn(columnsIds);
+        return boardRepository.findByColumnIdIn(columnsIds);
     }
 
     //    @Override

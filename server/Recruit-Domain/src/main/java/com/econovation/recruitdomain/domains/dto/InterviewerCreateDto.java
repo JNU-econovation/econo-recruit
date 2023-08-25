@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
+import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import lombok.Data;
 import lombok.Getter;
 

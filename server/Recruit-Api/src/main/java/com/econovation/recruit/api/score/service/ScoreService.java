@@ -72,7 +72,7 @@ public class ScoreService implements ScoreUseCase {
     @Override
     public Map<String, List<ScoreVo>> getByApplicantId(UUID applicantId) {
         List<Score> scores = scoreLoadPort.findByApplicantId(applicantId);
-        Map<Integer, String> interviewers = getAssociatedMapWithIdpIdWithName(scores);
+        Map<Long, String> interviewers = getAssociatedMapWithIdpIdWithName(scores);
         Map<String, List<ScoreVo>> result =
                 scores.stream()
                         .filter(score -> CRETERIA_SET.contains(score.getCriteria()))
@@ -131,7 +131,7 @@ public class ScoreService implements ScoreUseCase {
     }
 
     @NotNull
-    private Map<Integer, String> getAssociatedMapWithIdpIdWithName(List<Score> scores) {
+    private Map<Long, String> getAssociatedMapWithIdpIdWithName(List<Score> scores) {
         return interviewerLoadPort
                 .loadInterviewerByIdpIds(
                         scores.stream().map(Score::getIdpId).collect(Collectors.toList()))

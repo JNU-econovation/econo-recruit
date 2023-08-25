@@ -39,7 +39,7 @@ public class InterviewerController {
 
     @Operation(description = "idpId로 Interviewer 등록", summary = "면접관 등록")
     @PostMapping("/interviewers/idp-id")
-    public ResponseEntity<String> createInterviewers(@RequestBody List<Integer> idpIds) {
+    public ResponseEntity<String> createInterviewers(@RequestBody List<Long> idpIds) {
         interviewerUseCase.createInterviewers(idpIds);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }

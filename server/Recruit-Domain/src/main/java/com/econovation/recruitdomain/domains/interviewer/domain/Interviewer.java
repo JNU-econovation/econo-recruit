@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.interviewer.domain;
 
+import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +29,14 @@ public class Interviewer {
 
     public void updateRole(Role role) {
         this.role = role;
+    }
+
+    public static Interviewer from(InterviewerResponse interviewerResponse) {
+        return Interviewer.builder()
+                .id(interviewerResponse.getIdpId())
+                .name(interviewerResponse.getName())
+                //                .email(interviewerResponse.getEmail())
+                .year(interviewerResponse.getYear())
+                .build();
     }
 }

@@ -7,12 +7,13 @@ import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CardAdapter implements CardLoadPort, CardRecordPort {
+public class CardAdaptor implements CardLoadPort, CardRecordPort {
     private static final String NO_MATCH_CARD = "일치하는 Card 가 존재하지 않습니다";
     private final CardRepository cardRepository;
 
@@ -40,11 +41,6 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
     }
 
     @Override
-    public List<Card> findAllByBoardIdIn(List<Integer> boardIds) {
-        return cardRepository.findAllByBoardIdIn(boardIds);
-    }
-
-    @Override
     public Card findByApplicantId(UUID applicantId) {
         Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);
         if (applicant.isEmpty()) {
@@ -52,5 +48,10 @@ public class CardAdapter implements CardLoadPort, CardRecordPort {
         } else {
             return applicant.get();
         }
+    }
+
+    @Override
+    public List<Card> findByIdIn(List<Long> cardIds) {
+        return cardRepository.findAllById(cardIds);
     }
 }

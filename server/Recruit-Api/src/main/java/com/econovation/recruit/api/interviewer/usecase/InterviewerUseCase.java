@@ -6,7 +6,7 @@ import java.util.List;
 
 @UseCase
 public interface InterviewerUseCase {
-    List<Interviewer> createInterviewers(List<Integer> idpIds);
+    List<Interviewer> createInterviewers(List<Long> idpIds);
 
     Interviewer getById(Long idpId);
 

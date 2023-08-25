@@ -4,7 +4,7 @@ import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
-import com.econovation.recruit.api.card.usecase.ColumnsLoadUseCase;
+import com.econovation.recruit.api.card.usecase.ColumnsUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
@@ -28,7 +28,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final CardLoadPort cardLoadPort;
     private final BoardRegisterUseCase boardRegisterUseCase;
     private final BoardLoadUseCase boardLoadUseCase;
-    private final ColumnsLoadUseCase columnsLoadUseCase;
+    private final ColumnsUseCase columnsUseCase;
 
     /*    @Override
     public Card saveApplicantCard(Applicant applicant) {
@@ -54,7 +54,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
     @Override
     public List<Map<ColumnsResponseDto, CardResponseDto>> getByNavigationId(Integer navigationId) {
-        List<Columns> columns = columnsLoadUseCase.getByNavigationId(navigationId);
+        List<Columns> columns = columnsUseCase.getByNavigationId(navigationId);
         List<ColumnsResponseDto> columnsResponseDtos =
                 columns.stream().map(ColumnsResponseDto::from).collect(Collectors.toList());
 
@@ -63,8 +63,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         List<Board> boards = boardLoadUseCase.getBoardByColumnsIds(columnsIds);
         List<Card> cards =
-                cardLoadPort.findAllByBoardIdIn(
-                        boards.stream().map(Board::getId).collect(Collectors.toList()));
+                cardLoadPort.findByIdIn(
+                        boards.stream().map(Board::getCardId).collect(Collectors.toList()));
 
         Map<Long, Card> cardByBoardIdMap =
                 cards.stream().collect(Collectors.toMap(Card::getId, card -> card));
