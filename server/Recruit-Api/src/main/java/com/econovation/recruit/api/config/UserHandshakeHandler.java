@@ -1,4 +1,4 @@
-package com.econovation.recruit.config;
+package com.econovation.recruit.api.config;
 
 import com.sun.security.auth.UserPrincipal;
 import java.security.Principal;

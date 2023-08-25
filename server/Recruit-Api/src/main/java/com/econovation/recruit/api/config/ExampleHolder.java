@@ -1,4 +1,4 @@
-package com.econovation.recruit.config;
+package com.econovation.recruit.api.config;
 
 import io.swagger.v3.oas.models.examples.Example;
 import lombok.Builder;

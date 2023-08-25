@@ -1,4 +1,4 @@
-package com.econovation.recruit.config;
+package com.econovation.recruit.api.config;
 
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import io.jsonwebtoken.Jwts;
