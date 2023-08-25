@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  redis:
+    image: "redis:alpine"
+    network_mode: "host"
+  database:
+    image: "mysql:8.0.20"
+    container_name: database
+    env_file:
+      - .env
+    network_mode: "host"
+    environment:
+      - TZ=Asia/Seoul
+  backend:
+    image: blackbean99/econo-recruit:0.0.1
+    container_name: backend
+    env_file:
+      - .env
+    network_mode: "host"
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+        - database
+        - redis
