@@ -1,5 +1,7 @@
 package com.econovation.recruit.api.config.security;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
+import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
@@ -17,9 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
-import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 
 @RequiredArgsConstructor
 @Component

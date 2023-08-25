@@ -1,5 +1,7 @@
 package com.econovation.recruitcommon.jwt;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
+
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
 import com.econovation.recruitcommon.exception.ExpiredTokenException;
 import com.econovation.recruitcommon.exception.InvalidTokenException;
@@ -11,11 +13,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 @RequiredArgsConstructor
 @Component

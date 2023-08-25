@@ -22,7 +22,6 @@ public class RecruitStatic {
     public static final Integer DEVELOPER_COLUMNS_ID = 0;
     public static final Integer DESIGNER_COLUMNS_ID = 1;
     public static final Integer PLANNER_COLUMNS_ID = 2;
-
     public static final int MILLI_TO_SECOND = 1000;
     public static final int BAD_REQUEST = 400;
     public static final int UNAUTHORIZED = 401;
@@ -81,6 +80,6 @@ public class RecruitStatic {
             "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
 
     public static final String[] SwaggerPatterns = {
-        "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
+        "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/api-docs/**", "/api-docs"
     };
 }

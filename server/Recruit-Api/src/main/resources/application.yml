@@ -48,7 +48,7 @@ springdoc:
 swagger:
   user: ${SWAGGER_USER:user}
   password: ${SWAGGER_PASSWORD:password}
-  version: ${WHATNOW_VERSION:0.0.1-SNAPSHOT}
+  version: ${RECRUIT_SWAGGER_VERSION:0.0.1-SNAPSHOT}
 mail:
   destination:
     url: ${MAIL_DESTINATION_URL:http://localhost:8080}

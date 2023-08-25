@@ -1,6 +1,5 @@
 package com.econovation.recruitcommon.dto;
 
-
 import lombok.Builder;
 import lombok.Getter;
 

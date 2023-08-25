@@ -1,6 +1,5 @@
 package com.econovation.recruit.api.config.security;
 
-
 import java.util.Collection;
 import java.util.Collections;
 import lombok.AllArgsConstructor;
