@@ -50,11 +50,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.formLogin().disable()
-                .cors()
-                .and()
-                .csrf()
-                .disable();
+        http.formLogin().disable().cors().and().csrf().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().expressionHandler(expressionHandler());

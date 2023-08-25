@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
-    final Key encodedKey = getSecretKey();
+    //    final Key encodedKey = getSecretKey();
 
     private Jws<Claims> getJws(String token) {
         try {

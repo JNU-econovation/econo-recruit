@@ -80,6 +80,11 @@ public class RecruitStatic {
             "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
 
     public static final String[] SwaggerPatterns = {
-        "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/api-docs/**", "/api-docs"
+        "/swagger-resources/**",
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/v3/api-docs",
+        "/api-docs/**",
+        "/api-docs"
     };
 }
