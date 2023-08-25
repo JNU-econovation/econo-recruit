@@ -1,7 +1,6 @@
 package com.econovation.recruit.config;
 
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
-import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.util.Base64;
@@ -43,7 +42,7 @@ public class CookieFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-/*        String token = resolveToken(request.getHeader("Authorization"));
+        /*        String token = resolveToken(request.getHeader("Authorization"));
         if (request.getRequestURI().startsWith("/swagger")
                 || request.getRequestURI().startsWith("/api-docs")
                 || request.getRequestURI().startsWith("/api/v1/interviewers")) {
@@ -79,7 +78,7 @@ public class CookieFilter extends OncePerRequestFilter {
                         return;
         }*/
         // token은 있는데 다른 요청일 경우 넘어가자
-//        log.info("token은 있는데 다른 요청일 경우 넘어가자");
+        //        log.info("token은 있는데 다른 요청일 경우 넘어가자");
         filterChain.doFilter(request, response);
     }
 

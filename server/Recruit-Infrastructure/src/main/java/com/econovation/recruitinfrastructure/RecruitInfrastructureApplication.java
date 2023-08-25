@@ -11,7 +11,8 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 @RequiredArgsConstructor
 @Slf4j
-public class RecruitInfrastructureApplication implements ApplicationListener<ApplicationReadyEvent> {
+public class RecruitInfrastructureApplication
+        implements ApplicationListener<ApplicationReadyEvent> {
 
     private final Environment environment;
 

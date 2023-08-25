@@ -4,8 +4,6 @@ import com.econovation.recruit.api.card.usecase.NavigationUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import com.econovation.recruitdomain.out.NavigationRecordPort;
-import java.util.Comparator;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

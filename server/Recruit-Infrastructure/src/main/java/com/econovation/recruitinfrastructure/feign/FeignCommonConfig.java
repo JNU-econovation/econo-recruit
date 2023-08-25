@@ -34,6 +34,7 @@ public class FeignCommonConfig {
         objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
         return objectMapper;
     }
+
     @Bean
     Level feignLoggerLevel() {
         return Level.FULL;

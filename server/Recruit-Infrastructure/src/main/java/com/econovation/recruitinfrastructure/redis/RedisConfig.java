@@ -2,7 +2,6 @@ package com.econovation.recruitinfrastructure.redis;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @RequiredArgsConstructor
 public class RedisConfig {
 
-/*    @Value("${spring.redis.host}")
+    /*    @Value("${spring.redis.host}")
     private String redisHost;
 
     @Value("${spring.redis.port}")
@@ -30,12 +29,14 @@ public class RedisConfig {
     private String redisPassword;*/
 
     private final RedisProperties redisProperties;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig =
-                new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
+                new RedisStandaloneConfiguration(
+                        redisProperties.getHost(), redisProperties.getPort());
 
-//        if (redisPassword != null && !redisPassword.isBlank())
+        //        if (redisPassword != null && !redisPassword.isBlank())
         redisConfig.setPassword(redisProperties.getPassword());
 
         LettuceClientConfiguration clientConfig =

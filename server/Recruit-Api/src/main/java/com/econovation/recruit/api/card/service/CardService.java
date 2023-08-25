@@ -62,9 +62,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 columns.stream().map(Columns::getId).collect(Collectors.toList());
 
         List<Board> boards = boardLoadUseCase.getBoardByColumnsIds(columnsIds);
-        List<Card> cards = cardLoadPort.findByIdIn(
-                boards.stream().map(Board::getCardId).collect(Collectors.toList())
-        );
+        List<Card> cards =
+                cardLoadPort.findByIdIn(
+                        boards.stream().map(Board::getCardId).collect(Collectors.toList()));
 
         Map<Long, Card> cardByBoardIdMap =
                 cards.stream().collect(Collectors.toMap(Card::getId, card -> card));

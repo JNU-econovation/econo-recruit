@@ -1,6 +1,7 @@
 package com.econovation.recruit.config;
 
-import com.econovation.recruit.config.security.SecurityUtils;
+import static java.util.stream.Collectors.groupingBy;
+
 import com.econovation.recruitcommon.annotation.ApiErrorCodeExample;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.DisableSwaggerSecurity;
@@ -8,9 +9,7 @@ import com.econovation.recruitcommon.annotation.ExplainError;
 import com.econovation.recruitcommon.exception.BaseErrorCode;
 import com.econovation.recruitcommon.exception.ErrorReason;
 import com.econovation.recruitcommon.exception.ErrorResponse;
-import com.econovation.recruitcommon.exception.GlobalErrorCode;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
-import com.econovation.recruitcommon.exception.RecruitDynamicException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,47 +25,28 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import static java.util.stream.Collectors.groupingBy;
 
 @RestControllerAdvice
 @Slf4j
 @RequiredArgsConstructor
 public class SwaggerConfig extends ResponseEntityExceptionHandler {
     private final ApplicationContext applicationContext;
-
 
     @Bean
     public OpenAPI openAPI(ServletContext servletContext) {
@@ -86,6 +66,7 @@ public class SwaggerConfig extends ResponseEntityExceptionHandler {
                 .description("Econovation 신입모집 플랫폼의 API 문서 입니다.")
                 .license(license);
     }
+
     private Components authSetting() {
         return new Components()
                 .addSecuritySchemes(
@@ -97,6 +78,7 @@ public class SwaggerConfig extends ResponseEntityExceptionHandler {
                                 .in(SecurityScheme.In.HEADER)
                                 .name("Authorization"));
     }
+
     @Bean
     public ModelResolver modelResolver(ObjectMapper objectMapper) {
         return new ModelResolver(objectMapper);
@@ -156,7 +138,9 @@ public class SwaggerConfig extends ResponseEntityExceptionHandler {
                 .body(errorResponse);
     }
 
-    *//** Request Param Validation 예외 처리 *//*
+    */
+    /** Request Param Validation 예외 처리 */
+    /*
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> ConstraintViolationExceptionHandler(
             ConstraintViolationException e, HttpServletRequest request) {

@@ -40,7 +40,6 @@ public class CardAdaptor implements CardLoadPort, CardRecordPort {
                 .orElseThrow(() -> new IllegalStateException(NO_MATCH_CARD));
     }
 
-
     @Override
     public Card findByApplicantId(UUID applicantId) {
         Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);

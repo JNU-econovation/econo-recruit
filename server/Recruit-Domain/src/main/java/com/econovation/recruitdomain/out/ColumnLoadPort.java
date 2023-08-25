@@ -7,5 +7,6 @@ public interface ColumnLoadPort {
     Columns findById(Integer id);
 
     List<Columns> getColumnByNavigationId(Integer navigationId);
+
     Columns getColumnByNextColumnsId(Integer nextColId);
 }

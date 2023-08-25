@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class ColumnService implements ColumnsUseCase {
     private final ColumnRecordPort columnRecordPort;
     private final ColumnLoadPort columnLoadPort;
+
     public List<Columns> getByNavigationId(Integer navigationId) {
         return columnLoadPort.getColumnByNavigationId(navigationId);
     }
