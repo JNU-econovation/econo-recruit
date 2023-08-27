@@ -61,4 +61,4 @@ jobs:
           context: ./server/Recruit-Api
           # image push 최적화
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/econo-recruit:${{ steps.get_version.outputs.VERSION }}
+          tags: 'blackbean99/econo-recruit:${{ steps.get_version.outputs.VERSION }}'
