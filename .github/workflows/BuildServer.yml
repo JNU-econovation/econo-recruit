@@ -58,7 +58,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./Recruit-Api
+          context: ./server/Recruit-Api
           # image push 최적화
           push: true
-          tags: blackbean99/econo-recruit:${{ steps.get_version.outputs.VERSION }}
+          tags: blackbean99/econo-recruit:latest
+
