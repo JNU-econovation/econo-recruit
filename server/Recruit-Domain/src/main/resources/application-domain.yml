@@ -34,7 +34,6 @@ logging:
     org.springframework.transaction: DEBUG
     org.springframework.aop: DEBUG
 
-
 ---
 spring:
   config:
