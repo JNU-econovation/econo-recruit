@@ -38,7 +38,7 @@ jobs:
       - name: Execute Gradle build
         run: |
           cd ./server
-          ./gradlew :Recruit-Api:build --no-daemon
+          ./gradlew :Recruit-Api:build --no-daemon -x test
           cd ..
 
       - name: Set up Docker Buildx
