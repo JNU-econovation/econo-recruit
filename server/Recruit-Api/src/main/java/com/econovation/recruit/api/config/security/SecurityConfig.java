@@ -60,26 +60,28 @@ public class SecurityConfig {
         // commence 로 401 넘겨줌. -> 응답 헤더에 www-authenticate 로 인증하라는 응답줌.
         // 브라우저가 basic auth 실행 시켜줌.
         // 개발 환경에서만 스웨거 비밀번호 미설정.
-        if (springEnvironmentHelper.isProdAndStagingProfile()) {
+        if (springEnvironmentHelper.isProdProfile()) {
             http.authorizeRequests().mvcMatchers(SwaggerPatterns).authenticated().and().httpBasic();
         }
 
         http.authorizeRequests()
                 .mvcMatchers(SwaggerPatterns)
                 .permitAll()
-                /*                .mvcMatchers("/v1/auth/oauth/**")
-                .permitAll()
-                .mvcMatchers("/v1/auth/token/refresh")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}/ticketItems")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/v1/events/{eventId:[0-9]*$}/comments/**")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/v1/events/search")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/v1/examples/health")*/
+                //                                .mvcMatchers("/v1/auth/oauth/**")
+                //                .permitAll()
+                //                .mvcMatchers("/v1/auth/token/refresh")
+                //                .permitAll()
+                //                .mvcMatchers(HttpMethod.GET, "/api/v1/token}")
+                //                .permitAll()
+                //                .mvcMatchers(HttpMethod.GET,
+                // "/v1/events/{eventId:[0-9]*$}/ticketItems")
+                //                .permitAll()
+                //                .mvcMatchers(HttpMethod.GET,
+                // "/v1/events/{eventId:[0-9]*$}/comments/**")
+                //                .permitAll()
+                //                .mvcMatchers(HttpMethod.GET, "/v1/events/search")
+                //                .permitAll()
+                //                .mvcMatchers(HttpMethod.GET, "/v1/examples/health")
                 // TODO 임시로 모든 요청 permit
                 .mvcMatchers("/**")
                 .permitAll()
