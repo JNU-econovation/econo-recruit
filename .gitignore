@@ -39,5 +39,5 @@ out/
 .env.*
 
 *.xlsx
-
+/Recruit-Domain/src/main/generated/
 Recruit-Domain/src/main/generated/**/*.java
