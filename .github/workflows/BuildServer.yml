@@ -36,7 +36,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle build
-        run: ./gradlew :Recruit-Api:build --no-daemon
+        run: ./server/gradlew :Recruit-Api:build --no-daemon
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -55,7 +55,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./Recruit-Api
+          context: ./server/Recruit-Api
           # image push 최적화
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/econo-recruit:${{ steps.get_version.outputs.VERSION }}
