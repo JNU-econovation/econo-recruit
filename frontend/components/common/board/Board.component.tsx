@@ -7,10 +7,19 @@ import Image from "next/image";
 import CloseImage from "/public/icons/ellipsis.multiply.svg";
 import classNames from "classnames";
 
+interface BoardData {
+  id: number;
+  title: string;
+  subElements: string[];
+  score?: string;
+  time: Date;
+}
+
 interface BoardProps {
   baseUrl: string;
   onClick?: () => void;
   wapperClassname?: string;
+  boardData: BoardData[];
 }
 
 const Board: FC<PropsWithChildren<BoardProps>> = ({
@@ -18,6 +27,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
   children,
   onClick,
   wapperClassname,
+  boardData,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +37,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
   };
   const closeModel = () => setIsOpen(false);
 
-  const boardData = Array.from({ length: 10 }).map((_, i) => ({
+  const boardApplicationData = Array.from({ length: 10 }).map((_, i) => ({
     id: i,
     title: "[개발자]임채승",
     subElements: ["APP", "WEB", "1학년 1학기"],
@@ -41,6 +51,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           key={index}
           title={item.title}
           subElements={item.subElements}
+          score={item?.score ? item.score : ""}
           time={item.time}
           onClick={openModel}
         />
@@ -49,6 +60,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
         style={{
           content: {
             width: "calc(100% - 12rem)",
+            zIndex: "9999",
             height: "calc(100%)",
             margin: "3rem 6rem 0 6rem",
             minWidth: "1280px",
