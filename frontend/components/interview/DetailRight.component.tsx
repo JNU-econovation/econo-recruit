@@ -1,9 +1,16 @@
-import { InterviewRecode } from "@/mock/MockData";
+import { InterviewRes } from "@/src/apis/interview";
+import { FC } from "react";
 
-const InterviewDetailRightComponent = () => {
+interface InterviewDetailRightProps {
+  data: InterviewRes;
+}
+
+const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = async ({
+  data,
+}) => {
   return (
     <>
-      <pre className="whitespace-pre-wrap">{InterviewRecode}</pre>
+      <pre className="whitespace-pre-wrap">{data.recode}</pre>
     </>
   );
 };
