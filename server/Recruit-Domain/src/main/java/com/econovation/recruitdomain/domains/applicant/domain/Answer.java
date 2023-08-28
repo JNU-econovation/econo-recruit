@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
@@ -25,10 +26,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "answer")
 public class Answer {
     @Id
+    @Column(name = "answer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Question.class)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @Column(name = "answer")

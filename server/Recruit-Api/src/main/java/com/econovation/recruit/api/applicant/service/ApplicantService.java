@@ -12,6 +12,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
+import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -40,16 +41,16 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             questions.stream()
                                                     .filter(
                                                             question ->
-                                                                    question.getKey()
+                                                                    question.getName()
                                                                             .equals(
                                                                                     block
                                                                                             .getName()))
                                                     .findFirst()
                                                     .map(Result::success)
-                                                    .orElse(
-                                                            Result.failure(
-                                                                    ApplicantNotFoundException
-                                                                            .EXCEPTION));
+                                                    .orElseThrow(
+                                                            () ->
+                                                                    QuestionNotFoundException
+                                                                            .EXCEPTION);
                                     return matchingQuestionResult
                                             .map(
                                                     question ->
@@ -61,6 +62,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             .getValue();
                                 })
                         .collect(Collectors.toList());
+        // Result 를 save 하게 된다.
         answerAdaptor.saveAll(results);
         Events.raise(
                 SubmitApplicantEvent.of(applicantId, convertToSubmitApplicantEventTitle(results)));
@@ -77,7 +79,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
         String name = "";
 
         for (Answer answer : results) {
-            String question = answer.getQuestion().getKey();
+            String question = answer.getQuestion().getName();
             String userInputValue = answer.getAnswer();
 
             if (question.equals(HOPE_FIELD_QUESTION_KEY)) {

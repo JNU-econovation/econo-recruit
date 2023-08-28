@@ -23,7 +23,7 @@ public class AnswerService implements AnswerLoadUseCase {
                 .map(
                         answer -> {
                             Map<String, String> map = new HashMap<>();
-                            map.put(answer.getQuestion().getKey(), answer.getAnswer());
+                            map.put(answer.getQuestion().getName(), answer.getAnswer());
                             return map;
                         })
                 .collect(Collectors.toList());
@@ -38,12 +38,12 @@ public class AnswerService implements AnswerLoadUseCase {
     private Map<UUID, Map<String, String>> splitByAnswersInApplicantId(
             List<String> fields, List<Answer> answers) {
         return answers.stream()
-                .filter(answer -> fields.contains(answer.getQuestion().getKey()))
+                .filter(answer -> fields.contains(answer.getQuestion().getName()))
                 .collect(
                         Collectors.groupingBy(
                                 Answer::getApplicantId,
                                 Collectors.toMap(
-                                        answer -> answer.getQuestion().getKey(),
+                                        answer -> answer.getQuestion().getName(),
                                         Answer::getAnswer,
                                         (existing, replacement) -> existing,
                                         HashMap::new)));
@@ -55,7 +55,7 @@ public class AnswerService implements AnswerLoadUseCase {
                         Collectors.groupingBy(
                                 Answer::getApplicantId,
                                 Collectors.toMap(
-                                        answer -> answer.getQuestion().getKey(),
+                                        answer -> answer.getQuestion().getName(),
                                         Answer::getAnswer,
                                         (existing, replacement) -> existing,
                                         HashMap::new)));

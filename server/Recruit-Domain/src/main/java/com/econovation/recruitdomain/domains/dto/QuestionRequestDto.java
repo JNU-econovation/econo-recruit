@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class QuestionRequestDto {
     private String type;
-    private String key;
+    private String name;
     @Nullable private Integer parentId;
 }

@@ -15,18 +15,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table
 @Builder
-@Table(name = "question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "question_id")
+    private Long id;
 
     @Column(name = "question_type")
     private String questionType;
 
-    @Column(name = "key")
-    private String key;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "parent_id")
     private Integer parentId;
