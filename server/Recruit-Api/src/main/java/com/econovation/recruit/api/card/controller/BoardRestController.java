@@ -19,6 +19,7 @@ import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@SecurityRequirement(name = "access-token")
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor

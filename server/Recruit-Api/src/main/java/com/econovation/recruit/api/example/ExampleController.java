@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.example;
 
 import com.econovation.recruitcommon.annotation.ApiErrorCodeExample;
+import com.econovation.recruitcommon.annotation.DisableSwaggerSecurity;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantErrorCode;
 import com.econovation.recruitdomain.domains.card.exception.CardErrorCode;
 import com.econovation.recruitdomain.domains.comment.exception.CommentErrorCode;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "xx. [예시] 에러코드 문서화")
 public class ExampleController {
+    @GetMapping("/health")
+    @DisableSwaggerSecurity
+    public void health() {}
+
     @GetMapping("/applicants")
     @Operation(summary = "지원서 등록 관련 에러코드 나열")
     @ApiErrorCodeExample(ApplicantErrorCode.class)

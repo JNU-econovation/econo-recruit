@@ -1,5 +1,4 @@
 dependencies {
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     testImplementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
@@ -25,4 +24,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+jar {
+    enabled = false
 }
