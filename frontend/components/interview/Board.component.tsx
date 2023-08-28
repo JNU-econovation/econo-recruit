@@ -1,14 +1,12 @@
-import { interviewPopupBooleanState } from "@/src/stores/interview/Interview.atom";
-import { useAtom } from "jotai";
-import InterviewUserComponent from "./User.component";
-import InterviewLabelComponent from "./Label.component";
-import InterviewCommentComponent from "./Comment.component";
-
 import InterviewDetailLeftComponent from "./DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./DetailRight.component";
+import { getInterviewRecode } from "@/src/apis/interview";
+import { getScore } from "@/src/apis/score";
 
-const InterviewBoardComponent = () => {
+const InterviewBoardComponent = async () => {
+  const data = await getInterviewRecode("22");
+  const scoreData = await getScore("22");
   const boardInterviewData = Array.from({ length: 10 }).map((_, i) => ({
     id: i,
     title: "[개발자]임채승",
@@ -24,12 +22,12 @@ const InterviewBoardComponent = () => {
     >
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
-          <InterviewDetailLeftComponent />
+          <InterviewDetailLeftComponent data={data} scoreData={scoreData} />
         </div>
       </div>
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
-          <InterviewDetailRightComponent />
+          <InterviewDetailRightComponent data={data} />
         </div>
       </div>
     </Board>
