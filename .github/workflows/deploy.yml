@@ -1,64 +1,17 @@
-name: Deployment
+name: Build and Deploy to AWS
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
-
+      - master
+      - develop
 jobs:
-  deploy-staging:
-    name: Deploy(Staging)
-    runs-on: ubuntu-latest
-    environment: DuDoong-Staging
-    steps:
-      - name: checkout
-        uses: actions/checkout@master
-
-      - name: create env file
-        run: |
-          touch .env
-          echo "${{ secrets.ENV_VARS }}" >> .env
-      - name: create remote directory
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: mkdir -p ~/srv/ubuntu
-
-      - name: copy source via ssh key
-        uses: burnett01/rsync-deployments@4.1
-        with:
-          switches: -avzr --delete
-          remote_path: ~/srv/ubuntu/
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.KEY }}
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          envs:
-          script: |
-            sh ~/srv/ubuntu/docker-install.sh
-            echo "start docker-compose up: ubuntu"
-            sudo docker-compose -v
-            cat ~/srv/ubuntu/.env
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.staging.yml pull
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.staging.yml --env-file ~/srv/ubuntu/.env up --build -d
-            echo "prune images"
-            sudo docker system prune --all -f
-
   deploy-production:
     name: Deploy(Production)
-    needs: deploy-staging
     runs-on: ubuntu-latest
     environment: Recruit-Production
     steps:
       - name: checkout
-        uses: actions/checkout@backend
+        uses: actions/checkout@v3
 
       - name: create env file
         run: |
@@ -88,12 +41,34 @@ jobs:
           key: ${{ secrets.KEY }}
           envs:
           script: |
-	    cd ./server
+#	        cd ./server
             sh ~/srv/ubuntu/docker-install.sh
             echo "start docker-compose up: ubuntu"
             sudo docker-compose -v
             cat ~/srv/ubuntu/.env
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.prod.yml pull
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.prod.yml --env-file ~/srv/ubuntu/.env up --build -d
+            sudo docker-compose -f ~/srv/ubuntu/docker-compose.yml pull
+            sudo docker-compose -f ~/srv/ubuntu/docker-compose.yml --env-file ~/srv/ubuntu/.env up --build -d
             echo "prune images"
             sudo docker system prune --all -f
+      - name: Notify on success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_COLOR: '#703CDE'
+          SLACK_USERNAME: 서현이의 배포요정
+#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: "서버 Build succeeded 🎉 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"
+      - name: Notify on failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.DEV_SLACK_WEBHOOK }}
+          SLACK_CHANNEL: ${{ secrets.DEV_SLACK_CHANNEL }}
+          SLACK_COLOR: '#F33D63'
+          SLACK_USERNAME: 서현이의 배포요정
+#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: "서버 Build failed 🥲 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"
