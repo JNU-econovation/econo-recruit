@@ -11,7 +11,7 @@ interface RadioProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isCheck: boolean;
   isLast: boolean;
-  onClick?: Function;
+  onClick?: () => void;
 }
 
 const Radio: FC<RadioProps> = ({
@@ -37,7 +37,7 @@ const Radio: FC<RadioProps> = ({
           disabled && "bg-gray-200 text-gray-400 cursor-not-allowed"
         )}
         onClick={() => {
-          if (typeof onClick === "function") onClick();
+          typeof onClick === "function" && onClick();
         }}
       >
         {label}
@@ -62,9 +62,9 @@ interface RadioGroupProps {
   disableValue?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   radioList: string[];
-  splitNumber?: number;
+  splitNumber?: 2 | 3 | 4;
   isSpaned?: boolean;
-  onClick?: Function;
+  onClick?: () => void;
 }
 
 const gridCols = ["", "", "grid-cols-2", "grid-cols-3", "grid-cols-4"];

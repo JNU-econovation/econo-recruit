@@ -6,13 +6,13 @@ import {
   ApplicationTimeline,
 } from "@/src/constants/application/type";
 import { dateSplicer } from "@/src/functions/date";
-import { minimumIntegerDigits } from "@/src/functions/replacer";
 import classNames from "classnames";
 import { useParams } from "next/navigation";
 import { FC } from "react";
 import TimelineRow from "./TimelineRow.component";
 
 interface TimelineCellProps {
+  startIndex: number;
   startTime: Date;
   endTime: Date;
   disableTime: { startTime: Date; endTime: Date }[];
@@ -20,6 +20,7 @@ interface TimelineCellProps {
 }
 
 const TimelineCell: FC<TimelineCellProps> = ({
+  startIndex,
   startTime,
   endTime,
   disableTime,
@@ -37,6 +38,7 @@ const TimelineCell: FC<TimelineCellProps> = ({
         {dates.map((date, index) => (
           <TimelineRow
             key={index}
+            index={index + startIndex * seperate}
             date={date}
             isLast={dates.length !== index + 1}
           />
@@ -76,6 +78,7 @@ const ApplicationTimelineLayout: FC<ApplicationTimelineProps> = ({
       {time.map((time, index) => (
         <div key={index}>
           <TimelineCell
+            startIndex={index}
             startTime={time.startTime}
             endTime={time.endTime}
             disableTime={disableTime}

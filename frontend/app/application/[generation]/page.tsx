@@ -1,5 +1,6 @@
 import ApplicationNavbar from "@/components/application/Navbar.component";
 import ApplicationQuestion from "@/components/application/Question.component";
+import { postApplicant } from "@/src/apis/application";
 import { FC } from "react";
 
 interface ApplicationPageProps {

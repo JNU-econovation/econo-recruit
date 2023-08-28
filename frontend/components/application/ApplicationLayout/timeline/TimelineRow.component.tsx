@@ -1,17 +1,22 @@
+"use client";
+
 import Txt from "@/components/common/Txt.component";
 import { minimumIntegerDigits } from "@/src/functions/replacer";
+import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
 import { FC } from "react";
 
 interface TimelineRowProps {
   date: Date;
   isLast: boolean;
+  index: number;
 }
 
-const TimelineRow: FC<TimelineRowProps> = ({ date, isLast }) => {
+const TimelineRow: FC<TimelineRowProps> = ({ date, isLast, index }) => {
   const dateString = `${minimumIntegerDigits(
     date.getHours(),
     2
   )}:${minimumIntegerDigits(date.getMinutes(), 2)}`;
+  const [timeline, setTimeline] = useLocalStorage<number[]>("timeline", []);
 
   return (
     <span className="flex-1 border-l translate-x-6 mb-8">
@@ -25,6 +30,19 @@ const TimelineRow: FC<TimelineRowProps> = ({ date, isLast }) => {
             name="timeline"
             className="hidden peer"
             id={date.getTime().toString()}
+            checked={timeline.includes(index)}
+            onChange={() =>
+              setTimeline((prev) => {
+                console.log(prev);
+                if (prev.includes(index)) {
+                  const filtered = new Set(prev);
+                  filtered.delete(index);
+                  return Array.from(filtered);
+                }
+                const filtered = new Set([...prev, index]);
+                return Array.from(filtered);
+              })
+            }
           />
           <label
             htmlFor={date.getTime().toString()}

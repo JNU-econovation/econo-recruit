@@ -2,6 +2,7 @@
 
 import useApplicationIndexControll from "@/src/hooks/useApplicationIndexControll.hook";
 import { FC } from "react";
+import { postApplication } from "../SendApplication";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;
@@ -31,7 +32,9 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
       </button>
       <button
         onClick={
-          beforeCheckCallback
+          isLast
+            ? postApplication
+            : beforeCheckCallback
             ? () => {
                 if (beforeCheckCallback()) goNextIndex();
               }
