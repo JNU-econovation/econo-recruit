@@ -39,15 +39,16 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          envs:
+          port: 10022 # SSH 포트를 여기에 지정하세요.
+          script_start: |
+            cd ~/econo-recruit/server # 원하는 경로로 변경하세요.
           script: |
-#	        cd ./server
-            sh ~/srv/ubuntu/docker-install.sh
-            echo "start docker-compose up: ubuntu"
+            sh docker-install.sh
+            echo "start docker-compose up: econovation-server"
             sudo docker-compose -v
-            cat ~/srv/ubuntu/.env
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.yml pull
-            sudo docker-compose -f ~/srv/ubuntu/docker-compose.yml --env-file ~/srv/ubuntu/.env up --build -d
+            cat .env 
+            sudo docker-compose -f docker-compose.yml pull
+            sudo docker-compose -f docker-compose.yml --env-file .env up --build -d 
             echo "prune images"
             sudo docker system prune --all -f
       - name: Notify on success
@@ -65,8 +66,8 @@ jobs:
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK: ${{ secrets.DEV_SLACK_WEBHOOK }}
-          SLACK_CHANNEL: ${{ secrets.DEV_SLACK_CHANNEL }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
           SLACK_COLOR: '#F33D63'
           SLACK_USERNAME: 서현이의 배포요정
 #          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
