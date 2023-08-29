@@ -4,7 +4,6 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLI
 
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitdomain.domains.timetable.exception.TimeTableNotFoundException;
@@ -52,7 +51,8 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
     @Override
     @Transactional(readOnly = true)
     public List<Integer> getTimeTableByApplicantId(String applicantId) {
-        List<TimeTable> timeTableByApplicantId = timeTableLoadPort.getTimeTableByApplicantId(applicantId);
+        List<TimeTable> timeTableByApplicantId =
+                timeTableLoadPort.getTimeTableByApplicantId(applicantId);
         if (!timeTableByApplicantId.isEmpty()) {
             return timeTableByApplicantId.stream()
                     .map(TimeTable::getStartTime)

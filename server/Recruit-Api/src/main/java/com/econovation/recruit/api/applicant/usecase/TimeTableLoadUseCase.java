@@ -1,7 +1,6 @@
 package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import java.util.List;
 import java.util.Map;

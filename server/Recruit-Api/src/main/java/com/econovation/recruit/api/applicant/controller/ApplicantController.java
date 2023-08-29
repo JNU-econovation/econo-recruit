@@ -9,7 +9,6 @@ import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
