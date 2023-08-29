@@ -107,6 +107,7 @@ public class BoardRestController {
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PostMapping("/boards/work-cards")
     public ResponseEntity<String> createWorkBoard(
+            // TODO : navigation 확장 예정
             @RequestBody CreateWorkCardDto createWorkCardDto) {
         cardRegisterUseCase.saveWorkCard(createWorkCardDto);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);

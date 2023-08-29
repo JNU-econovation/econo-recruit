@@ -7,7 +7,6 @@ import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundExce
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -26,7 +25,7 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
     }
 
     @Override
-    public Record findByApplicantId(UUID applicantId) {
+    public Record findByApplicantId(String applicantId) {
         return recordRepository
                 .findByApplicantId(applicantId)
                 .orElseThrow(() -> RecordNotFoundException.EXCEPTION);

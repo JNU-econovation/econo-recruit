@@ -10,5 +10,5 @@ public interface RecordUseCase {
 
     List<Record> findAll();
 
-    Record findByApplicantId(UUID applicantId);
+    Record findByApplicantId(String applicantId);
 }

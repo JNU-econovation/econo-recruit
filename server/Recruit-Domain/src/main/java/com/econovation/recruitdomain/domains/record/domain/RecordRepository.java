@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Integer> {
-    Optional<Record> findByApplicantId(UUID applicantId);
+    Optional<Record> findByApplicantId(String applicantId);
 }

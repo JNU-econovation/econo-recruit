@@ -28,7 +28,7 @@ public class RecordService implements RecordUseCase {
     }
 
     @Override
-    public Record findByApplicantId(UUID applicantId) {
+    public Record findByApplicantId(String applicantId) {
         return recordLoadPort.findByApplicantId(applicantId);
     }
 }

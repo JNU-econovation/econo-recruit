@@ -38,7 +38,7 @@ public class RecordController {
     @Operation(summary = "지원자의 면접기록을 조회합니다")
     @ApiErrorExceptionsExample(RecordExceptionDocs.class)
     @GetMapping("/records")
-    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam UUID applicantId) {
+    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam String applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(RecordResponseDto.from(record), HttpStatus.OK);
     }
