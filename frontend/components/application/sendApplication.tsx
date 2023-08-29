@@ -53,5 +53,7 @@ export const postApplication = async () => {
     return false;
   }
 
+  window.localStorage.clear();
+
   return true;
 };

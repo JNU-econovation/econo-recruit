@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { useParams } from "next/navigation";
 import { FC } from "react";
 import TimelineRow from "./TimelineRow.component";
+import { CURRENT_GENERATION } from "@/src/constants";
 
 interface TimelineCellProps {
   startIndex: number;
@@ -55,17 +56,15 @@ interface ApplicationTimelineProps {
 const ApplicationTimelineLayout: FC<ApplicationTimelineProps> = ({
   applicationQuestion,
 }) => {
-  const params = useParams();
-  const data = require(`@/src/constants/application/${params.generation}.ts`);
+  const data = require(`@/src/constants/application/${CURRENT_GENERATION}.ts`);
   const { disableTime, time, seperate } =
     data.APPLICATION_TIMELINE as ApplicationTimeline;
 
   return (
     <div
-      className={classNames(
-        "w-full",
-        applicationQuestion.id !== -1 ? "pr-12" : ""
-      )}
+      className={classNames("w-full", {
+        "pr-12": applicationQuestion.id !== -1,
+      })}
     >
       {applicationQuestion.id !== -1 && applicationQuestion.title && (
         <div className="pb-6">

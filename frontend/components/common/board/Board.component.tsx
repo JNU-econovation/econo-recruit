@@ -8,29 +8,29 @@ import CloseImage from "/public/icons/ellipsis.multiply.svg";
 import classNames from "classnames";
 
 interface BoardProps {
-  onClick?: () => void;
+  onClick?: (id: string) => void;
   wapperClassname?: string;
+  boardData: {
+    id: string;
+    title: string;
+    subElements: string[];
+    time: Date;
+  }[];
 }
 
 const Board: FC<PropsWithChildren<BoardProps>> = ({
   children,
   onClick,
   wapperClassname,
+  boardData,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModel = () => {
+  const openModel = (id: string) => {
     setIsOpen(true);
-    onClick && onClick();
+    onClick && onClick(id);
   };
   const closeModel = () => setIsOpen(false);
-
-  const boardData = Array.from({ length: 10 }).map((_, i) => ({
-    id: i,
-    title: "[개발자]임채승",
-    subElements: ["APP", "WEB", "1학년 1학기"],
-    time: new Date(),
-  }));
 
   return (
     <section className="flex flex-col">
@@ -40,7 +40,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           title={item.title}
           subElements={item.subElements}
           time={item.time}
-          onClick={openModel}
+          onClick={() => openModel(item.id)}
         />
       ))}
       <Modal

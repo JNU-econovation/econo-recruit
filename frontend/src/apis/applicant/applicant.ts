@@ -11,8 +11,12 @@ export const getApplicant = async (id: string) => {
   return data;
 };
 
+export interface AllApplicantReq {
+  [string: string]: ApplicantReq[];
+}
+
 export const getAllApplicant = async () => {
-  const { data } = await https.get<ApplicantReq[]>(`/applicants`);
+  const { data } = await https.get<AllApplicantReq[]>(`/applicants`);
 
   return data;
 };

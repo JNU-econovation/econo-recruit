@@ -13,7 +13,7 @@ const ApplicantInterviewerScore = () => {
 
   return (
     <>
-      {isShow ? (
+      {!isShow ? (
         <button
           onClick={onClick}
           className="text-[#666666] text-sm my-4 underline-offset-2 underline"
