@@ -1,4 +1,4 @@
-import { ApplicantReq } from "@/src/apis/applicant";
+import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import dynamic from "next/dynamic";
 
 const ApplicantCustomField = dynamic(

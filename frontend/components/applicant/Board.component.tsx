@@ -1,5 +1,5 @@
 import Board from "@/components/common/board/Board.component";
-import { getApplicant } from "@/src/apis/applicant";
+import { getApplicant } from "@/src/apis/applicant/applicant";
 import ApplicantDetailRight from "./DetailRight.component";
 import ApplicantDetailLeft from "./DetailLeft.component";
 import { FC } from "react";

@@ -1,6 +1,9 @@
 "use client";
 
-import { ApplicantLabelReq, getApplicantLabel } from "@/src/apis/applicant";
+import {
+  ApplicantLabelReq,
+  getApplicantLabel,
+} from "@/src/apis/applicant/applicant";
 import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";

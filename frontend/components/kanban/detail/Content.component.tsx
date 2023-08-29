@@ -1,6 +1,6 @@
 import ApplicantDetailLeft from "@/components/applicant/DetailLeft.component";
 import ApplicantDetailRight from "@/components/applicant/DetailRight.component";
-import { getApplicant } from "@/src/apis/applicant";
+import { getApplicant } from "@/src/apis/applicant/applicant";
 import { FC } from "react";
 
 interface KanbanDetailContentProps {

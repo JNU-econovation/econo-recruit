@@ -1,6 +1,6 @@
 "use client";
 
-import { ApplicantReq } from "@/src/apis/applicant";
+import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationQuestion } from "@/src/constants/application/type";
@@ -30,8 +30,7 @@ const extractApplicantData = (
       value !== "timeline" &&
         applicationData.add({
           name: value,
-          type: "text",
-          answer: localStorage.get(value, ""),
+          answer: JSON.stringify(localStorage.get(value, "")),
         });
     }
   });
@@ -44,8 +43,15 @@ export const postApplication = async () => {
   const applicationQuestions =
     require(`@/src/constants/application/${generation}.ts`)
       .APPLICATION as ApplicationQuestion[];
-  extractApplicantData(applicationQuestions, applicationData);
 
-  const applicantId = await postApplicant(Array.from(applicationData));
-  await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
+  try {
+    extractApplicantData(applicationQuestions, applicationData);
+    const applicantId = await postApplicant(Array.from(applicationData));
+    await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
+  } catch (e) {
+    alert("지원서 제출에 실패했습니다. 관리자에게 문의해주세요.");
+    return false;
+  }
+
+  return true;
 };

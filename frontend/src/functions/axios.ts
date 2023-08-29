@@ -9,4 +9,12 @@ https.interceptors.request.use((config) => {
   return config;
 });
 
+https.interceptors.response.use((response) => {
+  if (response.status > 400) {
+    throw new Error(response.data);
+  }
+
+  return response;
+});
+
 export { https };

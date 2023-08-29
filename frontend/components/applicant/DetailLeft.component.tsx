@@ -1,4 +1,4 @@
-import { ApplicantReq } from "@/src/apis/applicant";
+import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import { FC } from "react";
 import ApplicantResource from "./applicantNode/CustomResource.component";
 import ApplicantLabel from "./applicantNode/Label.component";

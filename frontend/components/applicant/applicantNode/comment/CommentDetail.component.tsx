@@ -1,4 +1,4 @@
-import { ApplicantCommentReq } from "@/src/apis/applicant";
+import { ApplicantCommentReq } from "@/src/apis/applicant/applicant";
 import { FC } from "react";
 
 type ApplicantCommentDetailProps = {

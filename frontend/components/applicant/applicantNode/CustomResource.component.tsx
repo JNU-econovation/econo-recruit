@@ -1,5 +1,5 @@
 import Txt from "@/components/common/Txt.component";
-import { ApplicantReq } from "@/src/apis/applicant";
+import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import { applicantDataFinder } from "@/src/functions/finder";
 import Link from "next/link";
 import { FC } from "react";
