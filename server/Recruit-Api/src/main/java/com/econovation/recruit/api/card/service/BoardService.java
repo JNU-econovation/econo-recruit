@@ -179,8 +179,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public List<Board> findAllByNavLoc(Integer navLoc) {
-        return boardLoadPort.getBoardByNavLoc(navLoc);
+    public List<Board> findAllByNavigationId(Integer navigationId) {
+        return boardLoadPort.getBoardByNavLoc(navigationId);
     }
 
     @Override
@@ -190,7 +190,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public Navigation getNavigationByNavLoc(Integer navLoc) {
-        return navigationLoadPort.getByNavLoc(navLoc);
+        return navigationLoadPort.getByNavigationId(navLoc);
     }
 
     @Override

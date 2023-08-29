@@ -25,8 +25,8 @@ public class NavigationService implements NavigationUseCase {
     }
 
     @Override
-    public Navigation updateNavigationByNavLoc(Integer navLoc, String navTitle) {
-        Navigation navigation = navigationLoadPort.getByNavLoc(navLoc);
+    public Navigation updateNavigationByNavLoc(Integer navigationId, String navTitle) {
+        Navigation navigation = navigationLoadPort.getByNavigationId(navigationId);
         navigation.setNavTitle(navTitle);
         return navigationRecordPort.save(navigation);
     }

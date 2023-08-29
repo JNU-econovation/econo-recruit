@@ -25,7 +25,7 @@ public class BoardStompController {
     // "/pub/chat/enter"
     @MessageMapping(value = "/boards/message")
     public void enter(Card message) {
-        List<Board> cards = boardLoadUseCase.findAllByNavLoc(0);
+        List<Board> cards = boardLoadUseCase.findAllByNavigationId(0);
         //        message.setMessage(cards.toString());
         template.convertAndSend("/sub/board", cards);
         log.info("들어온 메세지 : " + message);

@@ -11,8 +11,8 @@ public interface BoardLoadUseCase {
     //    Map<String, Integer> getNewestLocation(String hopeField);
     //    Map<String, Integer> getNewestLocationByNavLocAndColLoc(Integer navLoc, Integer colLoc);
     Board findById(Integer id);
-    //    boolean isDuplicateLocation(Integer navLoc, Integer colLoc, Integer lowLoc);
-    List<Board> findAllByNavLoc(Integer navLoc);
+    //    boolean isDuplicateLocation(Integer navigationId, Integer colLoc, Integer lowLoc);
+    List<Board> findAllByNavigationId(Integer navigationId);
 
     List<Navigation> getAllNavigation();
 
