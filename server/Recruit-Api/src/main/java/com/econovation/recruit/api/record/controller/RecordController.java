@@ -10,7 +10,6 @@ import com.econovation.recruitdomain.domains.dto.RecordResponseDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

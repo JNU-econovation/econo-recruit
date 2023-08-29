@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.record.domain;
 
-import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

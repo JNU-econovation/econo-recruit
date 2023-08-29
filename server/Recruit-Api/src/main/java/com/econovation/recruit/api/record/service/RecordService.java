@@ -6,7 +6,6 @@ import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

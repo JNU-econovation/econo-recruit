@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.record.domain.Record;
-import java.util.UUID;
 import lombok.Data;
 import lombok.Getter;
 
