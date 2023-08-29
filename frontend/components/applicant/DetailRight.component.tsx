@@ -5,6 +5,8 @@ import { APPLICANT } from "@/src/constants/applicant/26";
 import { FC, Fragment } from "react";
 import { junctionApplicant } from "./Junction.component";
 import Txt from "../common/Txt.component";
+import ApplicantTimelineNode from "./applicantNode/Timeline.component";
+import { applicantDataFinder } from "@/src/functions/finder";
 
 interface ApplicantDetailRightProps {
   data: ApplicantReq[];
@@ -21,6 +23,10 @@ const ApplicantDetailRight: FC<ApplicantDetailRightProps> = ({ data }) => (
         {junctionApplicant(node, data)}
       </Fragment>
     ))}
+    <ApplicantTimelineNode
+      generation={applicantDataFinder(data, "generation")}
+      postId={"22"}
+    />
   </>
 );
 

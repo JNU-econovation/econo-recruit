@@ -7,7 +7,6 @@ import {
 } from "@/src/constants/application/type";
 import { dateSplicer } from "@/src/functions/date";
 import classNames from "classnames";
-import { useParams } from "next/navigation";
 import { FC } from "react";
 import TimelineRow from "./TimelineRow.component";
 import { CURRENT_GENERATION } from "@/src/constants";
@@ -20,7 +19,7 @@ interface TimelineCellProps {
   seperate: number;
 }
 
-const TimelineCell: FC<TimelineCellProps> = ({
+export const TimelineCell: FC<TimelineCellProps> = ({
   startIndex,
   startTime,
   endTime,

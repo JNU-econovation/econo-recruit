@@ -46,6 +46,10 @@ export const postApplication = async () => {
 
   try {
     extractApplicantData(applicationQuestions, applicationData);
+    applicationData.add({
+      name: "generation",
+      answer: `${CURRENT_GENERATION}`,
+    });
     const applicantId = await postApplicant(Array.from(applicationData));
     await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
   } catch (e) {

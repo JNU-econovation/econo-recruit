@@ -33,7 +33,6 @@ const TimelineRow: FC<TimelineRowProps> = ({ date, isLast, index }) => {
             checked={timeline.includes(index)}
             onChange={() =>
               setTimeline((prev) => {
-                console.log(prev);
                 if (prev.includes(index)) {
                   const filtered = new Set(prev);
                   filtered.delete(index);
