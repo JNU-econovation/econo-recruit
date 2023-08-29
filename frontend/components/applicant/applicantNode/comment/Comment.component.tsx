@@ -44,7 +44,6 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
       <ApplicantCommentInputForm
         onChange={(value) => setComment(value)}
         onSubmit={onSubmit}
-        value={comment}
       />
       <div className="flex flex-col gap-8 pt-8">
         {data.map((comment) => (
