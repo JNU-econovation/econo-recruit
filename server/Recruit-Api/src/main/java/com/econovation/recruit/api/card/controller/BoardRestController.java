@@ -1,7 +1,6 @@
 package com.econovation.recruit.api.card.controller;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_DELETE_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_REGISTER_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
@@ -95,22 +94,21 @@ public class BoardRestController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // 칸반보드 전체 조회 by navLoc
-    @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
-    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
-    @PostMapping("/boards/work-card")
-    public ResponseEntity<String> createWorkBoard(
-            @RequestBody CreateWorkCardDto createWorkCardDto) {
-        cardRegisterUseCase.saveWorkCard(createWorkCardDto);
-        return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
-    }
-
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
     @PostMapping("/boards/navigation/{navigation-id}/columns")
     public ResponseEntity<String> createBoardColumn(
             @PathVariable("navigation-id") Integer navigationId, String title) {
         boardRecordUseCase.createColumn(title, navigationId);
+        return new ResponseEntity(COLUMN_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    }
+    // 칸반보드 전체 조회 by navLoc
+    @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
+    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
+    @PostMapping("/boards/work-cards")
+    public ResponseEntity<String> createWorkBoard(
+            @RequestBody CreateWorkCardDto createWorkCardDto) {
+        cardRegisterUseCase.saveWorkCard(createWorkCardDto);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 

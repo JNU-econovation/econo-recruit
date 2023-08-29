@@ -9,4 +9,6 @@ public interface ColumnLoadPort {
     List<Columns> getColumnByNavigationId(Integer navigationId);
 
     Columns getColumnByNextColumnsId(Integer nextColId);
+
+    List<Columns> getColumnsByNavigationId(Integer navigationId);
 }
