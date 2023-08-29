@@ -6,7 +6,6 @@ import com.econovation.recruitdomain.domains.score.domain.ScoreRepository;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -25,7 +24,7 @@ public class ScoreAdapter implements ScoreLoadPort, ScoreRecordPort {
     }
 
     @Override
-    public List<Score> findByApplicantId(UUID applicantId) {
+    public List<Score> findByApplicantId(String applicantId) {
         return scoreRepository.findByApplicantId(applicantId);
     }
 }

@@ -29,9 +29,9 @@ public class RecruitStatic {
 
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
-    public static String[] CRETERIA = {"학력", "경력", "연봉", "연차", "기술"};
+    public static String[] CRETERIA = {"열정", "실천력", "협업", "동아리 집중", "간절함"};
     public static Set<String> CRETERIA_SET =
-            new HashSet<>(Arrays.asList("학력", "경력", "연봉", "연차", "기술"));
+            new HashSet<>(Arrays.asList("열정", "실천력", "협업", "동아리 집중", "간절함"));
 
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";

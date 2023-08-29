@@ -51,4 +51,15 @@ public class InterviewersService implements InterviewerUseCase {
     public List<Interviewer> findAll() {
         return interviewerLoadPort.findAll();
     }
+
+    @Override
+    public void createTempInterviewers() {
+        interviewerRecordPort.save(
+                Interviewer.builder()
+                        .id(0L)
+                        .name("이서현 (임시 면접관)")
+                        .role(Role.ROLE_OPERATION)
+                        .year(21)
+                        .build());
+    }
 }

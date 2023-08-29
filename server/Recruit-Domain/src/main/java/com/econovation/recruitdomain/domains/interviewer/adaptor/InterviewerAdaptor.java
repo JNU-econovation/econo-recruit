@@ -35,4 +35,9 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {
         return interviewerRepository.saveAll(interviewer);
     }
+
+    @Override
+    public void save(Interviewer interviewer) {
+        interviewerRepository.save(interviewer);
+    }
 }

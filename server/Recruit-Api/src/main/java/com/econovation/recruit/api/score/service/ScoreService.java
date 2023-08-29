@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +69,7 @@ public class ScoreService implements ScoreUseCase {
     }
 
     @Override
-    public Map<String, List<ScoreVo>> getByApplicantId(UUID applicantId) {
+    public Map<String, List<ScoreVo>> getByApplicantId(String applicantId) {
         List<Score> scores = scoreLoadPort.findByApplicantId(applicantId);
         Map<Long, String> interviewers = getAssociatedMapWithIdpIdWithName(scores);
         Map<String, List<ScoreVo>> result =
@@ -103,11 +102,14 @@ public class ScoreService implements ScoreUseCase {
     }
 
     @Override
-    public ScoreAverageDto getApplicantScoreWithAverage(UUID applicantId) {
+    public ScoreAverageDto getApplicantScoreWithAverage(String applicantId) {
         Map<String, List<ScoreVo>> byApplicantId = getByApplicantId(applicantId);
         List<ScoreVo> average = byApplicantId.get("average");
 
-        Float averageScore = average.stream().map(ScoreVo::getScore).reduce(0f, Float::sum);
+        // totalAverage = average.stream().map(ScoreVo::getScore).reduce(0, Integer::sum) / 4;
+        Float averageScore =
+                average.stream().map(ScoreVo::getScore).reduce(0f, Float::sum)
+                        / CRETERIA_SET.size();
         return ScoreAverageDto.of(averageScore, byApplicantId);
     }
 

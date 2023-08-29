@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.score.domain;
 
-import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +19,7 @@ public class Score {
     private Long id;
 
     @Column(name = "applicant_id")
-    private UUID applicantId;
+    private String applicantId;
 
     @Column(name = "criteria")
     private String criteria;

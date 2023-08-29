@@ -10,13 +10,13 @@ import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +30,7 @@ public class ScoreController {
     @Operation(description = "Score 평가 생성")
     @ApiErrorExceptionsExample(ScoreExceptionDocs.class)
     @PostMapping("/scores")
-    public ResponseEntity<String> createScore(CreateScoreDto createScoreDto) {
+    public ResponseEntity<String> createScore(@RequestBody CreateScoreDto createScoreDto) {
         scoreUseCase.createScore(createScoreDto);
         return new ResponseEntity<>(SCORE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class ScoreController {
     @Operation(description = "Score 평가 조회")
     @ApiErrorExceptionsExample(ScoreExceptionDocs.class)
     @GetMapping("/scores")
-    public ResponseEntity<ScoreAverageDto> getScoresByApplicantId(UUID applicantId) {
+    public ResponseEntity<ScoreAverageDto> getScoresByApplicantId(String applicantId) {
         ScoreAverageDto scores = scoreUseCase.getApplicantScoreWithAverage(applicantId);
         return new ResponseEntity<>(scores, HttpStatus.OK);
     }
