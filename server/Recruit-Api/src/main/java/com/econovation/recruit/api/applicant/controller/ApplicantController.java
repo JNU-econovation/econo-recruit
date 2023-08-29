@@ -9,6 +9,7 @@ import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
+import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
@@ -73,9 +74,8 @@ public class ApplicantController {
     @GetMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity<List<TimeTable>> getTimeTables(
             @PathVariable(name = "applicant-id") String applicantId) {
-        List<TimeTable> timeTables =
-                timeTableLoadUseCase.getTimeTableByApplicantId(applicantId.toString());
-        return new ResponseEntity(timeTables, HttpStatus.OK);
+        List<Integer> timeTableDto = timeTableLoadUseCase.getTimeTableByApplicantId(applicantId);
+        return new ResponseEntity(timeTableDto, HttpStatus.OK);
     }
 
     @Operation(summary = "면접 가능 시간마다 일치하는 지원자의 정보(희망분야, 이름)를 조회합니다.")

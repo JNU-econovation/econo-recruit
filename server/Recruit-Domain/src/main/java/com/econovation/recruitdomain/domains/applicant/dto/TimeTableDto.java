@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.applicant.dto;
 
 import java.util.List;
-import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -10,6 +9,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class TimeTableDto {
-    private UUID applicantID;
+    private String applicantId;
     private List<TimeTableVo> timeTableVo;
 }
