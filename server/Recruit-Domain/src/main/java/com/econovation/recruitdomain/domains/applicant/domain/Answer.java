@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.domains.applicant.domain;
 
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.common.events.AnswerRegisteredEvent;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,13 +36,16 @@ public class Answer {
     @Column(name = "answer")
     private String answer;
 
-    @Column(name = "applicant_id", length = 36, nullable = false)
-    private UUID applicantId;
+    //    @Column(name = "applicant_id", nullable = false
+    //            , columnDefinition = "BINARY(16)")
+    //    private UUID applicantId;
+    @Column(name = "applicant_id", nullable = false)
+    private String applicantId;
 
     @PostPersist
     public void postPersist() {
         AnswerRegisteredEvent answerRegisteredEvent =
-                AnswerRegisteredEvent.builder().applicantId(applicantId).build();
+                AnswerRegisteredEvent.builder().applicantId(applicantId.toString()).build();
         Events.raise(answerRegisteredEvent);
     }
 }

@@ -9,7 +9,7 @@ import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
+import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +37,7 @@ public class ApplicantController {
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final QuestionRegisterUseCase questionRegisterUseCase;
 
-    @Operation(summary = "지원자가 지원서를 작성합니다.",description = "반환 값은 생성된 지원자의 ID입니다.")
+    @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
@@ -51,7 +51,7 @@ public class ApplicantController {
     public ResponseEntity registerApplicantTimeTable(
             @PathVariable(value = "applicant-id") UUID applicantId,
             @RequestBody List<Integer> startTimes) {
-        timeTableRegisterUseCase.execute(applicantId, startTimes);
+        timeTableRegisterUseCase.execute(applicantId.toString(), startTimes);
         return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
@@ -65,15 +65,16 @@ public class ApplicantController {
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")
     @GetMapping("/timetables")
-    public ResponseEntity<List<TimeTableDto>> getTimeTables() {
+    public ResponseEntity<List<Map<String, List<TimeTableVo>>>> getTimeTables() {
         return new ResponseEntity(timeTableLoadUseCase.findAll(), HttpStatus.OK);
     }
 
     @Operation(summary = "지원자의 면접 가능 시간을 조회합니다.")
-    @GetMapping("/applicant/{applicant-id}/timetables")
+    @GetMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity<List<TimeTable>> getTimeTables(
-            @PathVariable(name = "applicant-id") UUID applicantId) {
-        List<TimeTable> timeTables = timeTableLoadUseCase.getTimeTableByApplicantId(applicantId);
+            @PathVariable(name = "applicant-id") String applicantId) {
+        List<TimeTable> timeTables =
+                timeTableLoadUseCase.getTimeTableByApplicantId(applicantId.toString());
         return new ResponseEntity(timeTables, HttpStatus.OK);
     }
 

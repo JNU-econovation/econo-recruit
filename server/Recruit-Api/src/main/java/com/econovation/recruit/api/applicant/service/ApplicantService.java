@@ -56,7 +56,8 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                                             Answer.builder()
                                                                     .question(question)
                                                                     .answer(block.getAnswer())
-                                                                    .applicantId(applicantId)
+                                                                    .applicantId(
+                                                                            applicantId.toString())
                                                                     .build())
                                             .getValue();
                                 })

@@ -1,17 +1,16 @@
 package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
-import com.econovation.recruitdomain.domains.applicant.dto.TimeTableDto;
+import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @UseCase
 public interface TimeTableLoadUseCase {
-    List<TimeTableDto> findAll();
+    List<Map<String, List<TimeTableVo>>> findAll();
 
-    List<TimeTable> getTimeTableByApplicantId(UUID applicantId);
+    List<TimeTable> getTimeTableByApplicantId(String applicantId);
 
-    Map<Integer, Map<String, String>> findAllSimpleApplicantWithTimeTable();
+    Map<Integer, List<String>> findAllSimpleApplicantWithTimeTable();
 }
