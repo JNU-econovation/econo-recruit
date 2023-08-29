@@ -11,7 +11,6 @@ import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
 
     @Transactional
     @Override
-    public void execute(List<BlockRequestDto> blocks) {
+    public UUID execute(List<BlockRequestDto> blocks) {
         List<Question> questions = questionAdaptor.findAll();
         UUID applicantId = UUID.randomUUID();
         List<Answer> results =
@@ -68,6 +67,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                 SubmitApplicantEvent.of(applicantId, convertToSubmitApplicantEventTitle(results)));
         // TODO: 추가될지 말지 결정해야 함
         //        applicantRegister(results);
+        return applicantId;
     }
 
     private String convertToSubmitApplicantEventTitle(List<Answer> results) {

@@ -37,12 +37,12 @@ public class ApplicantController {
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final QuestionRegisterUseCase questionRegisterUseCase;
 
-    @Operation(summary = "지원자가 지원서를 작성합니다.")
+    @Operation(summary = "지원자가 지원서를 작성합니다.",description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
-        applicantRegisterUseCase.execute(blockElements);
-        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        UUID applicantId = applicantRegisterUseCase.execute(blockElements);
+        return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
