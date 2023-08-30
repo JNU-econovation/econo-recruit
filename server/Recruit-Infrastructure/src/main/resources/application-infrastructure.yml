@@ -6,6 +6,7 @@ spring:
 slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
+    url: ${SLACK_WEBHOOK_URL:}
     id: ${SLACK_WEBHOOK_ID:}
     channel :  ${SLACK_SERVICE_CHANNEL_ID:}
     username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}

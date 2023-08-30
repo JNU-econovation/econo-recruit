@@ -9,10 +9,11 @@ import lombok.ToString;
 @Builder
 @ToString
 public class ApplicantRegisterEvent extends DomainEvent {
+    private final String applicantId;
     private final String hopeField;
     private final String userName;
 
-    public static ApplicantRegisterEvent of(String userName, String hopeField) {
+    public static ApplicantRegisterEvent of(String applicantId, String userName, String hopeField) {
         return ApplicantRegisterEvent.builder().hopeField(hopeField).userName(userName).build();
     }
 }

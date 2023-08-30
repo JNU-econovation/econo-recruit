@@ -162,7 +162,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
-        Integer columnsId = -1;
+        Integer columnsId = 0;
         if (hopeField.equals("개발자")) {
             columnsId = DEVELOPER_COLUMNS_ID;
         } else if (hopeField.equals("디자이너")) {

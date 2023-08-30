@@ -19,9 +19,9 @@ public class RecruitStatic {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
     public static final String KR_YES = "예";
     public static final String KR_NO = "아니요";
-    public static final Integer DEVELOPER_COLUMNS_ID = 0;
-    public static final Integer DESIGNER_COLUMNS_ID = 1;
-    public static final Integer PLANNER_COLUMNS_ID = 2;
+    public static final Integer DEVELOPER_COLUMNS_ID = 1;
+    public static final Integer DESIGNER_COLUMNS_ID = 2;
+    public static final Integer PLANNER_COLUMNS_ID = 3;
     public static final int MILLI_TO_SECOND = 1000;
     public static final int BAD_REQUEST = 400;
     public static final int UNAUTHORIZED = 401;

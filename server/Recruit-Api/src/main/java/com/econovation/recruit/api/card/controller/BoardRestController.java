@@ -162,6 +162,6 @@ public class BoardRestController {
     @PostMapping("/boards/cards/{card-id}/delete")
     public ResponseEntity<String> deleteCard(Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
-        return new ResponseEntity<>(BOARD_SUCCESS_DELETE_M햐ESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }
