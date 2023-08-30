@@ -1,8 +1,9 @@
 import Txt from "@/components/common/Txt.component";
-import { ApplicantReq } from "@/src/apis/applicant";
+import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import { applicantDataFinder } from "@/src/functions/finder";
 import Link from "next/link";
 import { FC } from "react";
+import ApplicantInterviewerScore from "./InterviewerScore.component";
 
 interface ApplicantResourceProps {
   data: ApplicantReq[];
@@ -20,7 +21,7 @@ const ApplicantResource: FC<ApplicantResourceProps> = ({ data }) => {
           "field"
         )}] ${applicantDataFinder(data, "name")}`}</Txt>
       </div>
-      <button className="my-4">면접관 점수 입력</button>
+      <ApplicantInterviewerScore />
       <div className="flex gap-4 mb-8">
         <div className="flex gap-1">
           <Txt typography="h3" color="gray" className="font-normal">

@@ -6,20 +6,21 @@ import {
   ApplicationTimeline,
 } from "@/src/constants/application/type";
 import { dateSplicer } from "@/src/functions/date";
-import { minimumIntegerDigits } from "@/src/functions/replacer";
 import classNames from "classnames";
-import { useParams } from "next/navigation";
 import { FC } from "react";
 import TimelineRow from "./TimelineRow.component";
+import { CURRENT_GENERATION } from "@/src/constants";
 
 interface TimelineCellProps {
+  startIndex: number;
   startTime: Date;
   endTime: Date;
   disableTime: { startTime: Date; endTime: Date }[];
   seperate: number;
 }
 
-const TimelineCell: FC<TimelineCellProps> = ({
+export const TimelineCell: FC<TimelineCellProps> = ({
+  startIndex,
   startTime,
   endTime,
   disableTime,
@@ -37,6 +38,7 @@ const TimelineCell: FC<TimelineCellProps> = ({
         {dates.map((date, index) => (
           <TimelineRow
             key={index}
+            index={index + startIndex * seperate}
             date={date}
             isLast={dates.length !== index + 1}
           />
@@ -53,17 +55,15 @@ interface ApplicationTimelineProps {
 const ApplicationTimelineLayout: FC<ApplicationTimelineProps> = ({
   applicationQuestion,
 }) => {
-  const params = useParams();
-  const data = require(`@/src/constants/application/${params.generation}.ts`);
+  const data = require(`@/src/constants/application/${CURRENT_GENERATION}.ts`);
   const { disableTime, time, seperate } =
     data.APPLICATION_TIMELINE as ApplicationTimeline;
 
   return (
     <div
-      className={classNames(
-        "w-full",
-        applicationQuestion.id !== -1 ? "pr-12" : ""
-      )}
+      className={classNames("w-full", {
+        "pr-12": applicationQuestion.id !== -1,
+      })}
     >
       {applicationQuestion.id !== -1 && applicationQuestion.title && (
         <div className="pb-6">
@@ -76,6 +76,7 @@ const ApplicationTimelineLayout: FC<ApplicationTimelineProps> = ({
       {time.map((time, index) => (
         <div key={index}>
           <TimelineCell
+            startIndex={index}
             startTime={time.startTime}
             endTime={time.endTime}
             disableTime={disableTime}

@@ -281,7 +281,7 @@ export const APPLICATION = [
         require: false,
         type: "text",
         title: "참고 URL",
-        subtitle: "(Github, Blog, Notion, Website 등 / 2개 이상 첨부 시 탈락)",
+        subtitle: "(Github, Blog, Notion, Website 등)",
       } as ApplicationText,
       {
         name: "fileUrl",
@@ -325,6 +325,8 @@ export const APPLICATION = [
             type: "text",
             name: "email",
             title: "E-mail",
+            validate: "emailString",
+            errorMessages: "이메일을 입력해주세요.",
             require: false,
           } as ApplicationText,
         ],
@@ -339,6 +341,8 @@ export const APPLICATION = [
           {
             type: "text",
             name: "check",
+            validate: "confirmationString",
+            errorMessages: '"확인했습니다"를 입력해주세요.',
             require: true,
           } as ApplicationText,
         ],
@@ -391,22 +395,27 @@ export const APPLICATION_NAVBAR = [
   {
     id: 6,
     title:
-      "소프트웨어 프로젝트 관련 개발/기획/디자인 경험이나 주도적으로 교육에 참여한 경험이 있나요?",
+      "IT 분야에서 앞으로 도전해 보고 싶은 기획이나 기술 혹은 분야가 있다면 그 이유와 함께 서술해 주세요.",
   },
   {
     id: 7,
     title:
+      "소프트웨어 프로젝트 관련 개발/기획/디자인 경험이나 주도적으로 교육에 참여한 경험이 있나요?",
+  },
+  {
+    id: 8,
+    title:
       "ECONOVATION에 들어오게 된다면 어떤 목표와 학습 계획을 바탕으로 활동하고 싶나요?",
   },
-  { id: 8, title: "무언가에 깊게 빠지거나 파고 들어본 적이 있나요?" },
+  { id: 9, title: "무언가에 깊게 빠지거나 파고 들어본 적이 있나요?" },
   {
-    id: 9,
+    id: 10,
     title:
       "협업(프로젝트, 팀 활동)에 있어서 가장 중요하다고 생각되는 것은 무엇인지 그 이유와 함께 서술해주세요. ",
   },
-  { id: 10, title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요." },
-  { id: 11, title: "개인정보 수집에 관한 안내 및 개인정보 수집" },
-  { id: 12, title: "면접 가능시간을 선택해주세요. (중복 선택 가능)" },
+  { id: 11, title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요." },
+  { id: 12, title: "개인정보 수집에 관한 안내 및 개인정보 수집" },
+  { id: 13, title: "면접 가능시간을 선택해주세요. (중복 선택 가능)" },
 ];
 
 export const APPLICATION_TIMELINE = {
@@ -432,3 +441,8 @@ export const APPLICATION_TIMELINE = {
     },
   ],
 } as ApplicationTimeline;
+
+export const END_DATE = {
+  month: 3,
+  date: 19,
+};
