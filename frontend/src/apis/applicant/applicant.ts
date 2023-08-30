@@ -39,3 +39,9 @@ export const getApplicantLabel = async (id: string) => {
 
   return data;
 };
+
+export const getApplicantTimeTables = async (id: string) => {
+  const { data } = await https.get<number[]>(`/applicants/${id}/timetables`);
+
+  return data;
+};

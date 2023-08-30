@@ -43,7 +43,6 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           title={item.title}
           subElements={item.subElements}
           score={item?.score ? item.score : ""}
-          time={item.time}
           onClick={() => openModel(item.id)}
         />
       ))}

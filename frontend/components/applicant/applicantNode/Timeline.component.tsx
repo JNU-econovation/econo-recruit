@@ -2,34 +2,46 @@
 
 import { TimelineCell } from "@/components/application/applicationLayout/timeline/Timeline.component";
 import Txt from "@/components/common/Txt.component";
+import { getApplicantTimeTables } from "@/src/apis/applicant/applicant";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationTimeline } from "@/src/constants/application/type";
 import { dateSplicer } from "@/src/functions/date";
 import { minimumIntegerDigits } from "@/src/functions/replacer";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 
 interface ApplicantTimelineNodeProps {
-  generation: string;
   postId: string;
 }
 
-const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({
-  generation,
-  postId,
-}) => {
+const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({ postId }) => {
   const data = require(`@/src/constants/application/${CURRENT_GENERATION}.ts`);
-  const { disableTime, time, seperate } =
-    data.APPLICATION_TIMELINE as ApplicationTimeline;
-  const [timeline, setTimeline] = useState<number[]>([]);
+  const { time, seperate } = data.APPLICATION_TIMELINE as ApplicationTimeline;
 
-  useEffect(() => {
-    // setTimeline(())
-  }, []);
+  const {
+    data: timeline,
+    isLoading,
+    isError,
+  } = useQuery<number[]>(
+    ["applicantTimeline", postId],
+    () => getApplicantTimeTables(postId),
+    {
+      enabled: !!postId,
+    }
+  );
+
+  if (!timeline || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
 
   return (
     <div>
-      {time.map((time, index) => (
+      {time.map((time, startIndex) => (
         <div className="w-full">
           <Txt
             typography="h6"
@@ -49,10 +61,13 @@ const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({
                     .length !==
                     index + 1 && (
                     <div
-                      className={classNames("h-8 block bg-[#EFEFEF]", {
-                        "bg-[#2160FF]": timeline.includes(index),
-                      })}
-                    />
+                      className={classNames(
+                        "h-8 block",
+                        timeline.includes(index + startIndex * seperate)
+                          ? "bg-[#2160FF]"
+                          : "bg-[#EFEFEF]"
+                      )}
+                    ></div>
                   )}
                 </span>
               )

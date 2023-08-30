@@ -30,7 +30,7 @@ const AdminPage: FC<AdminPageProps> = ({
   return (
     <div className="px-24 w-max-[1280px] flex p-12">
       <CommonNavbar generation={generation} />
-      <div className="flex-1 ml-32 min-w-[46rem] mb-48">
+      <div className="flex-1 ml-32 min-w-[46rem] mb-12">
         <div className="flex w-full justify-end gap-8 my-12">
           <AdminSearch />
           <SortListComponent sortList={orderMenu} selected={order} />
