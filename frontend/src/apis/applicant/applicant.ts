@@ -34,7 +34,7 @@ export interface ApplicantLabelReq {
 
 export const getApplicantLabel = async (id: string) => {
   const { data } = await https.get<ApplicantLabelReq[]>(
-    `/labels?=applicantId=${id}`
+    `/labels?applicantId=${id}`
   );
 
   return data;
