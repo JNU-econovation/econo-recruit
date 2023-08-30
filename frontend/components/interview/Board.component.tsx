@@ -3,8 +3,8 @@
 import InterviewDetailLeftComponent from "./DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./DetailRight.component";
-import { InterviewRes, getInterviewRecord } from "@/src/apis/interview";
-import { ScoreRes, getScore } from "@/src/apis/score";
+import { InterviewRes, getInterviewRecord } from "@/src/apis/interview/interview";
+import { ScoreRes, getScore } from "@/src/apis/interview/score";
 import { useEffect, useState } from "react";
 import { applicantDataFinder } from "@/src/functions/finder";
 import { getAllApplicant } from "@/src/apis/applicant/applicant";
