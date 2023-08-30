@@ -22,4 +22,7 @@ public class Label {
 
     @Column(name = "idpId")
     private Long idpId;
+
+    @Column(name = "card_id")
+    private Long cardId;
 }

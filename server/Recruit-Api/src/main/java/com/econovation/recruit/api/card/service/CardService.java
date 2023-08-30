@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.card.service;
 
+import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
@@ -7,12 +8,14 @@ import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
-import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.card.domain.Card;
-import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
+import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
+import com.econovation.recruitdomain.out.LabelLoadPort;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +32,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final BoardRegisterUseCase boardRegisterUseCase;
     private final BoardLoadUseCase boardLoadUseCase;
     private final ColumnsUseCase columnsUseCase;
-
+    private final AnswerLoadUseCase answerLoadPort;
+    private final LabelLoadPort labelLoadPort;
     /*    @Override
     public Card saveApplicantCard(Applicant applicant) {
                     // 지원자 희망 분야 (hope_field) 와 매칭되는  col_loc 조회 ( 새로 들어갈 빈 자리 )
@@ -53,10 +57,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     }
 
     @Override
-    public List<Map<ColumnsResponseDto, CardResponseDto>> getByNavigationId(Integer navigationId) {
+    public List<BoardCardResponseDto> getByNavigationId(Integer navigationId) {
         List<Columns> columns = columnsUseCase.getByNavigationId(navigationId);
-        List<ColumnsResponseDto> columnsResponseDtos =
-                columns.stream().map(ColumnsResponseDto::from).collect(Collectors.toList());
 
         List<Integer> columnsIds =
                 columns.stream().map(Columns::getId).collect(Collectors.toList());
@@ -69,25 +71,32 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         Map<Long, Card> cardByBoardIdMap =
                 cards.stream().collect(Collectors.toMap(Card::getId, card -> card));
 
-        List<Map<ColumnsResponseDto, CardResponseDto>> result = new LinkedList<>();
+        List<BoardCardResponseDto> result = new LinkedList<>();
+
+        // key : applicantId
+        Map<String, Map<String, String>> answers =
+                answerLoadPort.findAllApplicantVo(Arrays.asList("firstPriority", "secondPriority"));
+        Map<Long, Label> labels =
+                labelLoadPort.loadLabelByCardIdIn(
+                        cards.stream().map(Card::getId).collect(Collectors.toList()));
 
         for (Board board : boards) {
             Card card = cardByBoardIdMap.get(board.getCardId());
-            if (card != null) {
-                CardResponseDto cardDto = CardResponseDto.from(card, board);
+            String firstPriority = "";
+            String secondPriority = "";
 
-                ColumnsResponseDto columnsResponseDto =
-                        columnsResponseDtos.stream()
-                                .filter(dto -> dto.getColumnsId().equals(board.getColumnId()))
-                                .findFirst()
-                                .orElse(null);
-
-                if (columnsResponseDto != null) {
-                    result.add(Map.of(columnsResponseDto, cardDto));
-                }
+            Map<String, String> applicantAnswers = answers.get(card.getApplicantId());
+            if (applicantAnswers != null) {
+                firstPriority = applicantAnswers.getOrDefault("firstPriority", "");
+                secondPriority = applicantAnswers.getOrDefault("secondPriority", "");
             }
-        }
 
+            Boolean isLabeled = labels.containsKey(card.getId()) ? true : false;
+
+            result.add(
+                    BoardCardResponseDto.from(
+                            card, board, firstPriority, secondPriority, isLabeled));
+        }
         return result;
     }
 

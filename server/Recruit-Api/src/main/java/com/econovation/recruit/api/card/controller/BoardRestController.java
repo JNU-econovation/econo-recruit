@@ -16,7 +16,7 @@ import com.econovation.recruit.api.card.usecase.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
-import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -147,8 +147,8 @@ public class BoardRestController {
     @Operation(
             summary = "지원서 칸반보드 조회 by navigationId",
             description = "navigationId에 해당하는 모든 칸반을 조회합니다.")
-    @GetMapping("/boards/navigation/{navigation-id}")
-    public ResponseEntity<List<Map<ColumnsResponseDto, CardResponseDto>>> getBoardByNavigationId(
+    @GetMapping("/navigations/{navigation-id}/boards")
+    public ResponseEntity<List<BoardCardResponseDto>> getBoardByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
     }
@@ -162,6 +162,6 @@ public class BoardRestController {
     @PostMapping("/boards/cards/{card-id}/delete")
     public ResponseEntity<String> deleteCard(Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
-        return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(BOARD_SUCCESS_DELETE_M햐ESSAGE, HttpStatus.OK);
     }
 }
