@@ -5,20 +5,26 @@ export interface ApplicantReq {
   answer: string;
 }
 
-export const getApplicant = async (id: string) => {
-  const { data } = await https.get<ApplicantReq[]>(`/applicants/${id}`);
-
-  return data;
-};
-
-export interface AllApplicantReq {
-  [string: string]: ApplicantReq[];
+interface AllApplicantReq {
+  [string: string]: string;
 }
 
-export const getAllApplicant = async () => {
-  const { data } = await https.get<AllApplicantReq[]>(`/applicants`);
+export const getApplicant = async (id: string) => {
+  const { data } = await https.get<AllApplicantReq>(`/applicants/${id}`);
+  return Object.keys(data).map((key) => ({
+    name: key,
+    answer: data[key],
+  }));
+};
 
-  return data;
+export const getAllApplicant = async (): Promise<ApplicantReq[][]> => {
+  const { data } = await https.get<AllApplicantReq[]>(`/applicants`);
+  return data.map((d) =>
+    Object.keys(d).map((key) => ({
+      name: key,
+      answer: d[key],
+    }))
+  );
 };
 
 export interface ApplicantLabelReq {
@@ -28,7 +34,7 @@ export interface ApplicantLabelReq {
 
 export const getApplicantLabel = async (id: string) => {
   const { data } = await https.get<ApplicantLabelReq[]>(
-    `/applicants/${id}/label`
+    `/labels?=applicantId=${id}`
   );
 
   return data;

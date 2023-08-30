@@ -12,7 +12,7 @@ interface BoardData {
   title: string;
   subElements: string[];
   score?: string;
-  time: Date;
+  time?: Date;
 }
 
 interface BoardProps {
