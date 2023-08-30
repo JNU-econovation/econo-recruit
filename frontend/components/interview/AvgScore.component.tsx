@@ -1,4 +1,3 @@
-import { InterviewScoreMock } from "@/mock/MockData";
 import { ScoreRes, scoreDetail } from "@/src/apis/score";
 import { clamp, getScoreAverage } from "@/src/functions/calculator";
 import { FC } from "react";

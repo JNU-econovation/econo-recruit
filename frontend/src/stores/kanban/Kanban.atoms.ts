@@ -1,13 +1,13 @@
-import { atom } from 'jotai';
-import { KanbanMock } from '@/mock/MockData';
+import { atom } from "jotai";
+import { KanbanMock } from "@/mock/MockData";
 
 export type KanbanRowData = {
   id: number;
   title: string;
-  column: KanbanColumnData[];
+  Card: KanbanCardData[];
 };
 
-export type KanbanColumnData = {
+export type KanbanCardData = {
   id: number;
   major: string;
   title: string;

@@ -11,7 +11,6 @@ interface BoardData {
   id: string;
   title: string;
   subElements: string[];
-  score?: string;
   time?: Date;
 }
 
@@ -42,7 +41,6 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           key={index}
           title={item.title}
           subElements={item.subElements}
-          score={item?.score ? item.score : ""}
           time={item.time}
           onClick={() => openModel(item.id)}
         />

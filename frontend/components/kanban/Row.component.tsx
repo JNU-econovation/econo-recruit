@@ -1,24 +1,24 @@
 "use client";
 
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
-import KanbanAddColumnComponent from "./AddColumn.component";
-import KanbanColumnComponent from "./Column.component";
+import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
+import KanbanAddCardComponent from "./AddCard.component";
+import KanbanCardComponent from "./Card.component";
 import { useState } from "react";
 import KanbanRowDetailComponent from "./RowDetail.compontent";
 
 type KanbanRowComponent = {
   index: number;
   title: string;
-  columnCount: number;
-  columnData: KanbanColumnData[];
+  CardCount: number;
+  CardData: KanbanCardData[];
 };
 
 const KanbanRowComponent = ({
   index,
-  columnData,
+  CardData,
   title,
-  columnCount,
+  CardCount,
 }: KanbanRowComponent) => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   return (
@@ -34,7 +34,7 @@ const KanbanRowComponent = ({
             <div className="flex gap-2 items-center">
               <div className="font-bold text-lg">{title}</div>
               <div className="flex justify-center items-center px-3 rounded-full bg-[#E8EFFF] text-xs text-[#2160FF] h-4">
-                {columnCount}
+                {CardCount}
               </div>
             </div>
             <button type="button" onClick={() => setIsDetailOpen(true)}>
@@ -60,11 +60,11 @@ const KanbanRowComponent = ({
                       />
                     )}
                   </Draggable>
-                  {columnData.map((column, colIndex) => (
+                  {CardData.map((Card, colIndex) => (
                     <Draggable
-                      draggableId={`${colIndex}-${column.id}`}
+                      draggableId={`${colIndex}-${Card.id}`}
                       index={colIndex}
-                      key={column.id}
+                      key={Card.id}
                     >
                       {(provided) => (
                         <div
@@ -73,7 +73,7 @@ const KanbanRowComponent = ({
                           {...provided.dragHandleProps}
                           className="my-4"
                         >
-                          <KanbanColumnComponent data={column} row={index} />
+                          <KanbanCardComponent data={Card} row={index} />
                         </div>
                       )}
                     </Draggable>
@@ -83,7 +83,7 @@ const KanbanRowComponent = ({
               )}
             </Droppable>
           </div>
-          <KanbanAddColumnComponent AddColumnCallBack={() => ""} />
+          <KanbanAddCardComponent AddCardCallBack={() => ""} />
         </div>
       )}
     </Draggable>

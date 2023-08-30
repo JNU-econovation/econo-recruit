@@ -3,7 +3,7 @@
 import { KanbanDataArrayState } from "@/src/stores/kanban/Kanban.atoms";
 import { useAtomValue } from "jotai";
 import { FC } from "react";
-import KanbanColumnComponent from "../Column.component";
+import KanbanColumnComponent from "../Card.component";
 import KanbanDetailBackButton from "./BackButton.component";
 
 interface KanbanDetailRowProps {

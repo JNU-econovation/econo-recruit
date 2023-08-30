@@ -17,9 +17,14 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
   const [data, setData] = useState<ApplicantReq[]>([]);
 
   const onClick = (id: string) => {
-    getApplicant(id).then((res) => {
-      setData(res);
-    });
+    getApplicant(id)
+      .then((res) => {
+        setData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setData([]);
+      });
   };
 
   useEffect(() => {

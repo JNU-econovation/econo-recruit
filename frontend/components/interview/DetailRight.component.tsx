@@ -5,7 +5,7 @@ interface InterviewDetailRightProps {
   data: InterviewRes;
 }
 
-const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = async ({
+const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = ({
   data,
 }) => {
   return (
