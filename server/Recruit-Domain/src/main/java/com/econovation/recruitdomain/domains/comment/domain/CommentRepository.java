@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByCardId(Long cardId);
+
+    List<Comment> findByApplicantId(String applicantId);
 }

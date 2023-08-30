@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.comment.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +12,8 @@ import org.hibernate.annotations.Where;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
+@Builder
 @SQLDelete(sql = "UPDATE comment SET is_deleted = true WHERE comment_id = ?")
 @Where(clause = "is_deleted = false")
 public class Comment extends BaseTimeEntity {
@@ -27,7 +26,7 @@ public class Comment extends BaseTimeEntity {
     private Long cardId;
 
     @Column(name = "applicant_id")
-    private UUID applicantId;
+    private String applicantId;
 
     @Column(name = "parent_id")
     private Long parentId;
@@ -54,6 +53,10 @@ public class Comment extends BaseTimeEntity {
         this.isDeleted = false;
     }
 
+    public void setIdpId(Long idpId) {
+        this.idpId = idpId;
+    }
+
     public void plusLikeCount() {
         this.likeCount++;
     }
@@ -68,5 +71,13 @@ public class Comment extends BaseTimeEntity {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public Boolean isCardComment() {
+        return this.cardId != null;
+    }
+
+    public Boolean isApplicantComment() {
+        return this.applicantId != null;
     }
 }

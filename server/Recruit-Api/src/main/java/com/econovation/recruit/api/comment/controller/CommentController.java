@@ -3,6 +3,7 @@ package com.econovation.recruit.api.comment.controller;
 import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.comment.docs.CommentExceptionDocs;
+import com.econovation.recruit.api.comment.docs.CommentLikeExceptionDocs;
 import com.econovation.recruit.api.comment.usecase.CommentUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,38 +32,50 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     private final CommentUseCase commentUseCase;
 
-    @Operation(summary = "댓글 등록")
+    @Operation(summary = "지원서 카드에 댓글 등록")
     @ApiErrorExceptionsExample(CommentExceptionDocs.class)
     @PostMapping("/comments")
-    public ResponseEntity createComment(CommentRegisterDto commentRegisterDto) {
+    public ResponseEntity createComment(@RequestBody CommentRegisterDto commentRegisterDto) {
         commentUseCase.saveComment(CommentRegisterDto.from(commentRegisterDto));
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "댓글 조회")
-    @GetMapping("/comments/{cardId}")
-    public ResponseEntity<List<CommentPairVo>> findByCardId(Long cardId) {
+    @Operation(summary = "cardId 로 댓글 조회")
+    @ApiErrorExceptionsExample(CommentExceptionDocs.class)
+    @GetMapping("/cards/{card-id}/comments")
+    public ResponseEntity<List<CommentPairVo>> findByCardId(
+            @PathVariable(name = "card-id") Long cardId) {
         List<CommentPairVo> comments = commentUseCase.findByCardId(cardId);
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
+    @Operation(summary = "applicationId로 댓글 조회")
+    @GetMapping("/applicants/{applicant-id}/comments")
+    public ResponseEntity<List<CommentPairVo>> findByApplicantId(
+            @PathVariable(name = "applicant-id") String applicantId) {
+        List<CommentPairVo> comments = commentUseCase.findByApplicantId(applicantId);
+        return new ResponseEntity(comments, HttpStatus.OK);
+    }
+
     @Operation(summary = "댓글 좋아요")
-    @PostMapping("/comments/likes")
-    public ResponseEntity plusLikeCount(Long commentId) {
+    @ApiErrorExceptionsExample(CommentLikeExceptionDocs.class)
+    @PostMapping("/comments/{comment-id}/likes")
+    public ResponseEntity plusLikeCount(@PathVariable(name = "comment-id") Long commentId) {
         commentUseCase.createCommentLike(commentId);
         return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "댓글 좋아요 눌렀는지 확인")
-    @GetMapping("/comments/is-like")
-    public ResponseEntity<Boolean> isCheckedLike(Long commentId) {
+    @GetMapping("/comments/{comment-id}/is-like")
+    public ResponseEntity<Boolean> isCheckedLike(
+            @PathVariable(name = "comment-id") Long commentId) {
         Boolean isCheck = commentUseCase.isCheckedLike(commentId);
         return new ResponseEntity(isCheck, HttpStatus.OK);
     }
 
     @Operation(summary = "댓글 삭제")
-    @DeleteMapping("/comments")
-    public ResponseEntity<Long> deleteComment(Long commentId) {
+    @DeleteMapping("/comments/{comment-id}")
+    public ResponseEntity<Long> deleteComment(@PathVariable(name = "comment-id") Long commentId) {
         commentUseCase.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -69,15 +83,14 @@ public class CommentController {
     @Operation(summary = "댓글 수정")
     @PutMapping("/comments/{comment-id}")
     public ResponseEntity updateComment(
-            @PathVariable(name = "comment-id") Long commentId, String content) {
+            @PathVariable(name = "comment-id") Long commentId, @RequestBody String content) {
         commentUseCase.updateCommentContent(commentId, content);
-
-        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "댓글 좋아요 취소")
-    @DeleteMapping("/comments/likes")
-    public ResponseEntity minusLikeCount(Long commentId) {
+    @Operation(summary = "댓글 좋아요 취소", description = "댓글 좋아요 취소 -> 댓글 좋아요 한번 더 눌러도 동일합니다.")
+    @DeleteMapping("/comments/{comment-id}/likes")
+    public ResponseEntity minusLikeCount(@PathVariable(name = "comment-id") Long commentId) {
         commentUseCase.deleteCommentLike(commentId);
         return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }

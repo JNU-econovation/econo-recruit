@@ -65,7 +65,8 @@ public class ApplicantService implements ApplicantRegisterUseCase {
         // Result 를 save 하게 된다.
         answerAdaptor.saveAll(results);
         Events.raise(
-                SubmitApplicantEvent.of(applicantId, convertToSubmitApplicantEventTitle(results)));
+                SubmitApplicantEvent.of(
+                        applicantId.toString(), convertToSubmitApplicantEventTitle(results)));
         // TODO: 추가될지 말지 결정해야 함
         //        applicantRegister(results);
         return applicantId;

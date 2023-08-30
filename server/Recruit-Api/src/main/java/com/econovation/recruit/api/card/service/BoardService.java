@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
+import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -18,7 +19,6 @@ import com.econovation.recruitdomain.out.ColumnLoadPort;
 import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -161,7 +161,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }*/
 
     @Override
-    public void createApplicantBoard(UUID applicantId, String hopeField, Long cardId) {
+    public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
         Integer columnsId = -1;
         if (hopeField.equals("개발자")) {
             columnsId = DEVELOPER_COLUMNS_ID;
@@ -233,6 +233,12 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
         return boardLoadPort.getBoardByColumnsIds(columnsIds);
+    }
+
+    @Override
+    public List<ColumnsResponseDto> getColumnsByNavigationId(Integer navigationId) {
+        List<Columns> columns = columnLoadPort.getColumnsByNavigationId(navigationId);
+        return ColumnsResponseDto.from(columns);
     }
 
     //    @Override

@@ -35,10 +35,21 @@ public class CommentService implements CommentUseCase {
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
+        Long userId = SecurityUtils.getCurrentUserId();
         Comment loadedComment = commentRecordPort.saveComment(comment);
-        Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
-        card.plusCommentCount();
-        return loadedComment;
+        loadedComment.setIdpId(userId);
+        // 지원서 카드면 카드 타입이지만
+        if (comment.isApplicantComment()) {
+            Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
+            card.plusCommentCount();
+            return loadedComment;
+        }
+        // 카드 타입이면서 지원서 타입이면 안된다.
+        else {
+            Card card = cardLoadPort.findById(comment.getCardId());
+            card.plusCommentCount();
+            return loadedComment;
+        }
     }
 
     @Override
@@ -72,18 +83,18 @@ public class CommentService implements CommentUseCase {
                 commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId);
         Comment comment = commentLoadPort.findById(commentId);
         if (commentLikeResult.isSuccess()) {
-            updateCommentLikeAndDelete(comment, commentLikeResult.getValue());
+            deleteCommentLike(comment, commentLikeResult.getValue());
         } else {
-            updateCommentLikeAndSave(comment, idpId);
+            createCommentLike(comment, idpId);
         }
     }
 
-    private void updateCommentLikeAndDelete(Comment comment, CommentLike commentLike) {
+    private void deleteCommentLike(Comment comment, CommentLike commentLike) {
         comment.minusLikeCount();
         commentLikeRecordPort.deleteCommentLike(commentLike);
     }
 
-    private void updateCommentLikeAndSave(Comment comment, Long idpId) {
+    private void createCommentLike(Comment comment, Long idpId) {
         comment.plusLikeCount();
         CommentLike newCommentLike =
                 CommentLike.builder().commentId(comment.getId()).idpId(idpId).build();
@@ -96,13 +107,17 @@ public class CommentService implements CommentUseCase {
         // 현재 내가 눌렀던 댓글만 삭제할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
-        commentLikeLoadPort
-                .getByCommentIdAndIdpId(commentId, idpId)
-                .onSuccess(
-                        commentLike -> {
-                            commentLikeRecordPort.deleteCommentLike(commentLike);
-                            comment.minusLikeCount();
-                        });
+        Result<CommentLike> commentLikeResult =
+                commentLikeLoadPort.getByCommentIdAndIdpId(commentId, idpId);
+        commentLikeResult.onSuccess(
+                commentLike -> {
+                    commentLikeRecordPort.deleteCommentLike(commentLike);
+                    comment.minusLikeCount();
+                });
+        commentLikeResult.onFailure(
+                throwable -> {
+                    throw CommentNotHostException.EXCEPTION;
+                });
     }
 
     @Override
@@ -148,10 +163,47 @@ public class CommentService implements CommentUseCase {
         // 내가 작성한 comment 만 수정할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
-        if (comment.getIdpId().equals(idpId)) {
+        if (comment.getIdpId() == idpId) {
             comment.updateContent(content);
         } else {
             throw CommentNotHostException.EXCEPTION;
         }
+    }
+
+    //
+    @Override
+    @Transactional(readOnly = true)
+    public List<CommentPairVo> findByApplicantId(String applicantId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
+        List<Long> commentIds = comments.stream().map(Comment::getId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(commentIds);
+        return comments.stream()
+                .map(
+                        comment -> {
+                            Boolean isLiked =
+                                    commentLikes.stream()
+                                            .anyMatch(
+                                                    commentLike ->
+                                                            commentLike
+                                                                            .getCommentId()
+                                                                            .equals(comment.getId())
+                                                                    && commentLike
+                                                                            .getIdpId()
+                                                                            .equals(idpId));
+                            String interviewersName =
+                                    interviewers.stream()
+                                            .filter(
+                                                    interviewer ->
+                                                            interviewer
+                                                                    .getId()
+                                                                    .equals(comment.getIdpId()))
+                                            .findFirst()
+                                            .map(Interviewer::getName)
+                                            .orElse("");
+                            return CommentPairVo.of(comment, isLiked, interviewersName);
+                        })
+                .collect(Collectors.toList());
     }
 }

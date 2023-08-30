@@ -9,4 +9,6 @@ public interface CommentLoadPort {
     List<Comment> findAll();
 
     List<Comment> findByCardId(Long cardId);
+
+    List<Comment> findByApplicantId(String applicantId);
 }

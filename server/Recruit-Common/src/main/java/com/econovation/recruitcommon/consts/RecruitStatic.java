@@ -29,6 +29,7 @@ public class RecruitStatic {
 
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
+    public static final String COMMENT_LIKE_SUCCESS_UPDATE_MESSAGE = "성공적으로 댓글 좋아요가 수정됐습니다.";
     public static String[] CRETERIA = {"열정", "실천력", "협업", "동아리 집중", "간절함"};
     public static Set<String> CRETERIA_SET =
             new HashSet<>(Arrays.asList("열정", "실천력", "협업", "동아리 집중", "간절함"));

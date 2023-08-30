@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.label.domain;
 
-import java.util.UUID;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,7 @@ public class Label {
     private Integer id;
 
     @Column(name = "applicant_id")
-    private UUID applicantId;
+    private String applicantId;
 
     @Column(name = "idpId")
     private Long idpId;

@@ -9,7 +9,6 @@ import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -31,7 +30,7 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public List<Label> loadLabelByApplicantId(UUID applicantId) {
+    public List<Label> loadLabelByApplicantId(String applicantId) {
         List<Label> labels = labelRepository.findByApplicantId(applicantId);
         if (labels.isEmpty()) {
             throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
@@ -40,7 +39,7 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public Label loadLabelByApplicantIdAndIdpId(UUID applicantId, Integer idpId) {
+    public Label loadLabelByApplicantIdAndIdpId(String applicantId, Integer idpId) {
         Optional<Label> label = labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         if (label.isEmpty()) {
             throw LabelNotFoundException.EXCEPTION;

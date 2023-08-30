@@ -17,7 +17,7 @@ public enum CommentErrorCode implements BaseErrorCode {
     COMMENT_DUPLICATE_CREATED(BAD_REQUEST, "COMMENT_400_1", "중복된 댓글를 생성했습니다."),
     COMMENT_NOT_FOUND(NOT_FOUND, "COMMENT_404_1", "존재하지 않는 댓글입니다."),
     COMMENT_NOT_HOST(BAD_REQUEST, "COMMENT_400_2", "댓글의 작성자가 아닙니다."),
-    ;
+    COMMENT_NOT_APPLICANT(BAD_REQUEST, "COMMENT_400_3", "댓글이 지원서 댓글이 아닙니다.");
     private Integer status;
     private String code;
     private String reason;
