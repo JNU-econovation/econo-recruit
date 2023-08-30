@@ -54,6 +54,10 @@ export const postApplication = async () => {
       name: "generation",
       answer: `${CURRENT_GENERATION}`,
     });
+    applicationData.add({
+      name: "uploadDate",
+      answer: `${new Date().getTime()}`,
+    });
     const applicantId = await postApplicant(Array.from(applicationData));
     await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
   } catch (e) {

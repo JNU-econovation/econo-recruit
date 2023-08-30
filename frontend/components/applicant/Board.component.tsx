@@ -7,13 +7,13 @@ import ApplicantDetailLeft from "./DetailLeft.component";
 import { FC, useEffect, useState } from "react";
 import { ApplicantReq } from "@/src/apis/application";
 import { applicantDataFinder } from "@/src/functions/finder";
+import { useQuery } from "@tanstack/react-query";
 
 interface ApplicantBoardProps {
   generation: string;
 }
 
 const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
-  const [allData, setAllData] = useState<ApplicantReq[][]>([]);
   const [data, setData] = useState<ApplicantReq[]>([]);
 
   const onClick = (id: string) => {
@@ -27,23 +27,44 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
       });
   };
 
-  useEffect(() => {
-    getAllApplicant().then((res) => {
-      setAllData(res);
-    });
-  }, []);
+  const {
+    data: allData,
+    isLoading,
+    isError,
+  } = useQuery(["allApplicant", generation], () => getAllApplicant(), {
+    enabled: !!generation,
+  });
+
+  if (!allData || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
 
   return (
     <Board
       wapperClassname="divide-x"
       boardData={allData.map((value) => ({
         id: applicantDataFinder(value, "id"),
-        title: applicantDataFinder(value, "name"),
+        title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
+          value,
+          "name"
+        )}`,
         subElements: [
-          applicantDataFinder(value, "field"),
-          applicantDataFinder(value, "major"),
+          applicantDataFinder(value, "field1"),
+          applicantDataFinder(value, "field2"),
+          `${applicantDataFinder(value, "grade")} ${applicantDataFinder(
+            value,
+            "semester"
+          )}`,
+          applicantDataFinder(value, "uploadDate") === ""
+            ? new Date().toLocaleString("ko-KR", { dateStyle: "short" })
+            : new Date(
+                Number(applicantDataFinder(value, "uploadDate"))
+              ).toLocaleString("ko-KR", { dateStyle: "short" }),
         ],
-        // time: new Date(applicantDataFinder(value, "time")),
       }))}
       onClick={onClick}
     >
