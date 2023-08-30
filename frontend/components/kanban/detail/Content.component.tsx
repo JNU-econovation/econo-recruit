@@ -23,7 +23,7 @@ const KanbanDetailContent: FC<KanbanDetailContentProps> = async ({
         <div className="flex flex-1 pl-12 h-[calc(100vh-12rem)]">
           <div className="flex flex-1 min-h-0">
             <div className="flex-1 overflow-auto px-12 min-w-[35rem]">
-              <ApplicantDetailLeft data={data} postId={"22"} />
+              <ApplicantDetailLeft data={data} />
             </div>
           </div>
           <div className="flex flex-1 min-h-0 [box-shadow:0px_0px_6px_1px_rgba(0,0,0,0.14)] mr-12">

@@ -22,7 +22,7 @@ const KanbanBoardPage: FC<KanbanBoardPageProps> = ({ params }) => {
           <KanbanNavbarComponent />
         </div>
         <div className="overflow-auto max-h-[calc(100vh-16rem)]">
-          <KanbanBoardDragDropComponent />
+          <KanbanBoardDragDropComponent generation={generation} />
         </div>
       </div>
     </div>

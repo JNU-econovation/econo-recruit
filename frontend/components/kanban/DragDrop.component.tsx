@@ -1,17 +1,39 @@
 "use client";
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
-import { useAtom } from "jotai";
-import { KanbanDataArrayState } from "@/src/stores/kanban/Kanban.atoms";
+import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
 import { getMovedKanbanData } from "@/src/functions/kanban";
-import KanbanRowComponent from "./Card.component";
-import KanbanAddRowComponent from "./Addcard.component";
+import KanbanAddColumnComponent from "./AddColumn.component";
+import { useQuery } from "@tanstack/react-query";
+import { FC, useEffect } from "react";
+import { getAllKanbanData } from "@/src/apis/kanban";
+import KanbanColumnComponent from "./Column.component";
 
-const KanbanBoardDragDropComponent = () => {
-  const [kanbanData, setKanbanData] = useAtom(KanbanDataArrayState);
+interface KanbanBoardDragDropProps {
+  generation: string;
+}
+
+const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
+  generation,
+}) => {
+  const {
+    data: kanbanData,
+    isError,
+    isLoading,
+  } = useQuery<KanbanColumnData[]>(["kanbanDataArray", generation], () =>
+    getAllKanbanData("1")
+  );
+
+  if (!kanbanData || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
+
   const onDragEnd = (result: DropResult) => {
     const movedKanbanData = getMovedKanbanData(kanbanData, result);
-    setKanbanData(movedKanbanData);
   };
 
   return (
@@ -23,16 +45,16 @@ const KanbanBoardDragDropComponent = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {kanbanData.map((row, index) => (
-              <KanbanRowComponent
-                index={index}
-                cardData={row.card}
-                cardCount={row.card.length}
-                title={row.title}
+            {kanbanData.map((card, index) => (
+              <KanbanColumnComponent
                 key={index}
+                title={card.title}
+                columnCount={card.card.length}
+                columnData={card.card}
+                index={index}
               />
             ))}
-            <KanbanAddRowComponent AddRowCallBack={() => ""} />
+            <KanbanAddColumnComponent AddColumnCallBack={() => ""} />
             {provided.placeholder}
           </div>
         )}

@@ -1,19 +1,23 @@
 "use client";
 
-import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
+import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import { useParams } from "next/navigation";
 
-type KanbanColumnComponentType = {
-  data: KanbanColumnData;
-  row: number;
+type KanbanCardComponentType = {
+  data: KanbanCardData | null;
+  cardId: number;
 };
 
-function KanbanColumnComponent({ data, row }: KanbanColumnComponentType) {
+function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
+  if (!data) {
+    return <></>;
+  }
+
   const { major, title, apply, comment, isHearted, heart, id } = data;
   const { generation } = useParams();
 
   const onClickDetail = () => {
-    window.location.href = `/kanban/${generation}/detail?id=${id}&row=${row}`;
+    window.location.href = `/kanban/${generation}/detail?id=${id}&card=${cardId}`;
   };
 
   return (
@@ -44,4 +48,4 @@ function KanbanColumnComponent({ data, row }: KanbanColumnComponentType) {
   );
 }
 
-export default KanbanColumnComponent;
+export default KanbanCardComponent;

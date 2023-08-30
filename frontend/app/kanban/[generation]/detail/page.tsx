@@ -1,5 +1,5 @@
 import { FC } from "react";
-import KanbanDetailRow from "@/components/kanban/detail/Row.component";
+import KanbanDetailColumn from "@/components/kanban/ColumnWithBackButton.component";
 import KanbanDetailContent from "@/components/kanban/detail/Content.component";
 
 interface KanbanBoardDetailPageProps {
@@ -8,7 +8,7 @@ interface KanbanBoardDetailPageProps {
   };
   searchParams: {
     id: string;
-    row: string;
+    card: string;
   };
 }
 
@@ -19,11 +19,11 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
   const { generation } = params;
 
   const detailId = searchParams.id ?? "0";
-  const detailRow = searchParams.row ?? "0";
+  const detailCard = searchParams.card ?? "0";
 
   return (
     <div className="flex mt-8 overflow-auto pt-12 pl-12">
-      <KanbanDetailRow detailRow={detailRow} generation={generation} />
+      <KanbanDetailColumn detailCard={detailCard} generation={generation} />
       <KanbanDetailContent detailId={detailId} generation={generation} />
     </div>
   );

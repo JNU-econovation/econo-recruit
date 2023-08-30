@@ -1,10 +1,9 @@
 import { atom } from "jotai";
-import { KanbanMock } from "@/mock/MockData";
 
-export type KanbanRowData = {
+export type KanbanColumnData = {
   id: number;
   title: string;
-  Card: KanbanCardData[];
+  card: (KanbanCardData | null)[];
 };
 
 export type KanbanCardData = {
@@ -17,4 +16,4 @@ export type KanbanCardData = {
   isHearted: boolean;
 };
 
-export const KanbanDataArrayState = atom(KanbanMock as KanbanRowData[]);
+export const KanbanDataArrayState = atom({} as KanbanColumnData[]);
