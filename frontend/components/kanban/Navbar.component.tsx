@@ -1,5 +1,5 @@
-import { KANBAN_MANUES } from '@/src/constants/kanban/26';
-import NavbarButtonComponent from '../button/Navbar.component';
+import { KANBAN_MANUES } from "@/src/constants/kanban/26";
+import NavbarButtonComponent from "../button/Navbar.component";
 
 const KanbanNavbarComponent = () => {
   return (
