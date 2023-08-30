@@ -53,6 +53,10 @@ public class Comment extends BaseTimeEntity {
         this.isDeleted = false;
     }
 
+    public void setIdpId(Long idpId) {
+        this.idpId = idpId;
+    }
+
     public void plusLikeCount() {
         this.likeCount++;
     }

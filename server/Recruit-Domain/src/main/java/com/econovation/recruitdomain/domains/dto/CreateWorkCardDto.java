@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import javax.annotation.Nullable;
 import lombok.Data;
 import lombok.Getter;
 

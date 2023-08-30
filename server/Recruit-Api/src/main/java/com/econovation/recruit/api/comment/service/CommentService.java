@@ -35,7 +35,9 @@ public class CommentService implements CommentUseCase {
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
+        Long userId = SecurityUtils.getCurrentUserId();
         Comment loadedComment = commentRecordPort.saveComment(comment);
+        loadedComment.setIdpId(userId);
         // 지원서 카드면 카드 타입이지만
         if (comment.isApplicantComment()) {
             Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
@@ -164,6 +166,7 @@ public class CommentService implements CommentUseCase {
         }
     }
 
+    //
     @Override
     @Transactional(readOnly = true)
     public List<CommentPairVo> findByApplicantId(String applicantId) {

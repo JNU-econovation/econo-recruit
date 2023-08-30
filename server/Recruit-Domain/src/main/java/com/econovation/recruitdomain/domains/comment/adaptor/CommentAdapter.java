@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
@@ -53,7 +54,7 @@ public class CommentAdapter
     public List<Comment> findByCardId(Long cardId) {
         List<Comment> comments = commentRepository.findByCardId(cardId);
         if (comments.isEmpty()) {
-            throw CardNotFoundException.EXCEPTION;
+            throw CommentNotFoundException.EXCEPTION;
         }
         return comments;
     }

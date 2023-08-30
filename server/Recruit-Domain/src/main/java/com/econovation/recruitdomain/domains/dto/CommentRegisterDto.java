@@ -13,6 +13,8 @@ public class CommentRegisterDto {
     @Nullable private String applicantId;
     @Nullable private Long cardId;
 
+
+
     public static Comment from(CommentRegisterDto commentRegisterDto) {
         return Comment.builder()
                 .content(commentRegisterDto.getContent())
