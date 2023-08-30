@@ -12,22 +12,21 @@ interface ApplicantDetailRightProps {
   data: ApplicantReq[];
 }
 
-const ApplicantDetailRight: FC<ApplicantDetailRightProps> = ({ data }) => (
-  <>
-    {APPLICANT.map((node, index) => (
-      <Fragment key={index}>
-        <div className="flex gap-2">
-          <Txt typography="h5">{`${node.id}. `}</Txt>
-          <Txt typography="h5">{node.title}</Txt>
-        </div>
-        {junctionApplicant(node, data)}
-      </Fragment>
-    ))}
-    <ApplicantTimelineNode
-      generation={applicantDataFinder(data, "generation")}
-      postId={applicantDataFinder(data, "id")}
-    />
-  </>
-);
+const ApplicantDetailRight: FC<ApplicantDetailRightProps> = ({ data }) => {
+  return (
+    <>
+      {APPLICANT.map((node, index) => (
+        <Fragment key={index}>
+          <div className="flex gap-2">
+            <Txt typography="h5">{`${node.id}. `}</Txt>
+            <Txt typography="h5">{node.title}</Txt>
+          </div>
+          {junctionApplicant(node, data)}
+        </Fragment>
+      ))}
+      <ApplicantTimelineNode postId={applicantDataFinder(data, "id")} />
+    </>
+  );
+};
 
 export default ApplicantDetailRight;

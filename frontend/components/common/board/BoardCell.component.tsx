@@ -5,32 +5,32 @@ export interface BoardCellProps {
   title: string;
   subElements: string[];
   score?: string;
-  time?: Date;
   onClick?: () => void;
 }
 
 const BoardCell: FC<BoardCellProps> = ({
   title,
   subElements,
-  time,
   score,
   onClick,
 }) => {
   return (
     <button className="flex border-t py-4 justify-between" onClick={onClick}>
-      <Txt typography="h6">{title}</Txt>
-      <div className="flex gap-20">
-        {subElements.map((subElement) => (
-          <Txt key="" typography="p" color="light_gray">
+      <Txt typography="h6" className="flex-[2_0_0] text-left">
+        {title}
+      </Txt>
+      <div className="flex gap-20 flex-[2_0_0] text-center">
+        {subElements.map((subElement, index) => (
+          <Txt
+            key={index}
+            typography="p"
+            color="light_gray"
+            className="w-full flex-1 last:text-right"
+          >
             {subElement}
           </Txt>
         ))}
         {score && <Txt typography="p">{score}</Txt>}
-        {time && (
-          <Txt typography="p" color="light_gray">
-            {time.toLocaleDateString()}
-          </Txt>
-        )}
       </div>
     </button>
   );
