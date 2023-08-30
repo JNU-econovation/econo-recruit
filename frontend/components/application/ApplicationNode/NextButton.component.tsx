@@ -2,7 +2,7 @@
 
 import useApplicationIndexControll from "@/src/hooks/useApplicationIndexControll.hook";
 import { FC } from "react";
-import { postApplication } from "../sendApplication.tsx";
+import { postApplication } from "../sendApplication.jsx";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;

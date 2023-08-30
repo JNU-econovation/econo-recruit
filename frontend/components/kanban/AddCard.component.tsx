@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 
-type KanbanAddColumnComponent = {
-  AddColumnCallBack: () => {};
+type KanbanAddCardComponent = {
+  AddCardCallBack: () => {};
 };
 
-function KanbanAddColumnComponent({
-  AddColumnCallBack,
-}: KanbanAddColumnComponent) {
+function KanbanAddCardComponent({ AddCardCallBack }: KanbanAddCardComponent) {
   const [isOpenAddCard, setIsOpenAddCard] = useState(false);
 
   return (
@@ -24,7 +22,7 @@ function KanbanAddColumnComponent({
             <button type="button" onClick={() => setIsOpenAddCard(false)}>
               <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
-            <button type="submit" onClick={AddColumnCallBack}>
+            <button type="submit" onClick={AddCardCallBack}>
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
@@ -37,7 +35,7 @@ function KanbanAddColumnComponent({
             setIsOpenAddCard(true);
           }}
         >
-          <img src="/icons/ellipsis.plus.svg" alt="AddColumn" />
+          <img src="/icons/ellipsis.plus.svg" alt="AddCard" />
           Add a card
         </button>
       )}
@@ -45,4 +43,4 @@ function KanbanAddColumnComponent({
   );
 }
 
-export default KanbanAddColumnComponent;
+export default KanbanAddCardComponent;

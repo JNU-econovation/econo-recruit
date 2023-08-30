@@ -4,8 +4,8 @@ import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import { useAtom } from "jotai";
 import { KanbanDataArrayState } from "@/src/stores/kanban/Kanban.atoms";
 import { getMovedKanbanData } from "@/src/functions/kanban";
-import KanbanRowComponent from "./Row.component";
-import KanbanAddRowComponent from "./AddRow.component";
+import KanbanRowComponent from "./Card.component";
+import KanbanAddRowComponent from "./Addcard.component";
 
 const KanbanBoardDragDropComponent = () => {
   const [kanbanData, setKanbanData] = useAtom(KanbanDataArrayState);
@@ -16,7 +16,7 @@ const KanbanBoardDragDropComponent = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable" type="COLUMN" direction="horizontal">
+      <Droppable droppableId="droppable" type="card" direction="horizontal">
         {(provided) => (
           <div
             className="flex gap-4"
@@ -26,8 +26,8 @@ const KanbanBoardDragDropComponent = () => {
             {kanbanData.map((row, index) => (
               <KanbanRowComponent
                 index={index}
-                columnData={row.column}
-                columnCount={row.column.length}
+                cardData={row.card}
+                cardCount={row.card.length}
                 title={row.title}
                 key={index}
               />

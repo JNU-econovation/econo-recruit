@@ -10,7 +10,7 @@ interface InterviewDetailLeftProps {
   scoreData: ScoreRes;
 }
 
-const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = async ({
+const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = ({
   data,
   scoreData,
 }) => {

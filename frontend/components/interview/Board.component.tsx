@@ -1,27 +1,78 @@
+"use client";
+
 import InterviewDetailLeftComponent from "./DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./DetailRight.component";
-import { getInterviewRecord } from "@/src/apis/interview";
-import { getScore } from "@/src/apis/score";
+import { InterviewRes, getInterviewRecord } from "@/src/apis/interview";
+import { ScoreRes, getScore } from "@/src/apis/score";
+import { useEffect, useState } from "react";
+import { applicantDataFinder } from "@/src/functions/finder";
+import { getAllApplicant } from "@/src/apis/applicant/applicant";
+import { useQuery } from "@tanstack/react-query";
 
-const accessToken = "96b7d5b0-74da-4b6c-8328-3bedd57f0d34";
+const InterviewBoardComponent = () => {
+  const initData = {
+    record: "",
+    url: "",
+  } as InterviewRes;
 
-const InterviewBoardComponent = async () => {
-  const data = await getInterviewRecord(accessToken);
-  const scoreData = await getScore(accessToken);
+  const initScoreData = {
+    totalAverage: 0,
+    scoreVo: {
+      average: [],
+    },
+  } as ScoreRes;
 
-  const boardInterviewData = Array.from({ length: 10 }).map((_, i) => ({
-    id: i,
-    title: "[개발자]임채승",
-    subElements: ["APP", "WEB", "4.5"],
-    time: new Date(),
-  }));
+  const [data, setData] = useState<InterviewRes>(initData);
+  const [scoreData, setScoreData] = useState<ScoreRes>(initScoreData);
+  console.log(data);
+
+  const onClick = (id: string) => {
+    getInterviewRecord(id)
+      .then((res) => {
+        setData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setData(initData);
+      });
+
+    getScore(id)
+      .then((res) => {
+        setScoreData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setScoreData(initScoreData);
+      });
+  };
+
+  const { data: allData, isLoading } = useQuery({
+    queryKey: ["allApplicant"],
+    queryFn: () => getAllApplicant(),
+  });
+
+  if (!allData || isLoading) {
+    return <div>loading...</div>;
+  }
 
   return (
     <Board
-      baseUrl={""}
       wapperClassname="divide-x"
-      boardData={boardInterviewData}
+      boardData={allData.map((value) => ({
+        id: applicantDataFinder(value, "id"),
+        title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
+          value,
+          "name"
+        )}`,
+        subElements: [
+          applicantDataFinder(value, "field1"),
+          applicantDataFinder(value, "field2"),
+          applicantDataFinder(value, "major"),
+        ],
+        // time: new Date(applicantDataFinder(value, "time")),
+      }))}
+      onClick={(id) => onClick(id)}
     >
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
