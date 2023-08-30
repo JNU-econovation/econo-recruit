@@ -15,7 +15,6 @@ import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class LabelService implements LabelUseCase {
     @Override
     @RedissonLock(LockName = "라벨", identifier = "applicantId")
     @Transactional
-    public Label createLabel(UUID applicantId) {
+    public Label createLabel(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findByApplicantId(applicantId);
         Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
@@ -46,7 +45,7 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
-    public List<String> findByApplicantId(UUID applicantId) {
+    public List<String> findByApplicantId(String applicantId) {
         List<Label> labels = labelLoadPort.loadLabelByApplicantId(applicantId);
 
         if (labels.isEmpty()) {
@@ -69,7 +68,7 @@ public class LabelService implements LabelUseCase {
     @Override
     @Transactional
     @RedissonLock(LockName = "라벨", identifier = "applicantId")
-    public void deleteLabel(UUID applicantId, Integer idpId) {
+    public void deleteLabel(String applicantId, Integer idpId) {
         Label label = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
 
         // Card LabelCount 감소

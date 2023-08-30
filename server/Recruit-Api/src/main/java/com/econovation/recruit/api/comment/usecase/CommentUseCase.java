@@ -22,4 +22,6 @@ public interface CommentUseCase {
     Boolean isCheckedLike(Long commentId);
 
     void updateCommentContent(Long commentId, String content);
+
+    List<CommentPairVo> findByApplicantId(String applicantId);
 }

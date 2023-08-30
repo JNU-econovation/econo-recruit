@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.card.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import java.util.UUID;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class Card extends BaseTimeEntity {
 
     @Column(name = "applicant_id")
     @Nullable
-    private UUID applicantId;
+    private String applicantId;
 
     @Column(name = "title")
     private String title;

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,18 +31,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     private final CommentUseCase commentUseCase;
 
-    @Operation(summary = "댓글 등록")
+    @Operation(summary = "지원서 카드에 댓글 등록")
     @ApiErrorExceptionsExample(CommentExceptionDocs.class)
     @PostMapping("/comments")
-    public ResponseEntity createComment(CommentRegisterDto commentRegisterDto) {
+    public ResponseEntity createComment(@RequestBody CommentRegisterDto commentRegisterDto) {
         commentUseCase.saveComment(CommentRegisterDto.from(commentRegisterDto));
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "댓글 조회")
-    @GetMapping("/comments/{cardId}")
-    public ResponseEntity<List<CommentPairVo>> findByCardId(Long cardId) {
+    @Operation(summary = "cardId 로 댓글 조회")
+    @ApiErrorExceptionsExample(CommentExceptionDocs.class)
+    @GetMapping("/cards/{card-id}/comments")
+    public ResponseEntity<List<CommentPairVo>> findByCardId(
+            @PathVariable(name = "card-id") Long cardId) {
         List<CommentPairVo> comments = commentUseCase.findByCardId(cardId);
+        return new ResponseEntity(comments, HttpStatus.OK);
+    }
+
+    @Operation(summary = "applicationId로 댓글 조회")
+    @GetMapping("/applicants/{applicant-id}/comments")
+    public ResponseEntity<List<CommentPairVo>> findByApplicantId(
+            @PathVariable(name = "applicant-id") String applicantId) {
+        List<CommentPairVo> comments = commentUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 

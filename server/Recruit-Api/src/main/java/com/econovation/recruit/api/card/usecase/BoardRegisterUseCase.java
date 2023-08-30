@@ -4,7 +4,6 @@ import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
-import java.util.UUID;
 
 @UseCase
 public interface BoardRegisterUseCase {
@@ -12,7 +11,7 @@ public interface BoardRegisterUseCase {
 
     Board createWorkBoard(Integer columnId, Long cardId);
 
-    void createApplicantBoard(UUID applicantId, String hopeField, Long cardId);
+    void createApplicantBoard(String applicantId, String hopeField, Long cardId);
 
     Columns createColumn(String title, Integer navigationId);
     //    void execute(CreateWorkCardDto createWorkCardDto, CardType cardType);

@@ -7,7 +7,6 @@ import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,13 +34,11 @@ public class CardAdaptor implements CardLoadPort, CardRecordPort {
 
     @Override
     public Card findById(Long cardId) {
-        return cardRepository
-                .findById(cardId)
-                .orElseThrow(() -> new IllegalStateException(NO_MATCH_CARD));
+        return cardRepository.findById(cardId).orElseThrow(() -> CardNotFoundException.EXCEPTION);
     }
 
     @Override
-    public Card findByApplicantId(UUID applicantId) {
+    public Card findByApplicantId(String applicantId) {
         Optional<Card> applicant = cardRepository.findByApplicantId(applicantId);
         if (applicant.isEmpty()) {
             throw CardNotFoundException.EXCEPTION;

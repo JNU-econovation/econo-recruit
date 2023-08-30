@@ -36,9 +36,18 @@ public class CommentService implements CommentUseCase {
     @Transactional
     public Comment saveComment(Comment comment) {
         Comment loadedComment = commentRecordPort.saveComment(comment);
-        Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
-        card.plusCommentCount();
-        return loadedComment;
+        // 지원서 카드면 카드 타입이지만
+        if (comment.isApplicantComment()) {
+            Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
+            card.plusCommentCount();
+            return loadedComment;
+        }
+        // 카드 타입이면서 지원서 타입이면 안된다.
+        else {
+            Card card = cardLoadPort.findById(comment.getCardId());
+            card.plusCommentCount();
+            return loadedComment;
+        }
     }
 
     @Override
@@ -153,5 +162,41 @@ public class CommentService implements CommentUseCase {
         } else {
             throw CommentNotHostException.EXCEPTION;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CommentPairVo> findByApplicantId(String applicantId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
+        List<Long> commentIds = comments.stream().map(Comment::getId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(commentIds);
+        return comments.stream()
+                .map(
+                        comment -> {
+                            Boolean isLiked =
+                                    commentLikes.stream()
+                                            .anyMatch(
+                                                    commentLike ->
+                                                            commentLike
+                                                                            .getCommentId()
+                                                                            .equals(comment.getId())
+                                                                    && commentLike
+                                                                            .getIdpId()
+                                                                            .equals(idpId));
+                            String interviewersName =
+                                    interviewers.stream()
+                                            .filter(
+                                                    interviewer ->
+                                                            interviewer
+                                                                    .getId()
+                                                                    .equals(comment.getIdpId()))
+                                            .findFirst()
+                                            .map(Interviewer::getName)
+                                            .orElse("");
+                            return CommentPairVo.of(comment, isLiked, interviewersName);
+                        })
+                .collect(Collectors.toList());
     }
 }

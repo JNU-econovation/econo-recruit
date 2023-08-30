@@ -59,6 +59,15 @@ public class CommentAdapter
     }
 
     @Override
+    public List<Comment> findByApplicantId(String applicantId) {
+        List<Comment> comments = commentRepository.findByApplicantId(applicantId);
+        if (comments.isEmpty()) {
+            throw CardNotFoundException.EXCEPTION;
+        }
+        return comments;
+    }
+
+    @Override
     public CommentLike saveCommentLike(CommentLike commentLike) {
         return commentLikeRepository.save(commentLike);
     }
@@ -86,5 +95,10 @@ public class CommentAdapter
     @Override
     public Result<CommentLike> getByCommentIdAndIdpId(Long commentId, Long idpId) {
         return Result.of(commentLikeRepository.findByCommentIdAndIdpId(commentId, idpId).get());
+    }
+
+    @Override
+    public List<CommentLike> findByCommentIds(List<Long> commentIds) {
+        return commentLikeRepository.findByCommentIdIn(commentIds);
     }
 }
