@@ -8,9 +8,9 @@ import java.util.Map;
 public interface AnswerLoadUseCase {
     Map<String, String> execute(String applicantId);
 
-    Map<String, Map<String, String>> execute(List<String> fields, List<String> applicantIds);
+    List<Map<String, String>> execute(List<String> fields, List<String> applicantIds);
 
-    Map<String, Map<String, String>> execute();
+    List<Map<String, String>> execute();
 
     Map<String, String> execute(List<String> fields, String applicantId);
 

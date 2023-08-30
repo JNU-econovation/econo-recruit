@@ -130,7 +130,7 @@ public class BoardRestController {
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
     @GetMapping("/applicants")
-    public ResponseEntity<Map<String, Map<String, String>>> getApplicants() {
+    public ResponseEntity<List<Map<String, String>>> getApplicants() {
         return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
     }
 
