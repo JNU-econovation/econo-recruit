@@ -12,10 +12,10 @@ interface KanbanBoardPageProps {
 const KanbanBoardPage: FC<KanbanBoardPageProps> = ({ params }) => {
   const { generation } = params;
   return (
-    <div className="px-24 max-w-[1280px] flex p-12">
+    <div className="pl-24 flex py-12">
       <CommonNavbar generation={generation} isShort />
-      <div className="ml-32 overflow-auto mr-10">
-        <div className="pt-12 pb-6 text-3xl font-bold border-b-4">
+      <div className="ml-32 overflow-auto w-full">
+        <div className="w-full pt-12 pb-6 text-3xl font-bold border-b-4">
           {generation}기 신입모집
         </div>
         <div className="flex gap-4 py-6 font-medium overflow-auto">
