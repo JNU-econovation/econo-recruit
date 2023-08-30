@@ -31,7 +31,7 @@ export const MainNavbar = [
     short_title: "신청",
     type: "apply",
     target: "_blank",
-    href: `/application/${CURRENT_GENERATION}`,
+    href: `/application`,
   },
   {
     title: "신업모집 칸반보드",

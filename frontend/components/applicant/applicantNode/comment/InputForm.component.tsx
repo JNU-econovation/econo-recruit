@@ -60,7 +60,7 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
 
   const prevSubmit = useCallback(() => {
     const content = editorRef.current?.getInstance().getMarkdown();
-    onChange((hasQuestion ? "" : "") + content);
+    onChange((hasQuestion ? "**[질문]**" : "") + content);
   }, [onChange]);
 
   useEffect(() => {
