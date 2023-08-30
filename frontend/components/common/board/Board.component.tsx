@@ -7,15 +7,18 @@ import Image from "next/image";
 import CloseImage from "/public/icons/ellipsis.multiply.svg";
 import classNames from "classnames";
 
+interface BoardData {
+  id: string;
+  title: string;
+  subElements: string[];
+  score?: string;
+  time: Date;
+}
+
 interface BoardProps {
   onClick?: (id: string) => void;
   wapperClassname?: string;
-  boardData: {
-    id: string;
-    title: string;
-    subElements: string[];
-    time: Date;
-  }[];
+  boardData: BoardData[];
 }
 
 const Board: FC<PropsWithChildren<BoardProps>> = ({
@@ -39,6 +42,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           key={index}
           title={item.title}
           subElements={item.subElements}
+          score={item?.score ? item.score : ""}
           time={item.time}
           onClick={() => openModel(item.id)}
         />
@@ -47,6 +51,7 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
         style={{
           content: {
             width: "calc(100% - 12rem)",
+            zIndex: "9999",
             height: "calc(100%)",
             margin: "3rem 6rem 0 6rem",
             minWidth: "1280px",

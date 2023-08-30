@@ -62,7 +62,7 @@ const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId }) => {
                 .map((label) => (
                   <div
                     key={label.name}
-                    className="text-[#2160FF] bg-[#E8EFFF] py-1 px-4 rounded-full"
+                    className="text-[#2160FF] bg-[#E8EFFF] py-1 px-3 rounded-full"
                   >
                     {label.name}
                   </div>
