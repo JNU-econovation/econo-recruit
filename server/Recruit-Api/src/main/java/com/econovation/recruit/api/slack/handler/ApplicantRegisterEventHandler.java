@@ -53,15 +53,12 @@ public class ApplicantRegisterEventHandler {
 
     private Card createCardFromEvent(ApplicantRegisterEvent event) {
         String title = generateCardTitle(event);
-        return Card.builder()
-                .applicantId(event.getApplicantId())
-                .title(title)
-                .content("")
-                .build();
+        return Card.builder().applicantId(event.getApplicantId()).title(title).content("").build();
     }
 
     private String generateCardTitle(ApplicantRegisterEvent event) {
-        return String.format("[%s] %s", extractHopeField(event.getHopeField()), event.getUserName());
+        return String.format(
+                "[%s] %s", extractHopeField(event.getHopeField()), event.getUserName());
     }
 
     private String extractHopeField(String title) {

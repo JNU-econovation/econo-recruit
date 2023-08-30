@@ -95,7 +95,7 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
-    @PostMapping("/boards/navigation/{navigation-id}/columns")
+    @PostMapping("/boards/navigations/{navigation-id}/columns")
     public ResponseEntity<String> createBoardColumn(
             @PathVariable("navigation-id") Integer navigationId, String title) {
         boardRecordUseCase.createColumn(title, navigationId);
@@ -105,7 +105,7 @@ public class BoardRestController {
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",
             description = "navigationId에 해당하는 모든 세로줄을 조회합니다.")
-    @GetMapping("/boards/navigation/{navigation-id}/columns")
+    @GetMapping("/boards/navigations/{navigation-id}/columns")
     public ResponseEntity<List<ColumnsResponseDto>> getBoardColumnByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(
@@ -124,9 +124,9 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 칸반보드 위치 수정")
     @ApiErrorExceptionsExample(UpdateBoardExceptionDocs.class)
-    @PostMapping("/boards/location")
+    @PostMapping("/boards/locations")
     public ResponseEntity<String> updateLocationBoard(
-            UpdateLocationBoardDto updateLocationBoardDto) {
+            @RequestBody UpdateLocationBoardDto updateLocationBoardDto) {
         boardRecordUseCase.relocateCard(updateLocationBoardDto);
         return new ResponseEntity(HttpStatus.OK);
     }
