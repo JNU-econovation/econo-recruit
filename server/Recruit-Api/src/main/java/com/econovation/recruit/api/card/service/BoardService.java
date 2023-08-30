@@ -200,7 +200,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         List<Columns> columnsByNavigationId = columnLoadPort.getColumnsByNavigationId(navigationId);
         Columns save = columnRecordPort.save(column);
 
-        if (!columnsByNavigationId.isEmpty()) {
+        if (!(columnsByNavigationId == null)) {
             columnsByNavigationId.stream()
                     .filter(c -> c.getNextColumnsId() == null)
                     .findFirst()
