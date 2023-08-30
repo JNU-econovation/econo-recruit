@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 
-type KanbanAddRowComponent = {
-  AddRowCallBack: () => void;
+type KanbanAddColumnComponent = {
+  AddColumnCallBack: () => void;
 };
 
-function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
-  const [isOpenAddCard, setIsOpenAddCard] = useState(false);
+function KanbanAddColumnComponent({
+  AddColumnCallBack,
+}: KanbanAddColumnComponent) {
+  const [isOpenAddColumn, setIsOpenAddColumn] = useState(false);
 
   return (
     <div className="w-[17rem]">
-      {isOpenAddCard ? (
+      {isOpenAddColumn ? (
         <div className="w-[17rem] border-[1px] border-[#F0F0F0] p-3 rounded-lg">
           <input
             type="text"
@@ -19,10 +21,10 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
             placeholder="Enter list title"
           />
           <div className="flex gap-3 justify-end">
-            <button type="button" onClick={() => setIsOpenAddCard(false)}>
+            <button type="button" onClick={() => setIsOpenAddColumn(false)}>
               <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
-            <button type="submit" onClick={AddRowCallBack}>
+            <button type="submit" onClick={AddColumnCallBack}>
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
@@ -31,9 +33,9 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
         <button
           type="button"
           className="w-[17rem] flex gap-6 justify-start items-center text-[#828282] py-4 px-6 bg-[#EFEFEF] h-fit rounded-lg text-lg"
-          onClick={() => setIsOpenAddCard(true)}
+          onClick={() => setIsOpenAddColumn(true)}
         >
-          <img src="/icons/ellipsis.plus.svg" alt="AddCard" />
+          <img src="/icons/ellipsis.plus.svg" alt="AddColumn" />
           Add another list
         </button>
       )}
@@ -41,4 +43,4 @@ function KanbanAddRowComponent({ AddRowCallBack }: KanbanAddRowComponent) {
   );
 }
 
-export default KanbanAddRowComponent;
+export default KanbanAddColumnComponent;

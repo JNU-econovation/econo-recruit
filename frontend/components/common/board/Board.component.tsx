@@ -41,7 +41,6 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           key={index}
           title={item.title}
           subElements={item.subElements}
-          time={item.time}
           onClick={() => openModel(item.id)}
         />
       ))}
