@@ -24,7 +24,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -124,10 +123,9 @@ public class BoardRestController {
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
     @GetMapping("/applicants/{applicant-id}")
-    public ResponseEntity<List<Map<String, String>>> getApplicantById(
-            @PathVariable(value = "applicant-id") UUID applicantId) {
-        return new ResponseEntity<>(
-                answerLoadUseCase.execute(applicantId.toString()), HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> getApplicantById(
+            @PathVariable(value = "applicant-id") String applicantId) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
     }
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")

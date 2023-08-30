@@ -3,6 +3,7 @@ package com.econovation.recruitdomain.domains.applicant.adaptor;
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.AnswerRepository;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -20,14 +21,26 @@ public class AnswerAdaptor {
     }
 
     public List<Answer> findAll() {
-        return answerRepository.findAll();
+        List<Answer> applicants = answerRepository.findAll();
+        if (applicants.isEmpty()) {
+            throw ApplicantNotFoundException.EXCEPTION;
+        }
+        return applicants;
     }
 
     public List<Answer> findByAnswerIds(List<String> applicantIds) {
-        return answerRepository.findByApplicantIdIn(applicantIds);
+        List<Answer> applicants = answerRepository.findByApplicantIdIn(applicantIds);
+        if (applicants.isEmpty()) {
+            throw ApplicantNotFoundException.EXCEPTION;
+        }
+        return applicants;
     }
 
     public List<Answer> findByAnswerId(String applicantId) {
-        return answerRepository.findByApplicantId(applicantId);
+        List<Answer> applicants = answerRepository.findByApplicantId(applicantId);
+        if (applicants.isEmpty()) {
+            throw ApplicantNotFoundException.EXCEPTION;
+        }
+        return applicants;
     }
 }

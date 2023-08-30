@@ -16,16 +16,15 @@ public class AnswerService implements AnswerLoadUseCase {
     private final AnswerAdaptor answerAdaptor;
 
     @Override
-    public List<Map<String, String>> execute(String applicantId) {
+    public Map<String, String> execute(String applicantId) {
         List<Answer> answers = answerAdaptor.findByAnswerId(applicantId);
         return answers.stream()
-                .map(
-                        answer -> {
-                            Map<String, String> map = new HashMap<>();
-                            map.put(answer.getQuestion().getName(), answer.getAnswer());
-                            return map;
-                        })
-                .collect(Collectors.toList());
+                .collect(
+                        Collectors.toMap(
+                                answer -> answer.getQuestion().getName(),
+                                Answer::getAnswer,
+                                (existing, replacement) -> existing,
+                                HashMap::new));
     }
 
     @Override

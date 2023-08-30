@@ -6,7 +6,7 @@ import java.util.Map;
 
 @UseCase
 public interface AnswerLoadUseCase {
-    List<Map<String, String>> execute(String applicantId);
+    Map<String, String> execute(String applicantId);
 
     Map<String, Map<String, String>> execute(List<String> fields, List<String> applicantIds);
 
