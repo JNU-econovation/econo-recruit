@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.dto.RecordResponseDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,13 @@ public class RecordController {
     public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam String applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(RecordResponseDto.from(record), HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자의 면접기록을 전부 조회합니다")
+    @ApiErrorExceptionsExample(RecordExceptionDocs.class)
+    @GetMapping("/records/all")
+    public ResponseEntity<List<RecordResponseDto>> findAll() {
+        List<Record> records = recordUseCase.findAll();
+        return new ResponseEntity(RecordResponseDto.from(records), HttpStatus.OK);
     }
 }
