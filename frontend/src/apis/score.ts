@@ -1,7 +1,7 @@
 import { https } from "../functions/axios";
 
 export interface scoreDetail {
-  creteria: string;
+  creteria: "열정" | "실천력" | "협업" | "동아리 집중" | "간절함";
   score: number;
 }
 
@@ -20,6 +20,5 @@ export const getScore = async (id: string) => {
   const { data } = await https.get<ScoreRes>(`/scores`, {
     params: { applicantId: id },
   });
-
   return data;
 };
