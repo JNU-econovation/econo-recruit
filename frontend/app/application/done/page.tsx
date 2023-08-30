@@ -3,11 +3,12 @@ import Image from "next/image";
 
 const ApplicationDonePage = () => {
   const generation = `${CURRENT_GENERATION}`;
+
   const endDate =
     require(`@/src/constants/application/${generation}.ts`).END_DATE;
 
   return (
-    <section className="flex flex-col justify-center items-center w-screen h-screen gap-6">
+    <section className="flex flex-col justify-center items-center w-screen h-screen gap-6 absolute top-0 left-0">
       <Image
         src={require("/public/images/econo-3d-logo.png").default}
         alt="econo-3d-logo"

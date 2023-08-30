@@ -3,16 +3,15 @@ import { FC } from "react";
 import ApplicantResource from "./applicantNode/CustomResource.component";
 import ApplicantLabel from "./applicantNode/Label.component";
 import ApplicantComment from "./applicantNode/comment/Comment.component";
+import { applicantDataFinder } from "@/src/functions/finder";
 
 interface ApplicantDetailLeftProps {
   data: ApplicantReq[];
-  postId: string;
 }
 
-const ApplicantDetailLeft: FC<ApplicantDetailLeftProps> = ({
-  data,
-  postId,
-}) => {
+const ApplicantDetailLeft: FC<ApplicantDetailLeftProps> = ({ data }) => {
+  const postId = applicantDataFinder(data, "id");
+
   return (
     <>
       <ApplicantResource data={data} />
