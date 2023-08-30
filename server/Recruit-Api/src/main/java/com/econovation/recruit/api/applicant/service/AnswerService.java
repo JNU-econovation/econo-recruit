@@ -80,7 +80,7 @@ public class AnswerService implements AnswerLoadUseCase {
                 .collect(Collectors.toList());
     }
 
-    private List<Map<String, String>> splitByAnswersInApplicantId(List<Answer> answers) {
+    public List<Map<String, String>> splitByAnswersInApplicantId(List<Answer> answers) {
         return answers.stream()
                 .collect(
                         Collectors.groupingBy(

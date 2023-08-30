@@ -35,9 +35,6 @@ public class Answer {
     @Column(name = "answer")
     private String answer;
 
-    //    @Column(name = "applicant_id", nullable = false
-    //            , columnDefinition = "BINARY(16)")
-    //    private UUID applicantId;
     @Column(name = "applicant_id", nullable = false)
     private String applicantId;
 
