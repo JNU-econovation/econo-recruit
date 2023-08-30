@@ -1,10 +1,10 @@
-type KanbanRowDetailComponentProps = {
+type KanbanColumnDetailComponentProps = {
   setIsDetailOpen: (isOpen: boolean) => void;
 };
 
-const KanbanRowDetailComponent = ({
+const KanbanColumnDetailComponent = ({
   setIsDetailOpen,
-}: KanbanRowDetailComponentProps) => {
+}: KanbanColumnDetailComponentProps) => {
   return (
     <div
       className="flex flex-col gap-5 px-6 py-7 bg-white border-[1px] border-[#F0F0F0] justify-center items-center rounded-xl shadow-[0_2px_4px_0_rgba(0,0,0,0.11)] text-[#666] text-lg absolute -right-[3rem] top-9 z-20"
@@ -18,4 +18,4 @@ const KanbanRowDetailComponent = ({
   );
 };
 
-export default KanbanRowDetailComponent;
+export default KanbanColumnDetailComponent;

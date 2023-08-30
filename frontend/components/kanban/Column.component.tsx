@@ -1,26 +1,22 @@
-"use client";
-
 import { Draggable, Droppable } from "@hello-pangea/dnd";
+import KanbanAddColumnComponent from "./AddColumn.component";
+import KanbanCardComponent from "./Card.component";
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddCardComponent from "./AddCard.component";
-import KanbanCardComponent from "./Card.component";
-import { useState } from "react";
-import KanbanRowDetailComponent from "./RowDetail.compontent";
 
-type KanbanRowComponent = {
+type KanbanColumnComponent = {
   index: number;
   title: string;
-  CardCount: number;
-  CardData: KanbanCardData[];
+  columnCount: number;
+  columnData: (KanbanCardData | null)[];
 };
 
-const KanbanRowComponent = ({
+const KanbanColumnComponent = ({
   index,
-  CardData,
+  columnData,
   title,
-  CardCount,
-}: KanbanRowComponent) => {
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  columnCount,
+}: KanbanColumnComponent) => {
   return (
     <Draggable draggableId={`${index}`} index={index}>
       {(provided) => (
@@ -30,23 +26,18 @@ const KanbanRowComponent = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="flex justify-between relative">
+          <div className="flex justify-between">
             <div className="flex gap-2 items-center">
               <div className="font-bold text-lg">{title}</div>
               <div className="flex justify-center items-center px-3 rounded-full bg-[#E8EFFF] text-xs text-[#2160FF] h-4">
-                {CardCount}
+                {columnCount}
               </div>
             </div>
-            <button type="button" onClick={() => setIsDetailOpen(true)}>
-              <img src="/icons/ellipsis.bubble.svg" alt="RowDetail" />
+            <button>
+              <img src="/icons/ellipsis.bubble.svg" alt="ColumnDetail" />
             </button>
-            {isDetailOpen ? (
-              <KanbanRowDetailComponent setIsDetailOpen={setIsDetailOpen} />
-            ) : (
-              ""
-            )}
           </div>
-          <div className="flex flex-col justify-between overflow-auto h-fit">
+          <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
             <Droppable droppableId={`${index}`} key={index}>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -57,14 +48,14 @@ const KanbanRowComponent = ({
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         className="py-1"
-                      />
+                      ></div>
                     )}
                   </Draggable>
-                  {CardData.map((Card, colIndex) => (
+                  {columnData.map((column, colIndex) => (
                     <Draggable
-                      draggableId={`${colIndex}-${Card.id}`}
+                      draggableId={`${colIndex}-${column?.id}`}
                       index={colIndex}
-                      key={Card.id}
+                      key={column?.id}
                     >
                       {(provided) => (
                         <div
@@ -73,7 +64,7 @@ const KanbanRowComponent = ({
                           {...provided.dragHandleProps}
                           className="my-4"
                         >
-                          <KanbanCardComponent data={Card} row={index} />
+                          <KanbanCardComponent data={column} cardId={index} />
                         </div>
                       )}
                     </Draggable>
@@ -90,4 +81,4 @@ const KanbanRowComponent = ({
   );
 };
 
-export default KanbanRowComponent;
+export default KanbanColumnComponent;
