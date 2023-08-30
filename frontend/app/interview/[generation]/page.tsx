@@ -11,7 +11,7 @@ interface InterviewPageProps {
 
 const InterviewPage: FC<InterviewPageProps> = ({ generation }) => {
   return (
-    <div className="px-24 max-w-[1280px] flex p-12">
+    <div className="px-24 min-w-[1280px] flex p-12">
       <CommonNavbar generation={generation} />
       <div className="flex-1 ml-32 min-w-[46rem] mb-48">
         <div className="flex w-full justify-end gap-8 my-12">

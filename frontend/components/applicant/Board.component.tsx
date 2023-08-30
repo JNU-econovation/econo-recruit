@@ -1,11 +1,7 @@
 "use client";
 
 import Board from "@/components/common/board/Board.component";
-import {
-  AllApplicantReq,
-  getAllApplicant,
-  getApplicant,
-} from "@/src/apis/applicant/applicant";
+import { getAllApplicant, getApplicant } from "@/src/apis/applicant/applicant";
 import ApplicantDetailRight from "./DetailRight.component";
 import ApplicantDetailLeft from "./DetailLeft.component";
 import { FC, useEffect, useState } from "react";
@@ -17,7 +13,7 @@ interface ApplicantBoardProps {
 }
 
 const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
-  const [allData, setAllData] = useState<AllApplicantReq[]>([]);
+  const [allData, setAllData] = useState<ApplicantReq[][]>([]);
   const [data, setData] = useState<ApplicantReq[]>([]);
 
   const onClick = (id: string) => {
@@ -36,21 +32,19 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
     <Board
       wapperClassname="divide-x"
       boardData={allData.map((value) => ({
-        id: Object.keys(value)[0],
-        title: applicantDataFinder(value[Object.keys(value)[0]], "name"),
+        id: applicantDataFinder(value, "id"),
+        title: applicantDataFinder(value, "name"),
         subElements: [
-          applicantDataFinder(value[Object.keys(value)[0]], "field"),
-          applicantDataFinder(value[Object.keys(value)[0]], "major"),
+          applicantDataFinder(value, "field"),
+          applicantDataFinder(value, "major"),
         ],
-        time: new Date(
-          applicantDataFinder(value[Object.keys(value)[0]], "time")
-        ),
+        // time: new Date(applicantDataFinder(value, "time")),
       }))}
       onClick={onClick}
     >
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
-          <ApplicantDetailLeft data={data} postId={"22"} />
+          <ApplicantDetailLeft data={data} />
         </div>
       </div>
       <div className="flex flex-1 min-h-0">

@@ -5,7 +5,7 @@ export interface BoardCellProps {
   title: string;
   subElements: string[];
   score?: string;
-  time: Date;
+  time?: Date;
   onClick?: () => void;
 }
 
@@ -26,9 +26,11 @@ const BoardCell: FC<BoardCellProps> = ({
           </Txt>
         ))}
         {score && <Txt typography="p">{score}</Txt>}
-        <Txt typography="p" color="light_gray">
-          {time.toLocaleDateString()}
-        </Txt>
+        {time && (
+          <Txt typography="p" color="light_gray">
+            {time.toLocaleDateString()}
+          </Txt>
+        )}
       </div>
     </button>
   );

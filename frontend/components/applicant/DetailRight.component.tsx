@@ -25,7 +25,7 @@ const ApplicantDetailRight: FC<ApplicantDetailRightProps> = ({ data }) => (
     ))}
     <ApplicantTimelineNode
       generation={applicantDataFinder(data, "generation")}
-      postId={"22"}
+      postId={applicantDataFinder(data, "id")}
     />
   </>
 );
