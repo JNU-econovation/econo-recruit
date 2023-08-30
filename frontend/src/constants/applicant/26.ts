@@ -1,4 +1,4 @@
-export const APPLICANT = [
+const APPLICANT = [
   {
     id: 1,
     title: "프로젝트 희망 분야를 선택해주세요.*",
@@ -89,3 +89,13 @@ export const APPLICANT = [
     type: "timeline",
   } as ApplicantTimelineNode,
 ] as ApplicantNode[];
+
+const INTERVIEW_SCORE_KEYWOARD = [
+  { title: "열정", name: "passion" },
+  { title: "실천력", name: "energy" },
+  { title: "협업", name: "collaboration" },
+  { title: "동아리 집중", name: "clubFocus" },
+  { title: "간절함", name: "earnestness" },
+];
+
+export { INTERVIEW_SCORE_KEYWOARD, APPLICANT };

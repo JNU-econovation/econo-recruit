@@ -1,3 +1,7 @@
+"use client";
+
+import classNames from "classnames";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 type SortListComponent = {
@@ -6,17 +10,22 @@ type SortListComponent = {
 };
 
 const SortListComponent = ({ sortList, selected }: SortListComponent) => {
-  const searchParams = new URLSearchParams(location.search);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const [order, setOrder] = useState(
     searchParams.get("order") || sortList[0].type
   );
   const [isOpen, setIsOpen] = useState(false);
-  const buttonClass = "flex justify-end py-2 px-6 capitalize cursor-pointer";
 
-  const handleOrderChange = (order: string) => {
-    searchParams.set("order", order);
-    location.href = `${location.pathname}?${searchParams.toString()}`;
+  const onOrderChange = (order: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    current.set("order", order);
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
   };
 
   return (
@@ -40,14 +49,13 @@ const SortListComponent = ({ sortList, selected }: SortListComponent) => {
               disabled={sort.type === selected}
               onClick={() => {
                 setOrder(sort.type);
-                handleOrderChange(sort.type);
+                onOrderChange(sort.type);
                 setIsOpen(false);
               }}
-              className={
-                sort.type === selected
-                  ? buttonClass + " text-[#9A9A9A] cursor-auto"
-                  : buttonClass
-              }
+              className={classNames(
+                "flex justify-end py-2 px-6 capitalize cursor-pointer",
+                { "text-[#9A9A9A] cursor-auto": sort.type === selected }
+              )}
             >
               {sort.type}
             </button>

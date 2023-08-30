@@ -1,4 +1,4 @@
-import { ApplicantReq } from "../apis/applicant";
+import { ApplicantReq } from "../apis/applicant/applicant";
 
 export const applicantDataFinder = (
   applicantData: ApplicantReq[],

@@ -1,5 +1,7 @@
-import { ApplicantCommentReq } from "@/src/apis/applicant";
 import { FC } from "react";
+import { ApplicantCommentReq } from "@/src/apis/applicant/comment";
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
 type ApplicantCommentDetailProps = {
   comment: ApplicantCommentReq;
@@ -31,7 +33,11 @@ const ApplicantCommentDetail: FC<ApplicantCommentDetailProps> = ({
           <span className="text-xs text-[#808080]">{likeCount}</span>
         </div>
       </div>
-      <div className="text-sm">{content}</div>
+      <Viewer
+        className="text-sm"
+        initialEditType="markdown"
+        initialValue={content || ""}
+      />
       {canEdit && (
         <div className="flex text-sm gap-2 text-[#666666] items-center">
           <button>수정</button>

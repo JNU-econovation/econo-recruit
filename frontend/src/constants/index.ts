@@ -4,7 +4,7 @@ export const MAIN_MENU = [
   {
     title: `${CURRENT_GENERATION} PAGE`,
     subtitle: "신입모집 신청 페이지",
-    href: `/application/${CURRENT_GENERATION}`,
+    href: `/application`,
   },
   {
     title: "KANBAN BOARD",
@@ -31,7 +31,7 @@ export const MainNavbar = [
     short_title: "신청",
     type: "apply",
     target: "_blank",
-    href: `/application/${CURRENT_GENERATION}`,
+    href: `/application`,
   },
   {
     title: "신업모집 칸반보드",
@@ -52,7 +52,7 @@ export const MainNavbar = [
     short_title: "지원현황",
     type: "applicant",
     target: "none",
-    href: `/applicant/${CURRENT_GENERATION}`,
+    href: `/applicant`,
   },
   {
     title: "신입모집 쉐어 포인트",
