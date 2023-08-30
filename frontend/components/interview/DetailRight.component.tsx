@@ -8,7 +8,6 @@ interface InterviewDetailRightProps {
 const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = async ({
   data,
 }) => {
-  console.log(data.record);
   return (
     <>
       <pre className="whitespace-pre-wrap">{data.record}</pre>

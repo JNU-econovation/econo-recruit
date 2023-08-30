@@ -4,7 +4,7 @@ import InterviewDetailRightComponent from "./DetailRight.component";
 import { getInterviewRecord } from "@/src/apis/interview";
 import { getScore } from "@/src/apis/score";
 
-const accessToken = "383c8a9e-4ef6-4a62-a2d0-d0a1527eb03b";
+const accessToken = "96b7d5b0-74da-4b6c-8328-3bedd57f0d34";
 
 const InterviewBoardComponent = async () => {
   const data = await getInterviewRecord(accessToken);

@@ -10,8 +10,6 @@ export const getInterviewRecord = async (id: string) => {
   const { data } = await https.get<InterviewRes>(`/records`, {
     params: { applicantId: id },
   });
-
-  console.log(data);
   return data;
 };
 
