@@ -10,7 +10,6 @@ import com.econovation.recruitdomain.domains.dto.RecordResponseDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,7 @@ public class RecordController {
     @Operation(summary = "지원자의 면접기록을 조회합니다")
     @ApiErrorExceptionsExample(RecordExceptionDocs.class)
     @GetMapping("/records")
-    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam UUID applicantId) {
+    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam String applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
         return new ResponseEntity(RecordResponseDto.from(record), HttpStatus.OK);
     }

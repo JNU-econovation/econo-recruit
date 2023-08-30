@@ -1,11 +1,12 @@
 package com.econovation.recruit.api.card.controller;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_DELETE_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.BOARD_SUCCESS_REGISTER_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
+import com.econovation.recruit.api.card.docs.CreateNavigationExceptionDocs;
+import com.econovation.recruit.api.card.docs.FindNavigationExceptionDocs;
 import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
@@ -23,7 +24,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -48,14 +48,49 @@ public class BoardRestController {
     private final CardLoadUseCase cardLoadUseCase;
     private final NavigationUseCase navigationUseCase;
     private final AnswerLoadUseCase answerLoadUseCase;
-    // 칸반보드 전체 조회 by navLoc
-    @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
-    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
-    @PostMapping("/boards/work-card")
-    public ResponseEntity<String> createWorkBoard(
-            @RequestBody CreateWorkCardDto createWorkCardDto) {
-        cardRegisterUseCase.saveWorkCard(createWorkCardDto);
-        return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    //    ---------- Navigation ----------
+    @Operation(summary = "네비게이션 바 생성", description = "카드 생성 전에 네비게이션 바를 생성하셔야 합니다.")
+    @ApiErrorExceptionsExample(value = CreateNavigationExceptionDocs.class)
+    @PostMapping("/boards/navigations")
+    public ResponseEntity<Navigation> createNavigation(String navTitle) {
+        Navigation navigation = navigationUseCase.createNavigation(navTitle);
+        return new ResponseEntity<>(navigation, HttpStatus.OK);
+    }
+
+    @Operation(summary = "네비게이션 바 수정", description = "navigation 수정.")
+    @ApiErrorExceptionsExample(value = CreateNavigationExceptionDocs.class)
+    @PostMapping("/boards/navigations/{navigation-id}/update")
+    public ResponseEntity<Navigation> createNavigation(
+            @PathVariable(name = "navigation-id") Integer navigationId,
+            @RequestBody String navTitle) {
+        Navigation navigation = navigationUseCase.updateNavigationByNavLoc(navigationId, navTitle);
+        return new ResponseEntity<>(navigation, HttpStatus.OK);
+    }
+
+    @Operation(summary = "네비게이션 바 조회", description = "navigationId에 해당하는 네비게이션 바를 조회합니다.")
+    @GetMapping("/boards/navigations/{navigation-id}")
+    @ApiErrorExceptionsExample(value = FindNavigationExceptionDocs.class)
+    public ResponseEntity<Navigation> getNavigationByNavLoc(
+            @PathVariable(name = "navigation-id") Integer navigationId) {
+        return new ResponseEntity(
+                boardLoadUseCase.getNavigationByNavLoc(navigationId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "네비게이션 바 전체 조회", description = "네비게이션 바 전체를 조회합니다.")
+    @ApiErrorExceptionsExample(value = FindNavigationExceptionDocs.class)
+    @GetMapping("/boards/navigations")
+    public ResponseEntity<List<Navigation>> getAllNavigation() {
+        List<Navigation> navigations = boardLoadUseCase.getAllNavigation();
+        return new ResponseEntity<>(navigations, HttpStatus.OK);
+    }
+
+    @Operation(summary = "네비게이션 바 삭제", description = "navigationId에 해당하는 네비게이션 바를 삭제합니다.")
+    @ApiErrorExceptionsExample(value = FindNavigationExceptionDocs.class)
+    @PostMapping("/boards/navigations/{navigation-id}/delete")
+    public ResponseEntity deleteNavigation(
+            @PathVariable(name = "navigation-id") Integer navigationId) {
+        navigationUseCase.deleteById(navigationId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
@@ -64,6 +99,16 @@ public class BoardRestController {
     public ResponseEntity<String> createBoardColumn(
             @PathVariable("navigation-id") Integer navigationId, String title) {
         boardRecordUseCase.createColumn(title, navigationId);
+        return new ResponseEntity(COLUMN_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    }
+    // 칸반보드 전체 조회 by navLoc
+    @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
+    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
+    @PostMapping("/boards/work-cards")
+    public ResponseEntity<String> createWorkBoard(
+            // TODO : navigation 확장 예정
+            @RequestBody CreateWorkCardDto createWorkCardDto) {
+        cardRegisterUseCase.saveWorkCard(createWorkCardDto);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
@@ -78,14 +123,14 @@ public class BoardRestController {
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
     @GetMapping("/applicants/{applicant-id}")
-    public ResponseEntity<List<Map<String, String>>> getApplicantById(
-            @PathVariable(value = "applicant-id") UUID applicantId) {
+    public ResponseEntity<Map<String, String>> getApplicantById(
+            @PathVariable(value = "applicant-id") String applicantId) {
         return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
     }
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
     @GetMapping("/applicants")
-    public ResponseEntity<Map<UUID, Map<String, String>>> getApplicants() {
+    public ResponseEntity<List<Map<String, String>>> getApplicants() {
         return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
     }
 
@@ -108,38 +153,5 @@ public class BoardRestController {
     public ResponseEntity<String> deleteCard(Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
-    }
-
-    //    ---------- Navigation ----------
-    @PostMapping("/boards/navigation")
-    public ResponseEntity<Navigation> createNavigation(String navTitle) {
-        Navigation navigation = navigationUseCase.createNavigation(navTitle);
-        return new ResponseEntity<>(navigation, HttpStatus.OK);
-    }
-
-    @PostMapping("/boards/navigation/update")
-    public ResponseEntity<Navigation> createNavigation(Integer navLoc, String navTitle) {
-        Navigation navigation = navigationUseCase.updateNavigationByNavLoc(navLoc, navTitle);
-        return new ResponseEntity<>(navigation, HttpStatus.OK);
-    }
-
-    @GetMapping("/boards/navigation")
-    public Navigation getNavigationByNavLoc(Integer navLoc) {
-        return boardLoadUseCase.getNavigationByNavLoc(navLoc);
-    }
-
-    @GetMapping("/boards/navigations")
-    public List<Navigation> getAllNavigation() {
-        List<Navigation> navigations = boardLoadUseCase.getAllNavigation();
-        for (Navigation nav : navigations) {
-            log.info(nav.getId().toString() + ":" + nav.getNavTitle() + ":" + nav.getNavTitle());
-        }
-        return navigations;
-    }
-
-    @PostMapping("/boards/navigation/delete")
-    public ResponseEntity deleteNavigation(Integer navId) {
-        navigationUseCase.deleteById(navId);
-        return new ResponseEntity(HttpStatus.OK);
     }
 }

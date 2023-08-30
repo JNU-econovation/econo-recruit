@@ -6,3 +6,6 @@ app:
   auth:
     tokenSecret: secretkeysecretkeysecretkeysecretkeysecretkeysecretkey
     tokenExpiry: 2592000000
+swagger:
+  user: user
+  password: password

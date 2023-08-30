@@ -17,9 +17,9 @@ public class NavigationAdaptor implements NavigationLoadPort, NavigationRecordPo
     private final NavigationRepository navigationRepository;
 
     @Override
-    public Navigation getByNavLoc(Integer navigationIndex) {
+    public Navigation getByNavigationId(Integer navigationId) {
         return navigationRepository
-                .findById(navigationIndex)
+                .findById(navigationId)
                 .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
     }
 

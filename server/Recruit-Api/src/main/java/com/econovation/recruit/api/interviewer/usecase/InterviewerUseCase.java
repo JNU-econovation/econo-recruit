@@ -15,4 +15,6 @@ public interface InterviewerUseCase {
     void createInterviewersByName(List<String> names);
 
     List<Interviewer> findAll();
+
+    void createTempInterviewers();
 }

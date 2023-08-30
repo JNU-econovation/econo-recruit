@@ -15,9 +15,9 @@ public class QuestionService implements QuestionRegisterUseCase {
     private final QuestionAdaptor questionAdaptor;
 
     @Override
-    public void execute(String type, String key, Integer parentId) {
+    public void execute(String type, String name, Integer parentId) {
         questionAdaptor.save(
-                Question.builder().questionType(type).key(key).parentId(parentId).build());
+                Question.builder().questionType(type).name(name).parentId(parentId).build());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class QuestionService implements QuestionRegisterUseCase {
                                 question ->
                                         Question.builder()
                                                 .questionType(question.getType())
-                                                .key(question.getKey())
+                                                .name(question.getName())
                                                 .parentId(question.getParentId())
                                                 .build())
                         .collect(Collectors.toList()));

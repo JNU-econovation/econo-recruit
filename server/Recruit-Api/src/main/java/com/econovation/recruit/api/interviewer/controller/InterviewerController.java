@@ -5,6 +5,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.INTERVIEWER_SUC
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
+import com.econovation.recruitcommon.annotation.DevelopOnlyApi;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,6 +42,14 @@ public class InterviewerController {
     @PostMapping("/interviewers/idp-id")
     public ResponseEntity<String> createInterviewers(@RequestBody List<Long> idpIds) {
         interviewerUseCase.createInterviewers(idpIds);
+        return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+    }
+
+    @DevelopOnlyApi
+    @Operation(description = "임시 Interviewer 등록", summary = "임시 면접관 등록")
+    @PostMapping("/interviewers")
+    public ResponseEntity<String> createInterviewers() {
+        interviewerUseCase.createTempInterviewers();
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 

@@ -29,9 +29,9 @@ public class RecruitStatic {
 
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
-    public static String[] CRETERIA = {"학력", "경력", "연봉", "연차", "기술"};
+    public static String[] CRETERIA = {"열정", "실천력", "협업", "동아리 집중", "간절함"};
     public static Set<String> CRETERIA_SET =
-            new HashSet<>(Arrays.asList("학력", "경력", "연봉", "연차", "기술"));
+            new HashSet<>(Arrays.asList("열정", "실천력", "협업", "동아리 집중", "간절함"));
 
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";
@@ -48,7 +48,7 @@ public class RecruitStatic {
     public static final String INTERVIEWER_SUCCESS_REGISTER_MESSAGE = "성공적으로 면접관이 등록됐습니다";
     public static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
     public static final String RECORD_SUCCESS_CREATE_MESSAGE = "성공적으로 지원자의 면접 기록이 생성됐습니다";
-
+    public static final String COLUMN_SUCCESS_REGISTER_MESSAGE = "성공적으로 Column이 등록됐습니다";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(
@@ -70,7 +70,7 @@ public class RecruitStatic {
                             new AbstractMap.SimpleEntry<>("부전공", "minor"),
                             new AbstractMap.SimpleEntry<>("지원 경로 * (중복 선택 가능)", "supportPath"),
                             new AbstractMap.SimpleEntry<>("이메일", "email")));
-    public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("name", "hopeField");
+    public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("field", "name");
     public static final Long NO_START_NUMBER = 1000000L;
     public static final Long MINIMUM_PAYMENT_WON = 1000L;
     public static final Integer APPLICANT_REGISTER_NAVIGATION_LOCATION = 0;

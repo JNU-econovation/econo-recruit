@@ -16,11 +16,11 @@ spring:
     show-sql: ${SHOW_SQL:true}
     properties:
       hibernate:
-        format_sql: ${FORMAT_SQL:true}
+#        format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   sql:

@@ -5,7 +5,6 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
-import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
@@ -113,6 +112,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public Board createWorkBoard(Integer columnId, Long cardId) {
         Columns column = columnLoadPort.findById(columnId);
+        List<Board> boardByNavigationIdAndColumnId =
+                boardLoadPort.getBoardByNavigationIdAndColumnId(1, columnId);
         Board board =
                 boardRecordPort.save(
                         Board.builder()
@@ -120,20 +121,44 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                                 .nextBoardId(null)
                                 .columnId(column.getId())
                                 .cardId(cardId)
+                                .navigationId(column.getNavigationId())
                                 .build());
         //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
-        boardLoadPort.getBoardByNavigationIdAndColumnId(0, columnId).stream()
-                .filter(b -> b.getNextBoardId() == null)
-                .findFirst()
-                .ifPresent(
-                        b -> {
-                            b.updateNextBoardID(board.getId());
-                        });
+        if (!boardByNavigationIdAndColumnId.isEmpty()) {
+            boardByNavigationIdAndColumnId.stream()
+                    .filter(b -> b.getNextBoardId() == null)
+                    .findFirst()
+                    .ifPresent(
+                            b -> {
+                                b.updateNextBoardID(board.getId());
+                            });
+        }
         // board 에서 null
         // TODO : 소켓서버로 전송 차후에 주석 제거 예정
         // messagingTemplate.convertAndSend("/sub/boards/message", board);
-        return boardRecordPort.save(board);
+        return board;
     }
+
+    /*    @Override
+    @Transactional
+    public Columns createColumn(String title, Integer navigationId) {
+        Columns column = Columns.builder()
+                .title(title)
+                .navigationId(navigationId)
+                .build();
+
+        List<Columns> columnsByNavigationId = columnLoadPort.getColumnsByNavigationId(navigationId);
+        Columns save = columnRecordPort.save(column);
+
+        if (!columnsByNavigationId.isEmpty()) {
+            columnsByNavigationId.stream()
+                    .filter(c -> c.getNextColumnsId() == null)
+                    .findFirst()
+                    .ifPresent(c -> c.updateNextColumnsId(save.getId()));
+        }
+
+        return save;
+    }*/
 
     @Override
     public void createApplicantBoard(UUID applicantId, String hopeField, Long cardId) {
@@ -168,9 +193,21 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
+    @Transactional
     public Columns createColumn(String title, Integer navigationId) {
         Columns column = Columns.builder().title(title).navigationId(navigationId).build();
-        return columnRecordPort.save(column);
+
+        List<Columns> columnsByNavigationId = columnLoadPort.getColumnsByNavigationId(navigationId);
+        Columns save = columnRecordPort.save(column);
+
+        if (!columnsByNavigationId.isEmpty()) {
+            columnsByNavigationId.stream()
+                    .filter(c -> c.getNextColumnsId() == null)
+                    .findFirst()
+                    .ifPresent(c -> c.updateNextColumnsId(save.getId()));
+        }
+
+        return save;
     }
 
     @Override
@@ -179,8 +216,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public List<Board> findAllByNavLoc(Integer navLoc) {
-        return boardLoadPort.getBoardByNavLoc(navLoc);
+    public List<Board> findAllByNavigationId(Integer navigationId) {
+        return boardLoadPort.getBoardByNavLoc(navigationId);
     }
 
     @Override
@@ -190,7 +227,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public Navigation getNavigationByNavLoc(Integer navLoc) {
-        return navigationLoadPort.getByNavLoc(navLoc);
+        return navigationLoadPort.getByNavigationId(navLoc);
     }
 
     @Override
@@ -246,7 +283,10 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     @Transactional
-    @RedissonLock(LockName = "지원서", identifier = "boardId")
+    //    @RedissonLock(LockName = "지원서",
+    //            paramClassType = UpdateLocationBoardDto.class,
+    //            identifier = "boardId",
+    //            needSameTransaction = true)
     public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
@@ -263,10 +303,21 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Board board2Next = boardLoadPort.getByNextBoardId(board2.getId());
 
         // Update nextBoardId references
-        board2.updateNextBoardID(board1.getNextBoardId());
-        board1.updateNextBoardID(board2.getId());
-        board1Next.updateNextBoardID(board2.getId());
-        board2Next.updateNextBoardID(board1.getId());
+        if (board2.getNextBoardId() != null) {
+            board2.updateNextBoardID(board1.getNextBoardId());
+        }
+
+        if (board1.getNextBoardId() != null) {
+            board1.updateNextBoardID(board2.getId());
+        }
+
+        if (board1Next != null && board2.getNextBoardId() != null) {
+            board1Next.updateNextBoardID(board2.getId());
+        }
+
+        if (board2Next != null && board1.getNextBoardId() != null) {
+            board2Next.updateNextBoardID(board1.getId());
+        }
     }
 
     /*

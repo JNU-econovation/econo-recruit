@@ -11,7 +11,7 @@ import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
+import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
 
     @Transactional
     @Override
-    public void execute(List<BlockRequestDto> blocks) {
+    public UUID execute(List<BlockRequestDto> blocks) {
         List<Question> questions = questionAdaptor.findAll();
         UUID applicantId = UUID.randomUUID();
         List<Answer> results =
@@ -40,32 +40,35 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             questions.stream()
                                                     .filter(
                                                             question ->
-                                                                    question.getKey()
+                                                                    question.getName()
                                                                             .equals(
                                                                                     block
                                                                                             .getName()))
                                                     .findFirst()
                                                     .map(Result::success)
-                                                    .orElse(
-                                                            Result.failure(
-                                                                    ApplicantNotFoundException
-                                                                            .EXCEPTION));
+                                                    .orElseThrow(
+                                                            () ->
+                                                                    QuestionNotFoundException
+                                                                            .EXCEPTION);
                                     return matchingQuestionResult
                                             .map(
                                                     question ->
                                                             Answer.builder()
                                                                     .question(question)
                                                                     .answer(block.getAnswer())
-                                                                    .applicantId(applicantId)
+                                                                    .applicantId(
+                                                                            applicantId.toString())
                                                                     .build())
                                             .getValue();
                                 })
                         .collect(Collectors.toList());
+        // Result 를 save 하게 된다.
         answerAdaptor.saveAll(results);
         Events.raise(
                 SubmitApplicantEvent.of(applicantId, convertToSubmitApplicantEventTitle(results)));
         // TODO: 추가될지 말지 결정해야 함
         //        applicantRegister(results);
+        return applicantId;
     }
 
     private String convertToSubmitApplicantEventTitle(List<Answer> results) {
@@ -77,7 +80,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
         String name = "";
 
         for (Answer answer : results) {
-            String question = answer.getQuestion().getKey();
+            String question = answer.getQuestion().getName();
             String userInputValue = answer.getAnswer();
 
             if (question.equals(HOPE_FIELD_QUESTION_KEY)) {

@@ -36,6 +36,11 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     }
 
     @Override
+    public List<Columns> getColumnsByNavigationId(Integer navigationId) {
+        return columnRepository.findByNavigationId(navigationId);
+    }
+
+    @Override
     public Columns save(Columns column) {
         return columnRepository.save(column);
     }
