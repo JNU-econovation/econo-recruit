@@ -6,10 +6,12 @@ import InterviewSortList from "@/components/interview/SortList.component";
 import { FC } from "react";
 
 interface InterviewPageProps {
-  generation: string;
+  params: {
+    generation: string;
+  };
 }
 
-const InterviewPage: FC<InterviewPageProps> = ({ generation }) => {
+const InterviewPage: FC<InterviewPageProps> = ({ params: { generation } }) => {
   return (
     <div className="px-24 min-w-[1280px] flex p-12">
       <CommonNavbar generation={generation} />

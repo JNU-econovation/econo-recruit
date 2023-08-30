@@ -1,12 +1,15 @@
 import InterviewDetailLeftComponent from "./DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./DetailRight.component";
-import { getInterviewRecode } from "@/src/apis/interview";
+import { getInterviewRecord } from "@/src/apis/interview";
 import { getScore } from "@/src/apis/score";
 
+const accessToken = "96b7d5b0-74da-4b6c-8328-3bedd57f0d34";
+
 const InterviewBoardComponent = async () => {
-  const data = await getInterviewRecode("22");
-  const scoreData = await getScore("22");
+  const data = await getInterviewRecord(accessToken);
+  const scoreData = await getScore(accessToken);
+
   const boardInterviewData = Array.from({ length: 10 }).map((_, i) => ({
     id: i,
     title: "[개발자]임채승",

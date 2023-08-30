@@ -10,7 +10,7 @@ const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = async ({
 }) => {
   return (
     <>
-      <pre className="whitespace-pre-wrap">{data.recode}</pre>
+      <pre className="whitespace-pre-wrap">{data.record}</pre>
     </>
   );
 };

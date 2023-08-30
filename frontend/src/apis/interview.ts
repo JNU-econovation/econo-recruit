@@ -3,14 +3,13 @@ import { https } from "@/src/functions/axios";
 // recode get response data
 export interface InterviewRes {
   url: string;
-  recode: string;
+  record: string;
 }
 
-export const getInterviewRecode = async (id: string) => {
-  const { data } = await https.get<InterviewRes>(`/recodes`, {
+export const getInterviewRecord = async (id: string) => {
+  const { data } = await https.get<InterviewRes>(`/records`, {
     params: { applicantId: id },
   });
-
   return data;
 };
 
@@ -21,8 +20,8 @@ export interface interviewReqBody {
   recode: string;
 }
 
-export const postInterviewRecode = async (recode: interviewReqBody) => {
-  const { data } = await https.post<interviewReqBody>(`/recodes`, recode);
+export const postInterviewRecord = async (recode: interviewReqBody) => {
+  const { data } = await https.post<interviewReqBody>(`/records`, recode);
 
   return data;
 };
