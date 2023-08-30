@@ -9,12 +9,14 @@ import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.exception.CommentLikeNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -38,7 +40,7 @@ public class CommentAdapter
     public Comment findById(Long commentId) {
         return commentRepository
                 .findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_COMMENT_MESSAGE));
+                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
     }
 
     @Override
@@ -95,7 +97,12 @@ public class CommentAdapter
 
     @Override
     public Result<CommentLike> getByCommentIdAndIdpId(Long commentId, Long idpId) {
-        return Result.of(commentLikeRepository.findByCommentIdAndIdpId(commentId, idpId).get());
+        Optional<CommentLike> byCommentIdAndIdpId =
+                commentLikeRepository.findByCommentIdAndIdpId(commentId, idpId);
+        if (!byCommentIdAndIdpId.isPresent()) {
+            return Result.failure(CommentLikeNotFoundException.EXCEPTION);
+        }
+        return Result.success(byCommentIdAndIdpId.get());
     }
 
     @Override

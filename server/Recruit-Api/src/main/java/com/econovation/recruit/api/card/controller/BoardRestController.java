@@ -148,7 +148,7 @@ public class BoardRestController {
     //        return new ArrayList<>(cardLoadUseCase.findAll());
     //    }
 
-    @Operation(summary = "카드 생성", description = "카드를 삭제합니다")
+    @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")
     @PostMapping("/boards/cards/{card-id}/delete")
     public ResponseEntity<String> deleteCard(Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
