@@ -34,9 +34,7 @@ public class PdfRender {
 
         renderer.getFontResolver()
                 .addFont(
-                        new ClassPathResource("/templates/NanumBarunGothic.ttf")
-                                .getURL()
-                                .toString(),
+                        new ClassPathResource("/layouts/NanumBarunGothic.ttf").getURL().toString(),
                         BaseFont.IDENTITY_H,
                         BaseFont.EMBEDDED);
         renderer.setDocumentFromString(html);

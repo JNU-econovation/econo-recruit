@@ -1,19 +1,18 @@
 package com.econovation.recruitdomain.domains.applicant.helper;
 
 import com.econovation.recruitcommon.annotation.Helper;
-import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.dto.ApplicantPdfDto;
+import com.econovation.recruitinfrastructure.mail.EmailSenderService;
 import com.econovation.recruitinfrastructure.pdf.PdfRender;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lowagie.text.DocumentException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import com.sun.istack.ByteArrayDataSource;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import javax.mail.IllegalWriteException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -25,16 +24,7 @@ public class ApplicantPdfHelper {
     private final ObjectMapper objectMapper;
 
     private final SpringTemplateEngine templateEngine;
-
-    //    private final javaMailSender mailSender;
-
-    public void sendApplicantPdf(List<Answer> answer) throws DocumentException, IOException {
-        // 지원서 관련 타임리프 파일.
-        ApplicantPdfDto settlementPDFDto = getApplicantPDFDto(answer);
-        String html = templateEngine.process("applicant", getPdfHtmlContext(settlementPDFDto));
-        ByteArrayOutputStream outputStream = pdfRender.generatePdfFromHtml(html);
-        //        mailSender.sendMailWithAttachment()
-    }
+    private final EmailSenderService mailSender;
 
     private Context getPdfHtmlContext(ApplicantPdfDto settlementPDFDto) {
         Map result = objectMapper.convertValue(settlementPDFDto, Map.class);
@@ -44,15 +34,33 @@ public class ApplicantPdfHelper {
         return context;
     }
 
-    private ApplicantPdfDto getApplicantPDFDto(List<Answer> answers) {
-        LinkedHashMap<String, String> result =
-                answers.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        answer -> answer.getQuestion().getName(),
-                                        Answer::getAnswer,
-                                        (existing, replacement) -> existing,
-                                        LinkedHashMap::new));
+    public void sendToInterviewers(Map<String, String> answer) throws MessagingException {
+        ApplicantPdfDto applicantPdfDto = getApplicantPDFDto(answer);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+            messageHelper.setFrom("ymecca730135@gmail.com");
+            //            messageHelper.setTo(applicantPdfDto.getEmail());
+            messageHelper.setTo("ymecca12@naver.com");
+            messageHelper.setCc("Econovation_Recruit_Team");
+            messageHelper.setSubject("Econovation 신입모집 지원서");
+            messageHelper.setText("귀역뛰 ( 귀하의 역량은 뛰어나나... )");
+            String applicant =
+                    templateEngine.process("applicant", getPdfHtmlContext(applicantPdfDto));
+            messageHelper.addAttachment(
+                    "Econovation_Recruit_Team_신입모집_지원서.pdf",
+                    new ByteArrayDataSource(
+                            pdfRender.generatePdfFromHtml(applicant).toByteArray(),
+                            "application/pdf"));
+            mailSender.sendEmail(messageHelper.getMimeMessage());
+
+        } catch (Exception e) {
+            throw new IllegalWriteException("메일발송에 실패하였습니다.");
+        }
+    }
+
+    private ApplicantPdfDto getApplicantPDFDto(Map<String, String> result) {
         return ApplicantPdfDto.builder()
                 .field(result.get("field"))
                 .field1(result.get("field1"))

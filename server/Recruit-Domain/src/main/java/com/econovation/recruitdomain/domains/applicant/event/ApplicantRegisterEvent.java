@@ -12,7 +12,12 @@ import lombok.ToString;
 public class ApplicantRegisterEvent extends DomainEvent {
     private final Map<String, String> answers;
 
-    public static ApplicantRegisterEvent of(Map<String, String> answers) {
+    public static ApplicantRegisterEvent from(Map<String, String> answers) {
         return ApplicantRegisterEvent.builder().answers(answers).build();
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicantRegisterEvent{" + "answers=" + answers + '}';
     }
 }

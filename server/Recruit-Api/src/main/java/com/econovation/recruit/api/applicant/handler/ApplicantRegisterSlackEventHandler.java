@@ -35,7 +35,6 @@ public class ApplicantRegisterSlackEventHandler {
                 ":clapping: 지원자가 등록되었습니다.:clapping:\n"
                         + ":chikorita: 지원자 이름: %s\n"
                         + ":chikorita:희망 분야: %s",
-                answers.get("name"), answers.get("field")
-                );
+                answers.get("name"), answers.get("field"));
     }
 }
