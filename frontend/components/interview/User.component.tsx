@@ -5,7 +5,7 @@ type InterviewUserComponent = {
 const InterviewUserComponent = ({ src }: InterviewUserComponent) => {
   return (
     <div className="w-full aspect-video">
-      <video src={src} className="w-full h-full bg-[#D9D9D9]" />
+      <iframe src={src} width="560" height="315" title="김수민님.mp4"></iframe>
     </div>
   );
 };

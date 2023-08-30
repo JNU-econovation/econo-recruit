@@ -8,10 +8,8 @@ interface InterviewScoreProps {
 }
 
 const InterviewScoreComponent: FC<InterviewScoreProps> = ({ score }) => {
-  console.log(score);
   const [isOpen, setIsOpen] = useState(false);
-  const scoreData = score.scoreVo;
-  console.log(scoreData);
+  const scoreData = Object.entries(score.scoreVo).slice(1);
 
   return (
     <div className="flex flex-col w-full my-10 items-end">
