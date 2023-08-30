@@ -101,6 +101,16 @@ public class BoardRestController {
         boardRecordUseCase.createColumn(title, navigationId);
         return new ResponseEntity(COLUMN_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
+
+    @Operation(
+            summary = "지원서 세로줄 조회(by NavigationId)",
+            description = "navigationId에 해당하는 모든 세로줄을 조회합니다.")
+    @GetMapping("/boards/navigation/{navigation-id}/columns")
+    public ResponseEntity<List<ColumnsResponseDto>> getBoardColumnByNavigationId(
+            @PathVariable("navigation-id") Integer navigationId) {
+        return new ResponseEntity<>(
+                boardLoadUseCase.getColumnsByNavigationId(navigationId), HttpStatus.OK);
+    }
     // 칸반보드 전체 조회 by navLoc
     @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)

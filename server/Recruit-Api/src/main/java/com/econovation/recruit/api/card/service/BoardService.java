@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
+import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -232,6 +233,12 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
         return boardLoadPort.getBoardByColumnsIds(columnsIds);
+    }
+
+    @Override
+    public List<ColumnsResponseDto> getColumnsByNavigationId(Integer navigationId) {
+        List<Columns> columns = columnLoadPort.getColumnsByNavigationId(navigationId);
+        return ColumnsResponseDto.from(columns);
     }
 
     //    @Override
