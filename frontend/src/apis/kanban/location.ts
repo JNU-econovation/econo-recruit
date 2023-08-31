@@ -1,7 +1,12 @@
 import { https } from "@/src/functions/axios";
 
-export const postLocations = async () => {
-  const { data } = await https.post("/boards/locations");
+interface LocationReq {
+  boardId: number;
+  targetBoardId: number;
+}
+
+export const postLocations = async (body: LocationReq) => {
+  const { data } = await https.post("/boards/locations", body);
 
   return data;
 };

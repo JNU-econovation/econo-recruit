@@ -5,9 +5,9 @@ import Txt from "../common/Txt.component";
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
 import { applicationIndexAtom } from "@/src/stores/application";
-import { ApplicationQuestion } from "@/src/constants/application/type";
 import ApplicationNextButton from "./applicationNode/NextButton.component";
 import { ApplicationLayout } from "./Layout.component";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 
 interface ApplicationQuestionProps {
   className?: string;

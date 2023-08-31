@@ -1,22 +1,52 @@
 "use client";
 
+import { postAddCard } from "@/src/apis/kanban/kanban";
+import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 
 type KanbanAddCardComponent = {
   AddCardCallBack: () => {};
+  columnId: number;
 };
 
-function KanbanAddCardComponent({ AddCardCallBack }: KanbanAddCardComponent) {
+function KanbanAddCardComponent({
+  AddCardCallBack,
+  columnId,
+}: KanbanAddCardComponent) {
+  const [title, setTitle] = useState("");
   const [isOpenAddCard, setIsOpenAddCard] = useState(false);
+  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
+  const queryClient = useQueryClient();
+
+  const { mutate: addCard } = useMutation(postAddCard, {
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["kanbanDataArray", navbarId],
+      });
+    },
+  });
+  const addCardSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addCard({ columnId, title });
+    setTitle("");
+    setIsOpenAddCard(false);
+  };
 
   return (
     <div className="mt-2">
       {isOpenAddCard ? (
-        <div>
+        <form
+          className="w-[17rem] border-[1px] border-[#F0F0F0] p-3 rounded-lg"
+          onSubmit={(e) => addCardSubmit(e)}
+        >
           <input
             type="text"
             className="p-3 border-[1px] border-[#F0F0F0] drop-shadow-md bg-white rounded-lg w-full text-sm my-3 outline-none"
             placeholder="Enter a title for this card"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <div className="flex gap-3 justify-end">
             <button type="button" onClick={() => setIsOpenAddCard(false)}>
@@ -26,7 +56,7 @@ function KanbanAddCardComponent({ AddCardCallBack }: KanbanAddCardComponent) {
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
-        </div>
+        </form>
       ) : (
         <button
           type="button"

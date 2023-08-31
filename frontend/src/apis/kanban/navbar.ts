@@ -21,7 +21,7 @@ export const getKanbanNav = async (navId: string) => {
 
 export const postKanbanNav = async (navTitle: string) => {
   const { data } = await https.post<KanbanNavReq>("/boards/navigations", {
-    params: { navTitle: navTitle },
+    params: { navTitle },
   });
 
   return data;

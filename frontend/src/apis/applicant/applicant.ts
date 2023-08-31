@@ -1,9 +1,7 @@
 import { APPLICANT_KEYS } from "@/src/constants";
 import { https } from "@/src/functions/axios";
-import {
-  getAllInterviewer,
-  getInterviewRecordAll,
-} from "../interview/record";
+import { getInterviewRecordAll } from "../interview/record";
+import { getAllInterviewer } from "../interview/interviewer";
 
 export interface ApplicantReq {
   name: string;

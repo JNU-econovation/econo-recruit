@@ -25,14 +25,6 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
     setData(
       allData?.filter((value) => applicantDataFinder(value, "id") === id)[0]
     );
-    // getApplicantByIdWithField(id)
-    //   .then((res) => {
-    //     setData(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setData([]);
-    //   });
   };
 
   const {

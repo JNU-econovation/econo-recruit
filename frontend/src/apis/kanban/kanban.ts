@@ -1,15 +1,12 @@
 import { https } from "@/src/functions/axios";
-import {
-  KanbanCardData,
-  KanbanColumnData,
-} from "../../stores/kanban/Kanban.atoms";
+import { KanbanColumnData } from "../../stores/kanban/Kanban.atoms";
 
 export interface KanbanCardReq {
   id: number;
   boardId: number;
   columnId: number;
-  nextBoardId: number;
-  cardType: "WORK_CARD" | "APPLICANT" | "INTERVIEW";
+  nextBoardId: number | null;
+  cardType: "WORK_CARD" | "APPLICANT" | "INVISIBLE";
   title: string;
   content: string;
   labelCount: number;
@@ -62,6 +59,21 @@ export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
   return data;
 };
 
+interface addCardReq {
+  columnId: number;
+  title: string;
+}
+
+export const postAddCard = async ({ columnId, title }: addCardReq) => {
+  const { data } = await https.post<string>(`/boards/work-cards`, {
+    columnId,
+    title,
+    content: "",
+  });
+
+  return data;
+};
+
 export const getAllKanbanData = async (
   navigationId: string
 ): Promise<KanbanColumnData[]> => {
@@ -73,15 +85,19 @@ export const getAllKanbanData = async (
     title: column.title,
     card: cardsData
       .filter((card) => card.columnId === column.columnsId)
+      // .sort((a, b) =>
+      //   a.nextBoardId === null ? 1 : a.nextBoardId === b.boardId ? 1 : -1
+      // )
       .map((card) => ({
-        id: card.id,
+        id: card.boardId,
+        cardType: card.cardType,
         title: card.title,
         major: card.major.split('"').join(""),
         applicantId: card.applicantId,
         apply: [
           card.firstPriority.split('"').join(""),
           card.secondPriority.split('"').join(""),
-        ],
+        ].filter((apply) => apply !== ""),
         comment: card.commentCount,
         heart: card.labelCount,
         isHearted: card.isLabeled,

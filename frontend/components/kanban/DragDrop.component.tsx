@@ -2,23 +2,18 @@
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
-import { getMovedKanbanData } from "@/src/functions/kanban";
+import { getFromToIndex, getMovedKanbanData } from "@/src/functions/kanban";
 import KanbanAddColumnComponent from "./AddColumn.component";
-import { useQuery } from "@tanstack/react-query";
-import { FC, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { FC } from "react";
 import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./Column.component";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
+import { postLocations } from "@/src/apis/kanban/location";
 
-interface KanbanBoardDragDropProps {
-  generation: string;
-}
-
-const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
-  generation,
-}) => {
-  const [navbarId] = useAtom(KanbanSelectedButtonNumberState);
+const KanbanColumnView = () => {
+  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
 
   const {
     data: kanbanData,
@@ -35,9 +30,54 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
   if (isError) {
     return <div>에러 발생</div>;
   }
+  return (
+    <>
+      {kanbanData.map((column, index) => (
+        <KanbanColumnComponent
+          key={index}
+          title={column.title}
+          columnCount={column.card.length - 1}
+          columnData={column.card}
+          index={column.id}
+        />
+      ))}
+    </>
+  );
+};
+
+interface KanbanBoardDragDropProps {
+  generation: string;
+}
+
+const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
+  generation,
+}) => {
+  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
+  const queryClient = useQueryClient();
+
+  const { mutate: relocation } = useMutation(postLocations, {
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["kanbanDataArray", navbarId],
+      });
+    },
+  });
 
   const onDragEnd = (result: DropResult) => {
-    // const movedKanbanData = getMovedKanbanData(kanbanData, result);
+    const kanbanData = queryClient.getQueryData<KanbanColumnData[]>([
+      "kanbanDataArray",
+      navbarId,
+    ]) as KanbanColumnData[];
+    relocation(getFromToIndex(kanbanData, result), {
+      onSuccess: () => {
+        queryClient.setQueryData<KanbanColumnData[]>(
+          ["kanbanDataArray", navbarId],
+          (oldData) => {
+            return getMovedKanbanData(oldData as KanbanColumnData[], result);
+          }
+        );
+      },
+    });
   };
 
   return (
@@ -50,7 +90,7 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <KanbanColumnView kanbanData={kanbanData} />
+            <KanbanColumnView />
             <KanbanAddColumnComponent AddColumnCallBack={() => {}} />
             {provided.placeholder}
           </div>
@@ -60,23 +100,3 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
   );
 };
 export default KanbanBoardDragDropComponent;
-
-interface KanbanColumnViewProps {
-  kanbanData: KanbanColumnData[];
-}
-
-const KanbanColumnView: FC<KanbanColumnViewProps> = ({ kanbanData }) => {
-  return (
-    <>
-      {kanbanData.map((column, index) => (
-        <KanbanColumnComponent
-          key={index}
-          title={column.title}
-          columnCount={column.card.length}
-          columnData={column.card}
-          index={index}
-        />
-      ))}
-    </>
-  );
-};

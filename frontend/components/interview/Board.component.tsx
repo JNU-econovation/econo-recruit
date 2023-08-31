@@ -57,22 +57,23 @@ const InterviewBoardComponent = () => {
     return <div>loading...</div>;
   }
 
+  const boardData = allData.map((value) => ({
+    id: applicantDataFinder(value, "id"),
+    title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
+      value,
+      "name"
+    )}`,
+    subElements: [
+      applicantDataFinder(value, "field1"),
+      applicantDataFinder(value, "field2"),
+      applicantDataFinder(value, "major"),
+    ],
+  }));
+
   return (
     <Board
       wapperClassname="divide-x"
-      boardData={allData.map((value) => ({
-        id: applicantDataFinder(value, "id"),
-        title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
-          value,
-          "name"
-        )}`,
-        subElements: [
-          applicantDataFinder(value, "field1"),
-          applicantDataFinder(value, "field2"),
-          applicantDataFinder(value, "major"),
-        ],
-        // time: new Date(applicantDataFinder(value, "time")),
-      }))}
+      boardData={boardData}
       onClick={(id) => onClick(id)}
     >
       <div className="flex flex-1 min-h-0">

@@ -3,7 +3,7 @@
 import { postAddColumn } from "@/src/apis/kanban/kanban";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import React, { useState } from "react";
 
 type KanbanAddColumnComponent = {
@@ -15,19 +15,19 @@ function KanbanAddColumnComponent({
 }: KanbanAddColumnComponent) {
   const [title, setTitle] = useState("");
   const [isOpenAddColumn, setIsOpenAddColumn] = useState(false);
-  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
+  const navigationId = useAtomValue(KanbanSelectedButtonNumberState);
   const queryClient = useQueryClient();
 
   const { mutate: addColumn } = useMutation(postAddColumn, {
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["kanbanDataArray", navbarId],
+        queryKey: ["kanbanDataArray", navigationId],
       });
     },
   });
   const addColumnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addColumn({ navigationId: navbarId, title: title });
+    addColumn({ navigationId, title });
     setTitle("");
     setIsOpenAddColumn(false);
   };

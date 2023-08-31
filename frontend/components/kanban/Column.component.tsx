@@ -44,44 +44,47 @@ const KanbanColumnComponent = ({
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  <Draggable
-                    draggableId={`${index}-${-1}`}
-                    index={-1}
-                    key={`column-${index}`}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="py-1"
-                      ></div>
-                    )}
-                  </Draggable>
-                  {columnData.map((column, colIndex) => (
-                    <Draggable
-                      draggableId={`${colIndex}-${column?.id}`}
-                      index={colIndex}
-                      key={column?.id}
-                    >
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="my-4"
-                        >
-                          <KanbanCardComponent data={column} cardId={index} />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
+                  {columnData.map((column, colIndex) =>
+                    column?.cardType === "INVISIBLEaa" ? (
+                      <Draggable
+                        draggableId={`${index}-${-1}`}
+                        index={-1}
+                        key={`column-${index}`}
+                      >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="py-1"
+                          ></div>
+                        )}
+                      </Draggable>
+                    ) : (
+                      <Draggable
+                        draggableId={`${colIndex}-${column?.id}`}
+                        index={colIndex}
+                        key={column?.id}
+                      >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="my-4"
+                          >
+                            <KanbanCardComponent data={column} cardId={index} />
+                          </div>
+                        )}
+                      </Draggable>
+                    )
+                  )}
                   {provided.placeholder}
                 </div>
               )}
             </Droppable>
           </div>
-          <KanbanAddCardComponent AddCardCallBack={() => ""} />
+          <KanbanAddCardComponent AddCardCallBack={() => ""} columnId={index} />
         </div>
       )}
     </Draggable>
