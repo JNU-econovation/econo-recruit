@@ -53,6 +53,7 @@ public class RecruitStatic {
     public static final String COLUMN_SUCCESS_REGISTER_MESSAGE = "성공적으로 Column이 등록됐습니다";
     public static final String BOARD_SUCCESS_LOCATION_CHANGE_MESSAGE = "성공적으로 카드의 위치가 변경되었습니다.";
     public static final String QUESTION_SUCCESS_REGISTER_MESSAGE = "성공적으로 질문이 등록됐습니다";
+    public static final String BOARD_SUCCESS_UPDATE_MESSAGE = "성공적으로 업무카드가 수정됐습니다";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

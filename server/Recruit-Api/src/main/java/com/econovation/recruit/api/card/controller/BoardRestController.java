@@ -32,6 +32,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -123,6 +124,24 @@ public class BoardRestController {
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
+    @Operation(summary = "업무 칸반보드 내용 수정", description = "업무 칸반(지원자가 아닌) 내용 수정")
+    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
+    @PutMapping("/boards/cards/{card-id}/contents")
+    public ResponseEntity<String> updateWorkBoardContent(
+            @PathVariable(name = "card-id") Long cardId, @RequestBody String content) {
+        cardRegisterUseCase.updateContent(cardId, content);
+        return new ResponseEntity(BOARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "업무 칸반보드 제목 수정", description = "업무 칸반(지원자가 아닌) 제목 수정")
+    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
+    @PutMapping("/boards/cards/{card-id}/titles")
+    public ResponseEntity<String> updateWorkBoardTitle(
+            @PathVariable(name = "card-id") Long cardId, @RequestBody String title) {
+        cardRegisterUseCase.updateTitle(cardId, title);
+        return new ResponseEntity(BOARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
+    }
+
     @Operation(summary = "지원서 칸반보드 위치 수정")
     @ApiErrorExceptionsExample(UpdateBoardExceptionDocs.class)
     @PostMapping("/boards/locations")
@@ -135,7 +154,7 @@ public class BoardRestController {
     @Operation(
             summary = "지원서 칸반보드 조회 by navigationId",
             description = "navigationId에 해당하는 모든 칸반을 조회합니다.")
-    @GetMapping("/navigations/{navigation-id}/boards")
+    @PostMapping("/navigations/{navigation-id}/boards")
     public ResponseEntity<List<BoardCardResponseDto>> getBoardByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
@@ -143,7 +162,7 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 조회(원하는 field) 만 조회", description = "원하는 field만(리스트) 조회합니다.")
     @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
-    @GetMapping("/boards")
+    @PostMapping("/boards")
     public ResponseEntity<List<Map<String, String>>> getBoardByNavigationId(
             @RequestBody List<String> fields) {
         return new ResponseEntity<>(answerLoadUseCase.execute(fields), HttpStatus.OK);

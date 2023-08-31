@@ -37,4 +37,8 @@ public class Board extends BaseTimeEntity {
     public void updateNextBoardID(Integer nextBoardId) {
         this.nextBoardId = nextBoardId;
     }
+
+    public void updateColumnId(Integer columnId) {
+        this.columnId = columnId;
+    }
 }

@@ -15,5 +15,7 @@ public interface BoardLoadPort {
 
     Optional<Board> getByNextBoardId(Integer id);
 
+    Optional<Board> getById(Integer id);
+
     List<Board> getBoardByColumnsIds(List<Integer> columnsIds);
 }

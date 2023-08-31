@@ -6,7 +6,7 @@ on:
       - release/*
       - backend
       - feature/*
-
+      - hotfix/*
 jobs:
   build:
     runs-on: ubuntu-latest
