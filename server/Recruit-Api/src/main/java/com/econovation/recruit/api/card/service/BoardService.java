@@ -213,7 +213,15 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                     .findFirst()
                     .ifPresent(c -> c.updateNextColumnsId(save.getId()));
         }
-
+        // Invisible Board 추가
+        Board invisibleBoard =
+                Board.builder()
+                        .cardType(CardType.INVISIBLE)
+                        .nextBoardId(null)
+                        .columnId(save.getId())
+                        .cardId(null)
+                        .build();
+        boardRecordPort.save(invisibleBoard);
         return save;
     }
 
