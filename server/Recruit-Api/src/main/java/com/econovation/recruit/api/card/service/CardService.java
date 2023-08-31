@@ -85,7 +85,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         for (Board board : boards) {
             if (board.getCardType().equals(CardType.INVISIBLE)) {
-                result.add(BoardCardResponseDto.from(Card.empty(),board,"","",false));
+                result.add(BoardCardResponseDto.from(Card.empty(), board, "", "", false));
                 continue;
             }
             Card card = cardByBoardIdMap.get(board.getCardId());

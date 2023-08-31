@@ -10,4 +10,8 @@ public interface RecordUseCase {
     List<Record> findAll();
 
     Record findByApplicantId(String applicantId);
+
+    void updateRecordUrl(String applicantId, String url);
+
+    void updateRecordContents(String applicantId, String contents);
 }

@@ -26,4 +26,12 @@ public class Record {
     // Long text 제한을 해제
     @Column(name = "record", columnDefinition = "TEXT")
     private String record;
+
+    public void updateUrl(String url) {
+        this.url = url;
+    }
+
+    public void updateRecord(String contents) {
+        this.record = contents;
+    }
 }

@@ -35,7 +35,7 @@ public class LabelController {
         return new ResponseEntity(interviewerNames, HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 라벨을 생성합니다.")
+    @Operation(summary = "지원자의 라벨을 생성합니다. , 라벨이 이미 존재할 경우 삭제합니다.")
     @PostMapping("/applicants/{applicant-id}/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
     public ResponseEntity<String> createLabel(
