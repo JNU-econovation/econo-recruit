@@ -6,7 +6,7 @@ import { getMovedKanbanData } from "@/src/functions/kanban";
 import KanbanAddColumnComponent from "./AddColumn.component";
 import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
-import { getAllKanbanData } from "@/src/apis/kanban";
+import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./Column.component";
 import { useAtom } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";

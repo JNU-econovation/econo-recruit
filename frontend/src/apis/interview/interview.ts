@@ -15,7 +15,7 @@ export const getInterviewRecord = async (id: string) => {
 export interface interviewReqBody {
   applicantId: string;
   url: string;
-  recode: string;
+  record: string;
 }
 
 export const postInterviewRecord = async (recode: interviewReqBody) => {
