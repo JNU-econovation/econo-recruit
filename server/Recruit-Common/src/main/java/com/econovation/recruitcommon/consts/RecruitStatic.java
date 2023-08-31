@@ -19,9 +19,9 @@ public class RecruitStatic {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
     public static final String KR_YES = "예";
     public static final String KR_NO = "아니요";
-    public static final Integer DEVELOPER_COLUMNS_ID = 0;
-    public static final Integer DESIGNER_COLUMNS_ID = 1;
-    public static final Integer PLANNER_COLUMNS_ID = 2;
+    public static final Integer DEVELOPER_COLUMNS_ID = 1;
+    public static final Integer DESIGNER_COLUMNS_ID = 2;
+    public static final Integer PLANNER_COLUMNS_ID = 3;
     public static final int MILLI_TO_SECOND = 1000;
     public static final int BAD_REQUEST = 400;
     public static final int UNAUTHORIZED = 401;
@@ -30,9 +30,8 @@ public class RecruitStatic {
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
     public static final String COMMENT_LIKE_SUCCESS_UPDATE_MESSAGE = "성공적으로 댓글 좋아요가 수정됐습니다.";
-    public static String[] CRETERIA = {"열정", "실천력", "협업", "동아리 집중", "간절함"};
     public static Set<String> CRETERIA_SET =
-            new HashSet<>(Arrays.asList("열정", "실천력", "협업", "동아리 집중", "간절함"));
+            new HashSet<>(Arrays.asList("열정/실천력", "동아리 애착", "협업", "태도"));
 
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";
@@ -50,6 +49,8 @@ public class RecruitStatic {
     public static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
     public static final String RECORD_SUCCESS_CREATE_MESSAGE = "성공적으로 지원자의 면접 기록이 생성됐습니다";
     public static final String COLUMN_SUCCESS_REGISTER_MESSAGE = "성공적으로 Column이 등록됐습니다";
+    public static final String BOARD_SUCCESS_LOCATION_CHANGE_MESSAGE = "성공적으로 카드의 위치가 변경되었습니다.";
+    public static final String QUESTION_SUCCESS_REGISTER_MESSAGE = "성공적으로 질문이 등록됐습니다";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

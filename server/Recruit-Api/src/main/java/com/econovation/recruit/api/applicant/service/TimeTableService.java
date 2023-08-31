@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitdomain.domains.timetable.exception.TimeTableNotFoundException;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
     @Transactional(readOnly = true)
     public Map<Integer, List<String>> findAllSimpleApplicantWithTimeTable() {
         List<TimeTable> timeTables = timeTableLoadPort.findAll();
-        Map<String, Map<String, String>> allApplicantVo =
+        Map<String, HashMap<String, String>> allApplicantVo =
                 answerService.findAllApplicantVo(TIMETABLE_APPLICANT_FIELD);
         // SimpleApplicant : {applicantId : {name(이름), field(지원분야) }
         Map<Integer, List<String>> collect =

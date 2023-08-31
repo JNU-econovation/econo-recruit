@@ -6,6 +6,7 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateNavigationExceptionDocs;
+import com.econovation.recruit.api.card.docs.FindBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.FindNavigationExceptionDocs;
 import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
@@ -16,7 +17,7 @@ import com.econovation.recruit.api.card.usecase.NavigationUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
-import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -95,7 +96,7 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
-    @PostMapping("/boards/navigation/{navigation-id}/columns")
+    @PostMapping("/boards/navigations/{navigation-id}/columns")
     public ResponseEntity<String> createBoardColumn(
             @PathVariable("navigation-id") Integer navigationId, String title) {
         boardRecordUseCase.createColumn(title, navigationId);
@@ -104,8 +105,8 @@ public class BoardRestController {
 
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",
-            description = "navigationId에 해당하는 모든 세로줄을 조회합니다.")
-    @GetMapping("/boards/navigation/{navigation-id}/columns")
+            description = "navigationId에 해당하는 모든 세로줄을 조회합니다., 세로줄이 없으면 빈 배열을 반환합니다.")
+    @GetMapping("/boards/navigations/{navigation-id}/columns")
     public ResponseEntity<List<ColumnsResponseDto>> getBoardColumnByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(
@@ -124,43 +125,44 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 칸반보드 위치 수정")
     @ApiErrorExceptionsExample(UpdateBoardExceptionDocs.class)
-    @PostMapping("/boards/location")
+    @PostMapping("/boards/locations")
     public ResponseEntity<String> updateLocationBoard(
-            UpdateLocationBoardDto updateLocationBoardDto) {
+            @RequestBody UpdateLocationBoardDto updateLocationBoardDto) {
         boardRecordUseCase.relocateCard(updateLocationBoardDto);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
-    @GetMapping("/applicants/{applicant-id}")
-    public ResponseEntity<Map<String, String>> getApplicantById(
-            @PathVariable(value = "applicant-id") String applicantId) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
-    }
-
-    @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
-    @GetMapping("/applicants")
-    public ResponseEntity<List<Map<String, String>>> getApplicants() {
-        return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
+        return new ResponseEntity(BOARD_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(
             summary = "지원서 칸반보드 조회 by navigationId",
             description = "navigationId에 해당하는 모든 칸반을 조회합니다.")
-    @GetMapping("/boards/navigation/{navigation-id}")
-    public ResponseEntity<List<Map<ColumnsResponseDto, CardResponseDto>>> getBoardByNavigationId(
+    @GetMapping("/navigations/{navigation-id}/boards")
+    public ResponseEntity<List<BoardCardResponseDto>> getBoardByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
     }
 
-    //    @GetMapping("/boards/cards")
-    //    public List<Card> getCardAll() {
-    //        return new ArrayList<>(cardLoadUseCase.findAll());
-    //    }
+    @Operation(summary = "지원서 조회(원하는 field) 만 조회", description = "원하는 field만(리스트) 조회합니다.")
+    @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
+    @GetMapping("/boards")
+    public ResponseEntity<List<Map<String, String>>> getBoardByNavigationId(
+            @RequestBody List<String> fields) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(fields), HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "특정 지원서 조회(원하는 field) 만 조회",
+            description = "특정 지원자에 대하여 원하는 field만(리스트) 조회합니다.")
+    @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
+    @GetMapping("/boards/{applicant-id}")
+    public ResponseEntity<Map<String, String>> getBoardByNavigationId(
+            @PathVariable(name = "applicant-id") String applicantId,
+            @RequestBody List<String> fields) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId, fields), HttpStatus.OK);
+    }
 
     @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")
     @PostMapping("/boards/cards/{card-id}/delete")
-    public ResponseEntity<String> deleteCard(Long cardId) {
+    public ResponseEntity<String> deleteCard(@PathVariable(name = "card-id") Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }

@@ -17,6 +17,7 @@ public enum BoardErrorCode implements BaseErrorCode {
     BOARD_INVALID_LOCATION(BAD_REQUEST, "BOARD_400_1", "유효하지 않은 위치입니다."),
     INVALID_HOPE_FIELD(BAD_REQUEST, "BOARD_400_2", "유효하지 않은 희망 분야입니다."),
     BOARD_NOT_FOUND(NOT_FOUND, "BOARD_400_3", "보드를 찾을 수 없습니다."),
+    BOARD_SAME_LOCATION(BAD_REQUEST, "BOARD_400_4", "같은 위치에 보드 사이는 수정이 불가합니다"),
     ;
 
     private Integer status;

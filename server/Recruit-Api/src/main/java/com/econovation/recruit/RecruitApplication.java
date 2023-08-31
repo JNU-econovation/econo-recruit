@@ -7,8 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -19,6 +21,11 @@ public class RecruitApplication implements ApplicationListener<ApplicationReadyE
 
     public static void main(String[] args) {
         SpringApplication.run(RecruitApplication.class, args);
+    }
+
+    @Bean
+    ForwardedHeaderFilter forwardedHeaderFilter() {
+        return new ForwardedHeaderFilter();
     }
 
     @Override

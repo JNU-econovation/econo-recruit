@@ -7,6 +7,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     implementation project(':Recruit-Common')
     implementation project(':Recruit-Infrastructure')
+    //flyway
+//    implementation 'org.flywaydb:flyway-core'
+//    implementation 'org.flywaydb:flyway-mysql'
     //queryDsl 설정 부분
 //    api ("com.querydsl:querydsl-core") // querydsl
 //    api ("com.querydsl:querydsl-jpa") // querydsl

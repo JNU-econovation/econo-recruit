@@ -1,8 +1,10 @@
 package com.econovation.recruit.api.applicant.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.QUESTION_SUCCESS_REGISTER_MESSAGE;
 
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
+import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.QuestionRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
@@ -36,6 +38,7 @@ public class ApplicantController {
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final QuestionRegisterUseCase questionRegisterUseCase;
+    private final AnswerLoadUseCase answerLoadUseCase;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -45,9 +48,22 @@ public class ApplicantController {
         return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
 
+    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
+    @GetMapping("/applicants/{applicant-id}")
+    public ResponseEntity<Map<String, String>> getApplicantById(
+            @PathVariable(value = "applicant-id") String applicantId) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
+    @GetMapping("/applicants")
+    public ResponseEntity<List<Map<String, String>>> getApplicants() {
+        return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
+    }
+
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
-    @PostMapping("/applicants/{applicant-id}/time-tables")
+    @PostMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity registerApplicantTimeTable(
             @PathVariable(value = "applicant-id") UUID applicantId,
             @RequestBody List<Integer> startTimes) {
@@ -60,7 +76,7 @@ public class ApplicantController {
     public ResponseEntity registerInterviewQuestion(
             @RequestBody List<QuestionRequestDto> questions) {
         questionRegisterUseCase.execute(questions);
-        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(QUESTION_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")

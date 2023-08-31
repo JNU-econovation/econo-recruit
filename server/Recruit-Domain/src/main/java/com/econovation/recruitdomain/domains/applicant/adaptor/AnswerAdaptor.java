@@ -21,11 +21,7 @@ public class AnswerAdaptor {
     }
 
     public List<Answer> findAll() {
-        List<Answer> applicants = answerRepository.findAll();
-        if (applicants.isEmpty()) {
-            throw ApplicantNotFoundException.EXCEPTION;
-        }
-        return applicants;
+        return answerRepository.findAll();
     }
 
     public List<Answer> findByAnswerIds(List<String> applicantIds) {

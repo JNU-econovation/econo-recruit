@@ -3,6 +3,7 @@ package com.econovation.recruit.api.applicant.service;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,8 +37,17 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
-    public Map<String, Map<String, String>> findAllApplicantVo(List<String> fields) {
+    public List<Map<String, String>> execute(List<String> fields) {
         List<Answer> answers = answerAdaptor.findAll();
+        return splitByAnswersInApplicantId(fields, answers);
+    }
+
+    @Override
+    public Map<String, HashMap<String, String>> findAllApplicantVo(List<String> fields) {
+        List<Answer> answers = answerAdaptor.findAll();
+        if (answers.isEmpty()) {
+            return Collections.emptyMap();
+        }
         return answers.stream()
                 .filter(answer -> fields.contains(answer.getQuestion().getName()))
                 .collect(
@@ -115,7 +125,7 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
-    public Map<String, String> execute(List<String> fields, String applicantId) {
+    public Map<String, String> execute(String applicantId, List<String> fields) {
         List<Answer> answers = answerAdaptor.findByAnswerId(applicantId);
         return splitByAnswersInApplicantId(fields, answers).get(0);
     }
