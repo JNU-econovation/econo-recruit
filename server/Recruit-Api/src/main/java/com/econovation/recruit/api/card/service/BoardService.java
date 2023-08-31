@@ -186,6 +186,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .cardType(CardType.APPLICANT)
                         .nextBoardId(null)
                         .columnId(column.getId())
+                        .navigationId(1)
                         .cardId(cardId)
                         .build();
         Board save = boardRecordPort.save(board);
@@ -219,6 +220,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .cardType(CardType.INVISIBLE)
                         .nextBoardId(null)
                         .columnId(save.getId())
+                        .navigationId(navigationId)
                         .cardId(null)
                         .build();
         boardRecordPort.save(invisibleBoard);
@@ -307,18 +309,23 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     @Transactional
-    @RedissonLock(
+/*    @RedissonLock(
             LockName = "보드 위치 변경",
             identifier = "boardId",
-            paramClassType = UpdateLocationBoardDto.class)
+            paramClassType = UpdateLocationBoardDto.class,
+            leaseTime = 500,
+            waitTime = 500
+    )*/
     public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
+        // 2번
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
+        // 3번
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
-
         // 같은 board 끼리는 위치 변경이 불가하다.
         if (currentBoard.getId().equals(targetBoard.getId()))
             throw BoardSameLocationException.EXCEPTION;
 
+        currentBoard.updateColumnId(targetBoard.getColumnId());
         updateNextBoardIds(currentBoard, targetBoard);
 
         // TODO: Send data to the socket server
@@ -326,19 +333,23 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     private void updateNextBoardIds(Board board1, Board board2) {
+        // 1번
         Optional<Board> board1Prev = boardLoadPort.getByNextBoardId(board1.getId());
-        Optional<Board> board2Prev = boardLoadPort.getByNextBoardId(board2.getId());
-
+        // 5번
+        Optional<Board> board1Next = boardLoadPort.getById(board2.getNextBoardId());
         // Update nextBoardId references
         if (board1Prev.isPresent()) {
-            board1Prev.get().updateNextBoardID(board2.getId());
+            board1Prev.get().updateNextBoardID(board1Next.isPresent() ? board1.getNextBoardId() : null);
         }
-        if (board2Prev.isPresent()) {
-            board2Prev.get().updateNextBoardID(board1.getId());
+        //사이에 껴들어 가는 경우
+        if (board2.getNextBoardId() != null) {
+            board1.updateNextBoardID(board2.getNextBoardId());
+            board2.updateNextBoardID(board1.getId());
         }
-        Integer board2NextBoardId = board2.getNextBoardId();
-        Integer board1NextBoardId = board1.getNextBoardId();
-        board1.updateNextBoardID(board2NextBoardId);
-        board2.updateNextBoardID(board1NextBoardId);
+        // 맨 뒤로 가는 경우
+        else {
+            board2.updateNextBoardID(board1.getId());
+            board1.updateNextBoardID(null);
+        }
     }
 }

@@ -47,6 +47,14 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
+    public Optional<Board> getById(Integer id) {
+        if (id == null) {
+            return Optional.empty();
+        }
+        return boardRepository.findById(id);
+    }
+
+    @Override
     public List<Board> getBoardByColumnsIds(List<Integer> columnsIds) {
         return boardRepository.findByColumnIdIn(columnsIds);
     }
