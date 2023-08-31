@@ -1,7 +1,10 @@
 "use client";
 
 import Board from "@/components/common/board/Board.component";
-import { getAllApplicant, getApplicant } from "@/src/apis/applicant/applicant";
+import {
+  getAllApplicant,
+  getApplicantByIdWithField,
+} from "@/src/apis/applicant/applicant";
 import ApplicantDetailRight from "./DetailRight.component";
 import ApplicantDetailLeft from "./DetailLeft.component";
 import { FC, useEffect, useState } from "react";
@@ -18,14 +21,18 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
   const [data, setData] = useState<ApplicantReq[]>([]);
 
   const onClick = (id: string) => {
-    getApplicant(id)
-      .then((res) => {
-        setData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setData([]);
-      });
+    if (!allData) return;
+    setData(
+      allData?.filter((value) => applicantDataFinder(value, "id") === id)[0]
+    );
+    // getApplicantByIdWithField(id)
+    //   .then((res) => {
+    //     setData(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setData([]);
+    //   });
   };
 
   const {

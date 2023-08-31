@@ -9,7 +9,7 @@ import { FC } from "react";
 import KanbanCardComponent from "./Card.component";
 import KanbanDetailBackButton from "./detail/BackButton.component";
 import { useQuery } from "@tanstack/react-query";
-import { getAllKanbanData } from "@/src/apis/kanban";
+import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 
 interface KanbanDetailCardProps {

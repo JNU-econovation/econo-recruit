@@ -1,4 +1,4 @@
-import { KanbanCardReq } from "./../../apis/kanban";
+import { KanbanCardReq } from "../../apis/kanban/kanban";
 import { atom } from "jotai";
 
 export type KanbanColumnData = {
@@ -9,6 +9,7 @@ export type KanbanColumnData = {
 
 export type KanbanCardData = {
   id: number;
+  major: string;
   title: string;
   apply: string[];
   comment: number;

@@ -13,7 +13,7 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
     return <></>;
   }
 
-  const { title, apply, comment, isHearted, heart, id } = data;
+  const { title, apply, comment, isHearted, heart, id, major } = data;
   const { generation } = useParams();
   const navigate = useRouter();
 
@@ -26,7 +26,7 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
       className="border-[1px] border-[#F0F0F0] w-full p-3 rounded-lg drop-shadow-md bg-white hover:border-[#7AA0FF]"
       onClick={onClickDetail}
     >
-      {/* <div className="text-xs text-[#666666]">{major}</div> */}
+      <div className="text-xs text-[#666666]">{major}</div>
       <div className="font-bold">{title}</div>
       <div className="mt-2 flex justify-between items-center text-sm text-[#666666]">
         <div className="text-sm">{apply.join(" / ")}</div>

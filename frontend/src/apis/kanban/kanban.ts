@@ -2,17 +2,21 @@ import { https } from "@/src/functions/axios";
 import {
   KanbanCardData,
   KanbanColumnData,
-} from "../stores/kanban/Kanban.atoms";
+} from "../../stores/kanban/Kanban.atoms";
 
 export interface KanbanCardReq {
   id: number;
   boardId: number;
+  columnId: number;
   nextBoardId: number;
-  cardType: "WORK_CARD" | "APPLICANT";
+  cardType: "WORK_CARD" | "APPLICANT" | "INTERVIEW";
   title: string;
   content: string;
   labelCount: number;
   commentCount: number;
+  firstPriority: string;
+  secondPriority: string;
+  isLabeled: boolean;
 }
 
 // card api 추가 시 수정 필요
@@ -49,7 +53,7 @@ export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
     `/boards/navigations/${navigationId}/columns`,
     null,
     {
-      params: { title: title },
+      params: { title },
     }
   );
 
@@ -60,20 +64,24 @@ export const getAllKanbanData = async (
   navigationId: string
 ): Promise<KanbanColumnData[]> => {
   const columnsData = await getColums(navigationId);
-  const cardsData = await Promise.all(
-    columnsData.map((column) => getKanbanCards(column.columnsId.toString()))
-  );
+  const cardsData = await getKanbanCards(navigationId);
 
-  return columnsData.map((column, index) => ({
+  return columnsData.map((column) => ({
     id: column.columnsId,
     title: column.title,
-    card: cardsData[index].map((card) => ({
-      id: card.id,
-      title: card.title,
-      apply: [] as string[],
-      comment: card.commentCount,
-      heart: card.labelCount,
-      isHearted: false,
-    })),
+    card: cardsData
+      .filter((card) => card.columnId === column.columnsId)
+      .map((card) => ({
+        id: card.id,
+        title: card.title,
+        major: "",
+        apply: [
+          card.firstPriority.split('"').join(""),
+          card.secondPriority.split('"').join(""),
+        ],
+        comment: card.commentCount,
+        heart: card.labelCount,
+        isHearted: card.isLabeled,
+      })),
   }));
 };
