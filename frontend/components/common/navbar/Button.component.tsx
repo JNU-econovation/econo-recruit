@@ -1,27 +1,29 @@
 "use client";
 
-import { useAtom } from "jotai";
-import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 import { KANBAN_MENU } from "@/src/constants/kanban/26";
+import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
+import { useAtom } from "jotai";
 
-type NavbarButtonComponent = { value: string };
+type NavbarButtonComponent = {
+  value: string;
+};
 
 const NavbarButtonComponent = ({ value }: NavbarButtonComponent) => {
-  const findManueIndex = KANBAN_MENU.findIndex(
-    (menu) => menu.navTitle === value
-  );
+  const [navbarId, setnavbarId] = useAtom(KanbanSelectedButtonNumberState);
 
-  const [selected, setSelected] = useAtom(KanbanSelectedButtonNumberState);
+  const findmenuIndex =
+    KANBAN_MENU.findIndex((menu) => menu.navTitle === value) + 1;
+
   const buttonClassName = " py-2 px-6 rounded-lg min-w-fit ";
 
   const onClick = () => {
-    setSelected(findManueIndex);
+    setnavbarId(findmenuIndex.toString());
   };
 
   return (
     <button
       className={
-        findManueIndex === selected
+        findmenuIndex.toString() === navbarId
           ? `bg-[#303030] text-white${buttonClassName}`
           : `bg-white text-gray-400${buttonClassName}`
       }
