@@ -5,31 +5,31 @@ export interface KanbanMenu {
 
 export const KANBAN_MENU = [
   {
-    id: 0,
+    id: 1,
     navTitle: "공통",
   },
   {
-    id: 1,
+    id: 2,
     navTitle: "회장단",
   },
   {
-    id: 2,
+    id: 3,
     navTitle: "운영팀",
   },
   {
-    id: 3,
+    id: 4,
     navTitle: "홍보 및 디자인팀",
   },
   {
-    id: 4,
+    id: 5,
     navTitle: "지원자 대응팀",
   },
   {
-    id: 5,
+    id: 6,
     navTitle: "OT담당팀",
   },
   {
-    id: 6,
+    id: 7,
     navTitle: "기타 참고",
   },
 ];

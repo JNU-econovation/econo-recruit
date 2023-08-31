@@ -8,7 +8,7 @@ import {
   getInterviewRecord,
 } from "@/src/apis/interview/interview";
 import { ScoreRes, getScore } from "@/src/apis/interview/score";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { applicantDataFinder } from "@/src/functions/finder";
 import { getAllApplicant } from "@/src/apis/applicant/applicant";
 import { useQuery } from "@tanstack/react-query";
