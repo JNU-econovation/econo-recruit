@@ -16,10 +16,13 @@ export interface KanbanCardReq {
   commentCount: number;
 }
 
+// card api 추가 시 수정 필요
 export const getKanbanCards = async (columnId: string) => {
   const { data } = await https.get<KanbanCardReq[]>(
-    `/boards/navigation/${columnId}`
+    `/navigations/${columnId}/boards`
   );
+
+  console.log(data);
 
   return data;
 };
@@ -32,7 +35,26 @@ interface KanbanNavigationReq {
 
 export const getColums = async (navigationId: string) => {
   const { data } = await https.get<KanbanNavigationReq[]>(
-    `/boards/navigation/${navigationId}/columns`
+    `/boards/navigations/${navigationId}/columns`
+  );
+
+  return data;
+};
+
+// export interface
+interface addColumnReq {
+  navigationId: string;
+  title: string;
+}
+
+export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
+  console.log(navigationId, title);
+  const { data } = await https.post<string>(
+    `/boards/navigations/${navigationId}/columns`,
+    null,
+    {
+      params: { title: title },
+    }
   );
 
   return data;
@@ -53,8 +75,7 @@ export const getAllKanbanData = async (
       card[index]
         ? {
             id: card[index].cardId,
-            major: card[index].title,
-            title: card[index].content,
+            title: card[index].title,
             apply: [] as string[],
             comment: card[index].commentCount,
             heart: card[index].labelCount,
