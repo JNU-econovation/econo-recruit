@@ -15,7 +15,7 @@ import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import com.econovation.recruitdomain.out.LabelLoadPort;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +57,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BoardCardResponseDto> getByNavigationId(Integer navigationId) {
         List<Columns> columns = columnsUseCase.getByNavigationId(navigationId);
 
@@ -74,8 +75,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         List<BoardCardResponseDto> result = new LinkedList<>();
 
         // key : applicantId
-        Map<String, Map<String, String>> answers =
-                answerLoadPort.findAllApplicantVo(Arrays.asList("field1", "field2"));
+        Map<String, HashMap<String, String>> answers =
+                answerLoadPort.findAllApplicantVo(List.of("field1", "field2"));
+
         Map<Long, Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
                         cards.stream().map(Card::getId).collect(Collectors.toList()));
@@ -84,7 +86,12 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
             Card card = cardByBoardIdMap.get(board.getCardId());
             String firstPriority = "";
             String secondPriority = "";
-
+            if (answers.isEmpty()) {
+                result.add(
+                        BoardCardResponseDto.from(
+                                card, board, firstPriority, secondPriority, false));
+                continue;
+            }
             Map<String, String> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
                 firstPriority = applicantAnswers.getOrDefault("field1", "");

@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,5 +15,5 @@ public interface AnswerLoadUseCase {
 
     Map<String, String> execute(List<String> fields, String applicantId);
 
-    Map<String, Map<String, String>> findAllApplicantVo(List<String> fields);
+    Map<String, HashMap<String, String>> findAllApplicantVo(List<String> fields);
 }
