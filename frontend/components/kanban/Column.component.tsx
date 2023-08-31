@@ -44,7 +44,7 @@ const KanbanColumnComponent = ({
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {/* <Draggable
+                  <Draggable
                     draggableId={`${index}-${-1}`}
                     index={-1}
                     key={`column-${index}`}

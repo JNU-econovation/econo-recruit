@@ -3,7 +3,7 @@ import { https } from "@/src/functions/axios";
 import {
   getAllInterviewer,
   getInterviewRecordAll,
-} from "../interview/interview";
+} from "../interview/record";
 
 export interface ApplicantReq {
   name: string;

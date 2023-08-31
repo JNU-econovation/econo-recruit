@@ -1,27 +1,51 @@
 import LabeledInput from "@/components/common/LabeledInput.component";
 import LabeledTextarea from "@/components/common/LabeledTextarea";
 import {
+  InterviewRes,
   interviewReqBody,
   postInterviewRecord,
+  putInterviewRecord,
+  putInterviewUrl,
 } from "@/src/apis/interview/record";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-const InterviewUploadComponent = ({ applicantId }: { applicantId: string }) => {
+type InterviewEditRecordComponentProps = {
+  applicantId: string;
+  data: InterviewRes;
+};
+
+const InterviewEditRecordComponent = ({
+  applicantId,
+  data,
+}: InterviewEditRecordComponentProps) => {
+  const isDataExist = !!data.url && !!data.record;
   const [isOpen, setIsOpen] = useState(false);
   const [interviewData, setInterviewData] = useState({
     applicantId: applicantId,
-    url: "",
-    record: "",
+    url: data.url || "",
+    record: data.record || "",
   } as interviewReqBody);
 
   const { mutate: interviewUpload } = useMutation(postInterviewRecord);
+  const { mutate: editUrl } = useMutation(putInterviewUrl);
+  const { mutate: editRecord } = useMutation(putInterviewRecord);
+
+  const handleUpload = () => {
+    setIsOpen(false);
+    if (isDataExist) {
+      if (interviewData.url !== data.url) editUrl(interviewData);
+      if (interviewData.record !== data.record) editRecord(interviewData);
+    } else {
+      interviewUpload(interviewData);
+    }
+  };
 
   return (
     <div className="flex flex-col w-full my-10 items-end">
       <button onClick={() => setIsOpen((prev) => !prev)}>
         <span className="text-sm text-[#A7A7A7] underline underline-offset-2">
-          {isOpen ? "접어 두기" : "면접기록 입력하기"}
+          {isOpen ? "접어 두기" : "면접기록 수정하기"}
         </span>
       </button>
       {isOpen ? (
@@ -66,10 +90,7 @@ const InterviewUploadComponent = ({ applicantId }: { applicantId: string }) => {
             </button>
             <button
               className="flex-1 rounded-md flex justify-center items-center p-3 bg-[#303030] text-white"
-              onClick={() => {
-                setIsOpen(false);
-                interviewUpload(interviewData);
-              }}
+              onClick={handleUpload}
             >
               제출하기
             </button>
@@ -82,4 +103,4 @@ const InterviewUploadComponent = ({ applicantId }: { applicantId: string }) => {
   );
 };
 
-export default InterviewUploadComponent;
+export default InterviewEditRecordComponent;

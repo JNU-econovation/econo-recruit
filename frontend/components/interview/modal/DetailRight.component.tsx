@@ -1,4 +1,4 @@
-import { InterviewRes } from "@/src/apis/interview/interview";
+import { InterviewRes } from "@/src/apis/interview/record";
 import { FC } from "react";
 
 interface InterviewDetailRightProps {
