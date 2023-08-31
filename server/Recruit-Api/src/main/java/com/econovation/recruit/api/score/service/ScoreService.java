@@ -9,6 +9,8 @@ import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import com.econovation.recruitdomain.domains.dto.ScoreVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.score.domain.Score;
+import com.econovation.recruitdomain.domains.score.exception.ScoreInvalidFieldException;
+import com.econovation.recruitdomain.domains.score.exception.ScoreNotFoundException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
@@ -32,6 +34,9 @@ public class ScoreService implements ScoreUseCase {
     @Override
     public void createScore(CreateScoreDto scoreDto) {
         Long idpId = SecurityUtils.getCurrentUserId();
+        List<String> inputCreteria = scoreDto.getScoreVo().stream().map(scoreVo -> scoreVo.getCreteria()).collect(Collectors.toList());
+        if (!CRETERIA_SET.containsAll(inputCreteria))
+            throw ScoreInvalidFieldException.EXCEPTION;
         List<Score> scores =
                 scoreDto.getScoreVo().stream()
                         .map(

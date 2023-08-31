@@ -13,6 +13,7 @@ import lombok.Getter;
 public class BoardCardResponseDto {
     private Long id;
     private Integer boardId;
+    private Integer columnId;
     private Integer nextBoardId;
     private CardType cardType;
     private String title;
@@ -34,6 +35,7 @@ public class BoardCardResponseDto {
                 .nextBoardId(board.getNextBoardId())
                 .id(card.getId())
                 .cardType(board.getCardType())
+                .columnId(board.getColumnId())
                 .title(card.getTitle())
                 .content(card.getContent())
                 .labelCount(card.getLabelCount())
