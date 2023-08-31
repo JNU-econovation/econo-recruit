@@ -20,7 +20,7 @@ export const postApplicantTimeline = async (
   body: number[]
 ) => {
   const { data } = await https.post(
-    `/applicants/${applicantId}/time-tables`,
+    `/applicants/${applicantId}/timetables`,
     body
   );
 

@@ -1,13 +1,13 @@
-import { DropResult } from '@hello-pangea/dnd';
-import { KanbanRowData } from '@/src/stores/kanban/Kanban.atoms';
+import { DropResult } from "@hello-pangea/dnd";
+import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 
 export const getMovedKanbanData = (
-  kanbanData: KanbanRowData[],
+  kanbanData: KanbanCardData[],
   result: DropResult
-): KanbanRowData[] => {
+): KanbanCardData[] => {
   if (!result.destination) return kanbanData;
 
-  if (result.type === 'COLUMN') {
+  if (result.type === "COLUMN") {
     const fromIndex = result.source.index;
     const toIndex = result.destination.index;
 
@@ -20,7 +20,7 @@ export const getMovedKanbanData = (
     return shallow;
   }
 
-  if (result.type === 'DEFAULT') {
+  if (result.type === "DEFAULT") {
     const from = result.source;
     const to = result.destination;
 
