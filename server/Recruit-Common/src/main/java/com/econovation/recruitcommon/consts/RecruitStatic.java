@@ -30,9 +30,8 @@ public class RecruitStatic {
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
     public static final String COMMENT_LIKE_SUCCESS_UPDATE_MESSAGE = "성공적으로 댓글 좋아요가 수정됐습니다.";
-    public static String[] CRETERIA = {"열정", "실천력", "협업", "동아리 집중", "간절함"};
     public static Set<String> CRETERIA_SET =
-            new HashSet<>(Arrays.asList("열정", "실천력", "협업", "동아리 집중", "간절함"));
+            new HashSet<>(Arrays.asList("열정/실천력", "동아리 애착", "협업", "태도"));
 
     public static final String APPLICANT_SUCCESS_REGISTER_MESSAGE = "성공적으로 지원됐습니다";
     public static final String NO_MATCH_INTERVIEWER_MESSAGE = "해당하는 면접관이 없습니다.";

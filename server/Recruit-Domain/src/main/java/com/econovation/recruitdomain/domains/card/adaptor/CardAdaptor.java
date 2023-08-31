@@ -23,13 +23,13 @@ public class CardAdaptor implements CardLoadPort, CardRecordPort {
 
     @Override
     public void delete(Long cardId) {
+        cardRepository.findById(cardId).orElseThrow(() -> CardNotFoundException.EXCEPTION);
         cardRepository.deleteById(cardId);
     }
 
     @Override
     public List<Card> findAll() {
-        List<Card> all = cardRepository.findAll();
-        return all;
+        return cardRepository.findAll();
     }
 
     @Override

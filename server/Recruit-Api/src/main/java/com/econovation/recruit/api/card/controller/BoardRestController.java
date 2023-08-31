@@ -141,7 +141,7 @@ public class BoardRestController {
 
     @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")
     @PostMapping("/boards/cards/{card-id}/delete")
-    public ResponseEntity<String> deleteCard(Long cardId) {
+    public ResponseEntity<String> deleteCard(@PathVariable(name = "card-id") Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
