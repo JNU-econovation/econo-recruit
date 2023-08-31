@@ -36,14 +36,14 @@ public class Card extends BaseTimeEntity {
     private Integer commentCount;
 
     public static Card empty() {
-        return Card.builder().
-                id(0L).
-                applicantId("").
-                title("").
-                content("").
-                labelCount(0).
-                commentCount(0).
-                build();
+        return Card.builder()
+                .id(0L)
+                .applicantId("")
+                .title("")
+                .content("")
+                .labelCount(0)
+                .commentCount(0)
+                .build();
     }
 
     @PrePersist

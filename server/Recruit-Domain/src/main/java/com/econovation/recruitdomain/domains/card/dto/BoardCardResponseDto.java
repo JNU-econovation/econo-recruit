@@ -13,11 +13,14 @@ import lombok.Getter;
 public class BoardCardResponseDto {
     private Long id;
     private Integer boardId;
+    private Integer columnId;
     private Integer nextBoardId;
     private CardType cardType;
     private String title;
     private String content;
     private Integer labelCount;
+    private String major;
+    private String applicantId;
     private Integer commentCount;
     private String firstPriority;
     private String secondPriority;
@@ -28,12 +31,16 @@ public class BoardCardResponseDto {
             Board board,
             String firstPriority,
             String secondPriority,
+            String major,
             Boolean isLabeled) {
         return BoardCardResponseDto.builder()
                 .boardId(board.getId())
+                .applicantId(card.getApplicantId())
                 .nextBoardId(board.getNextBoardId())
                 .id(card.getId())
+                .major(major)
                 .cardType(board.getCardType())
+                .columnId(board.getColumnId())
                 .title(card.getTitle())
                 .content(card.getContent())
                 .labelCount(card.getLabelCount())

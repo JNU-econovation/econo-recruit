@@ -24,22 +24,23 @@ public class InterviewerController {
 
     @Operation(description = "Interviewer 조회", summary = "면접관 조회")
     @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
-    @GetMapping("/interviewers")
-    public ResponseEntity<Interviewer> findByApplicantId(Long idpId) {
+    @GetMapping("/idp/{idp_id}/interviewers")
+    public ResponseEntity<Interviewer> findByApplicantId(
+            @PathVariable(name = "idp_id") Long idpId) {
         Interviewer interviewer = interviewerUseCase.getById(idpId);
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
     @Operation(description = "Interviewer 전체 조회", summary = "면접관 전체 조회")
     @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
-    @GetMapping("/interviewers/all")
+    @GetMapping("/interviewers")
     public ResponseEntity<List<Interviewer>> findAll() {
         List<Interviewer> interviewers = interviewerUseCase.findAll();
         return new ResponseEntity(interviewers, HttpStatus.OK);
     }
 
     @Operation(description = "idpId로 Interviewer 등록", summary = "면접관 등록")
-    @PostMapping("/interviewers/idp-id")
+    @PostMapping("/interviewers")
     public ResponseEntity<String> createInterviewers(@RequestBody List<Long> idpIds) {
         interviewerUseCase.createInterviewers(idpIds);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
@@ -47,7 +48,7 @@ public class InterviewerController {
 
     @DevelopOnlyApi
     @Operation(description = "임시 Interviewer 등록", summary = "임시 면접관 등록")
-    @PostMapping("/interviewers")
+    @PostMapping("/interviewers/temp")
     public ResponseEntity<String> createInterviewers() {
         interviewerUseCase.createTempInterviewers();
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
