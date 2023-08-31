@@ -15,6 +15,8 @@ import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +58,7 @@ public class CommentAdapter
     public List<Comment> findByCardId(Long cardId) {
         List<Comment> comments = commentRepository.findByCardId(cardId);
         if (comments.isEmpty()) {
-            throw CommentNotFoundException.EXCEPTION;
+            return Collections.emptyList();
         }
         return comments;
     }
@@ -65,7 +67,7 @@ public class CommentAdapter
     public List<Comment> findByApplicantId(String applicantId) {
         List<Comment> comments = commentRepository.findByApplicantId(applicantId);
         if (comments.isEmpty()) {
-            throw CardNotFoundException.EXCEPTION;
+            return Collections.emptyList();
         }
         return comments;
     }

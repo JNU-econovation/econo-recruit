@@ -36,8 +36,8 @@ public class CommentService implements CommentUseCase {
     @Transactional
     public Comment saveComment(Comment comment) {
         Long userId = SecurityUtils.getCurrentUserId();
+        comment.setIdpId(userId);
         Comment loadedComment = commentRecordPort.saveComment(comment);
-        loadedComment.setIdpId(userId);
         // 지원서 카드면 카드 타입이지만
         if (comment.isApplicantComment()) {
             Card card = cardLoadPort.findByApplicantId(comment.getApplicantId());
@@ -187,8 +187,8 @@ public class CommentService implements CommentUseCase {
                                             .anyMatch(
                                                     commentLike ->
                                                             commentLike
-                                                                            .getCommentId()
-                                                                            .equals(comment.getId())
+                                                                    .getCommentId()
+                                                                    .equals(comment.getId())
                                                                     && commentLike
                                                                             .getIdpId()
                                                                             .equals(idpId));

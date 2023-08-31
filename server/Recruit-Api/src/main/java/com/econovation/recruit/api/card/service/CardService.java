@@ -77,7 +77,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         // key : applicantId
         Map<String, HashMap<String, String>> answers =
-                answerLoadPort.findAllApplicantVo(List.of("field1", "field2"));
+                answerLoadPort.findAllApplicantVo(List.of("field1", "field2", "major"));
 
         Map<Long, Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
@@ -85,31 +85,34 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         for (Board board : boards) {
             if (board.getCardType().equals(CardType.INVISIBLE)) {
-                result.add(BoardCardResponseDto.from(Card.empty(), board, "", "", false));
+                result.add(BoardCardResponseDto.from(Card.empty(), board, "", "","", false));
                 continue;
             }
             Card card = cardByBoardIdMap.get(board.getCardId());
             String firstPriority = "";
             String secondPriority = "";
+            String major = "";
             if (answers.isEmpty()) {
                 result.add(
                         BoardCardResponseDto.from(
-                                card, board, firstPriority, secondPriority, false));
+                                card, board, firstPriority, secondPriority,"", false));
                 continue;
             }
             Map<String, String> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
+                major = applicantAnswers.getOrDefault("major", "");
                 firstPriority = applicantAnswers.getOrDefault("field1", "");
                 secondPriority = applicantAnswers.getOrDefault("field2", "");
             } else {
                 firstPriority = "";
                 secondPriority = "";
+                major = "";
             }
             Boolean isLabeled = labels.containsKey(card.getId()) ? true : false;
 
             result.add(
                     BoardCardResponseDto.from(
-                            card, board, firstPriority, secondPriority, isLabeled));
+                            card, board, firstPriority, secondPriority, major, isLabeled));
         }
         return result;
     }
