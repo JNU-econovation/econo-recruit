@@ -22,8 +22,6 @@ export const getKanbanCards = async (columnId: string) => {
     `/navigations/${columnId}/boards`
   );
 
-  console.log(data);
-
   return data;
 };
 
@@ -48,7 +46,6 @@ interface addColumnReq {
 }
 
 export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
-  console.log(navigationId, title);
   const { data } = await https.post<string>(
     `/boards/navigations/${navigationId}/columns`,
     null,
@@ -67,21 +64,18 @@ export const getAllKanbanData = async (
   const cardsData = await Promise.all(
     columnsData.map((column) => getKanbanCards(column.columnsId.toString()))
   );
+  console.log(cardsData);
 
   return columnsData.map((column, index) => ({
     id: column.columnsId,
     title: column.title,
-    card: cardsData.map((card) =>
-      card[index]
-        ? {
-            id: card[index].cardId,
-            title: card[index].title,
-            apply: [] as string[],
-            comment: card[index].commentCount,
-            heart: card[index].labelCount,
-            isHearted: false,
-          }
-        : null
-    ),
+    card: cardsData[index].map((card) => ({
+      id: card.cardId,
+      title: card.title,
+      apply: [] as string[],
+      comment: card.commentCount,
+      heart: card.labelCount,
+      isHearted: false,
+    })),
   }));
 };

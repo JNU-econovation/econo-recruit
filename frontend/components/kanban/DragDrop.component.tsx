@@ -36,6 +36,8 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
     const movedKanbanData = getMovedKanbanData(kanbanData, result);
   };
 
+  console.log(kanbanData);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable" type="card" direction="horizontal">
@@ -45,12 +47,12 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {kanbanData.map((card, index) => (
+            {kanbanData.map((column, index) => (
               <KanbanColumnComponent
                 key={index}
-                title={card.title}
-                columnCount={card.card.length}
-                columnData={card.card}
+                title={column.title}
+                columnCount={column.card.length}
+                columnData={column.card}
                 index={index}
               />
             ))}
