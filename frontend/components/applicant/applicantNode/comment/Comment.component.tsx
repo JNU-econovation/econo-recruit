@@ -2,7 +2,6 @@
 
 import { FC, useState } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
-import ApplicantCommentDetail from "./CommentDetail.component";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCommentById } from "@/src/apis/comment/comment";
 

@@ -11,7 +11,7 @@ interface CheckboxProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
   isLast?: boolean;
-  onClick?: Function;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -68,7 +68,7 @@ interface CheckboxGroupProps {
   checkboxList: string[];
   splitNumber?: number;
   isSpaned?: boolean;
-  onClick?: Function;
+  onClick?: () => void;
 }
 
 const CheckboxGroup: FC<CheckboxGroupProps> = ({

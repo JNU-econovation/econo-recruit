@@ -9,15 +9,15 @@ type KanbanCardComponentType = {
 };
 
 function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
+  const { generation } = useParams();
+  const navigate = useRouter();
+
   if (!data) {
     return <></>;
   }
 
   const { title, apply, comment, isHearted, heart, id, major, applicantId } =
     data;
-
-  const { generation } = useParams();
-  const navigate = useRouter();
 
   const onClickDetail = () => {
     navigate.push(

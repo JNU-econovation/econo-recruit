@@ -3,7 +3,7 @@ import HomeCardComponent from "@/components/main/Card.component";
 import { MAIN_MENU, CURRENT_GENERATION } from "@/src/constants";
 
 const HomePage = () => {
-  let currentRecruitAfterString =
+  const currentRecruitAfterString =
     CURRENT_GENERATION % 10 === 1
       ? "st"
       : CURRENT_GENERATION % 10 === 2
