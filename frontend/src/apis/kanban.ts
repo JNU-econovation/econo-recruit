@@ -5,10 +5,9 @@ import {
 } from "../stores/kanban/Kanban.atoms";
 
 export interface KanbanCardReq {
-  id: string;
+  id: number;
   boardId: number;
   nextBoardId: number;
-  cardId: number;
   cardType: "WORK_CARD" | "APPLICANT";
   title: string;
   content: string;
@@ -64,13 +63,12 @@ export const getAllKanbanData = async (
   const cardsData = await Promise.all(
     columnsData.map((column) => getKanbanCards(column.columnsId.toString()))
   );
-  console.log(cardsData);
 
   return columnsData.map((column, index) => ({
     id: column.columnsId,
     title: column.title,
     card: cardsData[index].map((card) => ({
-      id: card.cardId,
+      id: card.id,
       title: card.title,
       apply: [] as string[],
       comment: card.commentCount,
