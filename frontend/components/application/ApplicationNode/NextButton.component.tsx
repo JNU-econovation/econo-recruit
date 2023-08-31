@@ -23,7 +23,7 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
     "flex-1 rounded-md flex justify-center items-center p-4";
 
   return (
-    <div className="flex gap-2 mt-4">
+    <div className="flex gap-2 my-4">
       <button
         className="flex-1 rounded-md flex justify-center items-center p-4 bg-[#EFEFEF]"
         onClick={goPrevIndex}

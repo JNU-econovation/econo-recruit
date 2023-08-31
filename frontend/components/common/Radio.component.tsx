@@ -10,7 +10,6 @@ interface RadioProps {
   disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   isCheck: boolean;
-  isLast: boolean;
   onClick?: () => void;
 }
 
@@ -21,12 +20,11 @@ const Radio: FC<RadioProps> = ({
   onChange,
   isCheck,
   disabled,
-  isLast,
   onClick,
 }) => {
   const id = useId();
   return (
-    <div className={classNames(isLast && "col-start-1 col-end-[-1]")}>
+    <>
       <label
         htmlFor={id}
         className={classNames(
@@ -52,7 +50,7 @@ const Radio: FC<RadioProps> = ({
         className="hidden"
         disabled={disabled}
       />
-    </div>
+    </>
   );
 };
 
@@ -76,7 +74,6 @@ const RadioGroup: FC<RadioGroupProps> = ({
   radioList,
   disableValue,
   splitNumber = 2,
-  isSpaned = false,
   onClick,
 }) => (
   <div
@@ -94,11 +91,6 @@ const RadioGroup: FC<RadioGroupProps> = ({
         onChange={onChange}
         disabled={disableValue === radioData}
         isCheck={radioData === value}
-        isLast={
-          isSpaned &&
-          index % splitNumber === 0 &&
-          index === radioList.length - 1
-        }
         onClick={onClick}
       />
     ))}
