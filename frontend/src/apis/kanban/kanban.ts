@@ -9,7 +9,7 @@ export interface KanbanCardReq {
   boardId: number;
   columnId: number;
   nextBoardId: number;
-  cardType: "WORK_CARD" | "APPLICANT" | "INTERVIEW";
+  cardType: "WORK_CARD" | "APPLICANT" | "INVISIBLE";
   title: string;
   content: string;
   labelCount: number;
@@ -62,6 +62,21 @@ export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
   return data;
 };
 
+interface addCardReq {
+  columnId: number;
+  title: string;
+}
+
+export const postAddCard = async ({ columnId, title }: addCardReq) => {
+  const { data } = await https.post<string>(`/boards/work-cards`, {
+    columnId,
+    title,
+    content: "",
+  });
+
+  return data;
+};
+
 export const getAllKanbanData = async (
   navigationId: string
 ): Promise<KanbanColumnData[]> => {
@@ -73,6 +88,7 @@ export const getAllKanbanData = async (
     title: column.title,
     card: cardsData
       .filter((card) => card.columnId === column.columnsId)
+      .filter((card) => card.cardType !== "INVISIBLE")
       .map((card) => ({
         id: card.id,
         title: card.title,
@@ -81,7 +97,7 @@ export const getAllKanbanData = async (
         apply: [
           card.firstPriority.split('"').join(""),
           card.secondPriority.split('"').join(""),
-        ],
+        ].filter((apply) => apply === ""),
         comment: card.commentCount,
         heart: card.labelCount,
         isHearted: card.isLabeled,

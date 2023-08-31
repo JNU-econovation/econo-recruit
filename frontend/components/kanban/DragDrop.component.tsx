@@ -74,7 +74,7 @@ const KanbanColumnView: FC<KanbanColumnViewProps> = ({ kanbanData }) => {
           title={column.title}
           columnCount={column.card.length}
           columnData={column.card}
-          index={index}
+          index={column.id}
         />
       ))}
     </>
