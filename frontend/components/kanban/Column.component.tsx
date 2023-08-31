@@ -18,7 +18,7 @@ const KanbanColumnComponent = ({
   columnCount,
 }: KanbanColumnComponent) => {
   return (
-    <Draggable draggableId={`${index}`} index={index}>
+    <Draggable draggableId={`${index}`} index={index} key={`column-${index}`}>
       {(provided) => (
         <div
           className="h-fit border-[1px] border-[#F0F0F0] w-fit p-4 rounded-lg min-w-[17rem] bg-white"
@@ -41,7 +41,11 @@ const KanbanColumnComponent = ({
             <Droppable droppableId={`${index}`} key={index}>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <Draggable draggableId={`${index}-${-1}`} index={-1} key={-1}>
+                  {/* <Draggable
+                    draggableId={`${index}-${-1}`}
+                    index={-1}
+                    key={`card-${index}`}
+                  >
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -50,7 +54,7 @@ const KanbanColumnComponent = ({
                         className="py-1"
                       ></div>
                     )}
-                  </Draggable>
+                  </Draggable> */}
                   {columnData.map((column, colIndex) => (
                     <Draggable
                       draggableId={`${colIndex}-${column?.id}`}

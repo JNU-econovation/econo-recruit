@@ -1,11 +1,13 @@
 "use client";
 
 import { postAddColumn } from "@/src/apis/kanban";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtom, useAtomValue } from "jotai";
+import React, { useState } from "react";
 
 type KanbanAddColumnComponent = {
-  AddColumnCallBack: () => void;
+  AddColumnCallBack: React.Dispatch<React.SetStateAction<number>>;
 };
 
 function KanbanAddColumnComponent({
@@ -13,15 +15,29 @@ function KanbanAddColumnComponent({
 }: KanbanAddColumnComponent) {
   const [title, setTitle] = useState("");
   const [isOpenAddColumn, setIsOpenAddColumn] = useState(false);
+  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
+  const queryClient = useQueryClient();
 
-  const { mutate: addColumn } = useMutation(postAddColumn);
+  const { mutate: addColumn } = useMutation(postAddColumn, {
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["kanbanDataArray", navbarId],
+      });
+    },
+  });
+  const addColumnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addColumn({ navigationId: navbarId, title: title });
+    setTitle("");
+    setIsOpenAddColumn(false);
+  };
 
   return (
     <div className="w-[17rem]">
       {isOpenAddColumn ? (
         <form
           className="w-[17rem] border-[1px] border-[#F0F0F0] p-3 rounded-lg"
-          onSubmit={(e) => addColumn({ navigationId: "1", title: title })}
+          onSubmit={(e) => addColumnSubmit(e)}
         >
           <input
             type="text"
@@ -34,7 +50,7 @@ function KanbanAddColumnComponent({
             <button type="button" onClick={() => setIsOpenAddColumn(false)}>
               <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
-            <button type="submit" onClick={AddColumnCallBack}>
+            <button type="submit">
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>

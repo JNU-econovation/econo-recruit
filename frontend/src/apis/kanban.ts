@@ -5,10 +5,9 @@ import {
 } from "../stores/kanban/Kanban.atoms";
 
 export interface KanbanCardReq {
-  id: string;
+  id: number;
   boardId: number;
   nextBoardId: number;
-  cardId: number;
   cardType: "WORK_CARD" | "APPLICANT";
   title: string;
   content: string;
@@ -21,8 +20,6 @@ export const getKanbanCards = async (columnId: string) => {
   const { data } = await https.get<KanbanCardReq[]>(
     `/navigations/${columnId}/boards`
   );
-
-  console.log(data);
 
   return data;
 };
@@ -48,7 +45,6 @@ interface addColumnReq {
 }
 
 export const postAddColumn = async ({ navigationId, title }: addColumnReq) => {
-  console.log(navigationId, title);
   const { data } = await https.post<string>(
     `/boards/navigations/${navigationId}/columns`,
     null,
@@ -71,17 +67,13 @@ export const getAllKanbanData = async (
   return columnsData.map((column, index) => ({
     id: column.columnsId,
     title: column.title,
-    card: cardsData.map((card) =>
-      card[index]
-        ? {
-            id: card[index].cardId,
-            title: card[index].title,
-            apply: [] as string[],
-            comment: card[index].commentCount,
-            heart: card[index].labelCount,
-            isHearted: false,
-          }
-        : null
-    ),
+    card: cardsData[index].map((card) => ({
+      id: card.id,
+      title: card.title,
+      apply: [] as string[],
+      comment: card.commentCount,
+      heart: card.labelCount,
+      isHearted: false,
+    })),
   }));
 };
