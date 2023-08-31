@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardLoadPort {
     Board getBoardById(Integer id);
@@ -12,7 +13,7 @@ public interface BoardLoadPort {
 
     List<Board> getBoardByNavLoc(Integer navLoc);
 
-    Board getByNextBoardId(Integer id);
+    Optional<Board> getByNextBoardId(Integer id);
 
     List<Board> getBoardByColumnsIds(List<Integer> columnsIds);
 }

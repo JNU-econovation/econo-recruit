@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -128,20 +127,7 @@ public class BoardRestController {
     public ResponseEntity<String> updateLocationBoard(
             @RequestBody UpdateLocationBoardDto updateLocationBoardDto) {
         boardRecordUseCase.relocateCard(updateLocationBoardDto);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
-    @GetMapping("/applicants/{applicant-id}")
-    public ResponseEntity<Map<String, String>> getApplicantById(
-            @PathVariable(value = "applicant-id") String applicantId) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
-    }
-
-    @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
-    @GetMapping("/applicants")
-    public ResponseEntity<List<Map<String, String>>> getApplicants() {
-        return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
+        return new ResponseEntity(BOARD_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(
@@ -152,11 +138,6 @@ public class BoardRestController {
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
     }
-
-    //    @GetMapping("/boards/cards")
-    //    public List<Card> getCardAll() {
-    //        return new ArrayList<>(cardLoadUseCase.findAll());
-    //    }
 
     @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")
     @PostMapping("/boards/cards/{card-id}/delete")

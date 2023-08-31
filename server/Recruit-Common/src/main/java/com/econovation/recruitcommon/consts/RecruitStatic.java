@@ -50,6 +50,7 @@ public class RecruitStatic {
     public static final String NO_MATCH_RECORD = "해당하는 RECORD가 존재하지 않습니다";
     public static final String RECORD_SUCCESS_CREATE_MESSAGE = "성공적으로 지원자의 면접 기록이 생성됐습니다";
     public static final String COLUMN_SUCCESS_REGISTER_MESSAGE = "성공적으로 Column이 등록됐습니다";
+    public static final String BOARD_SUCCESS_LOCATION_CHANGE_MESSAGE = "성공적으로 카드의 위치가 변경되었습니다.";
     public static final List<Map.Entry<String, String>> SUBMIT_APPLICANT_EVENT_SEPERATOR_LIST =
             new ArrayList<Map.Entry<String, String>>(
                     List.of(

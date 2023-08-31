@@ -42,10 +42,8 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     }
 
     @Override
-    public Board getByNextBoardId(Integer nextBoardId) {
-        return boardRepository
-                .findByNextBoardId(nextBoardId)
-                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+    public Optional<Board> getByNextBoardId(Integer nextBoardId) {
+        return boardRepository.findByNextBoardId(nextBoardId);
     }
 
     @Override

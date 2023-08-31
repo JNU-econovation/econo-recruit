@@ -5,12 +5,14 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
+import com.econovation.recruitdomain.domains.board.exception.BoardSameLocationException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -19,6 +21,7 @@ import com.econovation.recruitdomain.out.ColumnLoadPort;
 import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -289,15 +292,18 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     @Transactional
-    //    @RedissonLock(LockName = "지원서",
-    //            paramClassType = UpdateLocationBoardDto.class,
-    //            identifier = "boardId",
-    //            needSameTransaction = true)
+    @RedissonLock(
+            LockName = "보드 위치 변경",
+            identifier = "boardId",
+            paramClassType = UpdateLocationBoardDto.class)
     public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
 
-        // Update nextBoardId
+        // 같은 board 끼리는 위치 변경이 불가하다.
+        if (currentBoard.getId().equals(targetBoard.getId()))
+            throw BoardSameLocationException.EXCEPTION;
+
         updateNextBoardIds(currentBoard, targetBoard);
 
         // TODO: Send data to the socket server
@@ -305,35 +311,19 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     private void updateNextBoardIds(Board board1, Board board2) {
-        Board board1Next = boardLoadPort.getByNextBoardId(board1.getId());
-        Board board2Next = boardLoadPort.getByNextBoardId(board2.getId());
+        Optional<Board> board1Prev = boardLoadPort.getByNextBoardId(board1.getId());
+        Optional<Board> board2Prev = boardLoadPort.getByNextBoardId(board2.getId());
 
         // Update nextBoardId references
-        if (board2.getNextBoardId() != null) {
-            board2.updateNextBoardID(board1.getNextBoardId());
+        if (board1Prev.isPresent()) {
+            board1Prev.get().updateNextBoardID(board2.getId());
         }
-
-        if (board1.getNextBoardId() != null) {
-            board1.updateNextBoardID(board2.getId());
+        if (board2Prev.isPresent()) {
+            board2Prev.get().updateNextBoardID(board1.getId());
         }
-
-        if (board1Next != null && board2.getNextBoardId() != null) {
-            board1Next.updateNextBoardID(board2.getId());
-        }
-
-        if (board2Next != null && board1.getNextBoardId() != null) {
-            board2Next.updateNextBoardID(board1.getId());
-        }
+        Integer board2NextBoardId = board2.getNextBoardId();
+        Integer board1NextBoardId = board1.getNextBoardId();
+        board1.updateNextBoardID(board2NextBoardId);
+        board2.updateNextBoardID(board1NextBoardId);
     }
-
-    /*
-    @Override
-    public boolean isDuplicateLocation(Integer navLoc, Integer columnId, Integer boardId) {
-        Map<String, Integer> location = new HashMap<>();
-        location.put("columnId", columnId);
-        location.put("boardId", boardId);
-        Board boardByLocation = boardLoadPort.getBoardByLocation(navLoc, colLoc, boardId);
-        return false;
-    }
-    */
 }
