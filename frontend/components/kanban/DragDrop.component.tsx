@@ -45,6 +45,7 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
       <Droppable droppableId="droppable" type="card" direction="horizontal">
         {(provided) => (
           <div
+            key={navbarId}
             className="flex gap-4"
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -67,7 +68,6 @@ interface KanbanColumnViewProps {
 const KanbanColumnView: FC<KanbanColumnViewProps> = ({ kanbanData }) => {
   return (
     <>
-      {" "}
       {kanbanData.map((column, index) => (
         <KanbanColumnComponent
           key={index}

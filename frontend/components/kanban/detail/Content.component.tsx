@@ -1,19 +1,32 @@
+"use client";
+
 import ApplicantDetailLeft from "@/components/applicant/DetailLeft.component";
 import ApplicantDetailRight from "@/components/applicant/DetailRight.component";
-import { getApplicant } from "@/src/apis/applicant/applicant";
+import { getApplicantByIdWithField } from "@/src/apis/applicant/applicant";
 import { FC } from "react";
 import { APPLICANT_KEYS } from "@/src/constants/";
+import { useQuery } from "@tanstack/react-query";
 
 interface KanbanDetailContentProps {
   detailId: string;
   generation: string;
 }
 
-const KanbanDetailContent: FC<KanbanDetailContentProps> = async ({
+const KanbanDetailContent: FC<KanbanDetailContentProps> = ({
   detailId,
   generation,
 }) => {
-  const data = await getApplicant(detailId, APPLICANT_KEYS);
+  const { data, isLoading, isError } = useQuery(["applicant", detailId], () =>
+    getApplicantByIdWithField(detailId, APPLICANT_KEYS)
+  );
+
+  if (!data || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
 
   return (
     <div className="flex flex-col gap-12 ">

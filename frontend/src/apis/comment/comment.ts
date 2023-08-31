@@ -15,10 +15,10 @@ export interface CommentReq {
   idpId: string;
 }
 
-export const getComment = async (cardId: string) => {
-  const { data } = await https.get<CommentRes[]>(`/comments/`, {
-    params: { cardId: cardId },
-  });
+export const getAllCommentById = async (applicantId: string) => {
+  const { data } = await https.get<CommentRes[]>(
+    `/applicants/${applicantId}/comments`
+  );
   return data;
 };
 

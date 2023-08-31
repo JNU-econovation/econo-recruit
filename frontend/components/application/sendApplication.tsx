@@ -57,7 +57,9 @@ export const postApplication = async (
       name: "uploadDate",
       answer: `${new Date().getTime()}`,
     });
-    const applicantId = await postApplicant(Array.from(applicationData));
+    const applicantId = await postApplicant(
+      Array.from(new Set(applicationData))
+    );
     await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
   } catch (e) {
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);

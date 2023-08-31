@@ -39,8 +39,12 @@ const KanbanColumnComponent = ({
           <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
             <Droppable droppableId={`${index}`} key={index}>
               {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <Draggable
+                <div
+                  key={index}
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {/* <Draggable
                     draggableId={`${index}-${-1}`}
                     index={-1}
                     key={`column-${index}`}

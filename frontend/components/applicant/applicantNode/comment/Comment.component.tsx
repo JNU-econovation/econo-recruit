@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
 import ApplicantCommentDetail from "./CommentDetail.component";
 import { useQuery } from "@tanstack/react-query";
-import { getApplicantComment } from "@/src/apis/applicant/comment";
+import { getAllCommentById } from "@/src/apis/comment/comment";
 
 interface ApplicantCommentProps {
   postId: string;
@@ -16,7 +16,7 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
 
   const { data, error, isLoading } = useQuery(
     ["applicantComment", postId],
-    () => getApplicantComment(postId),
+    () => getAllCommentById(postId),
     {
       enabled: !!postId,
     }
@@ -46,9 +46,10 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
         onSubmit={onSubmit}
       />
       <div className="flex flex-col gap-8 pt-8">
-        {data.map((comment) => (
+        //TODO: comment
+        {/* {data.map((comment) => (
           <ApplicantCommentDetail comment={comment} key={comment.createAt} />
-        ))}
+        ))} */}
       </div>
     </>
   );
