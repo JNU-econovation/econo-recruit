@@ -128,7 +128,7 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
-    public List<Map<String, String>> execute(Integer page, String sortType) {
+    public List<Map<String, String>> execute(Integer page) {
         if (page < 1) throw OutOfIndexException.EXCEPTION;
         List<Answer> answers = answerAdaptor.findAll(page);
         List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
