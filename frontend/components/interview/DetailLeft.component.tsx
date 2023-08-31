@@ -1,6 +1,6 @@
 import InterviewUserComponent from "./User.component";
-import { InterviewRes } from "@/src/apis/interview";
-import { ScoreRes } from "@/src/apis/score";
+import { InterviewRes } from "@/src/apis/interview/interview";
+import { ScoreRes } from "@/src/apis/interview/score";
 import { FC } from "react";
 import InterviewAvgComponent from "@/components/interview/AvgScore.component";
 import InterviewScoreComponent from "./Score.component";

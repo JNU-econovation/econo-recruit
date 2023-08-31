@@ -34,7 +34,7 @@ export const MainNavbar = [
     href: `/application`,
   },
   {
-    title: "신업모집 칸반보드",
+    title: "신입모집 칸반보드",
     short_title: "칸반보드",
     type: "kanban",
     target: "none",
