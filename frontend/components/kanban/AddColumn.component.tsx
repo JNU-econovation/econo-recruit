@@ -1,5 +1,7 @@
 "use client";
 
+import { postAddColumn } from "@/src/apis/kanban";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 type KanbanAddColumnComponent = {
@@ -9,16 +11,24 @@ type KanbanAddColumnComponent = {
 function KanbanAddColumnComponent({
   AddColumnCallBack,
 }: KanbanAddColumnComponent) {
+  const [title, setTitle] = useState("");
   const [isOpenAddColumn, setIsOpenAddColumn] = useState(false);
+
+  const { mutate: addColumn } = useMutation(postAddColumn);
 
   return (
     <div className="w-[17rem]">
       {isOpenAddColumn ? (
-        <div className="w-[17rem] border-[1px] border-[#F0F0F0] p-3 rounded-lg">
+        <form
+          className="w-[17rem] border-[1px] border-[#F0F0F0] p-3 rounded-lg"
+          onSubmit={(e) => addColumn({ navigationId: "1", title: title })}
+        >
           <input
             type="text"
             className="p-3 border-[1px] border-[#F0F0F0] bg-white rounded-lg w-full text-sm my-3 outline-none"
             placeholder="Enter list title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <div className="flex gap-3 justify-end">
             <button type="button" onClick={() => setIsOpenAddColumn(false)}>
@@ -28,7 +38,7 @@ function KanbanAddColumnComponent({
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>
-        </div>
+        </form>
       ) : (
         <button
           type="button"
