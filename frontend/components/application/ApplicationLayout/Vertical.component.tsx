@@ -2,8 +2,8 @@
 
 import Txt from "@/components/common/Txt.component";
 import { ApplicationQuestion } from "@/src/constants/application/type";
-import { junctinOrLayout } from "../JunctionOrLayout";
 import classNames from "classnames";
+import { JunctinOrLayout } from "../JunctionOrLayout";
 
 interface ApplicationVerticalLayoutProps {
   applicationQuestion: ApplicationQuestion;
@@ -22,13 +22,11 @@ const ApplicationVerticalLayout = ({
           }${applicationQuestion.require ? "*" : ""}`}</Txt>
         </>
       )}
-      {applicationQuestion.nodes.map((node, index) => {
-        return (
-          <div key={index} className="mb-4">
-            {junctinOrLayout(node)}
-          </div>
-        );
-      })}
+      {applicationQuestion.nodes.map((node, index) => (
+        <div key={index} className="mb-4">
+          <JunctinOrLayout node={node} />
+        </div>
+      ))}
     </div>
   );
 };

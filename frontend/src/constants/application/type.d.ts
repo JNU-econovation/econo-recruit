@@ -48,7 +48,7 @@ interface ApplicationRadio extends BaseWithValues {
 }
 
 interface BaseWithValuesWithSplitNumber extends BaseWithValues {
-  splitNumber: number;
+  splitNumber: 2 | 3 | 4;
 }
 
 interface ApplicationRadioByTwoRank extends ApplicationNode {
@@ -114,7 +114,7 @@ interface ApplicationTimelineType extends ApplicationNodeBase {
 }
 
 interface ApplicationTimeline {
-  seperate: number;
+  seperate: 30 | 60;
   time: {
     startTime: Date;
     endTime: Date;
