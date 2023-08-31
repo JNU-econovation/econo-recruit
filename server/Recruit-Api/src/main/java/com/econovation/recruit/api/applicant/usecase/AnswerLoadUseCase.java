@@ -13,7 +13,9 @@ public interface AnswerLoadUseCase {
 
     List<Map<String, String>> execute();
 
-    Map<String, String> execute(List<String> fields, String applicantId);
+    Map<String, String> execute(String applicantId, List<String> fields);
+
+    List<Map<String, String>> execute(List<String> fields);
 
     Map<String, HashMap<String, String>> findAllApplicantVo(List<String> fields);
 }

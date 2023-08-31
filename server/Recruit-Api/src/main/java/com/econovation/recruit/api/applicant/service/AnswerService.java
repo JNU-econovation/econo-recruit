@@ -37,6 +37,12 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
+    public List<Map<String, String>> execute(List<String> fields) {
+        List<Answer> answers = answerAdaptor.findAll();
+        return splitByAnswersInApplicantId(fields, answers);
+    }
+
+    @Override
     public Map<String, HashMap<String, String>> findAllApplicantVo(List<String> fields) {
         List<Answer> answers = answerAdaptor.findAll();
         if (answers.isEmpty()) {
@@ -119,7 +125,7 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
-    public Map<String, String> execute(List<String> fields, String applicantId) {
+    public Map<String, String> execute(String applicantId, List<String> fields) {
         List<Answer> answers = answerAdaptor.findByAnswerId(applicantId);
         return splitByAnswersInApplicantId(fields, answers).get(0);
     }

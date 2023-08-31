@@ -62,8 +62,8 @@ public class ApplicantRegisterEventHandler {
     }
 
     private String generateCardTitle(ApplicantRegisterEvent event) {
-        return String.format(
-                "[%s] %s", extractHopeField(event.getHopeField()), event.getUserName());
+        return String.format("[%s] %s", extractHopeField(event.getHopeField()), event.getUserName())
+                .replace("\"", "");
     }
 
     private String extractHopeField(String title) {

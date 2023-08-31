@@ -6,6 +6,7 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateNavigationExceptionDocs;
+import com.econovation.recruit.api.card.docs.FindBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.FindNavigationExceptionDocs;
 import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -137,6 +139,25 @@ public class BoardRestController {
     public ResponseEntity<List<BoardCardResponseDto>> getBoardByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원서 조회(원하는 field) 만 조회", description = "원하는 field만(리스트) 조회합니다.")
+    @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
+    @GetMapping("/boards")
+    public ResponseEntity<List<Map<String, String>>> getBoardByNavigationId(
+            @RequestBody List<String> fields) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(fields), HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "특정 지원서 조회(원하는 field) 만 조회",
+            description = "특정 지원자에 대하여 원하는 field만(리스트) 조회합니다.")
+    @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
+    @GetMapping("/boards/{applicant-id}")
+    public ResponseEntity<Map<String, String>> getBoardByNavigationId(
+            @PathVariable(name = "applicant-id") String applicantId,
+            @RequestBody List<String> fields) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId, fields), HttpStatus.OK);
     }
 
     @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")

@@ -165,6 +165,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
+        //        \"hopeField\" -> hopeField 로 변경
+        hopeField = hopeField.replace("\"", "");
         Integer columnsId = 0;
         if (hopeField.equals("개발자")) {
             columnsId = DEVELOPER_COLUMNS_ID;
@@ -173,6 +175,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         } else if (hopeField.equals("기획자")) {
             columnsId = PLANNER_COLUMNS_ID;
         } else {
+            log.info("hopeField = {} 는 적절한 지원 분야가 아닙니다.", hopeField);
             throw InvalidHopeFieldException.EXCEPTION;
         }
 

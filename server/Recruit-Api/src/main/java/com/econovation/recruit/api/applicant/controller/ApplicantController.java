@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.QUESTION_SUCCESS_REGISTER_MESSAGE;
 
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
@@ -75,7 +76,7 @@ public class ApplicantController {
     public ResponseEntity registerInterviewQuestion(
             @RequestBody List<QuestionRequestDto> questions) {
         questionRegisterUseCase.execute(questions);
-        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(QUESTION_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")
