@@ -5,7 +5,6 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
-import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
@@ -309,7 +308,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     @Transactional
-/*    @RedissonLock(
+    /*    @RedissonLock(
             LockName = "보드 위치 변경",
             identifier = "boardId",
             paramClassType = UpdateLocationBoardDto.class,
@@ -339,9 +338,11 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Optional<Board> board1Next = boardLoadPort.getById(board2.getNextBoardId());
         // Update nextBoardId references
         if (board1Prev.isPresent()) {
-            board1Prev.get().updateNextBoardID(board1Next.isPresent() ? board1.getNextBoardId() : null);
+            board1Prev
+                    .get()
+                    .updateNextBoardID(board1Next.isPresent() ? board1.getNextBoardId() : null);
         }
-        //사이에 껴들어 가는 경우
+        // 사이에 껴들어 가는 경우
         if (board2.getNextBoardId() != null) {
             board1.updateNextBoardID(board2.getNextBoardId());
             board2.updateNextBoardID(board1.getId());

@@ -14,6 +14,7 @@ public interface BoardRegisterUseCase {
     void createApplicantBoard(String applicantId, String hopeField, Long cardId);
 
     Columns createColumn(String title, Integer navigationId);
+
     Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
 
     void relocateCard(UpdateLocationBoardDto updateLocationBoardDto);

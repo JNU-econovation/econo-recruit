@@ -26,7 +26,7 @@ public class Card extends BaseTimeEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "label_count")
@@ -55,5 +55,13 @@ public class Card extends BaseTimeEntity {
 
     public void minusCommentCount() {
         this.commentCount--;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
     }
 }

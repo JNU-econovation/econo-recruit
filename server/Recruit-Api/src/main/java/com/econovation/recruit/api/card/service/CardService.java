@@ -125,4 +125,16 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         Card savedCard = cardRecordPort.save(card);
         boardRegisterUseCase.createWorkBoard(createWorkCardDto.getColumnId(), savedCard.getId());
     }
+
+    @Override
+    public void updateContent(Long cardId, String content) {
+        Card card = cardLoadPort.findById(cardId);
+        card.updateContent(content);
+    }
+
+    @Override
+    public void updateTitle(Long cardId, String title) {
+        Card card = cardLoadPort.findById(cardId);
+        card.updateTitle(title);
+    }
 }

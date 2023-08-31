@@ -9,4 +9,8 @@ public interface CardRegisterUseCase {
     void deleteById(Long cardId);
 
     void saveWorkCard(CreateWorkCardDto createWorkCardDto);
+
+    void updateContent(Long cardId, String content);
+
+    void updateTitle(Long cardId, String title);
 }
