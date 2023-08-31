@@ -30,15 +30,32 @@ export const getInterviewRecordAll = async () => {
   return data;
 };
 
-interface InterviewerReq {
-  id: number;
-  name: string;
-  year: number;
-  role: string;
+export interface putInterviewReq {
+  applicantId: string;
+  record?: string;
+  url?: string;
 }
 
-export const getAllInterviewer = async () => {
-  const { data } = await https.get<InterviewerReq[]>(`/interviewers`);
+export const putInterviewRecord = async ({
+  applicantId,
+  record,
+}: putInterviewReq) => {
+  const { data } = await https.put<string>(
+    `/applicants/${applicantId}/records`,
+    JSON.stringify(record)
+  );
+
+  return data;
+};
+
+export const putInterviewUrl = async ({
+  applicantId,
+  url,
+}: putInterviewReq) => {
+  const { data } = await https.put<string>(
+    `/applicants/${applicantId}/records/url`,
+    JSON.stringify(url)
+  );
 
   return data;
 };

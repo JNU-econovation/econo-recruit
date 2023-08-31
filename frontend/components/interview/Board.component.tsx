@@ -3,10 +3,7 @@
 import InterviewDetailLeftComponent from "./modal/DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./modal/DetailRight.component";
-import {
-  InterviewRes,
-  getInterviewRecord,
-} from "@/src/apis/interview/interview";
+import { InterviewRes, getInterviewRecord } from "@/src/apis/interview/record";
 import { ScoreRes, getScore } from "@/src/apis/interview/score";
 import { useState } from "react";
 import { applicantDataFinder } from "@/src/functions/finder";

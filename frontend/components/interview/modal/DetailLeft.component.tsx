@@ -1,11 +1,10 @@
 import InterviewUserComponent from "./User.component";
-import { InterviewRes } from "@/src/apis/interview/interview";
+import { InterviewRes } from "@/src/apis/interview/record";
 import { ScoreRes } from "@/src/apis/interview/score";
 import { FC } from "react";
 import InterviewAvgComponent from "@/components/interview/modal/AvgScore.component";
 import InterviewScoreComponent from "./Score.component";
-import InterviewUploadComponent from "./Upload.component";
-import InterviewEditComponent from "./Edit.component";
+import InterviewEditRecordComponent from "./EditRecord.component";
 
 interface InterviewDetailLeftProps {
   applicantId: string;
@@ -26,11 +25,7 @@ const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = ({
         average={scoreData.scoreVo.average}
       />
       <InterviewScoreComponent score={scoreData} />
-      {!data ? (
-        <InterviewEditComponent applicantId={applicantId} />
-      ) : (
-        <InterviewUploadComponent applicantId={applicantId} />
-      )}
+      <InterviewEditRecordComponent applicantId={applicantId} data={data} />
     </>
   );
 };
