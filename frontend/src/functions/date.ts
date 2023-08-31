@@ -4,7 +4,7 @@ export const dateSplicer = (
   seperate: number
 ) => {
   const dateArray = [];
-  let currentDate = new Date(startDate);
+  const currentDate = new Date(startDate);
   while (currentDate <= endDate) {
     dateArray.push(new Date(currentDate));
     currentDate.setMinutes(currentDate.getMinutes() + seperate);

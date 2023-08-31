@@ -6,7 +6,9 @@ import { JunctionQuestion } from "./Junction.component";
 import { ApplicationLayout } from "./Layout.component";
 import { FC } from "react";
 
-const checkQuestion = (node: any): node is ApplicationQuestion => {
+const checkQuestion = (
+  node: ApplicationQuestion | ApplicationNode
+): node is ApplicationQuestion => {
   return "id" in node;
 };
 

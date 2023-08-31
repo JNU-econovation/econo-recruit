@@ -5,12 +5,10 @@ import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import { localStorage } from "@/src/functions/localstorage";
-import { applicationDataAtom } from "@/src/stores/application";
-import { useAtomValue } from "jotai";
 
 // 깊은 탐색을 통해 지원자가 작성한 데이터를 추출하는 함수
 const extractApplicantData = (
-  node: Object,
+  node: { [key: string]: any } | ApplicationQuestion[],
   applicationData: Set<ApplicantReq>
 ) => {
   if (node === null) return;
