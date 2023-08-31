@@ -35,6 +35,17 @@ public class Card extends BaseTimeEntity {
     @Column(name = "comment_count")
     private Integer commentCount;
 
+    public static Card empty() {
+        return Card.builder().
+                id(0L).
+                applicantId("").
+                title("").
+                content("").
+                labelCount(0).
+                commentCount(0).
+                build();
+    }
+
     @PrePersist
     public void prePersist() {
         this.labelCount = 0;

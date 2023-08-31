@@ -7,6 +7,7 @@ import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsUseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
@@ -83,6 +84,10 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                         cards.stream().map(Card::getId).collect(Collectors.toList()));
 
         for (Board board : boards) {
+            if (board.getCardType().equals(CardType.INVISIBLE)) {
+                result.add(BoardCardResponseDto.from(Card.empty(),board,"","",false));
+                continue;
+            }
             Card card = cardByBoardIdMap.get(board.getCardId());
             String firstPriority = "";
             String secondPriority = "";
@@ -96,8 +101,10 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
             if (applicantAnswers != null) {
                 firstPriority = applicantAnswers.getOrDefault("field1", "");
                 secondPriority = applicantAnswers.getOrDefault("field2", "");
+            } else {
+                firstPriority = "";
+                secondPriority = "";
             }
-
             Boolean isLabeled = labels.containsKey(card.getId()) ? true : false;
 
             result.add(
