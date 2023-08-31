@@ -154,7 +154,7 @@ public class BoardRestController {
     @Operation(
             summary = "지원서 칸반보드 조회 by navigationId",
             description = "navigationId에 해당하는 모든 칸반을 조회합니다.")
-    @PostMapping("/navigations/{navigation-id}/boards")
+    @GetMapping("/navigations/{navigation-id}/boards")
     public ResponseEntity<List<BoardCardResponseDto>> getBoardByNavigationId(
             @PathVariable("navigation-id") Integer navigationId) {
         return new ResponseEntity<>(cardLoadUseCase.getByNavigationId(navigationId), HttpStatus.OK);
@@ -172,7 +172,7 @@ public class BoardRestController {
             summary = "특정 지원서 조회(원하는 field) 만 조회",
             description = "특정 지원자에 대하여 원하는 field만(리스트) 조회합니다.")
     @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
-    @GetMapping("/boards/{applicant-id}")
+    @PostMapping("/boards/{applicant-id}")
     public ResponseEntity<Map<String, String>> getBoardByNavigationId(
             @PathVariable(name = "applicant-id") String applicantId,
             @RequestBody List<String> fields) {
