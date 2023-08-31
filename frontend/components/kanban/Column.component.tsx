@@ -1,5 +1,4 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import KanbanAddColumnComponent from "./AddColumn.component";
 import KanbanCardComponent from "./Card.component";
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddCardComponent from "./AddCard.component";
@@ -48,7 +47,7 @@ const KanbanColumnComponent = ({
                   {/* <Draggable
                     draggableId={`${index}-${-1}`}
                     index={-1}
-                    key={`card-${index}`}
+                    key={`column-${index}`}
                   >
                     {(provided) => (
                       <div
@@ -58,7 +57,7 @@ const KanbanColumnComponent = ({
                         className="py-1"
                       ></div>
                     )}
-                  </Draggable> */}
+                  </Draggable>
                   {columnData.map((column, colIndex) => (
                     <Draggable
                       draggableId={`${colIndex}-${column?.id}`}

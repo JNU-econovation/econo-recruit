@@ -1,8 +1,8 @@
 "use client";
 
-import InterviewDetailLeftComponent from "./DetailLeft.component";
+import InterviewDetailLeftComponent from "./modal/DetailLeft.component";
 import Board from "../common/board/Board.component";
-import InterviewDetailRightComponent from "./DetailRight.component";
+import InterviewDetailRightComponent from "./modal/DetailRight.component";
 import {
   InterviewRes,
   getInterviewRecord,
@@ -14,6 +14,7 @@ import { getAllApplicant } from "@/src/apis/applicant/applicant";
 import { useQuery } from "@tanstack/react-query";
 
 const InterviewBoardComponent = () => {
+  const [applicantId, setApplicantId] = useState<string>("");
   const initData = {
     record: "",
     url: "",
@@ -30,6 +31,7 @@ const InterviewBoardComponent = () => {
   const [scoreData, setScoreData] = useState<ScoreRes>(initScoreData);
 
   const onClick = (id: string) => {
+    setApplicantId(id);
     getInterviewRecord(id)
       .then((res) => {
         setData(res);
@@ -78,7 +80,11 @@ const InterviewBoardComponent = () => {
     >
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
-          <InterviewDetailLeftComponent data={data} scoreData={scoreData} />
+          <InterviewDetailLeftComponent
+            data={data}
+            scoreData={scoreData}
+            applicantId={applicantId}
+          />
         </div>
       </div>
       <div className="flex flex-1 min-h-0">
