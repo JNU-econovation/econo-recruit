@@ -2,7 +2,6 @@ package com.econovation.recruit.api.label.service;
 
 import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.label.usecase.LabelUseCase;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
@@ -29,19 +28,27 @@ public class LabelService implements LabelUseCase {
     private final CardLoadPort cardLoadPort;
 
     @Override
-    @RedissonLock(LockName = "라벨", identifier = "applicantId")
+    @RedissonLock(
+            LockName = "라벨 생성",
+            identifier = "applicantId",
+            waitTime = 1000L,
+            leaseTime = 1000L)
     @Transactional
-    public Label createLabel(String applicantId) {
+    public Boolean createLabel(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findByApplicantId(applicantId);
-        Label label = Label.builder().idpId(idpId).applicantId(applicantId).build();
-        Result<Label> result = labelRecordPort.save(label);
-        result.onSuccess(label1 -> card.plusLabelCount());
-        result.onFailure(
-                e -> {
-                    throw LabelNotFoundException.EXCEPTION;
-                });
-        return label;
+        Label label =
+                Label.builder().idpId(idpId).applicantId(applicantId).cardId(card.getId()).build();
+        //         라벨 중복 처리 : 라벨이 있으면 라벨을 삭제한다.
+        Label label2 = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
+        if (label2 != null) {
+            labelRecordPort.delete(label2);
+            card.minusLabelCount();
+            return false;
+        }
+        labelRecordPort.save(label);
+        card.plusLabelCount();
+        return true;
     }
 
     @Override
@@ -67,13 +74,17 @@ public class LabelService implements LabelUseCase {
 
     @Override
     @Transactional
-    @RedissonLock(LockName = "라벨", identifier = "applicantId")
-    public void deleteLabel(String applicantId, Integer idpId) {
+    @RedissonLock(
+            LockName = "라벨 삭제",
+            identifier = "applicantId",
+            waitTime = 1000L,
+            leaseTime = 1000L)
+    public void deleteLabel(String applicantId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
         Label label = labelLoadPort.loadLabelByApplicantIdAndIdpId(applicantId, idpId);
-
+        if (label == null) throw LabelNotFoundException.EXCEPTION;
         // Card LabelCount 감소
         cardLoadPort.findByApplicantId(applicantId).minusLabelCount();
-
         labelRecordPort.delete(label);
     }
 }

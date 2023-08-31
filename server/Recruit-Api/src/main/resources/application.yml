@@ -8,6 +8,9 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+data:
+  init:
+    disabled: ${DATA_INIT_DISABLED:false}
 server:
   port: ${SERVER_PORT:8080}
 throttle:

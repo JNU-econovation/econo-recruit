@@ -7,7 +7,7 @@ import java.util.Map;
 public interface LabelLoadPort {
     List<Label> loadLabelByApplicantId(String applicantId);
 
-    Label loadLabelByApplicantIdAndIdpId(String applicantId, Integer idpId);
+    Label loadLabelByApplicantIdAndIdpId(String applicantId, Long idpId);
 
     List<Label> findAll();
 

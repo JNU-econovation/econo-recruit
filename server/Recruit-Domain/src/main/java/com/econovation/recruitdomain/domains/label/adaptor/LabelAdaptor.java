@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.label.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.domains.label.domain.LabelRepository;
 import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
@@ -21,9 +20,8 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     private final LabelRepository labelRepository;
 
     @Override
-    public Result<Label> save(Label label) {
-        Label loadLabel = labelRepository.save(label);
-        return Result.of(loadLabel);
+    public Label save(Label label) {
+        return labelRepository.save(label);
     }
 
     @Override
@@ -35,16 +33,17 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     public List<Label> loadLabelByApplicantId(String applicantId) {
         List<Label> labels = labelRepository.findByApplicantId(applicantId);
         if (labels.isEmpty()) {
-            throw new IllegalArgumentException(NO_MATCH_LABEL_MESSAGE);
+            throw LabelNotFoundException.EXCEPTION;
         }
         return labels;
     }
 
     @Override
-    public Label loadLabelByApplicantIdAndIdpId(String applicantId, Integer idpId) {
+    public Label loadLabelByApplicantIdAndIdpId(String applicantId, Long idpId) {
         Optional<Label> label = labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         if (label.isEmpty()) {
-            throw LabelNotFoundException.EXCEPTION;
+            return null;
+            //            throw LabelNotFoundException.EXCEPTION;
         }
         return label.get();
     }
