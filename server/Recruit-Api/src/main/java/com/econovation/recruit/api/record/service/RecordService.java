@@ -42,11 +42,13 @@ public class RecordService implements RecordUseCase {
     public void updateRecordUrl(String applicantId, String url) {
         Record record = recordLoadPort.findByApplicantId(applicantId);
         record.updateUrl(url);
+        recordRecordPort.save(record);
     }
 
     @Override
     public void updateRecordContents(String applicantId, String contents) {
         Record record = recordLoadPort.findByApplicantId(applicantId);
         record.updateRecord(contents);
+        recordRecordPort.save(record);
     }
 }

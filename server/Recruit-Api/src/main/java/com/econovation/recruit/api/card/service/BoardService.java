@@ -352,5 +352,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
             board2.updateNextBoardID(board1.getId());
             board1.updateNextBoardID(null);
         }
+        boardRecordPort.saveAll(List.of(board1, board2, board1Prev.get(), board1Next.get()));
     }
 }

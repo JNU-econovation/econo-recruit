@@ -74,6 +74,11 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
         boardRepository.delete(board);
     }
 
+    @Override
+    public void saveAll(List<Board> board) {
+        boardRepository.saveAll(board);
+    }
+
     //    @Override
     //    public void update(Board board) {
     //        boardRepository.update(board);
