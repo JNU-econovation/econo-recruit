@@ -9,7 +9,7 @@ spring:
     hikari:
       maxLifetime: 580000
       maximum-pool-size: 20
-    password: ${MYSQL_PASSWORD}
+    password: ${MYSQL_PASSWORD:}
     username: ${MYSQL_USERNAME:root}
   jpa:
     hibernate:
@@ -24,9 +24,7 @@ spring:
     sql:
       init:
         mode: always
-        data-locations: classpath:sql/init.sql
         continue-on-error: false
-#    defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #     script 파일이 hibernate 초기화 이후 동작하게 하기 위한 옵션
