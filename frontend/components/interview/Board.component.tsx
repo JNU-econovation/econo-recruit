@@ -3,7 +3,10 @@
 import InterviewDetailLeftComponent from "./DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./DetailRight.component";
-import { InterviewRes, getInterviewRecord } from "@/src/apis/interview/interview";
+import {
+  InterviewRes,
+  getInterviewRecord,
+} from "@/src/apis/interview/interview";
 import { ScoreRes, getScore } from "@/src/apis/interview/score";
 import { useEffect, useState } from "react";
 import { applicantDataFinder } from "@/src/functions/finder";
@@ -25,7 +28,6 @@ const InterviewBoardComponent = () => {
 
   const [data, setData] = useState<InterviewRes>(initData);
   const [scoreData, setScoreData] = useState<ScoreRes>(initScoreData);
-  console.log(data);
 
   const onClick = (id: string) => {
     getInterviewRecord(id)

@@ -8,7 +8,6 @@ export type KanbanColumnData = {
 
 export type KanbanCardData = {
   id: number;
-  major: string;
   title: string;
   apply: string[];
   comment: number;
