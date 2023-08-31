@@ -4,12 +4,13 @@ import {
   KanbanColumnData,
   KanbanDataArrayState,
 } from "@/src/stores/kanban/Kanban.atoms";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { FC } from "react";
 import KanbanCardComponent from "./Card.component";
 import KanbanDetailBackButton from "./detail/BackButton.component";
 import { useQuery } from "@tanstack/react-query";
 import { getAllKanbanData } from "@/src/apis/kanban";
+import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 
 interface KanbanDetailCardProps {
   detailCard: string;
@@ -20,12 +21,13 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
   detailCard,
   generation,
 }) => {
+  const [navbarId] = useAtom(KanbanSelectedButtonNumberState);
   const {
     data: kanbanDataArray,
     isError,
     isLoading,
   } = useQuery<KanbanColumnData[]>(["kanbanDataArray", generation], () =>
-    getAllKanbanData("1")
+    getAllKanbanData(navbarId)
   );
 
   if (!kanbanDataArray || isLoading) {

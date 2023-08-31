@@ -1,10 +1,10 @@
 import { DropResult } from "@hello-pangea/dnd";
-import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
+import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
 
 export const getMovedKanbanData = (
-  kanbanData: KanbanCardData[],
+  kanbanData: KanbanColumnData[],
   result: DropResult
-): KanbanCardData[] => {
+): KanbanColumnData[] => {
   if (!result.destination) return kanbanData;
 
   if (result.type === "COLUMN") {
@@ -25,8 +25,8 @@ export const getMovedKanbanData = (
     const to = result.destination;
 
     const shallow = structuredClone(kanbanData);
-    const pickData = shallow[+from.droppableId].column.splice(from.index, 1);
-    shallow[+to.droppableId].column.splice(to.index, 0, ...pickData);
+    const pickData = shallow[+from.droppableId].card.splice(from.index, 1);
+    shallow[+to.droppableId].card.splice(to.index, 0, ...pickData);
 
     return shallow;
   }
