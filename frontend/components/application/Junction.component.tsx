@@ -1,5 +1,6 @@
 import { ApplicationNode } from "@/src/constants/application/type";
 import dynamic from "next/dynamic";
+import { FC } from "react";
 
 const ApplicationRadio = dynamic(
   () => import("./applicationNode/Radio.component")
@@ -27,7 +28,13 @@ const ApplicationJustText = dynamic(
   () => import("./applicationNode/JustText.component")
 );
 
-export const junctionQuestion = (applicationNodeData: ApplicationNode) => {
+interface JunctionQuestionProps {
+  applicationNodeData: ApplicationNode;
+}
+
+export const JunctionQuestion: FC<JunctionQuestionProps> = ({
+  applicationNodeData,
+}) => {
   const jsxNode = {
     radio: <ApplicationRadio data={applicationNodeData} />,
     radioByTwoRank: <ApplicationRadioByTwoRank data={applicationNodeData} />,

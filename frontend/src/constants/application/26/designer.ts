@@ -43,7 +43,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "restoration",
+        name: "workDescript",
         require: true,
         type: "textarea",
         errorMessages: "디자인 작업물을 설명해주세요.",
@@ -58,7 +58,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "restoration",
+        name: "keyword",
         require: true,
         type: "textarea",
         errorMessages: "가장 중요한 것을 서술해 주세요.",
@@ -73,7 +73,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "deep",
+        name: "betterment",
         require: true,
         type: "textarea",
         errorMessages: "개선하고 싶은 서비스를 서술해주세요.",
@@ -88,7 +88,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "collaboration",
+        name: "failure",
         require: true,
         type: "textarea",
         errorMessages: "협업에 있어서 중요하다고 생각되는 것을 입력해주세요.",
@@ -103,7 +103,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "collaboration",
+        name: "drain",
         require: true,
         type: "textarea",
         errorMessages: "깊게 빠져본 경험을 입력해주세요.",
@@ -131,7 +131,7 @@ export const APPLICATION_DESIGN = [
     direction: "horizontal",
     nodes: [
       {
-        name: "collaboration",
+        name: "studyPlan",
         require: true,
         type: "textarea",
         errorMessages: "목표와 학습 계획을 입력해주세요.",

@@ -3,6 +3,8 @@
 import useApplicationIndexControll from "@/src/hooks/useApplicationIndexControll.hook";
 import { FC } from "react";
 import { postApplication } from "../sendApplication";
+import { useAtomValue } from "jotai";
+import { applicationDataAtom } from "@/src/stores/application";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;
@@ -21,6 +23,7 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
     useApplicationIndexControll();
   const nextButtonClassName =
     "flex-1 rounded-md flex justify-center items-center p-4";
+  const applicationQuestions = useAtomValue(applicationDataAtom);
 
   return (
     <div className="flex gap-2 my-4">
@@ -33,7 +36,7 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
       <button
         onClick={
           isLast
-            ? postApplication
+            ? () => postApplication(applicationQuestions)
             : beforeCheckCallback
             ? () => {
                 if (beforeCheckCallback()) goNextIndex();

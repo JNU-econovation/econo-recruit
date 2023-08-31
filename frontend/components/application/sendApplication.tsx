@@ -3,6 +3,7 @@
 import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 import { localStorage } from "@/src/functions/localstorage";
 import { applicationDataAtom } from "@/src/stores/application";
 import { useAtomValue } from "jotai";
@@ -41,10 +42,10 @@ const extractApplicantData = (
   });
 };
 
-export const postApplication = async () => {
+export const postApplication = async (
+  applicationQuestions: ApplicationQuestion[]
+) => {
   const applicationData = new Set<ApplicantReq>();
-
-  const applicationQuestions = useAtomValue(applicationDataAtom);
 
   try {
     extractApplicantData(applicationQuestions, applicationData);

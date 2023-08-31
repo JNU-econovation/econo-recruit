@@ -109,7 +109,7 @@ export const APPLICATION = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: "기본 인적 사항을 입력해주세요.",
     subtitle: "복수 전공과 부전공은 선택 입력사항입니다.",
     direction: "horizontal",
