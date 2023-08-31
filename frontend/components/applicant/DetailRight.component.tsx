@@ -43,7 +43,7 @@ const ApplicantDetailRight: FC<ApplicantDetailRightProps> = ({ data }) => {
         ]);
         return;
     }
-  }, [applicantData]);
+  }, []);
 
   return <ApplicantDetail applicantData={applicantData} data={data} />;
 };

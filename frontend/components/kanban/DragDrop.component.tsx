@@ -6,7 +6,7 @@ import { getMovedKanbanData } from "@/src/functions/kanban";
 import KanbanAddColumnComponent from "./AddColumn.component";
 import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
-import { getAllKanbanData } from "@/src/apis/kanban";
+import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./Column.component";
 import { useAtom } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
@@ -45,6 +45,7 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
       <Droppable droppableId="droppable" type="card" direction="horizontal">
         {(provided) => (
           <div
+            key={navbarId}
             className="flex gap-4"
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -67,7 +68,6 @@ interface KanbanColumnViewProps {
 const KanbanColumnView: FC<KanbanColumnViewProps> = ({ kanbanData }) => {
   return (
     <>
-      {" "}
       {kanbanData.map((column, index) => (
         <KanbanColumnComponent
           key={index}
