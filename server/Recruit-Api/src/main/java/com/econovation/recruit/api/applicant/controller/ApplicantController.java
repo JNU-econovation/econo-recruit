@@ -47,7 +47,7 @@ public class ApplicantController {
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
-    @PostMapping("/applicants/{applicant-id}/time-tables")
+    @PostMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity registerApplicantTimeTable(
             @PathVariable(value = "applicant-id") UUID applicantId,
             @RequestBody List<Integer> startTimes) {

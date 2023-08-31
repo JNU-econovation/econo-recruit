@@ -12,20 +12,26 @@ spring:
     password: ${MYSQL_PASSWORD}
     username: ${MYSQL_USERNAME:root}
   jpa:
+    hibernate:
+      ddl-auto: create
     generate-ddl: true
     show-sql: ${SHOW_SQL:true}
     properties:
       hibernate:
 #        format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
-    hibernate:
-      ddl-auto: update
+
+    sql:
+      init:
+        mode: always
+        data-locations: classpath:sql/init.sql
+        continue-on-error: false
 #    defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  sql:
-    init:
-      mode: always
+#     script 파일이 hibernate 초기화 이후 동작하게 하기 위한 옵션
+    defer-datasource-initialization: false
+
 logging:
   level:
     com.zaxxer.hikari.HikariConfig: DEBUG

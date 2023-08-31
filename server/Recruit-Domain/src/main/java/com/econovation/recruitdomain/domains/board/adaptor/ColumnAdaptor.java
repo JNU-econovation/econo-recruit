@@ -39,7 +39,7 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     public List<Columns> getColumnsByNavigationId(Integer navigationId) {
         List<Columns> byNavigationId = columnRepository.findByNavigationId(navigationId);
         if (byNavigationId.isEmpty()) {
-//            throw ColumnsNotFoundException.EXCEPTION;
+            //            throw ColumnsNotFoundException.EXCEPTION;
             return null;
         }
         return byNavigationId;

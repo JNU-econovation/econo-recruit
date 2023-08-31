@@ -32,14 +32,13 @@ public class ApplicantRegisterEventHandler {
     public void handle(ApplicantRegisterEvent applicantRegistEvent) {
         String message = generateApplicantRegisterMessage(applicantRegistEvent);
 
-        Card card = createCardFromEvent(applicantRegistEvent);
+        Card card = fromApplicantRegisterEvent(applicantRegistEvent);
         cardAdaptor.save(card);
 
         boardRegisterUseCase.createApplicantBoard(
                 applicantRegistEvent.getApplicantId(),
                 applicantRegistEvent.getHopeField(),
                 card.getId());
-
         slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
     }
 
@@ -51,9 +50,14 @@ public class ApplicantRegisterEventHandler {
                 applicantRegistEvent.getUserName(), applicantRegistEvent.getHopeField());
     }
 
-    private Card createCardFromEvent(ApplicantRegisterEvent event) {
+    private Card fromApplicantRegisterEvent(ApplicantRegisterEvent event) {
         String title = generateCardTitle(event);
-        return Card.builder().applicantId(event.getApplicantId()).title(title).content("").build();
+        return Card.builder()
+                .applicantId(event.getApplicantId())
+                .title(title)
+                .applicantId(event.getApplicantId())
+                .content("")
+                .build();
     }
 
     private String generateCardTitle(ApplicantRegisterEvent event) {

@@ -75,7 +75,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         // key : applicantId
         Map<String, Map<String, String>> answers =
-                answerLoadPort.findAllApplicantVo(Arrays.asList("firstPriority", "secondPriority"));
+                answerLoadPort.findAllApplicantVo(Arrays.asList("field1", "field2"));
         Map<Long, Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
                         cards.stream().map(Card::getId).collect(Collectors.toList()));
@@ -87,8 +87,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
             Map<String, String> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
-                firstPriority = applicantAnswers.getOrDefault("firstPriority", "");
-                secondPriority = applicantAnswers.getOrDefault("secondPriority", "");
+                firstPriority = applicantAnswers.getOrDefault("field1", "");
+                secondPriority = applicantAnswers.getOrDefault("field2", "");
             }
 
             Boolean isLabeled = labels.containsKey(card.getId()) ? true : false;
