@@ -1,14 +1,11 @@
 import { https } from "@/src/functions/axios";
-import {
-  KanbanCardData,
-  KanbanColumnData,
-} from "../../stores/kanban/Kanban.atoms";
+import { KanbanColumnData } from "../../stores/kanban/Kanban.atoms";
 
 export interface KanbanCardReq {
   id: number;
   boardId: number;
   columnId: number;
-  nextBoardId: number;
+  nextBoardId: number | null;
   cardType: "WORK_CARD" | "APPLICANT" | "INVISIBLE";
   title: string;
   content: string;
@@ -88,16 +85,19 @@ export const getAllKanbanData = async (
     title: column.title,
     card: cardsData
       .filter((card) => card.columnId === column.columnsId)
-      .filter((card) => card.cardType !== "INVISIBLE")
+      // .sort((a, b) =>
+      //   a.nextBoardId === null ? 1 : a.nextBoardId === b.boardId ? 1 : -1
+      // )
       .map((card) => ({
-        id: card.id,
+        id: card.boardId,
+        cardType: card.cardType,
         title: card.title,
         major: card.major.split('"').join(""),
         applicantId: card.applicantId,
         apply: [
           card.firstPriority.split('"').join(""),
           card.secondPriority.split('"').join(""),
-        ].filter((apply) => apply === ""),
+        ].filter((apply) => apply !== ""),
         comment: card.commentCount,
         heart: card.labelCount,
         isHearted: card.isLabeled,

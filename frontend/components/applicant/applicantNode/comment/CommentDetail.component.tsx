@@ -1,7 +1,18 @@
 import { FC } from "react";
-import { ApplicantCommentReq } from "@/src/apis/applicant/comment";
+// import { ApplicantCommentReq } from "@/src/apis/comment/comment";
 import { Viewer } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+
+interface ApplicantCommentReq {
+  id: string;
+  postId: string;
+  content: string;
+  createAt: string;
+  interviewerName: string;
+  isLike: boolean;
+  likeCount: number;
+  canEdit: boolean;
+}
 
 type ApplicantCommentDetailProps = {
   comment: ApplicantCommentReq;

@@ -5,23 +5,28 @@ import dynamic from "next/dynamic";
 import { FC } from "react";
 
 const ApplicationHorizontalLayout = dynamic(
-  () => import("./applicationLayout/Horizontal.componet")
+  () => import("./applicationLayout/Horizontal.componet"),
+  { ssr: false }
 );
 
 const ApplicationVerticalLayout = dynamic(
-  () => import("./applicationLayout/Vertical.component")
+  () => import("./applicationLayout/Vertical.component"),
+  { ssr: false }
 );
 
 const ApplicationBooleanTextareaLayout = dynamic(
-  () => import("./applicationLayout/BooleanTextarea.component")
+  () => import("./applicationLayout/BooleanTextarea.component"),
+  { ssr: false }
 );
 
 const ApplicationRadioForCheckLayout = dynamic(
-  () => import("./applicationLayout/RadioForCheck.component")
+  () => import("./applicationLayout/RadioForCheck.component"),
+  { ssr: false }
 );
 
 const ApplicationTimelineLayout = dynamic(
-  () => import("./applicationLayout/timeline/Timeline.component")
+  () => import("./applicationLayout/timeline/Timeline.component"),
+  { ssr: false }
 );
 
 interface ApplicationLayoutProps {

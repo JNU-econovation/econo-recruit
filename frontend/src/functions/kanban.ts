@@ -33,3 +33,33 @@ export const getMovedKanbanData = (
 
   return kanbanData;
 };
+
+export const getFromToIndex = (
+  kanbanData: KanbanColumnData[],
+  result: DropResult
+): { boardId: number; targetBoardId: number } => {
+  if (!result.destination) return { boardId: 0, targetBoardId: 0 };
+
+  if (result.type === "COLUMN") {
+    // const fromIndex = result.source.index;
+    // const toIndex = result.destination.index;
+
+    // return { from: fromIndex, to: toIndex };
+    return { boardId: 0, targetBoardId: 0 };
+  }
+
+  if (result.type === "DEFAULT") {
+    const from = result.source;
+    const to = result.destination;
+    console.log(kanbanData[+from.droppableId - 1].card[from.index]);
+    console.log(kanbanData[+to.droppableId - 1].card[to.index - 1]);
+
+    const boardId = kanbanData[+from.droppableId - 1].card[from.index]?.id ?? 0;
+    const targetBoardId =
+      kanbanData[+to.droppableId - 1].card[to.index - 1]?.id ?? 0;
+
+    return { boardId, targetBoardId };
+  }
+
+  return { boardId: 0, targetBoardId: 0 };
+};
