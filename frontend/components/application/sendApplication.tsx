@@ -5,6 +5,8 @@ import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import { localStorage } from "@/src/functions/localstorage";
+import { applicationDataAtom } from "@/src/stores/application";
+import { useAtomValue } from "jotai";
 
 // 깊은 탐색을 통해 지원자가 작성한 데이터를 추출하는 함수
 const extractApplicantData = (
@@ -40,13 +42,10 @@ const extractApplicantData = (
   });
 };
 
-export const postApplication = async () => {
+export const postApplication = async (
+  applicationQuestions: ApplicationQuestion[]
+) => {
   const applicationData = new Set<ApplicantReq>();
-
-  const generation = CURRENT_GENERATION;
-  const applicationQuestions =
-    require(`@/src/constants/application/${generation}.ts`)
-      .APPLICATION as ApplicationQuestion[];
 
   try {
     extractApplicantData(applicationQuestions, applicationData);

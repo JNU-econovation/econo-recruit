@@ -2,10 +2,10 @@
 
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import dynamic from "next/dynamic";
+import { FC } from "react";
 
 const ApplicationHorizontalLayout = dynamic(
-  () => import("./applicationLayout/Horizontal.componet"),
-  { ssr: false }
+  () => import("./applicationLayout/Horizontal.componet")
 );
 
 const ApplicationVerticalLayout = dynamic(
@@ -24,10 +24,13 @@ const ApplicationTimelineLayout = dynamic(
   () => import("./applicationLayout/timeline/Timeline.component")
 );
 
-export const applicationLayout = (
-  layout: ApplicationQuestion["direction"],
-  applicationQuestion: ApplicationQuestion
-) => {
+interface ApplicationLayoutProps {
+  applicationQuestion: ApplicationQuestion;
+}
+
+export const ApplicationLayout: FC<ApplicationLayoutProps> = ({
+  applicationQuestion,
+}) => {
   const jsxNode = {
     horizontal: (
       <ApplicationHorizontalLayout applicationQuestion={applicationQuestion} />
@@ -50,5 +53,5 @@ export const applicationLayout = (
     ),
   };
 
-  return jsxNode[layout];
+  return jsxNode[applicationQuestion["direction"]];
 };

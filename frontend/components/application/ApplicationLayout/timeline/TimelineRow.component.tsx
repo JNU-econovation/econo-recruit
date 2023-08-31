@@ -3,6 +3,7 @@
 import Txt from "@/components/common/Txt.component";
 import { minimumIntegerDigits } from "@/src/functions/replacer";
 import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
+import classNames from "classnames";
 import { FC } from "react";
 
 interface TimelineRowProps {
@@ -19,8 +20,15 @@ const TimelineRow: FC<TimelineRowProps> = ({ date, isLast, index }) => {
   const [timeline, setTimeline] = useLocalStorage<number[]>("timeline", []);
 
   return (
-    <span className="flex-1 border-l translate-x-6 mb-8">
-      <Txt className="-translate-x-1/2 block w-fit -translate-y-6 h-2">
+    <span className="flex-1 border-l border-gray-300 translate-x-6 mb-8">
+      <Txt
+        className={classNames(
+          "-translate-x-1/2 block w-fit -translate-y-6 h-2",
+          {
+            "opacity-0": minimumIntegerDigits(date.getMinutes(), 2) === "30",
+          }
+        )}
+      >
         {dateString}
       </Txt>
       {isLast && (
