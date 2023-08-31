@@ -1,5 +1,6 @@
 import { ApplicantReq } from "@/src/apis/applicant/applicant";
 import dynamic from "next/dynamic";
+import { FC } from "react";
 
 const ApplicantCustomField = dynamic(
   () => import("./applicantNode/CustomField.component")
@@ -21,10 +22,15 @@ const ApplicantBooleanTextarea = dynamic(
   () => import("./applicantNode/BooleanTextarea.component")
 );
 
-export const junctionApplicant = (
-  applicantNodeData: ApplicantNode,
-  applicantData: ApplicantReq[]
-) => {
+interface JunctionApplicantProps {
+  applicantNodeData: ApplicantNode;
+  data: ApplicantReq[];
+}
+
+export const JunctionApplicant: FC<JunctionApplicantProps> = ({
+  applicantNodeData,
+  data: applicantData,
+}) => {
   const jsxNode = {
     customField: (
       <ApplicantCustomField nodeData={applicantNodeData} data={applicantData} />

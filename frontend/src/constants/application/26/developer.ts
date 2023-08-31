@@ -119,7 +119,7 @@ export const APPLICATION_DEVELOPER = [
     direction: "horizontal",
     nodes: [
       {
-        name: "collaboration",
+        name: "studyPlan",
         require: true,
         type: "textarea",
         errorMessages: "목표와 학습 계획을 입력해주세요.",

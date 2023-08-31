@@ -1,0 +1,197 @@
+[
+  {
+    "type": "string",
+    "name": "field",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "field1",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "field2",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "name",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "contacted",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "classOf",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "registered",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "grade",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "semester",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "major",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "doubleMajor",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "minor",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "activity",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "channel",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "reason",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "future",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "workDescript",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "keyword",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "betterment",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "failure",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "drain",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "collaboration",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "studyPlan",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "portfolio",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "fileUrl",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "email",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "check",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "personalInformationAgree",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "personalInformationAgreeForPortfolio",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "timeline",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "experienceTextarea",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "experience",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "restoration",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "deep",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "communication",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "failual",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "fileUrlforPlanner",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "generation",
+    "parentId": 0
+  },
+  {
+    "type": "string",
+    "name": "uploadDate",
+    "parentId": 0
+  }
+]

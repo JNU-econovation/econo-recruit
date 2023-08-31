@@ -24,7 +24,7 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
   return (
     <div className="flex mt-8 overflow-auto pt-12 pl-12">
       <KanbanDetailColumn detailCard={detailCard} generation={generation} />
-      <KanbanDetailContent detailId={detailId} generation={generation} />
+      {/* <KanbanDetailContent detailId={detailId} generation={generation} /> */}
     </div>
   );
 };

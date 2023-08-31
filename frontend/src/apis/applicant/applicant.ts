@@ -1,3 +1,4 @@
+import { APPLICANT_KEYS } from "@/src/constants";
 import { https } from "@/src/functions/axios";
 
 export interface ApplicantReq {
@@ -9,8 +10,13 @@ interface AllApplicantReq {
   [string: string]: string;
 }
 
-export const getApplicant = async (id: string) => {
-  const { data } = await https.get<AllApplicantReq>(`/applicants/${id}`);
+export const getApplicant = async (id: string, fields?: string[]) => {
+  if (fields === undefined) {
+    fields = APPLICANT_KEYS;
+  }
+  const { data } = await https.get<AllApplicantReq>(`/applicants/${id}`, {
+    params: { fields },
+  });
   return Object.keys(data).map((key) => ({
     name: key,
     answer: data[key],

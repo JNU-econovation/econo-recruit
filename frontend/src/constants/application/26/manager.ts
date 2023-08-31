@@ -98,7 +98,7 @@ export const APPLICATION_MANAGER = [
         name: "failual",
         require: true,
         type: "textarea",
-        errorMessages: "깊게 빠져본 경험을 입력해주세요.",
+        errorMessages: "도전하고 실패해 본 경험을 입력해주세요.",
       } as ApplicationTextarea,
     ],
   },
@@ -275,7 +275,7 @@ export const APPLICATION_NAVBAR_MANAGER = [
   {
     id: 8,
     title:
-      "지원자님께서 직접 IT 서비스(UI/UX)를 설계하거나 개선한 경험이 있나요?(",
+      "지원자님께서 직접 IT 서비스(UI/UX)를 설계하거나 개선한 경험이 있나요?",
   },
   { id: 9, title: "어떤 일에 도전하고 실패해 본 경험이 있나요?" },
   {
