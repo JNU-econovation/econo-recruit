@@ -4,7 +4,6 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMEN
 
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
-import com.econovation.recruitdomain.domains.card.exception.CardNotFoundException;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
@@ -15,7 +14,6 @@ import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

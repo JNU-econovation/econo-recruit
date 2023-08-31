@@ -25,7 +25,8 @@ public class InterviewerController {
     @Operation(description = "Interviewer 조회", summary = "면접관 조회")
     @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
     @GetMapping("/idp/{idp_id}/interviewers")
-    public ResponseEntity<Interviewer> findByApplicantId(@PathVariable(name = "idp_id") Long idpId) {
+    public ResponseEntity<Interviewer> findByApplicantId(
+            @PathVariable(name = "idp_id") Long idpId) {
         Interviewer interviewer = interviewerUseCase.getById(idpId);
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }

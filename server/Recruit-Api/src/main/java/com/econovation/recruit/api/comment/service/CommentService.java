@@ -187,8 +187,8 @@ public class CommentService implements CommentUseCase {
                                             .anyMatch(
                                                     commentLike ->
                                                             commentLike
-                                                                    .getCommentId()
-                                                                    .equals(comment.getId())
+                                                                            .getCommentId()
+                                                                            .equals(comment.getId())
                                                                     && commentLike
                                                                             .getIdpId()
                                                                             .equals(idpId));

@@ -55,7 +55,7 @@ public class RecordController {
         return new ResponseEntity(RecordResponseDto.from(records), HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 면접기록의 면접 영상 url을 수정합니다")
+    @Operation(summary = "지원자의 면접기록의 면접 영상 url을 수정합니다.")
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records/url")
     public ResponseEntity<String> updateRecordUrl(
@@ -64,7 +64,7 @@ public class RecordController {
         return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 면접기록의 면접 영상 url을 수정합니다")
+    @Operation(summary = "지원자의 면접기록의 면접기록을 수정합니다.")
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records")
     public ResponseEntity<String> updateRecord(

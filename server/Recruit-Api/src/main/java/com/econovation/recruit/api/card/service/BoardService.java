@@ -190,7 +190,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .build();
         Board save = boardRecordPort.save(board);
         //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
-        boardLoadPort.getBoardByNavigationIdAndColumnsId(0, columnsId).stream()
+        boardLoadPort.getBoardByNavigationIdAndColumnsId(1, columnsId).stream()
                 .filter(b -> b.getNextBoardId() == null)
                 .findFirst()
                 .ifPresent(
