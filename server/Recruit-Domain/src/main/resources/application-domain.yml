@@ -13,7 +13,7 @@ spring:
     username: ${MYSQL_USERNAME:root}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     generate-ddl: true
     show-sql: ${SHOW_SQL:true}
     properties:

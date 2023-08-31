@@ -20,11 +20,9 @@ import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.ColumnLoadPort;
 import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -247,7 +245,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public List<ColumnsResponseDto> getColumnsByNavigationId(Integer navigationId) {
         List<Columns> columns = columnLoadPort.getColumnsByNavigationId(navigationId);
-        if (columns == null){
+        if (columns == null) {
             return Collections.emptyList();
         }
         return ColumnsResponseDto.from(columns);

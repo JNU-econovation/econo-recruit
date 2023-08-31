@@ -6,6 +6,6 @@ public class LabelNotFoundException extends RecruitCodeException {
     public static final LabelNotFoundException EXCEPTION = new LabelNotFoundException();
 
     private LabelNotFoundException() {
-        super(LabelErrorCode.LABEL_DUPLICATE_SUBMIT);
+        super(LabelErrorCode.LABEL_NOT_FOUND);
     }
 }
