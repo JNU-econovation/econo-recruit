@@ -33,7 +33,7 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
   }
 
   const onDragEnd = (result: DropResult) => {
-    const movedKanbanData = getMovedKanbanData(kanbanData, result);
+    // const movedKanbanData = getMovedKanbanData(kanbanData, result);
   };
 
   return (

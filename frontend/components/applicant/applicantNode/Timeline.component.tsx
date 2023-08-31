@@ -50,8 +50,16 @@ const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({ postId }) => {
           <div className="w-full flex">
             {dateSplicer(time.startTime, time.endTime, seperate).map(
               (date, index) => (
-                <span className="flex-1 border-l translate-x-6 mb-8">
-                  <Txt className="-translate-x-1/2 block w-fit -translate-y-6 h-2">
+                <span className="flex-1 border-l translate-x-6 mb-8 w-4">
+                  <Txt
+                    className={classNames(
+                      "-translate-x-1/2 block w-fit -translate-y-6 h-2",
+                      {
+                        "opacity-0":
+                          minimumIntegerDigits(date.getMinutes(), 2) === "30",
+                      }
+                    )}
+                  >
                     {`${minimumIntegerDigits(
                       date.getHours(),
                       2

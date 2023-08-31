@@ -32,7 +32,7 @@ export const APPLICATION_DESIGN = [
         name: "future",
         require: true,
         type: "textarea",
-        errorMessages: "개발자를 희망하는 이유를 입력해주세요.",
+        errorMessages: "디자이너를 희망하는 이유를 입력해주세요.",
       } as ApplicationTextarea,
     ],
   },
@@ -125,9 +125,9 @@ export const APPLICATION_DESIGN = [
     ],
   },
   {
-    id: 11,
+    id: 13,
     title:
-      "에코노베이션에 최종 합격 시 신입 기수로 구성된 팀으로 개발 프로젝트에 참여하고, 목표를 달성하기 위해 스스로 끊임없이 배우고 노력합니다. 에코노베이션에 들어오게 된다면 어떤 목표와 함습 계획을 바탕으로 활동하고 싶나요?",
+      "에코노베이션에 최종 합격 시 신입 기수로 구성된 팀으로 개발 프로젝트에 참여하고, 목표를 달성하기 위해 스스로 끊임없이 배우고 노력합니다. 에코노베이션에 들어오게 된다면 어떤 목표와 학습 계획을 바탕으로 활동하고 싶나요?",
     direction: "horizontal",
     nodes: [
       {
@@ -139,7 +139,7 @@ export const APPLICATION_DESIGN = [
     ],
   },
   {
-    id: 12,
+    id: 14,
     title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요.",
     direction: "horizontal",
     nodes: [
@@ -165,7 +165,7 @@ export const APPLICATION_DESIGN = [
     direction: "vertical",
     nodes: [
       {
-        id: 13,
+        id: 15,
         direction: "horizontal",
         title: "합격여부 전달을 위하여 이메일을 입력해주세요.",
         subtitle: "이메일을 기재하지 않을 시, 합격이 취소될 수 있습니다.",
@@ -182,7 +182,7 @@ export const APPLICATION_DESIGN = [
         ],
       },
       {
-        id: 13,
+        id: 16,
         direction: "horizontal",
         title:
           "에코노베이션은 3학기 이상의 활동을 권장하고 있으며 매주 금요일 17시에는 주간발표가 있습니다.\n위 내용을 확인하셨으면 '확인했습니다'를 기입해주세요.",
@@ -198,7 +198,7 @@ export const APPLICATION_DESIGN = [
         ],
       },
       {
-        id: 14,
+        id: 17,
         direction: "radioForCheck",
         title:
           "개인정보 수집에 관한 안내 및 개인정보 수집에 대한 안내에 동의하시나요?",
@@ -223,7 +223,7 @@ export const APPLICATION_DESIGN = [
     ],
   },
   {
-    id: 15,
+    id: 18,
     title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
     direction: "timeline",
     require: false,
