@@ -13,6 +13,9 @@ public interface AnswerLoadUseCase {
 
     List<Map<String, String>> execute();
 
+    List<Map<String, String>> execute(Integer page);
+    //    List<Map<String, String>> execute(Integer page, String sortType);
+
     Map<String, String> execute(String applicantId, List<String> fields);
 
     List<Map<String, String>> execute(List<String> fields);

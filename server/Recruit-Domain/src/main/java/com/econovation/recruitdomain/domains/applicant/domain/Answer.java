@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.applicant.domain;
 
+import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 @Table(name = "answer")
-public class Answer {
+public class Answer extends BaseTimeEntity {
     @Id
     @Column(name = "answer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
