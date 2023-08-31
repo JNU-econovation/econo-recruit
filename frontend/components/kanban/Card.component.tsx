@@ -13,12 +13,16 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
     return <></>;
   }
 
-  const { title, apply, comment, isHearted, heart, id, major } = data;
+  const { title, apply, comment, isHearted, heart, id, major, applicantId } =
+    data;
+
   const { generation } = useParams();
   const navigate = useRouter();
 
   const onClickDetail = () => {
-    navigate.push(`/kanban/${generation}/detail?id=${id}&card=${cardId}`);
+    navigate.push(
+      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}`
+    );
   };
 
   return (

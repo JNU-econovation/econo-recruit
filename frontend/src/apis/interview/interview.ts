@@ -38,7 +38,7 @@ interface InterviewerReq {
 }
 
 export const getAllInterviewer = async () => {
-  const { data } = await https.get<InterviewerReq[]>(`/interviewers/all`);
+  const { data } = await https.get<InterviewerReq[]>(`/interviewers`);
 
   return data;
 };

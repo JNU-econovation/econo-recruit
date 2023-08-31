@@ -15,6 +15,7 @@ export type KanbanCardData = {
   comment: number;
   heart: number;
   isHearted: boolean;
+  applicantId: string;
 };
 
 export const KanbanDataArrayState = atom({} as KanbanColumnData[]);

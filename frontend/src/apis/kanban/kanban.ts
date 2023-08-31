@@ -13,6 +13,8 @@ export interface KanbanCardReq {
   title: string;
   content: string;
   labelCount: number;
+  major: string;
+  applicantId: string;
   commentCount: number;
   firstPriority: string;
   secondPriority: string;
@@ -74,7 +76,8 @@ export const getAllKanbanData = async (
       .map((card) => ({
         id: card.id,
         title: card.title,
-        major: "",
+        major: card.major.split('"').join(""),
+        applicantId: card.applicantId,
         apply: [
           card.firstPriority.split('"').join(""),
           card.secondPriority.split('"').join(""),

@@ -21,18 +21,21 @@ export const getApplicantByIdWithField = async (
   if (fields === undefined) {
     fields = APPLICANT_KEYS;
   }
-  const { data } = await https.post<AllApplicantReq>(
-    `/applicants/${id}`,
-    fields
-  );
+  const { data } = await https.post<AllApplicantReq>(`/boards/${id}`, fields);
+
   return Object.keys(data).map((key) => ({
     name: key,
     answer: data[key],
   }));
 };
 
-export const getAllApplicant = async (): Promise<ApplicantReq[][]> => {
-  const { data } = await https.get<AllApplicantReq[]>(`/applicants`);
+export const getAllApplicant = async (
+  fields?: string[]
+): Promise<ApplicantReq[][]> => {
+  if (fields === undefined) {
+    fields = APPLICANT_KEYS;
+  }
+  const { data } = await https.post<AllApplicantReq[]>(`/boards`, fields);
   return data.map((d) =>
     Object.keys(d).map((key) => ({
       name: key,
