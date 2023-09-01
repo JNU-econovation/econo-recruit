@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.AnswerRepository;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -50,5 +51,10 @@ public class AnswerAdaptor {
             throw ApplicantNotFoundException.EXCEPTION;
         }
         return applicants;
+    }
+
+    public Answer findByAnswer(String answer) {
+        Optional<Answer> result = answerRepository.findByAnswer(answer);
+        return result.orElse(null);
     }
 }
