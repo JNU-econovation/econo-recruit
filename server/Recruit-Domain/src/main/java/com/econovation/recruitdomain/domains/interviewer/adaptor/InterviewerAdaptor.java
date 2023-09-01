@@ -5,6 +5,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_INTERV
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.InterviewerRepository;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotFoundException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import java.util.List;
@@ -30,6 +31,13 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     @Override
     public List<Interviewer> findAll() {
         return interviewerRepository.findAll();
+    }
+
+    @Override
+    public Interviewer loadInterviewerByEmail(String email) {
+        return interviewerRepository
+                .findByEmail(email)
+                .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
     }
 
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {

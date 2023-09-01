@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Interviewer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idp_id")
     private Long id;
 
@@ -32,6 +33,11 @@ public class Interviewer {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+    @PrePersist
+    public void prePersist() {
+        this.role = Role.ROLE_TF;
+    }
 
     public void updateRole(Role role) {
         this.role = role;

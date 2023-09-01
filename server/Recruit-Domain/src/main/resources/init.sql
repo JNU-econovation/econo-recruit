@@ -11,7 +11,4 @@ INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (4,
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (5,NOW(),NOW(),"지원자 대응팀");
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (6,NOW(),NOW(),"OT 담당팀");
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (7,NOW(),NOW(),"기타 참고");
-INSERT INTO interviewer (idp_id, name, role, year) VALUES (0,"이서현_관리자","ROLE_TF", 21);
-INSERT INTO interviewer (idp_id, name, role, year) VALUES (1,"임채승","ROLE_TF", 22);
-INSERT INTO interviewer (idp_id, name, role, year) VALUES (2,"강바다","ROLE_TF", 24);
-INSERT INTO interviewer (idp_id, name, role, year) VALUES (3,"이도연","ROLE_PRESIDENT", 23);
+INSERT INTO interviewer (idp_id, name, role, year, email, password) VALUES (0,"이서현_관리자","ROLE_TF", 21, "ymecca1@gmail.com","asldnwlq!@Tqwashg");

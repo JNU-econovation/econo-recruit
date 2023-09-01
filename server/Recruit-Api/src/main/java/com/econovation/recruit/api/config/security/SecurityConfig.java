@@ -6,6 +6,7 @@ import com.econovation.recruitcommon.helper.SpringEnvironmentHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -71,18 +72,21 @@ public class SecurityConfig {
                 //                .permitAll()
                 //                .mvcMatchers("/v1/auth/token/refresh")
                 //                .permitAll()
-                //                .mvcMatchers(HttpMethod.GET, "/api/v1/token}")
-                //                .permitAll()
                 //                .mvcMatchers(HttpMethod.GET,
                 // "/v1/events/{eventId:[0-9]*$}/ticketItems")
                 //                .permitAll()
                 //                .mvcMatchers(HttpMethod.GET,
                 // "/v1/events/{eventId:[0-9]*$}/comments/**")
                 //                .permitAll()
-                //                .mvcMatchers(HttpMethod.GET, "/v1/events/search")
-                //                .permitAll()
-                //                .mvcMatchers(HttpMethod.GET, "/v1/examples/health")
-                // TODO 임시로 모든 요청 permit
+                .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
+                .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
+                .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/signup")
+                .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/login")
+                .permitAll()
+                // TODO 임시로 모든 요청 permit  -> 채승이가 로그인 로직 완성하면 수정
                 .mvcMatchers("/**")
                 .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다

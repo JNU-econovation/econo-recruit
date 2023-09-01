@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Getter
 public class AuthDetails implements UserDetails {
-
-    private String userId;
+    private String idpId;
 
     private String role;
 
@@ -28,7 +27,7 @@ public class AuthDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userId;
+        return idpId;
     }
 
     @Override
