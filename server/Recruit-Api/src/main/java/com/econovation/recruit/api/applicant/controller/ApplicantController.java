@@ -61,6 +61,15 @@ public class ApplicantController {
         return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
     }
 
+    @Operation(summary = "모든 지원자의 지원서를 페이지 단위로(1페이지당 8개) 조회합니다.")
+    @GetMapping("/page/{page}/applicants")
+    public ResponseEntity<List<Map<String, String>>> getApplicantsByPage(
+            // TODO 정렬 기준 추가
+            //  @PathVariable(value = "page") Integer page, String sortType) {
+            @PathVariable(value = "page") Integer page) {
+        return new ResponseEntity<>(answerLoadUseCase.execute(page), HttpStatus.OK);
+    }
+
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants/{applicant-id}/timetables")

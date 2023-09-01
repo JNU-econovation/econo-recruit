@@ -5,6 +5,7 @@ import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
+import com.econovation.recruitdomain.domains.record.exception.RecordDuplicateCreatedException;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
@@ -24,6 +25,9 @@ public class RecordService implements RecordUseCase {
         if (answerLoadUseCase.execute(recordDto.getApplicantId()).isEmpty()) {
             throw ApplicantNotFoundException.EXCEPTION;
         }
+        if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()) != null) {
+            throw RecordDuplicateCreatedException.EXCEPTION;
+        }
         Record record = CreateRecordDto.toRecord(recordDto);
         return recordRecordPort.save(record);
     }
@@ -42,11 +46,13 @@ public class RecordService implements RecordUseCase {
     public void updateRecordUrl(String applicantId, String url) {
         Record record = recordLoadPort.findByApplicantId(applicantId);
         record.updateUrl(url);
+        recordRecordPort.save(record);
     }
 
     @Override
     public void updateRecordContents(String applicantId, String contents) {
         Record record = recordLoadPort.findByApplicantId(applicantId);
         record.updateRecord(contents);
+        recordRecordPort.save(record);
     }
 }

@@ -41,11 +41,13 @@ public enum GlobalErrorCode implements BaseErrorCode {
     OTHER_SERVER_NOT_FOUND(BAD_REQUEST, "FEIGN_400_5", "Other server not found error"),
     OTHER_SERVER_INTERNAL_SERVER_ERROR(
             BAD_REQUEST, "FEIGN_400_6", "Other server internal server error"),
-    NOT_AVAILABLE_REDISSON_LOCK(500, "Redisson_500_1", "can not get redisson lock"),
-    SECURITY_CONTEXT_NOT_FOUND(500, "GLOBAL_500_2", "security context not found"),
-    BAD_LOCK_IDENTIFIER(500, "AOP_500_1", "락의 키값이 잘못 세팅 되었습니다"),
+    NOT_AVAILABLE_REDISSON_LOCK(INTERNAL_SERVER, "Redisson_500_1", "can not get redisson lock"),
+    SECURITY_CONTEXT_NOT_FOUND(INTERNAL_SERVER, "GLOBAL_500_2", "security context not found"),
+    BAD_LOCK_IDENTIFIER(INTERNAL_SERVER, "AOP_500_1", "락의 키값이 잘못 세팅 되었습니다"),
     BAD_FILE_EXTENSION(BAD_REQUEST, "FILE_400_1", "파일 확장자가 잘못 되었습니다."),
-    TOO_MANY_REQUEST(429, "GLOBAL_429_1", "과도한 요청을 보내셨습니다. 잠시 기다려 주세요.");
+    OUT_OF_INDEX(BAD_REQUEST, "GLOBAL_400_2", "인덱스 범위를 벗어났습니다."),
+    TOO_MANY_REQUEST(TOO_MANY_REQUESTS, "GLOBAL_429_1", "과도한 요청을 보내셨습니다. 잠시 기다려 주세요."),
+    ;
     private Integer status;
     private String code;
     private String reason;

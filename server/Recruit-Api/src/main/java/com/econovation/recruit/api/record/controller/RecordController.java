@@ -59,7 +59,7 @@ public class RecordController {
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records/url")
     public ResponseEntity<String> updateRecordUrl(
-            @PathVariable(name = "applicant-id") String applicantId, @RequestBody String url) {
+            @PathVariable(name = "applicant-id") String applicantId, @RequestParam String url) {
         recordUseCase.updateRecordUrl(applicantId, url);
         return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
@@ -68,7 +68,8 @@ public class RecordController {
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records")
     public ResponseEntity<String> updateRecord(
-            @PathVariable(name = "applicant-id") String applicantId, @RequestBody String contents) {
+            @PathVariable(name = "applicant-id") String applicantId,
+            @RequestParam String contents) {
         recordUseCase.updateRecordContents(applicantId, contents);
         return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }

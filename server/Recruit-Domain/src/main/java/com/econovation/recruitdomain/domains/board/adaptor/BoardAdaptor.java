@@ -43,7 +43,11 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
 
     @Override
     public Optional<Board> getByNextBoardId(Integer nextBoardId) {
-        return boardRepository.findByNextBoardId(nextBoardId);
+        Optional<Board> byNextBoardId = boardRepository.findByNextBoardId(nextBoardId);
+        if (byNextBoardId == null) {
+            return null;
+        }
+        return byNextBoardId;
     }
 
     @Override
@@ -72,6 +76,11 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     @Override
     public void delete(Board board) {
         boardRepository.delete(board);
+    }
+
+    @Override
+    public void saveAll(List<Board> board) {
+        boardRepository.saveAll(board);
     }
 
     //    @Override

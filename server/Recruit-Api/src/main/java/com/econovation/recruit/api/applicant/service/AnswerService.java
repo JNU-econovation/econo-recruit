@@ -1,8 +1,10 @@
 package com.econovation.recruit.api.applicant.service;
 
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
+import com.econovation.recruitcommon.exception.OutOfIndexException;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
+import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AnswerService implements AnswerLoadUseCase {
     private final AnswerAdaptor answerAdaptor;
+    private final ScoreAdaptor scoreAdaptor;
 
     @Override
     public Map<String, String> execute(String applicantId) {
@@ -122,6 +125,23 @@ public class AnswerService implements AnswerLoadUseCase {
     public List<Map<String, String>> execute() {
         List<Answer> answers = answerAdaptor.findAll();
         return splitByAnswersInApplicantId(answers);
+    }
+
+    @Override
+    public List<Map<String, String>> execute(Integer page) {
+        if (page < 1) throw OutOfIndexException.EXCEPTION;
+        List<Answer> answers = answerAdaptor.findAll(page);
+        List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
+        return results;
+
+        //        if (sortType.equals("score")) {
+        // Map -> id
+        /*            List<List<Score>> scores = results.stream().map(map -> map.get("id"))
+                .map(scoreAdaptor::findByApplicantId).collect(Collectors.toList());
+        // groupBy applicant 평균 점수
+        Map<String, Double> averageScore = scores.stream().mapToDouble(list -> list.stream()
+                        .mapToDouble(Score::getScore).average().orElse(0)).boxed()
+                .collect(Collectors.toMap(*/
     }
 
     @Override

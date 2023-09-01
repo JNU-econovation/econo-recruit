@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.board.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.persistence.Column;
 import lombok.*;
@@ -34,11 +35,11 @@ public class Board extends BaseTimeEntity {
     @Column(name = "navigation_id")
     private Integer navigationId;
 
-    public void updateNextBoardID(Integer nextBoardId) {
+    public void updateNextBoardID(@Nullable Integer nextBoardId) {
         this.nextBoardId = nextBoardId;
     }
 
-    public void updateColumnId(Integer columnId) {
+    public void updateColumnId(@Nullable Integer columnId) {
         this.columnId = columnId;
     }
 }

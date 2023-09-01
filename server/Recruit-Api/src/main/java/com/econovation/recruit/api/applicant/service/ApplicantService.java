@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
 import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class ApplicantService implements ApplicantRegisterUseCase {
     public UUID execute(List<BlockRequestDto> blocks) {
         List<Question> questions = questionAdaptor.findAll();
         UUID applicantId = UUID.randomUUID();
+
         List<Answer> results =
                 blocks.stream()
                         .map(
@@ -60,6 +62,18 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                             .getValue();
                                 })
                         .collect(Collectors.toList());
+        // classOf 가 기존에 존재하면 중복된 지원자 입니다.
+        String studentId =
+                results.stream()
+                        .filter(answer -> answer.getQuestion().getName().equals("classOf"))
+                        .findFirst()
+                        .get()
+                        .getAnswer();
+
+        // 이미 제출한 학생은 중복 지원자입니다. (학번으로 검증)
+        if (answerAdaptor.findByAnswer(studentId) != null)
+            throw ApplicantDuplicateSubmitException.EXCEPTION;
+
         // Result 를 save 하게 된다.
         answerAdaptor.saveAll(results);
 
