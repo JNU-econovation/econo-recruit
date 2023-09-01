@@ -14,5 +14,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     List<Answer> findByApplicantId(String applicantId);
 
     Page<Answer> findAll(Pageable pageable);
+
     Optional<Answer> findByAnswer(String name);
 }

@@ -32,7 +32,6 @@ public class ApplicantService implements ApplicantRegisterUseCase {
         List<Question> questions = questionAdaptor.findAll();
         UUID applicantId = UUID.randomUUID();
 
-
         List<Answer> results =
                 blocks.stream()
                         .map(
@@ -64,12 +63,15 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                                 })
                         .collect(Collectors.toList());
         // classOf 가 기존에 존재하면 중복된 지원자 입니다.
-        String studentId = results.stream()
-                .filter(answer -> answer.getQuestion().getName().equals("classOf"))
-                .findFirst().get().getAnswer();
+        String studentId =
+                results.stream()
+                        .filter(answer -> answer.getQuestion().getName().equals("classOf"))
+                        .findFirst()
+                        .get()
+                        .getAnswer();
 
         // 이미 제출한 학생은 중복 지원자입니다. (학번으로 검증)
-        if(answerAdaptor.findByAnswer(studentId) != null)
+        if (answerAdaptor.findByAnswer(studentId) != null)
             throw ApplicantDuplicateSubmitException.EXCEPTION;
 
         // Result 를 save 하게 된다.
@@ -88,7 +90,6 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                         .findFirst()
                         .map(Answer::getAnswer)
                         .orElseThrow(() -> new RuntimeException("이름을 찾을 수 없습니다."));
-
 
         ApplicantRegisterEvent applicantRegisterEvent =
                 ApplicantRegisterEvent.of(applicantId.toString(), name, hopeField);
