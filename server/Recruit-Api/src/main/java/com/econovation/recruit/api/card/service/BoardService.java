@@ -5,12 +5,14 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
+import com.econovation.recruitdomain.domains.board.exception.BoardInvisibleMovingException;
 import com.econovation.recruitdomain.domains.board.exception.BoardSameLocationException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
@@ -21,7 +23,6 @@ import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -308,17 +309,18 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     @Transactional
-    /*    @RedissonLock(
+    @RedissonLock(
             LockName = "보드 위치 변경",
             identifier = "boardId",
             paramClassType = UpdateLocationBoardDto.class,
             leaseTime = 500,
-            waitTime = 500
-    )*/
+            waitTime = 500)
     public void relocateCard(UpdateLocationBoardDto updateLocationBoardDto) {
-        // 2번
+        List<Integer> invisibleBoard = List.of(1, 2, 3);
+        // 기준 보드는 이동이 불가하다.
+        if (invisibleBoard.contains(updateLocationBoardDto.getBoardId()))
+            throw BoardInvisibleMovingException.EXCEPTION;
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
-        // 3번
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
         // 같은 board 끼리는 위치 변경이 불가하다.
         if (currentBoard.getId().equals(targetBoard.getId()))
@@ -326,32 +328,20 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
         updateNextBoardIds(currentBoard, targetBoard);
-
-        // TODO: Send data to the socket server
-        // messagingTemplate.convertAndSend("/sub/boards/", boards);
     }
 
     private void updateNextBoardIds(Board board1, Board board2) {
-        // 1번
-        Optional<Board> board1Prev = boardLoadPort.getByNextBoardId(board1.getId());
-        // 5번
-        Optional<Board> board1Next = boardLoadPort.getById(board2.getNextBoardId());
-        // Update nextBoardId references
-        if (board1Prev.isPresent()) {
-            board1Prev
-                    .get()
-                    .updateNextBoardID(board1Next.isPresent() ? board1.getNextBoardId() : null);
-        }
-        // 사이에 껴들어 가는 경우
-        if (board2.getNextBoardId() != null) {
-            board1.updateNextBoardID(board2.getNextBoardId());
-            board2.updateNextBoardID(board1.getId());
-        }
-        // 맨 뒤로 가는 경우
-        else {
-            board2.updateNextBoardID(board1.getId());
-            board1.updateNextBoardID(null);
-        }
-        boardRecordPort.saveAll(List.of(board1, board2, board1Prev.get(), board1Next.get()));
+        Integer board1NextBoardId = board1.getNextBoardId();
+        Integer board2NextBoardId = board2.getNextBoardId();
+
+        boardLoadPort
+                .getByNextBoardId(board1.getId())
+                .ifPresent(
+                        board -> {
+                            board.updateNextBoardID(board1NextBoardId);
+                        });
+
+        board1.updateNextBoardID(board2NextBoardId);
+        board2.updateNextBoardID(board1.getId());
     }
 }
