@@ -19,6 +19,7 @@ public enum InterviewerErrorCode implements BaseErrorCode {
     INTERVIEWER_NOT_LOGIN(UNAUTHORIZED, "INTERVIEWER_400_2", "로그인이 되지 않은 면접관입니다."),
     INTERVIEWER_IDP_SERVER(FORBIDDEN, "INTERVIEWER_400_3", "Idp가 정상 동작하지 않습니다."),
     INTERVIEWER_INVALID_ROLE(BAD_REQUEST, "INTERVIEWER_400_4", "유효하지 않은 Role 을 입력했습니다."),
+    INVALID_PASSWORD(BAD_REQUEST, "INTERVIEWER_400_5", "유효하지 않은 비밀번호입니다."),
     ;
     private Integer status;
     private String code;

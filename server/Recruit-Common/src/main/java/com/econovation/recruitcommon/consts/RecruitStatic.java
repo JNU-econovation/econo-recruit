@@ -50,6 +50,7 @@ public class RecruitStatic {
     public static final String QUESTION_SUCCESS_REGISTER_MESSAGE = "성공적으로 질문이 등록됐습니다";
     public static final String BOARD_SUCCESS_UPDATE_MESSAGE = "성공적으로 업무카드가 수정됐습니다";
     public static final String RECORD_SUCCESS_UPDATE_MESSAGE = "성공적으로 지원자의 면접 기록이 수정됐습니다";
+    public static final String INTERVIEWER_SUCCESS_SIGNUP_MESSAGE = "성공적으로 면접관이 등록됐습니다";
     public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("field", "name");
 
     public static final String[] SwaggerPatterns = {

@@ -23,6 +23,12 @@ public class Interviewer {
     @Column(name = "year")
     private Integer year;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
