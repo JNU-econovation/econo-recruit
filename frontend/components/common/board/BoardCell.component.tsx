@@ -16,16 +16,16 @@ const BoardCell: FC<BoardCellProps> = ({
 }) => {
   return (
     <button className="flex border-t py-4 justify-between" onClick={onClick}>
-      <Txt typography="h6" className="flex-[2_0_0] text-left">
+      <Txt typography="h6" className="flex-[2_0_0] text-left truncate">
         {title}
       </Txt>
-      <div className="flex gap-20 flex-[2_0_0] text-center">
+      <div className="flex gap-20 flex-[2_0_0] text-center truncate">
         {subElements.map((subElement, index) => (
           <Txt
             key={index}
             typography="p"
             color="light_gray"
-            className="w-full flex-1 last:text-right"
+            className="w-full flex-1 last:text-right truncate"
           >
             {subElement}
           </Txt>

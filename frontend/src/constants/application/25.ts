@@ -94,6 +94,7 @@ export const APPLICATION = [
         type: "text",
         name: "major",
         title: "전공",
+        maxLength: 30,
         require: true,
         errorMessages: "전공을 입력해주세요.",
       } as ApplicationText,
@@ -101,12 +102,14 @@ export const APPLICATION = [
         type: "text",
         name: "doubleMajor",
         title: "복수전공",
+        maxLength: 30,
         require: false,
       } as ApplicationText,
       {
         type: "text",
         name: "minor",
         title: "부전공",
+        maxLength: 30,
         require: false,
       } as ApplicationText,
     ],
@@ -123,6 +126,7 @@ export const APPLICATION = [
         type: "text",
         title:
           "학업 외에 병행하고 있거나 향후 계획 중에 있는 활동이 있으시다면 적어주세요.",
+        maxLength: 200,
         subtitle: "(동아리, 연구실, 아르바이트, 스터디, 교환학생 등)",
       } as ApplicationText,
       {

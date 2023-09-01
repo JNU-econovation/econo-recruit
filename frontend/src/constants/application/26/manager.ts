@@ -201,7 +201,7 @@ export const APPLICATION_MANAGER = [
             title: "E-mail",
             validate: "emailString",
             errorMessages: "이메일을 입력해주세요.",
-            require: false,
+            require: true,
           } as ApplicationText,
         ],
       },

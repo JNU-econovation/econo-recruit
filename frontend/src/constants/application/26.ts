@@ -53,6 +53,7 @@ export const APPLICATION = [
         type: "text",
         name: "name",
         title: "이름",
+        maxLength: 5,
         require: true,
         errorMessages: "이름을 입력해주세요.",
       } as ApplicationText,
