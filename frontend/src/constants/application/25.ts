@@ -119,7 +119,7 @@ export const APPLICATION = [
     nodes: [
       {
         name: "activity",
-        require: false,
+        require: true,
         type: "text",
         title:
           "학업 외에 병행하고 있거나 향후 계획 중에 있는 활동이 있으시다면 적어주세요.",
@@ -189,7 +189,7 @@ export const APPLICATION = [
               "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
             subtitle:
               "팀 프로젝트가 아닌 개인 프로젝트 및 경험일 경우, 역할에 관한 서술은 안 하셔도 됩니다.",
-            require: false,
+            require: true,
             type: "true",
           },
           {
@@ -198,7 +198,7 @@ export const APPLICATION = [
               "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
             subtitle:
               "팀 프로젝트가 아닌 개인 프로젝트 및 경험일 경우, 역할에 관한 서술은 안 하셔도 됩니다.",
-            require: false,
+            require: true,
             type: "false",
           },
         ],

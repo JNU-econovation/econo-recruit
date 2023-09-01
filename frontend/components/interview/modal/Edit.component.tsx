@@ -6,20 +6,19 @@ import {
   putInterviewRecord,
   putInterviewUrl,
 } from "@/src/apis/interview/record";
+import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import { use, useEffect, useState } from "react";
 
 type InterviewEditComponentProps = {
-  applicantId: string;
   data: InterviewRes;
 };
 
-const InterviewEditComponent = ({
-  applicantId,
-  data,
-}: InterviewEditComponentProps) => {
+const InterviewEditComponent = ({ data }: InterviewEditComponentProps) => {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
+  const applicantId = useAtomValue(interViewApplicantIdState);
   const [interviewData, setInterviewData] = useState({
     applicantId: applicantId,
     url: data.url,

@@ -4,10 +4,13 @@ import {
   interviewReqBody,
   postInterviewRecord,
 } from "@/src/apis/interview/record";
+import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 
-const InterviewUploadComponent = ({ applicantId }: { applicantId: string }) => {
+const InterviewUploadComponent = () => {
+  const applicantId = useAtomValue(interViewApplicantIdState);
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const [interviewData, setInterviewData] = useState({
