@@ -1,37 +1,65 @@
 import InterviewUserComponent from "./User.component";
-import { InterviewRes } from "@/src/apis/interview/record";
-import { ScoreRes } from "@/src/apis/interview/score";
-import { FC } from "react";
+import { getInterviewRecord } from "@/src/apis/interview/record";
+import { getScore } from "@/src/apis/interview/score";
 import InterviewAvgComponent from "@/components/interview/modal/AvgScore.component";
 import InterviewScoreComponent from "./Score.component";
 import InterviewEditComponent from "./Edit.component";
 import InterviewUploadComponent from "./Upload.component";
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
 
-interface InterviewDetailLeftProps {
-  applicantId: string;
-  data: InterviewRes;
-  scoreData: ScoreRes;
-}
+const InterViewScore = () => {
+  const applicantId = useAtomValue(interViewApplicantIdState);
+  const {
+    data: scoreData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["score", applicantId],
+    queryFn: () => getScore(applicantId),
+  });
 
-const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = ({
-  applicantId,
-  data,
-  scoreData,
-}) => {
-  const isDataExist = !!data.url || !!data.record;
+  if (!scoreData || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
+
   return (
     <>
-      <InterviewUserComponent src={data.url} />
       <InterviewAvgComponent
         totalAverage={scoreData.totalAverage}
         average={scoreData.scoreVo.average}
       />
       <InterviewScoreComponent score={scoreData} />
-      {isDataExist ? (
-        <InterviewEditComponent applicantId={applicantId} data={data} />
-      ) : (
-        <InterviewUploadComponent applicantId={applicantId} />
-      )}
+    </>
+  );
+};
+
+const InterViewEditorOrUploader = () => {
+  const applicantId = useAtomValue(interViewApplicantIdState);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["record", applicantId],
+    queryFn: () => getInterviewRecord(applicantId),
+  });
+
+  if (!data || isLoading || isError) {
+    return <InterviewUploadComponent />;
+  }
+
+  return <InterviewEditComponent data={data} />;
+};
+
+const InterviewDetailLeftComponent = () => {
+  return (
+    <>
+      <InterviewUserComponent />
+      <InterViewScore />
+      <InterViewEditorOrUploader />
     </>
   );
 };

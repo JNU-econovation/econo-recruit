@@ -10,3 +10,5 @@ type interviewBoardState = {
 export const interviewListState = atom(<interviewBoardState[]>[]);
 
 export const interviewPopupBooleanState = atom(false);
+
+export const interViewApplicantIdState = atom("");

@@ -226,7 +226,10 @@ export const APPLICATION_DEVELOPER = [
 ] as ApplicationQuestion[];
 
 export const APPLICATION_NAVBAR_DEVELOPER = [
-  { id: 5, title: "에코노베이션에 지원하게 된 계기는 무엇인가요?" },
+  {
+    id: 5,
+    title: "자기소개 및 에코노베이션에 지원하게 된 계기를 서술해 주세요.",
+  },
   {
     id: 6,
     title: "개발자를 희망하는 이유는 무엇인가요?",

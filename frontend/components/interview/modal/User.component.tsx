@@ -1,19 +1,43 @@
-type InterviewUserComponent = {
-  src: string;
-};
+import { InterviewRes, getInterviewRecord } from "@/src/apis/interview/record";
+import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 
-const InterviewUserComponent = ({ src }: InterviewUserComponent) => {
+const InterviewUserComponent = () => {
+  const applicantId = useAtomValue(interViewApplicantIdState);
+
+  const {
+    data: fetchedRecord,
+    isError,
+    isLoading,
+  } = useQuery<InterviewRes>({
+    queryKey: ["record", applicantId],
+    queryFn: () => getInterviewRecord(applicantId),
+    onError: (err) => {
+      console.log(err);
+    },
+    enabled: !!applicantId,
+  });
+
+  if (!fetchedRecord || isLoading) {
+    return (
+      <div className="w-full pb-[56.25%] relative h-0">
+        <div className="w-full h-full absolute top-0 left-0 bg-gray-200"></div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
+
   return (
     <div className="w-full pb-[56.25%] relative h-0">
-      {!src ? (
-        <div className="w-full h-full absolute top-0 left-0 bg-gray-200"></div>
-      ) : (
-        <iframe
-          src={src}
-          title="김수민님.mp4"
-          className="w-full h-full absolute top-0 left-0"
-        />
-      )}
+      <iframe
+        src={fetchedRecord.url}
+        title=""
+        className="w-full h-full absolute top-0 left-0"
+      />
     </div>
   );
 };

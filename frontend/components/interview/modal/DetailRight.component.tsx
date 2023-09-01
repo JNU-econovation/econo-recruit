@@ -1,16 +1,35 @@
-import { InterviewRes } from "@/src/apis/interview/record";
-import { FC } from "react";
+import { InterviewRes, getInterviewRecord } from "@/src/apis/interview/record";
+import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 
-interface InterviewDetailRightProps {
-  data: InterviewRes;
-}
+const InterviewDetailRightComponent = () => {
+  const applicantId = useAtomValue(interViewApplicantIdState);
 
-const InterviewDetailRightComponent: FC<InterviewDetailRightProps> = ({
-  data,
-}) => {
+  const {
+    data: fetchedRecord,
+    isError,
+    isLoading,
+  } = useQuery<InterviewRes>({
+    queryKey: ["record", applicantId],
+    queryFn: () => getInterviewRecord(applicantId),
+    onError: (err) => {
+      console.log(err);
+    },
+    enabled: !!applicantId,
+  });
+
+  if (!fetchedRecord || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
+
   return (
     <>
-      <pre className="whitespace-pre-wrap">{data.record}</pre>
+      <pre className="whitespace-pre-wrap">{fetchedRecord.record}</pre>
     </>
   );
 };
