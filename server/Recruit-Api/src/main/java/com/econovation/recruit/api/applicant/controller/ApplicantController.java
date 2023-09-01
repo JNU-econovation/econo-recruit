@@ -10,6 +10,7 @@ import com.econovation.recruit.api.applicant.usecase.QuestionRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
+import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
@@ -42,6 +43,7 @@ public class ApplicantController {
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @XssProtected
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
         UUID applicantId = applicantRegisterUseCase.execute(blockElements);

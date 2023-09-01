@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.applicant.dto;
 
+import com.econovation.recruitcommon.annotation.XssProtected;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

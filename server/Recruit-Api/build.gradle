@@ -13,6 +13,8 @@ dependencies {
     implementation 'org.webjars:stomp-websocket:2.3.3'
     implementation 'org.webjars:bootstrap:3.3.7'
     implementation 'org.webjars:jquery:3.1.1-1'
+    // XSS validator
+    implementation 'org.jsoup:jsoup:1.13.1'
 
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
     //    testImplementation 'org.junit.jupiter:junit-jupiter-api:4.13'

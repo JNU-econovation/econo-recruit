@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class SlackMessageProvider {
 
     private final SlackProperties slackProperties;
 
+    @Transactional
     public void sendMessage(String url, String text) {
         // 슬랙 url 이 null 일경우 안보냄.
         if (Objects.isNull(url)) return;

@@ -33,6 +33,8 @@ public enum GlobalErrorCode implements BaseErrorCode {
 
     @ExplainError("500번대 알수없는 오류입니다. 서버 관리자에게 문의 주세요")
     INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "GLOBAL_500_1", "서버 오류. 관리자에게 문의 부탁드립니다."),
+    @ExplainError("XSS 공격이 의심되는 입력이 감지되었습니다. 정상적인 입력값을 넣어주세요.")
+    XSS_SCRIPT_ATTACK(BAD_REQUEST, "GLOBAL_400_3", "XSS 공격이 의심되는 입력이 감지되었습니다. 정상적인 입력값을 넣어주세요."),
 
     OTHER_SERVER_BAD_REQUEST(BAD_REQUEST, "FEIGN_400_1", "Other server bad request"),
     OTHER_SERVER_UNAUTHORIZED(BAD_REQUEST, "FEIGN_400_2", "Other server unauthorized"),
