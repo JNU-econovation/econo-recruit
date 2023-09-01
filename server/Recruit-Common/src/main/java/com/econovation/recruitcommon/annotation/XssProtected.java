@@ -9,5 +9,4 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface XssProtected {
-}
+public @interface XssProtected {}

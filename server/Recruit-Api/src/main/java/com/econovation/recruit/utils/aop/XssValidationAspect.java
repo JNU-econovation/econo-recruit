@@ -1,20 +1,16 @@
 package com.econovation.recruit.utils.aop;
 
-import com.econovation.recruitcommon.exception.XssScriptAttackException;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
-import com.econovation.recruitinfrastructure.slack.SlackErrorNotificationProvider;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
-import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.stereotype.Component;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
@@ -51,8 +47,7 @@ public class XssValidationAspect {
         String sanitizedAnswer = Jsoup.clean(dto.getAnswer(), Whitelist.relaxed());
         if (!dto.getAnswer().equals(sanitizedAnswer)) {
             slackMessageProvider.sendMessage(
-                    slackProperties.getUrl(),
-                    generateApplicantRegisterMessage(dto));
+                    slackProperties.getUrl(), generateApplicantRegisterMessage(dto));
             return true;
         }
         return false;
@@ -83,7 +78,8 @@ public class XssValidationAspect {
         StringBuilder detectedXss = new StringBuilder();
 
         for (int i = 0; i < inputAnswer.length(); i++) {
-            if (i >= sanitizedAnswer.length() || inputAnswer.charAt(i) != sanitizedAnswer.charAt(i)) {
+            if (i >= sanitizedAnswer.length()
+                    || inputAnswer.charAt(i) != sanitizedAnswer.charAt(i)) {
                 detectedXss.append(inputAnswer.charAt(i));
             }
         }
