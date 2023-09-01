@@ -56,9 +56,15 @@ public class RecruitStatic {
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**",
         "/swagger-ui/**",
+        "/swagger-ui.html",
         "/v3/api-docs/**",
         "/v3/api-docs",
         "/api-docs/**",
         "/api-docs"
+    };
+    public static final String[] RolePattern = {
+            "ROLE_TF",
+            "ROLE_PRESIDENT",
+            "ROLE_OPERATION",
     };
 }

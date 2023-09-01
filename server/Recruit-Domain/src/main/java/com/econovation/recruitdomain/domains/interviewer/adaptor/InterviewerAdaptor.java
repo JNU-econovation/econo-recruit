@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNo
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -39,6 +40,12 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
                 .findByEmail(email)
                 .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
     }
+    @Override
+    public Optional<Interviewer> loadOptionalInterviewerByEmail(String email) {
+        return interviewerRepository
+                .findByEmail(email);
+    }
+
 
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {
         return interviewerRepository.saveAll(interviewer);

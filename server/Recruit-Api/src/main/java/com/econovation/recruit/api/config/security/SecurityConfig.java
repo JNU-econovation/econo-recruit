@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.config.security;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.RolePattern;
 import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
 
 import com.econovation.recruitcommon.helper.SpringEnvironmentHelper;
@@ -78,6 +79,8 @@ public class SecurityConfig {
                 //                .mvcMatchers(HttpMethod.GET,
                 // "/v1/events/{eventId:[0-9]*$}/comments/**")
                 //                .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/token")
+                .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
@@ -87,14 +90,14 @@ public class SecurityConfig {
                 .mvcMatchers(HttpMethod.POST, "/api/v1/login")
                 .permitAll()
                 // TODO 임시로 모든 요청 permit  -> 채승이가 로그인 로직 완성하면 수정
-                .mvcMatchers("/**")
-                .permitAll()
+//                .mvcMatchers("/**")
+//                .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다
                 // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
                 // 내부 소스까지 실행을 못함. 권한 문제 때문에.
                 .anyRequest()
-                .hasRole("USER");
+                .hasAnyRole(RolePattern);
         http.apply(filterConfig);
 
         return http.build();
