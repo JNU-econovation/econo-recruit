@@ -24,28 +24,38 @@ const InterviewBoardComponent = () => {
     },
   } as ScoreRes;
 
-  const [data, setData] = useState<InterviewRes>(initData);
+  const [recordData, setData] = useState<InterviewRes>(initData);
   const [scoreData, setScoreData] = useState<ScoreRes>(initScoreData);
+  const { data: fetchedRecord, refetch: refetchRecord } =
+    useQuery<InterviewRes>({
+      queryKey: ["record", applicantId],
+      queryFn: () => getInterviewRecord(applicantId),
+      onError: (err) => {
+        console.log(err);
+        return initData;
+      },
+      onSuccess: (data) => {
+        setData(data);
+      },
+      enabled: !!applicantId,
+    });
+  const { data: fetchedScore, refetch: refetchScore } = useQuery<ScoreRes>({
+    queryKey: ["score", applicantId],
+    queryFn: () => getScore(applicantId),
+    onError: (err) => {
+      console.log(err);
+      return initScoreData;
+    },
+    onSuccess: (data) => {
+      setScoreData(data);
+    },
+    enabled: !!applicantId,
+  });
 
   const onClick = (id: string) => {
     setApplicantId(id);
-    getInterviewRecord(id)
-      .then((res) => {
-        setData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setData(initData);
-      });
-
-    getScore(id)
-      .then((res) => {
-        setScoreData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setScoreData(initScoreData);
-      });
+    refetchRecord();
+    refetchScore();
   };
 
   const { data: allData, isLoading } = useQuery({
@@ -79,7 +89,7 @@ const InterviewBoardComponent = () => {
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
           <InterviewDetailLeftComponent
-            data={data}
+            data={recordData}
             scoreData={scoreData}
             applicantId={applicantId}
           />
@@ -87,7 +97,7 @@ const InterviewBoardComponent = () => {
       </div>
       <div className="flex flex-1 min-h-0">
         <div className="flex-1 overflow-auto px-12">
-          <InterviewDetailRightComponent data={data} />
+          <InterviewDetailRightComponent data={recordData} />
         </div>
       </div>
     </Board>
