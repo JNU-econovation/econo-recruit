@@ -3,42 +3,52 @@ import LabeledTextarea from "@/components/common/LabeledTextarea";
 import {
   InterviewRes,
   interviewReqBody,
-  postInterviewRecord,
   putInterviewRecord,
   putInterviewUrl,
 } from "@/src/apis/interview/record";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { use, useEffect, useState } from "react";
 
-type InterviewEditRecordComponentProps = {
+type InterviewEditComponentProps = {
   applicantId: string;
   data: InterviewRes;
 };
 
-const InterviewEditRecordComponent = ({
+const InterviewEditComponent = ({
   applicantId,
   data,
-}: InterviewEditRecordComponentProps) => {
-  const isDataExist = !!data.url && !!data.record;
+}: InterviewEditComponentProps) => {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [interviewData, setInterviewData] = useState({
     applicantId: applicantId,
-    url: data.url || "",
-    record: data.record || "",
+    url: data.url,
+    record: data.record,
   } as interviewReqBody);
 
-  const { mutate: interviewUpload } = useMutation(postInterviewRecord);
-  const { mutate: editUrl } = useMutation(putInterviewUrl);
-  const { mutate: editRecord } = useMutation(putInterviewRecord);
+  useEffect(() => {
+    setInterviewData({
+      applicantId: applicantId,
+      url: data.url,
+      record: data.record,
+    });
+  }, [data]);
+
+  const { mutate: editUrl } = useMutation(putInterviewUrl, {
+    onSettled(data, error, variables, context) {
+      queryClient.invalidateQueries(["record", applicantId]);
+    },
+  });
+  const { mutate: editRecord } = useMutation(putInterviewRecord, {
+    onSettled: () => {
+      queryClient.invalidateQueries(["record", applicantId]);
+    },
+  });
 
   const handleUpload = () => {
     setIsOpen(false);
-    if (isDataExist) {
-      if (interviewData.url !== data.url) editUrl(interviewData);
-      if (interviewData.record !== data.record) editRecord(interviewData);
-    } else {
-      interviewUpload(interviewData);
-    }
+    if (interviewData.url !== data.url) editUrl(interviewData);
+    if (interviewData.record !== data.record) editRecord(interviewData);
   };
 
   return (
@@ -81,8 +91,8 @@ const InterviewEditRecordComponent = ({
                 setIsOpen(false);
                 setInterviewData({
                   applicantId: applicantId,
-                  url: "",
-                  record: "",
+                  url: data.url,
+                  record: data.record,
                 });
               }}
             >
@@ -92,7 +102,7 @@ const InterviewEditRecordComponent = ({
               className="flex-1 rounded-md flex justify-center items-center p-3 bg-[#303030] text-white"
               onClick={handleUpload}
             >
-              제출하기
+              수정하기
             </button>
           </div>
         </div>
@@ -103,4 +113,4 @@ const InterviewEditRecordComponent = ({
   );
 };
 
-export default InterviewEditRecordComponent;
+export default InterviewEditComponent;

@@ -4,7 +4,8 @@ import { ScoreRes } from "@/src/apis/interview/score";
 import { FC } from "react";
 import InterviewAvgComponent from "@/components/interview/modal/AvgScore.component";
 import InterviewScoreComponent from "./Score.component";
-import InterviewEditRecordComponent from "./EditRecord.component";
+import InterviewEditComponent from "./Edit.component";
+import InterviewUploadComponent from "./Upload.component";
 
 interface InterviewDetailLeftProps {
   applicantId: string;
@@ -17,6 +18,7 @@ const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = ({
   data,
   scoreData,
 }) => {
+  const isDataExist = !!data.url || !!data.record;
   return (
     <>
       <InterviewUserComponent src={data.url} />
@@ -25,7 +27,11 @@ const InterviewDetailLeftComponent: FC<InterviewDetailLeftProps> = ({
         average={scoreData.scoreVo.average}
       />
       <InterviewScoreComponent score={scoreData} />
-      <InterviewEditRecordComponent applicantId={applicantId} data={data} />
+      {isDataExist ? (
+        <InterviewEditComponent applicantId={applicantId} data={data} />
+      ) : (
+        <InterviewUploadComponent applicantId={applicantId} />
+      )}
     </>
   );
 };

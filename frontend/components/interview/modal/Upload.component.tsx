@@ -4,18 +4,23 @@ import {
   interviewReqBody,
   postInterviewRecord,
 } from "@/src/apis/interview/record";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 const InterviewUploadComponent = ({ applicantId }: { applicantId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
   const [interviewData, setInterviewData] = useState({
     applicantId: applicantId,
     url: "",
     record: "",
   } as interviewReqBody);
 
-  const { mutate: interviewUpload } = useMutation(postInterviewRecord);
+  const { mutate: interviewUpload } = useMutation(postInterviewRecord, {
+    onSettled: () => {
+      queryClient.invalidateQueries(["record", applicantId]);
+    },
+  });
 
   return (
     <div className="flex flex-col w-full my-10 items-end">
