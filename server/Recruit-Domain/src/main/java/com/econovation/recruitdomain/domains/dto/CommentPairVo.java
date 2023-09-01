@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CommentPairVo {
+    private Long id;
     private LocalDateTime createdAt;
     private String interviewerName;
     private String content;
@@ -16,6 +17,7 @@ public class CommentPairVo {
 
     public static CommentPairVo of(Comment comment, Boolean isLike, String interviewerName) {
         return CommentPairVo.builder()
+                .id(comment.getId())
                 .createdAt(comment.getCreatedAt())
                 .content(comment.getContent())
                 .isLike(isLike)

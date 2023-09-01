@@ -3,6 +3,7 @@ package com.econovation.recruitcommon.jwt;
 import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
+import com.econovation.recruitcommon.dto.TokenResponse;
 import com.econovation.recruitcommon.exception.ExpiredTokenException;
 import com.econovation.recruitcommon.exception.InvalidTokenException;
 import com.econovation.recruitcommon.exception.RefreshTokenExpiredException;
@@ -23,6 +24,12 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
+
+    public TokenResponse createToken(Long idpId, String role) {
+        String accessToken = generateAccessToken(idpId, role);
+        String refreshToken = generateRefreshToken(idpId);
+        return new TokenResponse(accessToken, refreshToken);
+    }
 
     private Jws<Claims> getJws(String token) {
         try {

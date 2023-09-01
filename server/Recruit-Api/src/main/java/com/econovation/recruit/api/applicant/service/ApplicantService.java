@@ -3,7 +3,6 @@ package com.econovation.recruit.api.applicant.service;
 import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
-import com.econovation.recruitdomain.domain.applicant.Applicant;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
@@ -13,7 +12,6 @@ import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEv
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
 import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -119,24 +117,5 @@ public class ApplicantService implements ApplicantRegisterUseCase {
 
         titleBuilder.append("[").append(hopeField).append("] ").append(name);
         return titleBuilder.toString();
-    }
-
-    private Applicant createApplicantFromUserInput(Map<String, String> userInput) {
-        return Applicant.builder()
-                .id(UUID.randomUUID())
-                .hopeField(userInput.get("hopeField"))
-                .firstPriority(userInput.get("firstPriority"))
-                .secondPriority(userInput.get("secondPriority"))
-                .name(userInput.get("name"))
-                .phoneNumber(userInput.get("phoneNumber"))
-                .studentId(Integer.parseInt(userInput.get("studentId")))
-                .grade(Integer.parseInt(userInput.get("grade")))
-                .semester(Integer.parseInt(userInput.get("semester")))
-                .major(userInput.get("major"))
-                .doubleMajor(userInput.get("doubleMajor"))
-                .minor(userInput.get("minor"))
-                .supportPath(userInput.get("supportPath"))
-                .email(userInput.get("email"))
-                .build();
     }
 }
