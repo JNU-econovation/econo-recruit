@@ -5,6 +5,7 @@ import {
 } from "@/src/constants/application/type";
 import { useLocalStorage } from "@/src/hooks/useLocalstorage.hook";
 import classNames from "classnames";
+import Link from "next/link";
 import { FC } from "react";
 
 interface RadioCellProps {
@@ -22,9 +23,23 @@ const RadioCell: FC<RadioCellProps> = ({
   );
   return (
     <div className="flex-1">
-      <Txt typography="h6" className="mb-4 flex-1 block">
-        {radioForCheckData.title}
-      </Txt>
+      <Link
+        href={
+          radioForCheckData.name === "personalInformationAgree"
+            ? "https://lightning-derby-674.notion.site/ad720024b5ab482caaa78419c57b373a?pvs=4"
+            : radioForCheckData.name === "personalInformationAgreeForPortfolio"
+            ? "https://lightning-derby-674.notion.site/50b16833d1c549dba80ba0949a119de1?pvs=4"
+            : ""
+        }
+        target="_blank"
+      >
+        <Txt
+          typography="h6"
+          className="mb-4 flex-1 block underline underline-offset-4"
+        >
+          {radioForCheckData.title}
+        </Txt>
+      </Link>
       <input
         className="mr-2"
         type="radio"

@@ -175,6 +175,7 @@ export const APPLICATION = [
 export const APPLICATION_NAVBAR = [
   { id: 1, title: "프로젝트 희망 분야를 선택해주세요." },
   { id: 2, title: "기본 인적 사항을 입력해주세요." },
+  { id: 3, title: "기본 인적 사항을 입력해주세요." },
   { id: 4, title: "기타 질문 사항에 답변해주세요." },
 ];
 
