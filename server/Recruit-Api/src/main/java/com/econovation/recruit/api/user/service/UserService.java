@@ -41,7 +41,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     @Override
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
-        if (interviewerLoadPort.loadOptionalInterviewerByEmail(signUpRequestDto.getEmail()) == null)
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(signUpRequestDto.getEmail()) != null)
             throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
         Interviewer interviewer =

@@ -1,12 +1,30 @@
+aws:
+  access-key: ${AWS_ACCESS_KEY:testKey}
+  secret-key: ${AWS_SECRET_KEY:secretKey}
+  s3:
+    bucket: ${AWS_S3_BUCKET:bucket}
+    private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
+    base-url: ${AWS_S3_BASE_URL:base-url}
+
 spring:
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD:}
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: 587
+    username: ${GMAIL_ADDRESS:ymecca730135@gmail.com}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
-    url: ${SLACK_WEBHOOK_URL:}
     id: ${SLACK_WEBHOOK_ID:}
     channel :  ${SLACK_SERVICE_CHANNEL_ID:}
     username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}
