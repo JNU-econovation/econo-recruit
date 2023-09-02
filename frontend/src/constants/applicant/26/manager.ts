@@ -26,7 +26,7 @@ export const APPLICANT_MANAGER = [
     type: "booleanTextarea",
     booleanValue: { name: "experience" },
     subtitle: [
-      "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
+      "본인이 어떤 역할을 했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
       "우리 주변의 IT서비스 중에 개선하고 싶은 서비스가 있다면, 어떤 점을 '왜' 그리고 '어떻게' 개선하고 싶은지 서술해 주세요.",
     ],
     value: { name: "experienceTextarea" },

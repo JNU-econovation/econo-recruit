@@ -19,7 +19,7 @@ export const APPLICANT_DEVELOPER = [
     type: "booleanTextarea",
     booleanValue: { name: "experience" },
     subtitle: [
-      "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
+      "본인이 어떤 역할을 했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
       "앞으로 해보고 싶은 프로젝트가 무엇인가요? 그 이유와 함께 서술해 주세요.",
     ],
     value: { name: "experienceTextarea" },

@@ -73,7 +73,7 @@ export const APPLICATION = [
         type: "text",
         name: "classOf",
         title: "학번",
-        subtitle: "(ex) 123456)",
+        subtitle: "(ex. 123456)",
         require: true,
         replace: "undergradeNumber",
         validate: "undergradeNumber",
@@ -83,7 +83,7 @@ export const APPLICATION = [
       {
         type: "text",
         name: "registered",
-        title: "학적상태 (재학 or 휴학)",
+        title: "학적상태(재학 or 휴학)",
         subtitle: "'휴학'일 경우 복학 예정 시기를 기재해 주세요.",
         require: true,
         errorMessages: "학적상태를 입력해주세요.",
@@ -149,7 +149,7 @@ export const APPLICATION = [
         require: true,
         type: "text",
         title:
-          "학업 외에 병행하고 있거나 향후 계획 중에 있는 활동이 있으시다면 적어주세요.",
+          "학업 외에 병행하고 있거나 향후 계획 중에 있는 활동이 있으시다면 서술해 주세요.",
         subtitle:
           "(동아리, 연구실, 아르바이트, 스터디, 교환학생 등), 없을 경우, 없음으로 기재해 주세요.",
       } as ApplicationText,

@@ -73,6 +73,15 @@ const ApplicationTimelineLayout: FC<ApplicationTimelineProps> = ({
           }${applicationQuestion.require ? "*" : ""}`}</Txt>
         </div>
       )}
+      {applicationQuestion.subtitle && (
+        <div className="pb-6">
+          {applicationQuestion.subtitle.split("\n").map((line, index) => (
+            <Txt className="break-keep block" key={index}>
+              {line}
+            </Txt>
+          ))}
+        </div>
+      )}
       {time.map((time, index) => (
         <div key={index}>
           <TimelineCell

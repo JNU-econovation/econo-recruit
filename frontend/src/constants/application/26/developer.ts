@@ -53,8 +53,8 @@ export const APPLICATION_DEVELOPER = [
           {
             name: "experienceTextarea",
             title:
-              "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
-            require: false,
+              "본인이 어떤 역할을 했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
+
             type: "true",
           },
           {
@@ -131,7 +131,9 @@ export const APPLICATION_DEVELOPER = [
   },
   {
     id: 12,
-    title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요.",
+    title: "자신을 어필할 수 있는 포트폴리오를 업로드해 주세요.",
+    subtitle:
+      "지원자 분의 포트폴리오 링크 접근 권한을 열어주세요 만약 접근 권한이 없을 경우 불이익이 있을 수 있습니다",
     direction: "horizontal",
     nodes: [
       {
@@ -173,7 +175,7 @@ export const APPLICATION_DEVELOPER = [
         ],
       },
       {
-        id: 13,
+        id: 14,
         direction: "horizontal",
         title:
           "에코노베이션은 3학기 이상의 활동을 권장하고 있으며 매주 금요일 17시에는 주간발표가 있습니다.\n위 내용을 확인하셨으면 '확인했습니다'를 기입해주세요.",
@@ -189,7 +191,7 @@ export const APPLICATION_DEVELOPER = [
         ],
       },
       {
-        id: 14,
+        id: 15,
         direction: "radioForCheck",
         title:
           "개인정보 수집에 관한 안내 및 개인정보 수집에 대한 안내에 동의하시나요?",
@@ -214,8 +216,10 @@ export const APPLICATION_DEVELOPER = [
     ],
   },
   {
-    id: 15,
-    title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
+    id: 16,
+    title: "면접 가능시간을 선택해주세요.(중복 선택 가능)",
+    subtitle:
+      "면접은 오프라인으로 진행되며 지원서에 작성된 내용을 토대로 약 10분간 진행될 예정입니다.\n선택한 시간이 적을 경우, 지원자님의 면접이 임의 시간에 배정될 수 있습니다.\n면접이 가능한 시간대를 모두 선택해 주시기 바랍니다.",
     direction: "timeline",
     require: true,
     nodes: [
@@ -258,5 +262,5 @@ export const APPLICATION_NAVBAR_DEVELOPER = [
   },
   { id: 12, title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요." },
   { id: 13, title: "개인정보 수집에 관한 안내 및 개인정보 수집" },
-  { id: 14, title: "면접 가능시간을 선택해주세요. (중복 선택 가능)" },
+  { id: 14, title: "면접 가능시간을 선택해주세요.(중복 선택 가능)" },
 ];
