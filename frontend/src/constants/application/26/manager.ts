@@ -27,7 +27,7 @@ export const APPLICATION_MANAGER = [
   {
     id: 6,
     title: "본인이 계획하고 있는 진로가 무엇인가요?",
-    subtitle: "(IT 분야가 아니어도 괜찮습니다.)",
+    subtitle: "IT 분야가 아니어도 괜찮습니다.",
     direction: "horizontal",
     require: true,
     nodes: [
@@ -42,7 +42,7 @@ export const APPLICATION_MANAGER = [
   {
     id: 7,
     title:
-      "PM(기획자)은 아이디어를 낼 뿐만 아니라, 자신의 아이디어를 동료들이 이해할 수 있는 형식으로 효과적으로 전달해야 하는 역활입니다. 지원자님께서 자신의 아이디어를 시각적으로 구현하여, 구체적으로 전달한 경험이 있다면 서술해 주세요.",
+      "PM(기획자)은 아이디어를 낼 뿐만 아니라, 자신의 아이디어를 동료들이 이해할 수 있는 형식으로 효과적으로 전달해야 하는 역할입니다. 지원자님께서 자신의 아이디어를 시각적으로 구현하여, 구체적으로 전달한 경험이 있다면 서술해 주세요.",
     subtitle:
       "어떤 아이디어를 어떤 형태로 구현하여, 누구에게 전달했는지 잘 드러나도록 작성해 주세요.",
     direction: "horizontal",
@@ -72,7 +72,7 @@ export const APPLICATION_MANAGER = [
           {
             name: "experienceTextarea",
             title:
-              "본인이 어떤 역할을 했고, 경험을 통해 무엇을 얻었는지 적어주세요.",
+              "본인이 어떠한 부분을 설계 및 개선했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
             require: false,
             type: "true",
           },
@@ -91,7 +91,7 @@ export const APPLICATION_MANAGER = [
     id: 9,
     title:
       "어떤 일에 도전하고 실패해 본 경험이 있나요? 그 실패를 어떻게 극복했는지 서술해 주세요.",
-    subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
+    subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
     direction: "horizontal",
     nodes: [
       {
@@ -105,8 +105,8 @@ export const APPLICATION_MANAGER = [
   {
     id: 10,
     title:
-      "무언가 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게 빠져본 적이 있다면 서술해 주세요.",
-    subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
+      "무언가에 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게 빠져본 적이 있다면 서술해 주세요.",
+    subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
     direction: "horizontal",
     nodes: [
       {
@@ -147,7 +147,9 @@ export const APPLICATION_MANAGER = [
   },
   {
     id: 13,
-    title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요.",
+    title: "자신을 어필할 수 있는 포트폴리오를 업로드해 주세요.",
+    subtitle:
+      "지원자 분의 포트폴리오 링크 접근 권한을 열어주세요 만약 접근 권한이 없을 경우 불이익이 있을 수 있습니다",
     direction: "horizontal",
     nodes: [
       {
@@ -155,14 +157,14 @@ export const APPLICATION_MANAGER = [
         require: false,
         type: "text",
         title: "참고 URL",
-        subtitle: "(Github, Blog, Notion, Website 등)",
+        subtitle: "Github, Blog, Notion, Website 등",
       } as ApplicationText,
       {
         name: "fileUrl",
         require: false,
         type: "text",
         title: "파일 URL",
-        subtitle: "(Google Drive 등)",
+        subtitle: "Google Drive 등",
       } as ApplicationText,
       {
         type: "bar",
@@ -172,14 +174,14 @@ export const APPLICATION_MANAGER = [
         title:
           "기획자를 지원하는 경우 이번 학기에 진행하고 싶은 프로젝트의 기획서를 제출해 주세요.",
         subtitle:
-          "(단, 제출한 기획을 기반으로 이번 학기에 프로젝트를 진행하지 못할 수 있습니다.)",
+          "단, 제출한 기획을 기반으로 이번 학기에 프로젝트를 진행하지 못할 수 있습니다.",
       } as ApplicationJustText,
       {
         name: "fileUrlforPlanner",
         require: false,
         type: "text",
         title: "파일 URL",
-        subtitle: "(Google Drive 등)",
+        subtitle: "Google Drive 등",
       } as ApplicationText,
     ],
   },
@@ -248,7 +250,9 @@ export const APPLICATION_MANAGER = [
   },
   {
     id: 17,
-    title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
+    title: "면접 가능시간을 선택해주세요.(중복 선택 가능)",
+    subtitle:
+      "면접은 오프라인으로 진행되며 지원서에 작성된 내용을 토대로 약 10분간 진행될 예정입니다.\n선택한 시간이 적을 경우, 지원자님의 면접이 임의 시간에 배정될 수 있습니다.\n면접이 가능한 시간대를 모두 선택해 주시기 바랍니다.",
     direction: "timeline",
     require: false,
     nodes: [
@@ -294,5 +298,5 @@ export const APPLICATION_NAVBAR_MANAGER = [
   },
   { id: 13, title: "자신을 어필할 수 있는 포트폴리오를 업로드해주세요." },
   { id: 14, title: "개인정보 수집에 관한 안내 및 개인정보 수집" },
-  { id: 15, title: "면접 가능시간을 선택해주세요. (중복 선택 가능)" },
+  { id: 15, title: "면접 가능시간을 선택해주세요.(중복 선택 가능)" },
 ];

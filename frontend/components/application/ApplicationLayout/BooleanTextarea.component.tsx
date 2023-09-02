@@ -28,7 +28,7 @@ const TextArea: FC<TextAreaProps> = ({ index, node }) => {
       <div className="flex-1">
         <div className="pl-8">
           <Txt typography="h6" className="mb-4 block break-keep">
-            {`${index + 1}. ${node.title}`}
+            {`1) ${node.title}`}
           </Txt>
           <Txt className="pl-4 block break-keep">{node.subtitle}</Txt>
         </div>
@@ -40,7 +40,7 @@ const TextArea: FC<TextAreaProps> = ({ index, node }) => {
           maxLength={1000}
           name={node.name}
           value={textValue}
-          onChange={(e) => setTextValue(e.target.value)}
+          onInput={(e) => setTextValue(e.currentTarget.value)}
         />
       </div>
     </div>
