@@ -7,6 +7,7 @@ import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAlreadySubmitException;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
@@ -40,8 +41,8 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     @Override
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
-        if (interviewerLoadPort.loadInterviewerByEmail(signUpRequestDto.getEmail()) != null)
-            throw InterviewerNotMatchException.EXCEPTION;
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(signUpRequestDto.getEmail()) == null)
+            throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
         Interviewer interviewer =
                 Interviewer.builder()

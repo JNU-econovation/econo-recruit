@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.config.security;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.RolePattern;
 import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
 
 import com.econovation.recruitcommon.helper.SpringEnvironmentHelper;
@@ -22,7 +23,6 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-
     private final FilterConfig filterConfig;
 
     @Value("${swagger.user}")
@@ -78,6 +78,8 @@ public class SecurityConfig {
                 //                .mvcMatchers(HttpMethod.GET,
                 // "/v1/events/{eventId:[0-9]*$}/comments/**")
                 //                .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/token")
+                .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
@@ -94,7 +96,7 @@ public class SecurityConfig {
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
                 // 내부 소스까지 실행을 못함. 권한 문제 때문에.
                 .anyRequest()
-                .hasRole("USER");
+                .hasAnyRole(RolePattern);
         http.apply(filterConfig);
 
         return http.build();
@@ -103,7 +105,7 @@ public class SecurityConfig {
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_SUPER_ADMIN > ROLE_ADMIN > ROLE_MANAGER > ROLE_USER");
+        roleHierarchy.setHierarchy("ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF");
         return roleHierarchy;
     }
 

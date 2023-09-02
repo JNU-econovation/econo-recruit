@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
+import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ public interface AnswerLoadUseCase {
 
     List<Map<String, String>> execute();
 
-    List<Map<String, String>> execute(Integer page);
+    ApplicantPaginationResponseDto execute(Integer page);
     //    List<Map<String, String>> execute(Integer page, String sortType);
 
     Map<String, String> execute(String applicantId, List<String> fields);
