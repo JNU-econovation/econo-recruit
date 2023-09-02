@@ -21,7 +21,7 @@ const ApplicationCheckboxWithEtc: FC<ApplicationCheckboxWithEtcProps> = ({
 }) => {
   const checkboxWithEtcData = data as ApplicationCheckboxWithEtcType;
   const [isOpenEtc, setIsOpenEtc] = useState(
-    localStorage.get(checkboxWithEtcData.name + "Etc") !== ""
+    localStorage.get(checkboxWithEtcData.name + "Etc", "") !== ""
   );
   const [etcValue, setEtcValue] = useLocalStorage<string>(
     checkboxWithEtcData.name + "Etc",
