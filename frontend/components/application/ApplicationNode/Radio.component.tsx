@@ -2,7 +2,6 @@
 
 import RadioGroup from "@/components/common/Radio.component";
 import Txt from "@/components/common/Txt.component";
-import { CURRENT_GENERATION } from "@/src/constants";
 import {
   APPLICATION_DESIGN,
   APPLICATION_NAVBAR_DESIGN,

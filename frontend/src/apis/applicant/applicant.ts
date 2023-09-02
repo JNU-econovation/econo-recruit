@@ -27,18 +27,27 @@ export const getApplicantByIdWithField = async (
   }));
 };
 
+interface ApplicantByPageReq {
+  maxPage: number;
+  applicants: AllApplicantReq[];
+}
+
 export const getApplicantByPage = async (
   page: number
-): Promise<ApplicantReq[][]> => {
-  const { data } = await https.get<AllApplicantReq[]>(
-    `/page/${page}/applicants`
-  );
-  return data.map((d) =>
-    Object.keys(d).map((key) => ({
-      name: key,
-      answer: d[key],
-    }))
-  );
+): Promise<{ maxPage: number; applicants: ApplicantReq[][] }> => {
+  const {
+    data: { applicants, maxPage },
+  } = await https.get<ApplicantByPageReq>(`/page/${page}/applicants`);
+
+  return {
+    maxPage,
+    applicants: applicants.map((applicant) =>
+      Object.keys(applicant).map((key) => ({
+        name: key,
+        answer: applicant[key],
+      }))
+    ),
+  };
 };
 
 export const getAllApplicant = async (

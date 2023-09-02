@@ -12,7 +12,6 @@ import { FC, useState } from "react";
 import { ApplicantReq } from "@/src/apis/application";
 import { applicantDataFinder } from "@/src/functions/finder";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
 interface ApplicantBoardProps {
@@ -27,7 +26,7 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
   const onClick = (id: string) => {
     if (!allData) return;
     setData(
-      allData?.filter((value) => applicantDataFinder(value, "id") === id)[0]
+      applicants?.filter((value) => applicantDataFinder(value, "id") === id)[0]
     );
   };
 
@@ -51,7 +50,9 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
     return <div>에러 발생</div>;
   }
 
-  const boardData = allData.map((value) => ({
+  const { maxPage, applicants } = allData;
+
+  const boardData = applicants.map((value) => ({
     id: applicantDataFinder(value, "id"),
     title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
       value,
