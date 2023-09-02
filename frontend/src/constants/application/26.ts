@@ -91,6 +91,7 @@ export const APPLICATION = [
       {
         type: "radioByTwoRank",
         title: "학년 및 학기",
+        require: true,
         subtitle: "'휴학'일 경우 휴학 직전 학기를 선택해 주세요.",
         subNodes: [
           {

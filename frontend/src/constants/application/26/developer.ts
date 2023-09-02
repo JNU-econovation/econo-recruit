@@ -89,6 +89,7 @@ export const APPLICATION_DEVELOPER = [
       "무언가에 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게  빠져본 적이 있다면 서술해주세요.",
     subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
     direction: "horizontal",
+    require: true,
     nodes: [
       {
         name: "deep",
@@ -103,6 +104,7 @@ export const APPLICATION_DEVELOPER = [
     title:
       "협업(프로젝트, 팀 활동)에 있어서 가장 중요하다고 생각되는 것은 무엇인지 그 이유와 함께 지원자님의 생각을 서술해 주세요.",
     direction: "horizontal",
+    require: true,
     nodes: [
       {
         name: "collaboration",
@@ -117,6 +119,7 @@ export const APPLICATION_DEVELOPER = [
     title:
       "에코노베이션에 최종 합격 시 신입 기수로 구성된 팀으로 개발 프로젝트에 참여하고, 목표를 달성하기 위해 스스로 끊임없이 배우고 노력합니다. 에코노베이션에 들어오게 된다면 어떤 목표와 학습 계획을 바탕으로 활동하고 싶나요?",
     direction: "horizontal",
+    require: true,
     nodes: [
       {
         name: "studyPlan",
@@ -214,7 +217,7 @@ export const APPLICATION_DEVELOPER = [
     id: 15,
     title: "면접 가능시간을 선택해주세요. (중복 선택 가능)",
     direction: "timeline",
-    require: false,
+    require: true,
     nodes: [
       {
         type: "timeline",

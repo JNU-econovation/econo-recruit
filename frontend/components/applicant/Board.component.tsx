@@ -4,14 +4,16 @@ import Board from "@/components/common/board/Board.component";
 import {
   getAllApplicant,
   getApplicantByIdWithField,
+  getApplicantByPage,
 } from "@/src/apis/applicant/applicant";
 import ApplicantDetailRight from "./DetailRight.component";
 import ApplicantDetailLeft from "./DetailLeft.component";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { ApplicantReq } from "@/src/apis/application";
 import { applicantDataFinder } from "@/src/functions/finder";
 import { useQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
 interface ApplicantBoardProps {
   generation: string;
@@ -19,6 +21,8 @@ interface ApplicantBoardProps {
 
 const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
   const [data, setData] = useState<ApplicantReq[]>([]);
+  const searchParams = useSearchParams();
+  const pageIndex = searchParams.get("page") || "1";
 
   const onClick = (id: string) => {
     if (!allData) return;
@@ -31,9 +35,13 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
     data: allData,
     isLoading,
     isError,
-  } = useQuery(["allApplicant", generation], () => getAllApplicant(), {
-    enabled: !!generation,
-  });
+  } = useQuery(
+    ["allApplicant", generation],
+    () => getApplicantByPage(+pageIndex),
+    {
+      enabled: !!generation,
+    }
+  );
 
   if (!allData || isLoading) {
     return <div>로딩중...</div>;

@@ -58,9 +58,12 @@ export const postApplication = async (
       name: "uploadDate",
       answer: `${new Date().getTime()}`,
     });
-    const applicantId = await postApplicant(
-      Array.from(new Set(applicationData))
-    );
+    const channel = localStorage.get<string[]>("channel");
+    applicationData.add({
+      name: "channel",
+      answer: channel.push(localStorage.get("channelEtc", "")),
+    });
+    const applicantId = await postApplicant(Array.from(applicationData));
     const timeline = localStorage.get("timeline", []);
     if (timeline.length === 0) {
       new Error("시간표가 존재하지 않습니다.");
