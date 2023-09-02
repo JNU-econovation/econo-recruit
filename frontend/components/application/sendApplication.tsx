@@ -26,7 +26,7 @@ const extractApplicantData = (
       });
       return;
     }
-    if (key === "name" && value !== "timeline") {
+    if (key === "name" && value !== "timeline" && value !== "channel") {
       if ("require" in node) {
         if (localStorage.get(value, "").length === 0 && node.require) {
           throw new Error(`지원서 작성이 완료되지 않았습니다. ${value}`);
@@ -50,6 +50,7 @@ export const postApplication = async (
 
   try {
     extractApplicantData(applicationQuestions, applicationData);
+
     applicationData.add({
       name: "generation",
       answer: `${CURRENT_GENERATION}`,
@@ -63,10 +64,14 @@ export const postApplication = async (
       name: "channel",
       answer: channel.push(localStorage.get("channelEtc", "")),
     });
+    if (localStorage.get("channel", "").length === 0) {
+      throw new Error("지원 경로를 선택해주세요.");
+    }
+
     const applicantId = await postApplicant(Array.from(applicationData));
-    const timeline = localStorage.get("timeline", []);
-    if (timeline.length === 0) {
-      new Error("시간표가 존재하지 않습니다.");
+    const timeline = localStorage.get<number[]>("timeline", []);
+    if (!Array.isArray(timeline) || timeline.length === 0) {
+      throw new Error("시간표가 존재하지 않습니다.");
     }
     await postApplicantTimeline(applicantId, timeline);
   } catch (e) {

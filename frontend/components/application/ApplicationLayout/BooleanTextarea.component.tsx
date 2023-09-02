@@ -37,6 +37,7 @@ const TextArea: FC<TextAreaProps> = ({ index, node }) => {
         <textarea
           className="my-2 border rounded-lg p-4 w-full resize-none"
           rows={20}
+          maxLength={1000}
           name={node.name}
           value={textValue}
           onChange={(e) => setTextValue(e.target.value)}

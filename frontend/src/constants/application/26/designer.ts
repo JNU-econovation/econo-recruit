@@ -152,7 +152,7 @@ export const APPLICATION_DESIGN = [
       } as ApplicationText,
       {
         name: "fileUrl",
-        require: false,
+        require: true,
         type: "text",
         title: "파일 URL",
         subtitle: "(Google Drive 등)",

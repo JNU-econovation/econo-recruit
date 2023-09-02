@@ -4,8 +4,13 @@ const isCellPhoneNumber = (phoneNumber: string) =>
 const isUndergradeNumber = (isUndergradeNumber: string) =>
   /^[0-9]{6}$/.test(isUndergradeNumber);
 
-const isEmailString = (emailString: string) =>
-  /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(emailString);
+const isEmailString = (emailString: string) => {
+  const re =
+    // eslint-disable-next-line no-useless-escape
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(emailString);
+};
 
 const isConfirmationString = (confirmationString: string) =>
   /확인했습니다/.test(confirmationString);

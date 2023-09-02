@@ -74,8 +74,8 @@ const ApplicantBoard: FC<ApplicantBoardProps> = ({ generation }) => {
 
   return (
     <Board wapperClassname="divide-x" boardData={boardData} onClick={onClick}>
-      <div className="flex flex-1 min-h-0">
-        <div className="flex-1 overflow-auto px-12">
+      <div className="flex flex-1">
+        <div className="flex-1 overflow-auto px-12 min-w-[40rem]">
           <ApplicantDetailLeft data={data} />
         </div>
       </div>

@@ -12,11 +12,9 @@ const ApplicantTextarea: FC<ApplicantTextareaProps> = ({ nodeData, data }) => {
   const textareaData = nodeData as ApplicantTextareaNode;
 
   return (
-    <>
-      <Txt className="block pt-6 pb-12 ml-6">
-        {applicantDataFinder(data, textareaData.value.name)}
-      </Txt>
-    </>
+    <Txt className="block pt-6 pb-12 ml-6">
+      {applicantDataFinder(data, textareaData.value.name)}
+    </Txt>
   );
 };
 
