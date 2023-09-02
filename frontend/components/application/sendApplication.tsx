@@ -43,6 +43,9 @@ const extractApplicantData = (
 export const postApplication = async (
   applicationQuestions: ApplicationQuestion[]
 ) => {
+  const isSend = confirm("지원서를 제출하시겠습니까?");
+  if (!isSend) return false;
+
   const applicationData = new Set<ApplicantReq>();
 
   try {
@@ -55,10 +58,17 @@ export const postApplication = async (
       name: "uploadDate",
       answer: `${new Date().getTime()}`,
     });
-    const applicantId = await postApplicant(
-      Array.from(new Set(applicationData))
-    );
-    await postApplicantTimeline(applicantId, localStorage.get("timeline", []));
+    const channel = localStorage.get<string[]>("channel");
+    applicationData.add({
+      name: "channel",
+      answer: channel.push(localStorage.get("channelEtc", "")),
+    });
+    const applicantId = await postApplicant(Array.from(applicationData));
+    const timeline = localStorage.get("timeline", []);
+    if (timeline.length === 0) {
+      new Error("시간표가 존재하지 않습니다.");
+    }
+    await postApplicantTimeline(applicantId, timeline);
   } catch (e) {
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);
     return false;

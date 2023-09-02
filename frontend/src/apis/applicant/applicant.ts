@@ -27,6 +27,20 @@ export const getApplicantByIdWithField = async (
   }));
 };
 
+export const getApplicantByPage = async (
+  page: number
+): Promise<ApplicantReq[][]> => {
+  const { data } = await https.get<AllApplicantReq[]>(
+    `/page/${page}/applicants`
+  );
+  return data.map((d) =>
+    Object.keys(d).map((key) => ({
+      name: key,
+      answer: d[key],
+    }))
+  );
+};
+
 export const getAllApplicant = async (
   fields?: string[]
 ): Promise<ApplicantReq[][]> => {

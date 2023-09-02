@@ -17,7 +17,7 @@ const ApplicantCustomHuman: FC<ApplicantCustomHumanProps> = ({
   return (
     <>
       <div className="flex items-center pt-6 pb-12">
-        <Txt typography="h1" className="px-6">
+        <Txt typography="h1" className="px-6 min-w-fit">
           {applicantDataFinder(data, customHumanData.value.hunamName.name)}
         </Txt>
         <div className="h-full flex flex-col gap-2 justify-between">

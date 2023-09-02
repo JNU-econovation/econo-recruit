@@ -31,7 +31,11 @@ const ApplicationTexarea: FC<ApplicationTexareaProps> = ({ data }) => {
         rows={20}
         name={textData.name}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value.length > 1000)
+            return alert("1000자 이내로 작성해주세요.");
+          setValue(e.target.value.slice(1000));
+        }}
       />
     </>
   );

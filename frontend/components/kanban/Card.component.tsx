@@ -21,7 +21,7 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
 
   const onClickDetail = () => {
     navigate.push(
-      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}`
+      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId - 1}`
     );
   };
 

@@ -5,6 +5,8 @@ import { FC } from "react";
 import { postApplication } from "../sendApplication";
 import { useAtomValue } from "jotai";
 import { applicationDataAtom } from "@/src/stores/application";
+import { applicantQuestionsAtom } from "@/src/stores/applicant";
+import { ApplicationQuestion } from "@/src/constants/application/type";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;
@@ -23,7 +25,50 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
     useApplicationIndexControll();
   const nextButtonClassName =
     "flex-1 rounded-md flex justify-center items-center p-4";
-  const applicationQuestions = useAtomValue(applicationDataAtom);
+  const applicationData = useAtomValue(applicationDataAtom);
+  const applicationQuestion = useAtomValue(applicantQuestionsAtom);
+
+  const applicationName = new Set<string>();
+
+  const getApplicationName = (
+    node: { [key: string]: any } | ApplicationQuestion[],
+    applicationName: Set<string>
+  ) => {
+    if (node === undefined) return;
+    if (Array.isArray(node)) {
+      node.forEach((element) => {
+        getApplicationName(element, applicationName);
+      });
+      return;
+    }
+
+    Object.entries(node).map(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((element) => {
+          getApplicationName(element, applicationName);
+        });
+        return;
+      }
+      if (key === "name" && value !== "timeline") {
+        if ("require" in node) {
+          if (node.require) {
+            console.log(value);
+          }
+        }
+      }
+    });
+  };
+
+  getApplicationName(applicationData[applicationIndex], applicationName);
+
+  const beforeCheck = () => {
+    if (beforeCheckCallback) {
+      if (!beforeCheckCallback()) {
+        return;
+      }
+    }
+    applicationQuestion[applicationIndex];
+  };
 
   return (
     <div className="flex gap-2 my-4">
@@ -36,12 +81,11 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
       <button
         onClick={
           isLast
-            ? () => postApplication(applicationQuestions)
-            : beforeCheckCallback
-            ? () => {
-                if (beforeCheckCallback()) goNextIndex();
+            ? () => postApplication(applicationData)
+            : () => {
+                beforeCheck();
+                goNextIndex();
               }
-            : goNextIndex
         }
         disabled={!canNext}
         className={
