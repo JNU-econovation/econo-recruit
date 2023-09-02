@@ -64,7 +64,10 @@ export const postApplication = async (
       name: "channel",
       answer: channel.push(localStorage.get("channelEtc", "")),
     });
-    if (localStorage.get("channel", "").length === 0) {
+    if (
+      localStorage.get("channel", "") === "" ||
+      localStorage.get("channelEtc", "") === ""
+    ) {
       throw new Error("지원 경로를 선택해주세요.");
     }
 

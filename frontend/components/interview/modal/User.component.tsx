@@ -13,9 +13,6 @@ const InterviewUserComponent = () => {
   } = useQuery<InterviewRes>({
     queryKey: ["record", applicantId],
     queryFn: () => getInterviewRecord(applicantId),
-    onError: (err) => {
-      console.log(err);
-    },
     enabled: !!applicantId,
   });
 

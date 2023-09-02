@@ -51,8 +51,8 @@ export const getFromToIndex = (
   if (result.type === "DEFAULT") {
     const from = result.source;
     const to = result.destination;
-    console.log(kanbanData[+from.droppableId - 1].card[from.index]);
-    console.log(kanbanData[+to.droppableId - 1].card[to.index - 1]);
+    // console.log(kanbanData[+from.droppableId - 1].card[from.index]);
+    // console.log(kanbanData[+to.droppableId - 1].card[to.index - 1]);
 
     const boardId = kanbanData[+from.droppableId - 1].card[from.index]?.id ?? 0;
     const targetBoardId =

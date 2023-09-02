@@ -16,7 +16,6 @@ const get = <T>(key: string, initialValue?: T) => {
     const item = window.localStorage.getItem(key);
     return item ? JSON.parse(item) : initialValue;
   } catch (error) {
-    console.log(error);
     return initialValue;
   }
 };

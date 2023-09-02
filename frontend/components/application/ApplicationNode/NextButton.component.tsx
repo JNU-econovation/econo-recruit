@@ -7,6 +7,7 @@ import { useAtomValue } from "jotai";
 import { applicationDataAtom } from "@/src/stores/application";
 import { applicantQuestionsAtom } from "@/src/stores/applicant";
 import { ApplicationQuestion } from "@/src/constants/application/type";
+import { localStorage } from "@/src/functions/localstorage";
 
 interface ApplicationNextButtonProps {
   canNext: boolean;
@@ -26,7 +27,6 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
   const nextButtonClassName =
     "flex-1 rounded-md flex justify-center items-center p-4";
   const applicationData = useAtomValue(applicationDataAtom);
-  const applicationQuestion = useAtomValue(applicantQuestionsAtom);
 
   const applicationName = new Set<string>();
 
@@ -52,22 +52,30 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
       if (key === "name" && value !== "timeline") {
         if ("require" in node) {
           if (node.require) {
-            console.log(value);
+            applicationName.add(value);
           }
         }
       }
     });
   };
 
-  getApplicationName(applicationData[applicationIndex], applicationName);
-
   const beforeCheck = () => {
     if (beforeCheckCallback) {
       if (!beforeCheckCallback()) {
-        return;
+        return false;
       }
     }
-    applicationQuestion[applicationIndex];
+
+    getApplicationName(applicationData[applicationIndex], applicationName);
+    const applicationNameArray = Array.from(applicationName);
+    for (let i = 0; i < applicationNameArray.length; i++) {
+      const name = applicationNameArray[i];
+      if (localStorage.get(name, "") === "") {
+        alert("필수 항목을 입력해주세요.");
+        return false;
+      }
+    }
+    return true;
   };
 
   return (
@@ -83,7 +91,9 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
           isLast
             ? () => postApplication(applicationData)
             : () => {
-                beforeCheck();
+                if (!beforeCheck()) {
+                  return;
+                }
                 goNextIndex();
               }
         }
