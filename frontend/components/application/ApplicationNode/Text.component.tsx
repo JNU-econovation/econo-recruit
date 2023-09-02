@@ -39,10 +39,10 @@ const ApplicationText: FC<ApplicationTextProps> = ({ data }) => {
         type="text"
         id={id}
         value={value}
-        onChange={(e) => {
+        onInput={(e) => {
           const value = textData.replace
-            ? replacer(e.target.value, textData.replace)
-            : e.target.value;
+            ? replacer(e.currentTarget.value, textData.replace)
+            : e.currentTarget.value;
           const isError = textData.validate
             ? !validator(value, textData.validate)
             : false;
