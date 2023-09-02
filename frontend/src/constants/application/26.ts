@@ -198,6 +198,6 @@ export const APPLICATION_TIMELINE = {
 } as ApplicationTimeline;
 
 export const END_DATE = {
-  month: 3,
+  month: 9,
   date: 19,
 };
