@@ -23,7 +23,6 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
-
     private final FilterConfig filterConfig;
 
     @Value("${swagger.user}")

@@ -4,6 +4,7 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruitcommon.exception.OutOfIndexException;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
+import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import java.util.Collections;
 import java.util.HashMap;
@@ -128,11 +129,16 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     @Override
-    public List<Map<String, String>> execute(Integer page) {
+    public ApplicantPaginationResponseDto execute(Integer page) {
         if (page < 1) throw OutOfIndexException.EXCEPTION;
         List<Answer> answers = answerAdaptor.findAll(page);
         List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
-        return results;
+        // maxPage
+        Integer maxPage = results.size() / 8;
+        return ApplicantPaginationResponseDto.builder()
+                .applicants(results)
+                .maxPage(maxPage + 1)
+                .build();
 
         //        if (sortType.equals("score")) {
         // Map -> id

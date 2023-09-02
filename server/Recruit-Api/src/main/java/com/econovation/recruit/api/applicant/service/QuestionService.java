@@ -22,8 +22,18 @@ public class QuestionService implements QuestionRegisterUseCase {
 
     @Override
     public void execute(List<QuestionRequestDto> questions) {
-        questionAdaptor.saveAll(
+        // DB 내에 있는 질문은 기존에 있는 것은 생략하고 저장한다
+        List<Question> questionList = questionAdaptor.findAll();
+        List<Question> filteredQuestions =
                 questions.stream()
+                        .filter(
+                                question ->
+                                        questionList.stream()
+                                                .noneMatch(
+                                                        q ->
+                                                                q.getName()
+                                                                        .equals(
+                                                                                question.getName())))
                         .map(
                                 question ->
                                         Question.builder()
@@ -31,6 +41,7 @@ public class QuestionService implements QuestionRegisterUseCase {
                                                 .name(question.getName())
                                                 .parentId(question.getParentId())
                                                 .build())
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList());
+        questionAdaptor.saveAll(filteredQuestions);
     }
 }

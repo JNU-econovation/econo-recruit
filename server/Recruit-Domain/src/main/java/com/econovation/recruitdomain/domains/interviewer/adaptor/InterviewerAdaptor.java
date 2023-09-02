@@ -40,12 +40,11 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
                 .findByEmail(email)
                 .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
     }
+
     @Override
     public Optional<Interviewer> loadOptionalInterviewerByEmail(String email) {
-        return interviewerRepository
-                .findByEmail(email);
+        return interviewerRepository.findByEmail(email);
     }
-
 
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {
         return interviewerRepository.saveAll(interviewer);

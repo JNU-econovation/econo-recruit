@@ -13,6 +13,7 @@ import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
+import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,8 @@ public class ApplicantController {
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @XssProtected
     @PostMapping("/applicants")
-    public ResponseEntity registerApplicant(@RequestBody List<BlockRequestDto> blockElements) {
+    public ResponseEntity registerApplicant(
+            @RequestBody @Valid List<BlockRequestDto> blockElements) {
         UUID applicantId = applicantRegisterUseCase.execute(blockElements);
         return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
@@ -65,9 +68,8 @@ public class ApplicantController {
 
     @Operation(summary = "모든 지원자의 지원서를 페이지 단위로(1페이지당 8개) 조회합니다.")
     @GetMapping("/page/{page}/applicants")
-    public ResponseEntity<List<Map<String, String>>> getApplicantsByPage(
+    public ResponseEntity<ApplicantPaginationResponseDto> getApplicantsByPage(
             // TODO 정렬 기준 추가
-            //  @PathVariable(value = "page") Integer page, String sortType) {
             @PathVariable(value = "page") Integer page) {
         return new ResponseEntity<>(answerLoadUseCase.execute(page), HttpStatus.OK);
     }

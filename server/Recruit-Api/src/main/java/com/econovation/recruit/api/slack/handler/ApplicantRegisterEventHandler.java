@@ -21,7 +21,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class ApplicantRegisterEventHandler {
     private final SlackMessageProvider slackMessageProvider;
     private final SlackProperties slackProperties;
-
     private final CardAdaptor cardAdaptor;
     private final BoardRegisterUseCase boardRegisterUseCase;
 
@@ -40,7 +39,7 @@ public class ApplicantRegisterEventHandler {
                 applicantRegistEvent.getApplicantId(),
                 applicantRegistEvent.getHopeField(),
                 card.getId());
-        slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
+//        slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
     }
 
     private String generateApplicantRegisterMessage(ApplicantRegisterEvent applicantRegistEvent) {
