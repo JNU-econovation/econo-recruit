@@ -27,7 +27,7 @@ export const APPLICATION_MANAGER = [
   {
     id: 6,
     title: "본인이 계획하고 있는 진로가 무엇인가요?",
-    subtitle: "(IT 분야가 아니어도 괜찮습니다.)",
+    subtitle: "IT 분야가 아니어도 괜찮습니다.",
     direction: "horizontal",
     require: true,
     nodes: [
@@ -91,7 +91,7 @@ export const APPLICATION_MANAGER = [
     id: 9,
     title:
       "어떤 일에 도전하고 실패해 본 경험이 있나요? 그 실패를 어떻게 극복했는지 서술해 주세요.",
-    subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
+    subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
     direction: "horizontal",
     nodes: [
       {
@@ -106,7 +106,7 @@ export const APPLICATION_MANAGER = [
     id: 10,
     title:
       "무언가 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게 빠져본 적이 있다면 서술해 주세요.",
-    subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
+    subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
     direction: "horizontal",
     nodes: [
       {
@@ -155,14 +155,14 @@ export const APPLICATION_MANAGER = [
         require: false,
         type: "text",
         title: "참고 URL",
-        subtitle: "(Github, Blog, Notion, Website 등)",
+        subtitle: "Github, Blog, Notion, Website 등",
       } as ApplicationText,
       {
         name: "fileUrl",
         require: false,
         type: "text",
         title: "파일 URL",
-        subtitle: "(Google Drive 등)",
+        subtitle: "Google Drive 등",
       } as ApplicationText,
       {
         type: "bar",
@@ -172,7 +172,7 @@ export const APPLICATION_MANAGER = [
         title:
           "기획자를 지원하는 경우 이번 학기에 진행하고 싶은 프로젝트의 기획서를 제출해 주세요.",
         subtitle:
-          "(단, 제출한 기획을 기반으로 이번 학기에 프로젝트를 진행하지 못할 수 있습니다.)",
+          "단, 제출한 기획을 기반으로 이번 학기에 프로젝트를 진행하지 못할 수 있습니다.",
       } as ApplicationJustText,
       {
         name: "fileUrlforPlanner",

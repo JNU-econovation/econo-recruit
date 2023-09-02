@@ -87,7 +87,7 @@ export const APPLICATION_DEVELOPER = [
     id: 9,
     title:
       "무언가에 깊게 빠지거나 파고 들어본 적이 있나요? 좋아하는 것을 위해서 주변에서 인정할 정도로 깊게  빠져본 적이 있다면 서술해주세요.",
-    subtitle: "(소프트웨어 분야 관련 경험이 아니어도 좋습니다.)",
+    subtitle: "소프트웨어 분야 관련 경험이 아니어도 좋습니다.",
     direction: "horizontal",
     require: true,
     nodes: [
@@ -139,14 +139,14 @@ export const APPLICATION_DEVELOPER = [
         require: false,
         type: "text",
         title: "참고 URL",
-        subtitle: "(Github, Blog, Notion, Website 등)",
+        subtitle: "Github, Blog, Notion, Website 등",
       } as ApplicationText,
       {
         name: "fileUrl",
         require: false,
         type: "text",
         title: "파일 URL",
-        subtitle: "(Google Drive 등)",
+        subtitle: "Google Drive 등",
       } as ApplicationText,
     ],
   },
