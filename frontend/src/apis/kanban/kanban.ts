@@ -31,6 +31,7 @@ interface KanbanNavigationReq {
   columnsId: number;
   title: string;
   navigationId: number;
+  nextColumnsId: number;
 }
 
 export const getColums = async (navigationId: string) => {
@@ -38,10 +39,24 @@ export const getColums = async (navigationId: string) => {
     `/boards/navigations/${navigationId}/columns`
   );
 
-  return data;
+  const startColumn = data.filter((column) => column.nextColumnsId === null);
+
+  const locationSort = (
+    column: KanbanNavigationReq[]
+  ): KanbanNavigationReq[] => {
+    if (column.length === data.length) return column;
+
+    const nextColumnId = column[column.length - 1].columnsId;
+    const nextColumn = data.filter(
+      (column) => column.nextColumnsId === nextColumnId
+    );
+
+    return locationSort([...column, ...nextColumn]);
+  };
+
+  return locationSort(startColumn).reverse();
 };
 
-// export interface
 interface addColumnReq {
   navigationId: string;
   title: string;
@@ -80,27 +95,48 @@ export const getAllKanbanData = async (
   const columnsData = await getColums(navigationId);
   const cardsData = await getKanbanCards(navigationId);
 
-  return columnsData.map((column) => ({
-    id: column.columnsId,
-    title: column.title,
-    card: cardsData
+  return columnsData.map((column) => {
+    const columnCardData = cardsData
       .filter((card) => card.columnId === column.columnsId)
-      // .sort((a, b) =>
-      //   a.nextBoardId === null ? 1 : a.nextBoardId === b.boardId ? 1 : -1
-      // )
-      .map((card) => ({
-        id: card.boardId,
-        cardType: card.cardType,
-        title: card.title,
-        major: card.major.split('"').join(""),
-        applicantId: card.applicantId,
-        apply: [
-          card.firstPriority.split('"').join(""),
-          card.secondPriority.split('"').join(""),
-        ].filter((apply) => apply !== ""),
-        comment: card.commentCount,
-        heart: card.labelCount,
-        isHearted: card.isLabeled,
-      })),
-  }));
+      .filter((card) => card.cardType === "INVISIBLE");
+
+    const findLocationData = (
+      columnCardsData: KanbanCardReq[]
+    ): KanbanCardReq[] => {
+      if (columnCardsData[columnCardsData.length - 1].nextBoardId === null) {
+        return columnCardsData;
+      }
+      const nextBoardId =
+        columnCardsData[columnCardsData.length - 1].nextBoardId;
+      const nextColumnCardsData = cardsData.filter(
+        (card) => card.boardId === nextBoardId
+      );
+
+      return findLocationData([...columnCardsData, ...nextColumnCardsData]);
+    };
+
+    return {
+      id: column.columnsId,
+      title: column.title,
+      card: findLocationData(columnCardData)
+        .map((card) => {
+          if (!card) return null;
+          return {
+            id: card.boardId,
+            cardType: card.cardType,
+            title: card.title,
+            major: card.major.split('"').join(""),
+            applicantId: card.applicantId,
+            apply: [
+              card.firstPriority.split('"').join(""),
+              card.secondPriority.split('"').join(""),
+            ].filter((apply) => apply !== ""),
+            comment: card.commentCount,
+            heart: card.labelCount,
+            isHearted: card.isLabeled,
+          };
+        })
+        .filter((card) => card !== null),
+    };
+  });
 };

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { https } from "../functions/axios";
 
 export interface ApplicantReq {
@@ -7,10 +8,6 @@ export interface ApplicantReq {
 
 export const postApplicant = async (body: ApplicantReq[]) => {
   const { data } = await https.post(`/applicants`, body);
-
-  if (data satisfies string) {
-    return data;
-  }
 
   return data;
 };
@@ -23,6 +20,16 @@ export const postApplicantTimeline = async (
     `/applicants/${applicantId}/timetables`,
     body
   );
+
+  if (data satisfies string) {
+    return data;
+  }
+
+  return data;
+};
+
+export const postApplicantBackup = async (body: ApplicantReq[]) => {
+  const { data } = await axios.post(`/application/backup`, body);
 
   if (data satisfies string) {
     return data;

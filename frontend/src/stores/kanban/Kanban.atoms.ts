@@ -1,4 +1,3 @@
-import { KanbanCardReq } from "../../apis/kanban/kanban";
 import { atom } from "jotai";
 
 export type KanbanColumnData = {

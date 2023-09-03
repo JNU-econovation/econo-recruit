@@ -1,5 +1,6 @@
 import Txt from "@/components/common/Txt.component";
 import HomeCardComponent from "@/components/main/Card.component";
+import Validate from "@/components/user/Validate.component";
 import { MAIN_MENU, CURRENT_GENERATION } from "@/src/constants";
 
 const HomePage = () => {
@@ -12,6 +13,7 @@ const HomePage = () => {
 
   return (
     <main className="flex justify-between">
+      <Validate />
       <div className="pt-24 pl-16 flex flex-col gap-2">
         <Txt typography="head" className="font-semibold uppercase">
           econovation

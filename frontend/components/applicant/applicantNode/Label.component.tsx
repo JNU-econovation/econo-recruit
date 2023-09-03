@@ -5,16 +5,16 @@ import {
   getApplicantLabel,
   postApplicantLabel,
 } from "@/src/apis/applicant/applicant";
-import { applicantDataFinder } from "@/src/functions/finder";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 
 interface ApplicantLabelProps {
   postId: string;
+  generation: string;
 }
 
-const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId }) => {
+const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId, generation }) => {
   const [openAdditional, setOpenAdditional] = useState(false);
 
   const { data, error, isLoading } = useQuery<ApplicantLabelReq[]>(
@@ -49,11 +49,21 @@ const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId }) => {
         <div className="grid grid-cols-6 gap-2 my-4 w-fit">
           {openAdditional
             ? data.map((label) => (
-                <ApplicantLabelButton label={label} postId={postId} />
+                <ApplicantLabelButton
+                  generation={generation}
+                  key={label.name}
+                  label={label}
+                  postId={postId}
+                />
               ))
             : data
                 .map((label) => (
-                  <ApplicantLabelButton label={label} postId={postId} />
+                  <ApplicantLabelButton
+                    generation={generation}
+                    key={label.name}
+                    label={label}
+                    postId={postId}
+                  />
                 ))
                 .slice(0, 6)}
         </div>
@@ -74,17 +84,22 @@ const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId }) => {
 interface ApplicantLabelButtonProps {
   label: ApplicantLabelReq;
   postId: string;
+  generation: string;
 }
 
 const ApplicantLabelButton: FC<ApplicantLabelButtonProps> = ({
   label,
   postId,
+  generation,
 }) => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(postApplicantLabel, {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["applicantLabel", postId] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanbanDataArray", generation],
+      });
     },
   });
 

@@ -1,10 +1,12 @@
 "use client";
 
-import { FC, FormEvent, useCallback, useEffect, useState } from "react";
+import { FC, FormEvent, use, useCallback, useEffect, useState } from "react";
 import React from "react";
 import { Editor } from "@toast-ui/react-editor";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postComment } from "@/src/apis/comment/comment";
 
 type InputCheckBoxProps = {
   name: string;
@@ -37,17 +39,42 @@ const InputCheckBox = ({
 };
 
 interface ApplicantCommentInputFormProps {
-  onChange: (value: string) => void;
-  onSubmit: (event: FormEvent) => void;
+  applicantId: string;
+  commentLength: number;
+  generation: string;
 }
 
 const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
-  onChange,
-  onSubmit,
+  applicantId,
+  commentLength,
+  generation,
 }) => {
   const [isNocomment, setIsNocomment] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(false);
+  const [content, setContent] = useState("");
+  const queryClient = useQueryClient();
   const editorRef = React.useRef<Editor>(null);
+
+  const { mutate } = useMutation(
+    () => {
+      return postComment({
+        content,
+        applicantId,
+        cardId: 0,
+        parentCommentId: 0,
+      });
+    },
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["applicantComment", applicantId],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["kanbanDataArray", generation],
+        });
+      },
+    }
+  );
 
   const onNocommentCheck = useCallback(() => {
     setIsNocomment(!isNocomment);
@@ -58,10 +85,10 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
     }
   }, [isNocomment]);
 
-  const prevSubmit = useCallback(() => {
+  const prevSubmit = () => {
     const content = editorRef.current?.getInstance().getMarkdown();
-    onChange((hasQuestion ? "**[질문]**" : "") + content);
-  }, [onChange]);
+    setContent((hasQuestion ? "**[질문]** " : "") + content);
+  };
 
   useEffect(() => {
     if (editorRef.current) {
@@ -73,10 +100,21 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
   return (
     <form
       onSubmit={(e) => {
+        e.preventDefault();
         prevSubmit();
-        onSubmit(e);
+        mutate();
+        editorRef.current?.getInstance().reset();
       }}
     >
+      <div className="flex justify-between items-center pb-2">
+        <div className="flex gap-4 items-center">
+          <div className="text-lg font-semibold">댓글</div>
+          <div className="text-sm">{commentLength}개</div>
+        </div>
+        <button>
+          <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
+        </button>
+      </div>
       <Editor
         className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
         height="6rem"
@@ -93,7 +131,6 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
         }}
         ref={editorRef}
       />
-      <textarea className="hidden"></textarea>
       <div className="font-normal">
         <InputCheckBox
           name="question"

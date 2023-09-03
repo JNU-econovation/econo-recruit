@@ -68,9 +68,20 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
 
     getApplicationName(applicationData[applicationIndex], applicationName);
     const applicationNameArray = Array.from(applicationName);
+
     for (let i = 0; i < applicationNameArray.length; i++) {
       const name = applicationNameArray[i];
+
       if (localStorage.get(name, "") === "") {
+        if (
+          !(
+            name === "channel" &&
+            localStorage.get("channelEtc", "").length === 0
+          )
+        ) {
+          return true;
+        }
+
         alert("필수 항목을 입력해주세요.");
         return false;
       }

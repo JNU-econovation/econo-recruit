@@ -1,6 +1,5 @@
 import { APPLICANT_KEYS } from "@/src/constants";
 import { https } from "@/src/functions/axios";
-import { getInterviewRecordAll } from "../interview/record";
 import { getAllInterviewer } from "../interview/interviewer";
 
 export interface ApplicantReq {
@@ -63,6 +62,15 @@ export const getAllApplicant = async (
       answer: d[key],
     }))
   );
+};
+
+export const getAppliationById = async (id: string) => {
+  const { data } = await https.get<AllApplicantReq>(`/applicants/${id}`);
+
+  return Object.keys(data).map((key) => ({
+    name: key,
+    answer: data[key],
+  }));
 };
 
 export interface ApplicantLabelReq {

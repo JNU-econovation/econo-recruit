@@ -1,5 +1,5 @@
 {
-  "root": true, 
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
   "parserOptions": {
@@ -20,24 +20,24 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/no-redeclare" : "off",
+    "@typescript-eslint/no-redeclare": "off",
     "@next/next/no-img-element": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "react/function-component-definition":"off",
-    "global-require":"off",
-    "react/jsx-props-no-spreading":"off",
-    "react/no-array-index-key":"off",
-    "jsx-a11y/no-static-element-interactions":"off",
+    "react/function-component-definition": "off",
+    "global-require": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     "no-shadow": "off",
-    "react/require-default-props":"off",
+    "react/require-default-props": "off",
     "@typescript-eslint/no-shadow": "off",
-    "jsx-a11y/click-events-have-key-events":"off",
-    "react/button-has-type":"off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "react/button-has-type": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
     "no-useless-catch": "off",
     "@typescript-eslint/no-unused-vars": "off",
-    "react/jsx-key" : "off",
+    "react/jsx-key": "off",
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/ban-types": [
       "error",
@@ -47,6 +47,10 @@
           "{}": false
         }
       }
-    ]
+    ],
+    "parserOptions": {
+      "project": ["tsconfig.json"],
+      "createDefaultProgram": true
+    }
   }
 }

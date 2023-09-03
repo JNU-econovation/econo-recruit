@@ -1,6 +1,9 @@
+"use client";
+
 import { FC } from "react";
 import KanbanDetailColumn from "@/components/kanban/ColumnWithBackButton.component";
 import KanbanDetailContent from "@/components/kanban/detail/Content.component";
+import Validate from "@/components/user/Validate.component";
 
 interface KanbanBoardDetailPageProps {
   params: {
@@ -23,6 +26,7 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
 
   return (
     <div className="flex mt-8 overflow-auto pt-12 pl-12">
+      <Validate />
       <KanbanDetailColumn detailCard={detailCard} generation={generation} />
       <KanbanDetailContent detailId={detailId} generation={generation} />
     </div>

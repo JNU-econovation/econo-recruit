@@ -1,24 +1,23 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCommentById } from "@/src/apis/comment/comment";
+import ApplicantCommentDetail from "./CommentDetail.component";
 
 interface ApplicantCommentProps {
   postId: string;
+  generation: string;
 }
 
-const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
-  const [comment, setComment] = useState("");
-  const onSubmit = () => {};
-
+const ApplicantComment: FC<ApplicantCommentProps> = ({
+  postId,
+  generation,
+}) => {
   const { data, error, isLoading } = useQuery(
     ["applicantComment", postId],
-    () => getAllCommentById(postId),
-    {
-      enabled: !!postId,
-    }
+    () => getAllCommentById(postId)
   );
 
   if (!data || isLoading) {
@@ -31,24 +30,20 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <div className="text-lg font-semibold">댓글</div>
-          <div className="text-sm">{data.length}개</div>
-        </div>
-        <button>
-          <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
-        </button>
-      </div>
       <ApplicantCommentInputForm
-        onChange={(value) => setComment(value)}
-        onSubmit={onSubmit}
+        applicantId={postId}
+        commentLength={data.length}
+        generation={generation}
       />
       <div className="flex flex-col gap-8 pt-8">
-        //TODO: comment
-        {/* {data.map((comment) => (
-          <ApplicantCommentDetail comment={comment} key={comment.createAt} />
-        ))} */}
+        {data.map((comment) => (
+          <ApplicantCommentDetail
+            generation={generation}
+            comment={comment}
+            postId={postId}
+            key={comment.id}
+          />
+        ))}
       </div>
     </>
   );

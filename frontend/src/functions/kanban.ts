@@ -34,32 +34,40 @@ export const getMovedKanbanData = (
   return kanbanData;
 };
 
-export const getFromToIndex = (
+export const getFromToIndexColumn = (
+  kanbanData: KanbanColumnData[],
+  result: DropResult
+): { columnId: number; targetColumnId: number } => {
+  if (!result.destination) return { columnId: 0, targetColumnId: 0 };
+
+  const fromIndex = result.source.index;
+  const toIndex = result.destination.index;
+
+  const columnId = kanbanData[+fromIndex - 1].id ?? kanbanData[0].id ?? 0;
+  const targetColumnId = kanbanData[+toIndex - 1].id ?? kanbanData[0].id ?? 0;
+
+  return { columnId, targetColumnId };
+};
+
+export const getFromToIndexDefault = (
   kanbanData: KanbanColumnData[],
   result: DropResult
 ): { boardId: number; targetBoardId: number } => {
   if (!result.destination) return { boardId: 0, targetBoardId: 0 };
 
-  if (result.type === "COLUMN") {
-    // const fromIndex = result.source.index;
-    // const toIndex = result.destination.index;
+  const from = result.source;
+  const to = result.destination;
 
-    // return { from: fromIndex, to: toIndex };
-    return { boardId: 0, targetBoardId: 0 };
-  }
+  const boardId =
+    kanbanData[+from.droppableId - 1].card[from.index]?.id ??
+    kanbanData[+from.droppableId - 1].card[0]?.id ??
+    0;
+  const targetBoardId =
+    kanbanData[+to.droppableId - 1].card.length === 1
+      ? kanbanData[+to.droppableId - 1].card[to.index]?.id ?? 0
+      : kanbanData[+to.droppableId - 1].card[to.index - 1]?.id ??
+        kanbanData[+from.droppableId - 1].card[0]?.id ??
+        0;
 
-  if (result.type === "DEFAULT") {
-    const from = result.source;
-    const to = result.destination;
-    // console.log(kanbanData[+from.droppableId - 1].card[from.index]);
-    // console.log(kanbanData[+to.droppableId - 1].card[to.index - 1]);
-
-    const boardId = kanbanData[+from.droppableId - 1].card[from.index]?.id ?? 0;
-    const targetBoardId =
-      kanbanData[+to.droppableId - 1].card[to.index - 1]?.id ?? 0;
-
-    return { boardId, targetBoardId };
-  }
-
-  return { boardId: 0, targetBoardId: 0 };
+  return { boardId, targetBoardId };
 };

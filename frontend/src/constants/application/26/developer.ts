@@ -54,14 +54,14 @@ export const APPLICATION_DEVELOPER = [
             name: "experienceTextarea",
             title:
               "본인이 어떤 역할을 했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
-
+            require: true,
             type: "true",
           },
           {
             name: "experienceTextarea",
             title:
               "앞으로 해보고 싶은 프로젝트가 무엇인가요? 그 이유와 함께 서술해 주세요.",
-            require: false,
+            require: true,
             type: "false",
           },
         ],
@@ -72,6 +72,7 @@ export const APPLICATION_DEVELOPER = [
     id: 8,
     title:
       "어떤 일에 도전하고 실패해 본 경험이 있나요? 그 실패를 어떻게 극복했는지 서술해 주세요.",
+    subtitle: "소프트웨어 관련 경험이 아니어도 좋습니다",
     direction: "horizontal",
     nodes: [
       {

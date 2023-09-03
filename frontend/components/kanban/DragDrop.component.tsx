@@ -2,15 +2,19 @@
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
-import { getFromToIndex, getMovedKanbanData } from "@/src/functions/kanban";
+import {
+  getFromToIndexColumn,
+  getFromToIndexDefault,
+  getMovedKanbanData,
+} from "@/src/functions/kanban";
 import KanbanAddColumnComponent from "./AddColumn.component";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./Column.component";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
-import { postLocations } from "@/src/apis/kanban/location";
+import { postLocations, putColumnsLocations } from "@/src/apis/kanban/location";
 
 const KanbanColumnView = () => {
   const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
@@ -63,21 +67,45 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
     },
   });
 
+  const { mutate: relocationColumn } = useMutation(putColumnsLocations, {
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["kanbanDataArray", navbarId],
+      });
+    },
+  });
+
   const onDragEnd = (result: DropResult) => {
     const kanbanData = queryClient.getQueryData<KanbanColumnData[]>([
       "kanbanDataArray",
       navbarId,
     ]) as KanbanColumnData[];
-    relocation(getFromToIndex(kanbanData, result), {
-      onSuccess: () => {
-        queryClient.setQueryData<KanbanColumnData[]>(
-          ["kanbanDataArray", navbarId],
-          (oldData) => {
-            return getMovedKanbanData(oldData as KanbanColumnData[], result);
-          }
-        );
-      },
-    });
+
+    if (result.type === "card") {
+      relocationColumn(getFromToIndexColumn(kanbanData, result), {
+        onSuccess: () => {
+          queryClient.setQueryData<KanbanColumnData[]>(
+            ["kanbanDataArray", navbarId],
+            (oldData) => {
+              return getMovedKanbanData(oldData as KanbanColumnData[], result);
+            }
+          );
+        },
+      });
+    }
+
+    if (result.type === "DEFAULT") {
+      relocation(getFromToIndexDefault(kanbanData, result), {
+        onSuccess: () => {
+          queryClient.setQueryData<KanbanColumnData[]>(
+            ["kanbanDataArray", navbarId],
+            (oldData) => {
+              return getMovedKanbanData(oldData as KanbanColumnData[], result);
+            }
+          );
+        },
+      });
+    }
   };
 
   return (

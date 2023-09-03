@@ -1,18 +1,20 @@
 import { https } from "../../functions/axios";
 
 export interface CommentRes {
+  id: string;
+  content: string;
   createdAt: string;
   interviewerName: string;
-  content: string;
   isLike: boolean;
   likeCount: number;
+  canEdit: boolean;
 }
 
 export interface CommentReq {
   content: string;
-  parentId: number; // 대댓글 시 부모 댓글의 id
+  parentCommentId: number;
   applicantId: string;
-  idpId: string;
+  cardId: number;
 }
 
 export const getAllCommentById = async (applicantId: string) => {
@@ -23,20 +25,37 @@ export const getAllCommentById = async (applicantId: string) => {
 };
 
 export const postComment = async (body: CommentReq) => {
-  const { data } = await https.post<string>(`/comments/`, body);
+  const { data } = await https.post<string>(`/comments`, body);
   return data;
 };
 
-export const putComment = async (commentId: string, content: string) => {
-  const { data } = await https.put<string>(`/comments/`, {
-    params: { commentId: commentId, content: content },
+export const putComment = async ({
+  commentId,
+  content,
+}: {
+  commentId: string;
+  content: string;
+}) => {
+  const { data } = await https.put<string>(`/comments/${commentId}`, {
+    content,
   });
+
   return data;
 };
 
 export const deleteComment = async (commentId: string) => {
-  const { data } = await https.delete<number>(`/comments`, {
-    params: { commentId: commentId },
-  });
+  const { data } = await https.delete<number>(`/comments/${commentId}`);
+  return data;
+};
+
+export const getCardsByCardId = async (cardId: string) => {
+  const { data } = await https.get<CommentRes[]>(`/cards/${cardId}/comments`);
+  return data;
+};
+
+export const getCardsByApplicantId = async (applicantId: string) => {
+  const { data } = await https.get<CommentRes[]>(
+    `/applicants/${applicantId}/comments`
+  );
   return data;
 };

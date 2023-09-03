@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 
 interface ApplicantDetailLeftProps {
   data: ApplicantReq[];
+  generation: string;
 }
 
 const ApplicantComment = dynamic(
@@ -14,14 +15,17 @@ const ApplicantComment = dynamic(
   { ssr: false }
 );
 
-const ApplicantDetailLeft: FC<ApplicantDetailLeftProps> = ({ data }) => {
+const ApplicantDetailLeft: FC<ApplicantDetailLeftProps> = ({
+  data,
+  generation,
+}) => {
   const postId = applicantDataFinder(data, "id");
 
   return (
     <>
       <ApplicantResource data={data} />
-      <ApplicantLabel postId={postId} />
-      <ApplicantComment postId={postId} />
+      <ApplicantLabel postId={postId} generation={generation} />
+      <ApplicantComment postId={postId} generation={generation} />
     </>
   );
 };

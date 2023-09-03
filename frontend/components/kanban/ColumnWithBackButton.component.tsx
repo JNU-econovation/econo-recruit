@@ -61,7 +61,7 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
               (col) =>
                 col && (
                   <div className="my-2" key={col.id}>
-                    <KanbanCardComponent data={col} cardId={+detailCard} />
+                    <KanbanCardComponent data={col} cardId={+detailCard + 1} />
                   </div>
                 )
             )}

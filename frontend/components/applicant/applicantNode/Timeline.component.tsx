@@ -42,7 +42,7 @@ const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({ postId }) => {
   return (
     <div>
       {time.map((time, startIndex) => (
-        <div className="w-full">
+        <div className="w-full" key={startIndex}>
           <Txt
             typography="h6"
             className="block pb-8"
@@ -50,7 +50,10 @@ const ApplicantTimelineNode: FC<ApplicantTimelineNodeProps> = ({ postId }) => {
           <div className="w-full flex">
             {dateSplicer(time.startTime, time.endTime, seperate).map(
               (date, index) => (
-                <span className="flex-1 border-l translate-x-6 mb-8 w-4">
+                <span
+                  className="flex-1 border-l translate-x-6 mb-8 w-4"
+                  key={index}
+                >
                   <Txt
                     className={classNames(
                       "-translate-x-1/2 block w-fit -translate-y-6 h-2",

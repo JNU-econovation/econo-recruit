@@ -142,7 +142,7 @@ export const APPLICATION = [
     id: 4,
     title: "기타 질문 사항에 답변해주세요.",
     direction: "horizontal",
-    require: false,
+    require: true,
     nodes: [
       {
         name: "activity",

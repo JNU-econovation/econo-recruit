@@ -1,7 +1,11 @@
 "use client";
 
 import { ApplicantReq } from "@/src/apis/applicant/applicant";
-import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
+import {
+  postApplicant,
+  postApplicantBackup,
+  postApplicantTimeline,
+} from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import { localStorage } from "@/src/functions/localstorage";
@@ -59,25 +63,32 @@ export const postApplication = async (
       name: "uploadDate",
       answer: `${new Date().getTime()}`,
     });
-    const channel = localStorage.get<string[]>("channel");
+    const channel = localStorage.get<string[]>("channel", []);
+    channel.push(localStorage.get("channelEtc", ""));
+
     applicationData.add({
       name: "channel",
-      answer: channel.push(localStorage.get("channelEtc", "")),
+      answer: JSON.stringify(channel.join(",")),
     });
-    if (
-      localStorage.get("channel", "") === "" ||
-      localStorage.get("channelEtc", "") === ""
-    ) {
-      throw new Error("지원 경로를 선택해주세요.");
+
+    if (localStorage.get("channel", "").length === 0) {
+      if (channel.length === 0) {
+        throw new Error("지원 경로를 선택해주세요.");
+      }
     }
 
-    const applicantId = await postApplicant(Array.from(applicationData));
     const timeline = localStorage.get<number[]>("timeline", []);
     if (!Array.isArray(timeline) || timeline.length === 0) {
       throw new Error("시간표가 존재하지 않습니다.");
     }
+
+    const applicantId = await postApplicant(Array.from(applicationData));
+
     await postApplicantTimeline(applicantId, timeline);
+    await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
+    console.log(e);
+
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);
     return false;
   }

@@ -31,7 +31,14 @@ const SignUpPage = () => {
   const [error, setError] = useState("");
 
   const onSubmit = async () => {
-    if (await signUp(signUpData)) {
+    if (
+      await signUp({
+        email: signUpData.email,
+        password: signUpData.password,
+        name: signUpData.username,
+        year: +signUpData.generation,
+      })
+    ) {
       navigate.push("/");
       alert("회원가입이 완료되었습니다.");
     }

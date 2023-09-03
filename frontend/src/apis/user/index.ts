@@ -1,16 +1,21 @@
 import { https } from "@/src/functions/axios";
 import { localStorage } from "@/src/functions/localstorage";
 
-interface SignUpRes {
+interface SignInReq {
+  email: string;
+  password: string;
+}
+
+interface SignInRes {
   accessToken: "string";
   refreshToken: "string";
 }
 
-export const signIn = async ({ email = "", password = "" }) => {
+export const signIn = async ({ email, password }: SignInReq) => {
   try {
-    const { data } = await https.post<SignUpRes>("/login", { email, password });
-    if (data satisfies SignUpRes) {
-      alert("로그인이 실패하였습니다");
+    const { data } = await https.post<SignInRes>("/login", { email, password });
+    if (data satisfies SignInRes) {
+      alert("로그인이 성공하였습니다");
     }
 
     localStorage.set("accessToken", data.accessToken);
@@ -21,14 +26,16 @@ export const signIn = async ({ email = "", password = "" }) => {
   }
 };
 
-export const signUp = async ({
-  name = "",
-  year = 0,
-  email = "",
-  password = "",
-}) => {
+interface SignUpReq {
+  name: string;
+  year: number;
+  email: string;
+  password: string;
+}
+
+export const signUp = async ({ name, year, email, password }: SignUpReq) => {
   try {
-    const { data } = await https.post<string>("/signup", {
+    const { data } = await https.post("/signup", {
       name,
       year,
       email,
