@@ -1,18 +1,16 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCommentById } from "@/src/apis/comment/comment";
+import ApplicantCommentDetail from "./CommentDetail.component";
 
 interface ApplicantCommentProps {
   postId: string;
 }
 
 const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
-  const [comment, setComment] = useState("");
-  const onSubmit = () => {};
-
   const { data, error, isLoading } = useQuery(
     ["applicantComment", postId],
     () => getAllCommentById(postId),
@@ -40,15 +38,11 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
           <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
         </button>
       </div>
-      <ApplicantCommentInputForm
-        onChange={(value) => setComment(value)}
-        onSubmit={onSubmit}
-      />
+      <ApplicantCommentInputForm applicantId={postId} />
       <div className="flex flex-col gap-8 pt-8">
-        //TODO: comment
-        {/* {data.map((comment) => (
-          <ApplicantCommentDetail comment={comment} key={comment.createAt} />
-        ))} */}
+        {data.map((comment) => (
+          <ApplicantCommentDetail comment={comment} key={comment.id} />
+        ))}
       </div>
     </>
   );

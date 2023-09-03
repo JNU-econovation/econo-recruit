@@ -5,7 +5,6 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 
 interface ApplicantCommentReq {
   id: string;
-  postId: string;
   content: string;
   createAt: string;
   interviewerName: string;

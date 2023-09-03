@@ -73,14 +73,14 @@ export const APPLICATION_MANAGER = [
             name: "experienceTextarea",
             title:
               "본인이 어떠한 부분을 설계 및 개선했고, 그 경험을 통해 무엇을 얻었는지 서술해 주세요.",
-            require: false,
+            require: true,
             type: "true",
           },
           {
             name: "experienceTextarea",
             title:
               "우리 주변의 IT서비스 중에 개선하고 싶은 서비스가 있다면, 어떤 점을 '왜' 그리고 '어떻게' 개선하고 싶은지 서술해 주세요.",
-            require: false,
+            require: true,
             type: "false",
           },
         ],

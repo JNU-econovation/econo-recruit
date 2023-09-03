@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./Column.component";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 import { postLocations } from "@/src/apis/kanban/location";
 

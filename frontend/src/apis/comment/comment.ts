@@ -1,18 +1,20 @@
 import { https } from "../../functions/axios";
 
 export interface CommentRes {
-  createdAt: string;
-  interviewerName: string;
+  id: string;
   content: string;
+  createAt: string;
+  interviewerName: string;
   isLike: boolean;
   likeCount: number;
+  canEdit: boolean;
 }
 
 export interface CommentReq {
   content: string;
-  parentId: number; // 대댓글 시 부모 댓글의 id
+  parentCommentId: number;
   applicantId: string;
-  idpId: string;
+  cardId: number;
 }
 
 export const getAllCommentById = async (applicantId: string) => {

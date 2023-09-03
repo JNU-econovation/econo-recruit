@@ -49,11 +49,19 @@ const ApplicantLabel: FC<ApplicantLabelProps> = ({ postId }) => {
         <div className="grid grid-cols-6 gap-2 my-4 w-fit">
           {openAdditional
             ? data.map((label) => (
-                <ApplicantLabelButton label={label} postId={postId} />
+                <ApplicantLabelButton
+                  key={label.name}
+                  label={label}
+                  postId={postId}
+                />
               ))
             : data
                 .map((label) => (
-                  <ApplicantLabelButton label={label} postId={postId} />
+                  <ApplicantLabelButton
+                    key={label.name}
+                    label={label}
+                    postId={postId}
+                  />
                 ))
                 .slice(0, 6)}
         </div>

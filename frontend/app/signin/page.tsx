@@ -2,6 +2,7 @@
 
 import SignInForm from "@/components/user/SignInForm.component";
 import { signIn } from "@/src/apis/user";
+import { localStorage } from "@/src/functions/localstorage";
 import { useRouter } from "next/navigation";
 import { useReducer, useState } from "react";
 
@@ -30,8 +31,11 @@ const SignInPage = () => {
   const onSubmit = async () => {
     if (await signIn(signInData)) {
       navigate.push("/");
+      return;
     }
     setError("로그인이 실패했습니다.");
+    localStorage.remove("accessToken");
+    localStorage.remove("refreshToken");
   };
 
   return (

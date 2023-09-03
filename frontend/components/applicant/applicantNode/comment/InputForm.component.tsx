@@ -1,10 +1,12 @@
 "use client";
 
-import { FC, FormEvent, useCallback, useEffect, useState } from "react";
+import { FC, FormEvent, use, useCallback, useEffect, useState } from "react";
 import React from "react";
 import { Editor } from "@toast-ui/react-editor";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { useMutation } from "@tanstack/react-query";
+import { postComment } from "@/src/apis/comment/comment";
 
 type InputCheckBoxProps = {
   name: string;
@@ -37,17 +39,28 @@ const InputCheckBox = ({
 };
 
 interface ApplicantCommentInputFormProps {
-  onChange: (value: string) => void;
-  onSubmit: (event: FormEvent) => void;
+  applicantId: string;
 }
 
 const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
-  onChange,
-  onSubmit,
+  applicantId,
 }) => {
   const [isNocomment, setIsNocomment] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(false);
+  const [content, setContent] = useState("");
   const editorRef = React.useRef<Editor>(null);
+
+  const { mutate } = useMutation(
+    () => {
+      return postComment({
+        content,
+        applicantId,
+        cardId: 0,
+        parentCommentId: 0,
+      });
+    },
+    { onSettled: () => {} }
+  );
 
   const onNocommentCheck = useCallback(() => {
     setIsNocomment(!isNocomment);
@@ -58,10 +71,10 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
     }
   }, [isNocomment]);
 
-  const prevSubmit = useCallback(() => {
+  const prevSubmit = () => {
     const content = editorRef.current?.getInstance().getMarkdown();
-    onChange((hasQuestion ? "**[질문]**" : "") + content);
-  }, [onChange]);
+    setContent((hasQuestion ? "**[질문]**" : "") + content);
+  };
 
   useEffect(() => {
     if (editorRef.current) {
@@ -74,7 +87,7 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
     <form
       onSubmit={(e) => {
         prevSubmit();
-        onSubmit(e);
+        mutate();
       }}
     >
       <Editor

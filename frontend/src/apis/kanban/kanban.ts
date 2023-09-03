@@ -85,9 +85,14 @@ export const getAllKanbanData = async (
     title: column.title,
     card: cardsData
       .filter((card) => card.columnId === column.columnsId)
-      // .sort((a, b) =>
-      //   a.nextBoardId === null ? 1 : a.nextBoardId === b.boardId ? 1 : -1
-      // )
+      .sort((a, b) =>
+        a.nextBoardId === null
+          ? 1
+          : b.nextBoardId === null
+          ? -1
+          : a.nextBoardId - b.nextBoardId
+      )
+      .sort((a, b) => (a.cardType === "INVISIBLE" ? -1 : 1))
       .map((card) => ({
         id: card.boardId,
         cardType: card.cardType,
