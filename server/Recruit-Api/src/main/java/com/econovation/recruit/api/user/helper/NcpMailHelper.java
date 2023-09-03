@@ -34,7 +34,7 @@ public class NcpMailHelper {
     @SneakyThrows
     public void sendMail(String title, String body, String recipientAddress) {
         String timeStamp = String.valueOf(Instant.now().toEpochMilli());
-        String signature = makeSignature(ncpProperties.getAccessKey(), ncpProperties.getSecretKey(), ncpProperties.getSendUrl(), timeStamp);
+        String signature = makeSignature(ncpProperties.getAccessKey(), ncpProperties.getSecretKey(), "/api/v1/mails", timeStamp);
         ncpClient.sendMail(ncpProperties.getAccessKey(), timeStamp,  signature, createSendRawEmailDto(title, body, recipientAddress));
     }
     public String makeSignature(
@@ -66,7 +66,6 @@ public class NcpMailHelper {
         }
         return result;
     }
-
     public SendRawEmailDto createSendRawEmailDto(String title, String body, String recipientAddress) {
         return SendRawEmailDto.builder()
                 .senderAddress(ncpProperties.getSenderAddress())

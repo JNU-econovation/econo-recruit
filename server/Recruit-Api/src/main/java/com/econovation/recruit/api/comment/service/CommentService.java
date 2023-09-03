@@ -18,6 +18,7 @@ import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -181,7 +182,8 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @Transactional
-    public void updateCommentContent(Long commentId, String content) {
+    public void updateCommentContent(Long commentId, Map<String, String> contents) {
+        String content = contents.get("content");
         // 내가 작성한 comment 만 수정할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
