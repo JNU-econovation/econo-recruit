@@ -24,7 +24,7 @@ public class AwsSesConfig {
                 AwsBasicCredentials.create(this.accessKey, this.secretKey);
         return SesClient.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
-                .region(Region.US_WEST_2)
+                .region(Region.AP_NORTHEAST_2)
                 .build();
     }
 }

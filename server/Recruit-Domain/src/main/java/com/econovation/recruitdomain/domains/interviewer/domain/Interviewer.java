@@ -51,4 +51,8 @@ public class Interviewer {
                 .year(interviewerResponse.getYear())
                 .build();
     }
+
+    public void changePassword(String encededPassword) {
+        this.password = encededPassword;
+    }
 }

@@ -6,6 +6,8 @@ import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitinfrastructure.mail.EmailSenderService;
 import com.econovation.recruitinfrastructure.mail.GoogleMailProperties;
+import com.econovation.recruitinfrastructure.ses.AwsSesUtils;
+import com.econovation.recruitinfrastructure.ses.SendRawEmailDto;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import javax.mail.MessagingException;
@@ -27,6 +29,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class ApplicantRegisterEventConfirmEmailHandler {
     private final GoogleMailProperties googleMailProperties;
     private final EmailSenderService emailSenderService;
+    private final AwsSesUtils awsSesUtils;
     @Async
     @TransactionalEventListener(
             classes = ApplicantRegisterEvent.class,
@@ -35,13 +38,12 @@ public class ApplicantRegisterEventConfirmEmailHandler {
     public void handle(ApplicantRegisterEvent applicantRegistEvent) {
         log.info("%s님의 지원서가 접수되었습니다.", applicantRegistEvent.getUserName());
         try{
-            MimeMessage mimeMessage = emailSenderService.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setFrom(googleMailProperties.getUsername());
-            helper.setTo(applicantRegistEvent.getEmail());
-            helper.setSubject("[Econovation] 에코노베이션 지원서 접수 확인 메일");
-            helper.setText(generateConfirmRegisterEmailBody(applicantRegistEvent.getEmail(), applicantRegistEvent.getUserName()), true);
-            emailSenderService.sendEmail(mimeMessage);
+            SendRawEmailDto sendData = SendRawEmailDto.builder()
+                    .bodyHtml(generateConfirmRegisterEmailBody(applicantRegistEvent.getEmail(), applicantRegistEvent.getUserName()))
+                    .recipient(applicantRegistEvent.getEmail())
+                    .subject("[Econovation] 에코노베이션 지원서 접수 확인 메일")
+                    .build();
+            awsSesUtils.sendRawEmails(sendData);
         } catch (MessagingException e) {
             log.error("메일 content 생성에 실패하였습니다.. {}", e.getMessage());
         }

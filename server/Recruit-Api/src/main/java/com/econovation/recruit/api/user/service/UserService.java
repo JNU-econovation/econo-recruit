@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.user.service;
 
+import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
 import com.econovation.recruitcommon.dto.TokenResponse;
@@ -33,6 +34,13 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
         return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
     }
 
+    @Override
+    public TokenResponse refresh(String refreshToken) {
+        Long idpId = jwtTokenProvider.parseRefreshToken(refreshToken);
+        Interviewer account = interviewerLoadPort.loadInterviewById(idpId);
+        return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+    }
+
     private void checkPassword(String password, String encodePassword) {
         boolean isMatch = passwordEncoder.matches(password, encodePassword);
         if (!isMatch) throw InterviewerNotMatchException.EXCEPTION;
@@ -41,7 +49,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     @Override
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
-        if (interviewerLoadPort.loadOptionalInterviewerByEmail(signUpRequestDto.getEmail()) != null)
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(signUpRequestDto.getEmail()).isPresent())
             throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
         Interviewer interviewer =
@@ -52,5 +60,13 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
                         .password(encededPassword)
                         .build();
         interviewerRecordPort.save(interviewer);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(String password) {
+        Long userId = SecurityUtils.getCurrentUserId();
+        String encededPassword = passwordEncoder.encode(password);
+        interviewerLoadPort.loadInterviewById(userId).changePassword(encededPassword);
     }
 }
