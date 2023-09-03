@@ -86,11 +86,14 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/signup")
                 .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/token/refresh")
+                .permitAll()
+
                 .mvcMatchers(HttpMethod.POST, "/api/v1/login")
                 .permitAll()
                 // TODO 임시로 모든 요청 permit  -> 채승이가 로그인 로직 완성하면 수정
-                .mvcMatchers("/**")
-                .permitAll()
+//                .mvcMatchers("/**")
+//                .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다
                 // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.

@@ -28,8 +28,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     @Override
     @Transactional
     public TokenResponse execute(LoginRequestDto loginRequestDto) {
-        Interviewer account =
-                interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
+        Interviewer account = interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
         checkPassword(loginRequestDto.getPassword(), account.getPassword());
         return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
     }

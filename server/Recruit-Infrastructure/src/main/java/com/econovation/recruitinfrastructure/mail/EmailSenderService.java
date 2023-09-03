@@ -1,6 +1,5 @@
 package com.econovation.recruitinfrastructure.mail;
 
-import java.util.Properties;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
