@@ -3,6 +3,7 @@ package com.econovation.recruit.api.interviewer.service;
 import com.econovation.recruit.api.interviewer.helper.IdpHelper;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
+import com.econovation.recruitdomain.domains.dto.InterviewerResponseDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
@@ -48,8 +49,9 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
-    public List<Interviewer> findAll() {
-        return interviewerLoadPort.findAll();
+    public List<InterviewerResponseDto> findAll() {
+        List<Interviewer> interviewers = interviewerLoadPort.findAll();
+        return interviewers.stream().map(InterviewerResponseDto::from).collect(Collectors.toList());
     }
 
     @Override
