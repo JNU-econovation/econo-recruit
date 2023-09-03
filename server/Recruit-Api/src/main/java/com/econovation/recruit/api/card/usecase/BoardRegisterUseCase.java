@@ -4,6 +4,7 @@ import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 
 @UseCase
 public interface BoardRegisterUseCase {
@@ -18,4 +19,6 @@ public interface BoardRegisterUseCase {
     Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
 
     void relocateCard(UpdateLocationBoardDto updateLocationBoardDto);
+
+    void updateColumnLocation(UpdateLocationColumnDto updateLocationDto);
 }

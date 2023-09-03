@@ -35,22 +35,6 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final ColumnsUseCase columnsUseCase;
     private final AnswerLoadUseCase answerLoadPort;
     private final LabelLoadPort labelLoadPort;
-    /*    @Override
-    public Card saveApplicantCard(Applicant applicant) {
-                    // 지원자 희망 분야 (hope_field) 와 매칭되는  col_loc 조회 ( 새로 들어갈 빈 자리 )
-                    Map<String, Integer> newestLocation =
-                                                    boardUseCase.getNewestLocation(applicant.getHopeField());
-                    // 그 col_loc 에서 생성될 마지막 low_col 조회
-                    Board board =
-                                                    boardUseCase.save(
-                                                                                    newestLocation,
-                                                                                    applicant.getHopeField(),
-                                                                                    APPLICANT_REGISTER_NAVIGATION_LOCATION);
-                    Applicant savedApplicant = applicantRecordPort.save(applicant);
-                    Card card = Card.builder().applicant(savedApplicant).workCardInfo("-").board(board).build();
-                    return cardRecordPort.save(card);
-    }*/
-
     @Override
     @Transactional(readOnly = true)
     public List<Card> findAll() {

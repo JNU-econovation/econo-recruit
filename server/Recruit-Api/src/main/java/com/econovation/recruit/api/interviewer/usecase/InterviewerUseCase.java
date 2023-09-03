@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.interviewer.usecase;
 
 import com.econovation.recruitcommon.annotation.UseCase;
+import com.econovation.recruitdomain.domains.dto.InterviewerResponseDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public interface InterviewerUseCase {
 
     void createInterviewersByName(List<String> names);
 
-    List<Interviewer> findAll();
+    List<InterviewerResponseDto> findAll();
 
     void createTempInterviewers();
+
+    InterviewerResponseDto findMe();
 }

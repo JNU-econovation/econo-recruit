@@ -4,6 +4,10 @@ on:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
+      - develop
+      - release
 jobs:
   deploy-production:
     name: Deploy(Production)
@@ -43,14 +47,10 @@ jobs:
           script_start: |
             cd ~/econo-recruit/server # 원하는 경로로 변경하세요.
           script: |
-            sh docker-install.sh
-            echo "start docker-compose up: econovation-server"
-            sudo docker-compose -v
-            cat .env 
-            sudo docker-compose -f docker-compose.yml pull
-            sudo docker-compose -f docker-compose.yml --env-file .env up --build -d 
-            echo "prune images"
-            sudo docker system prune --all -f
+            echo "start deploy: restart server econovation-server"
+            sudo docker-compose
+            cat .env
+            sudo sh deploy.sh
       - name: Notify on success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2

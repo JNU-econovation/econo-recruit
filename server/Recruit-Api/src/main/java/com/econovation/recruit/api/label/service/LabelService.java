@@ -11,6 +11,7 @@ import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,9 +56,8 @@ public class LabelService implements LabelUseCase {
     public List<String> findByApplicantId(String applicantId) {
         List<Label> labels = labelLoadPort.loadLabelByApplicantId(applicantId);
 
-        if (labels.isEmpty()) {
-            throw LabelNotFoundException.EXCEPTION;
-        }
+        if (labels.isEmpty())
+            return Collections.emptyList();
 
         List<Long> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);

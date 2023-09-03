@@ -49,6 +49,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
     BAD_FILE_EXTENSION(BAD_REQUEST, "FILE_400_1", "파일 확장자가 잘못 되었습니다."),
     OUT_OF_INDEX(BAD_REQUEST, "GLOBAL_400_2", "인덱스 범위를 벗어났습니다."),
     TOO_MANY_REQUEST(TOO_MANY_REQUESTS, "GLOBAL_429_1", "과도한 요청을 보내셨습니다. 잠시 기다려 주세요."),
+    INVALID_PASSWORD(BAD_REQUEST, "GLOBAL_400_4", "비밀번호는 10자 이상 숫자, 특수문자를 포함해야 합니다."),
     ;
     private Integer status;
     private String code;

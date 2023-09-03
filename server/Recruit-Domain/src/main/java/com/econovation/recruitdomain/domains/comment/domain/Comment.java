@@ -61,9 +61,7 @@ public class Comment extends BaseTimeEntity {
         this.likeCount++;
     }
 
-    public void minusLikeCount() {
-        this.likeCount++;
-    }
+    public void minusLikeCount() { this.likeCount--;}
 
     public boolean isHost(Long idpId) {
         return this.idpId.equals(idpId);

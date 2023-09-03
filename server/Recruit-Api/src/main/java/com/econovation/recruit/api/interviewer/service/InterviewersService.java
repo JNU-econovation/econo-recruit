@@ -1,8 +1,10 @@
 package com.econovation.recruit.api.interviewer.service;
 
+import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.interviewer.helper.IdpHelper;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
+import com.econovation.recruitdomain.domains.dto.InterviewerResponseDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
@@ -41,6 +43,7 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
+    @Transactional
     public void createInterviewersByName(List<String> names) {
         List<InterviewerResponse> interviewers = idpHelper.loadByNames(names);
         interviewerRecordPort.saveAll(
@@ -48,11 +51,14 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
-    public List<Interviewer> findAll() {
-        return interviewerLoadPort.findAll();
+    @Transactional(readOnly = true)
+    public List<InterviewerResponseDto> findAll() {
+        List<Interviewer> interviewers = interviewerLoadPort.findAll();
+        return interviewers.stream().map(InterviewerResponseDto::from).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public void createTempInterviewers() {
         interviewerRecordPort.save(
                 Interviewer.builder()
@@ -61,5 +67,13 @@ public class InterviewersService implements InterviewerUseCase {
                         .role(Role.ROLE_OPERATION)
                         .year(21)
                         .build());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public InterviewerResponseDto findMe() {
+        Long userId = SecurityUtils.getCurrentUserId();
+        Interviewer interviewer = interviewerLoadPort.loadInterviewById(userId);
+        return InterviewerResponseDto.from(interviewer);
     }
 }

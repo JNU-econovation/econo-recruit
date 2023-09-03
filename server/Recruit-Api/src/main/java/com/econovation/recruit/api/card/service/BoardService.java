@@ -16,6 +16,7 @@ import com.econovation.recruitdomain.domains.board.exception.BoardInvisibleMovin
 import com.econovation.recruitdomain.domains.board.exception.BoardSameLocationException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.ColumnLoadPort;
@@ -320,14 +321,38 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         // 기준 보드는 이동이 불가하다.
         if (invisibleBoard.contains(updateLocationBoardDto.getBoardId()))
             throw BoardInvisibleMovingException.EXCEPTION;
+
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
+
         // 같은 board 끼리는 위치 변경이 불가하다.
-        if (currentBoard.getId().equals(targetBoard.getId()))
+        if (currentBoard.getId() == targetBoard.getId() || targetBoard.getNextBoardId() == currentBoard.getId())
             throw BoardSameLocationException.EXCEPTION;
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
         updateNextBoardIds(currentBoard, targetBoard);
+    }
+
+    @Override
+    @Transactional
+    public void updateColumnLocation(UpdateLocationColumnDto updateLocationDto) {
+        Columns currentColumn = columnLoadPort.findById(updateLocationDto.getColumnId());
+        Columns targetColumn = columnLoadPort.findById(updateLocationDto.getTargetColumnId());
+
+        updateNextColumnIds(currentColumn, targetColumn);
+    }
+
+    private void updateNextColumnIds(Columns currentColumn, Columns targetColumn) {
+        if (currentColumn.getId() == targetColumn.getId() || targetColumn.getNextColumnsId() == currentColumn.getId())
+            throw BoardSameLocationException.EXCEPTION;
+        columnLoadPort
+                .getByNextColumnsId(currentColumn.getId())
+                .ifPresent(
+                        column -> {
+                            column.updateNextColumnsId(currentColumn.getNextColumnsId());
+                        });
+        currentColumn.updateNextColumnsId(targetColumn.getNextColumnsId());
+        targetColumn.updateNextColumnsId(currentColumn.getId());
     }
 
     private void updateNextBoardIds(Board board1, Board board2) {

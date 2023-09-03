@@ -7,4 +7,6 @@ import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
 @UseCase
 public interface UserLoginUseCase {
     TokenResponse execute(LoginRequestDto loginRequestDto);
+
+    TokenResponse refresh(String refreshToken);
 }

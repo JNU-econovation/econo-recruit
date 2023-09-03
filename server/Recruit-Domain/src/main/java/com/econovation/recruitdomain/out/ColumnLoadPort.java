@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import java.util.List;
+import java.util.Optional;
 
 public interface ColumnLoadPort {
     Columns findById(Integer id);
@@ -11,4 +12,6 @@ public interface ColumnLoadPort {
     Columns getColumnByNextColumnsId(Integer nextColId);
 
     List<Columns> getColumnsByNavigationId(Integer navigationId);
+
+    Optional<Columns> getByNextColumnsId(Integer id);
 }

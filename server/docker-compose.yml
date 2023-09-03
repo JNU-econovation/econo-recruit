@@ -8,6 +8,8 @@ services:
     container_name: database
     env_file:
       - .env
+    volumes:
+      - ~/docker/mysql:/var/lib/mysql
     network_mode: "host"
     environment:
       - TZ=Asia/Seoul

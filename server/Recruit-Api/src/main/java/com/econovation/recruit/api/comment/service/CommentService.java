@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
+import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
@@ -17,6 +18,8 @@ import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,9 +37,18 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @Transactional
-    public Comment saveComment(Comment comment) {
+    public Comment saveComment(CommentRegisterDto commentDto) {
         Long userId = SecurityUtils.getCurrentUserId();
-        comment.setIdpId(userId);
+        Comment comment = Comment.builder()
+                .content(commentDto.getContent())
+                .applicantId(commentDto.getApplicantId())
+                .cardId(commentDto.getCardId())
+                .parentId(commentDto.getParentCommentId())
+                .idpId(userId)
+                .isDeleted(false)
+                .likeCount(0)
+                .build();
+
         Comment loadedComment = commentRecordPort.saveComment(comment);
         // 지원서 카드면 카드 타입이지만
         if (comment.isApplicantComment()) {
@@ -76,6 +88,7 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
+    @Transactional
     public void createCommentLike(Long commentId) {
         // 기존에 눌렀으면 취소 처리
         Long idpId = SecurityUtils.getCurrentUserId();
@@ -103,6 +116,7 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
+    @Transactional
     public void deleteCommentLike(Long commentId) {
         // 현재 내가 눌렀던 댓글만 삭제할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
@@ -122,20 +136,30 @@ public class CommentService implements CommentUseCase {
 
     @Override
     public List<CommentPairVo> findByCardId(Long cardId) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
+        Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findById(cardId);
         List<Comment> comments = commentLoadPort.findByCardId(card.getId());
 
-        List<Long> commentIdpIds =
-                comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
+        List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIdpIds);
-
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
                         comment -> {
-                            boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
-                            String interviewerName =
+                            Boolean isLiked =
+                                    commentLikes.stream()
+                                            .anyMatch(
+                                                    commentLike ->
+                                                            commentLike
+                                                                    .getCommentId()
+                                                                    .equals(comment.getId())
+                                                                    && commentLike
+                                                                    .getIdpId()
+                                                                    .equals(idpId));
+
+                            Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
+                            String interviewersName =
                                     interviewers.stream()
                                             .filter(
                                                     interviewer ->
@@ -145,8 +169,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-
-                            return CommentPairVo.of(comment, isLiked, interviewerName);
+                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
                         })
                 .collect(Collectors.toList());
     }
@@ -159,7 +182,8 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @Transactional
-    public void updateCommentContent(Long commentId, String content) {
+    public void updateCommentContent(Long commentId, Map<String, String> contents) {
+        String content = contents.get("content");
         // 내가 작성한 comment 만 수정할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
@@ -176,9 +200,9 @@ public class CommentService implements CommentUseCase {
     public List<CommentPairVo> findByApplicantId(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
-        List<Long> commentIds = comments.stream().map(Comment::getId).collect(Collectors.toList());
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIds);
-        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(commentIds);
+        List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
                         comment -> {
@@ -192,6 +216,8 @@ public class CommentService implements CommentUseCase {
                                                                     && commentLike
                                                                             .getIdpId()
                                                                             .equals(idpId));
+
+                            Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
                             String interviewersName =
                                     interviewers.stream()
                                             .filter(
@@ -202,7 +228,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewersName);
+                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
                         })
                 .collect(Collectors.toList());
     }

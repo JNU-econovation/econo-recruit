@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
+import com.econovation.recruitdomain.domains.applicant.exception.AnswerEmptyFieldException;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
 import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;
 import java.util.List;
@@ -80,17 +81,21 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                         .filter(answer -> answer.getQuestion().getName().equals("field"))
                         .findFirst()
                         .map(Answer::getAnswer)
-                        .orElseThrow(() -> new RuntimeException("희망 분야를 찾을 수 없습니다."));
+                        .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
 
         String name =
                 results.stream()
                         .filter(answer -> answer.getQuestion().getName().equals("name"))
                         .findFirst()
                         .map(Answer::getAnswer)
-                        .orElseThrow(() -> new RuntimeException("이름을 찾을 수 없습니다."));
-
+                        .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
+        String email = results.stream()
+                .filter(answer -> answer.getQuestion().getName().equals("email"))
+                .findFirst()
+                .map(Answer::getAnswer)
+                .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
         ApplicantRegisterEvent applicantRegisterEvent =
-                ApplicantRegisterEvent.of(applicantId.toString(), name, hopeField);
+                ApplicantRegisterEvent.of(applicantId.toString(), name, hopeField,email);
         Events.raise(applicantRegisterEvent);
         return applicantId;
     }

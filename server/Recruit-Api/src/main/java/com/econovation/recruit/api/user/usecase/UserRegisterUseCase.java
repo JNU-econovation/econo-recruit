@@ -7,4 +7,6 @@ import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 public interface UserRegisterUseCase {
 
     void signUp(SignUpRequestDto signUpRequestDto);
+
+    void changePassword(String password);
 }

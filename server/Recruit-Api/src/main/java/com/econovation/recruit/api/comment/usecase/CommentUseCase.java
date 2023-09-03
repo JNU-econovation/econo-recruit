@@ -3,11 +3,13 @@ package com.econovation.recruit.api.comment.usecase;
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
+import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import java.util.List;
+import java.util.Map;
 
 @UseCase
 public interface CommentUseCase {
-    Comment saveComment(Comment comment);
+    Comment saveComment(CommentRegisterDto comment);
 
     void deleteComment(Long commentId);
 
@@ -21,7 +23,7 @@ public interface CommentUseCase {
 
     Boolean isCheckedLike(Long commentId);
 
-    void updateCommentContent(Long commentId, String content);
+    void updateCommentContent(Long commentId, Map<String, String> contents);
 
     List<CommentPairVo> findByApplicantId(String applicantId);
 }

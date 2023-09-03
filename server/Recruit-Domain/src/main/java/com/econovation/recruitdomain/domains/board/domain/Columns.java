@@ -40,4 +40,5 @@ public class Columns extends BaseTimeEntity {
     public void updateNextColumnsId(Integer id) {
         this.nextColumnsId = id;
     }
+
 }

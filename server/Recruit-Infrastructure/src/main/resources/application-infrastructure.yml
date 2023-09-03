@@ -1,12 +1,38 @@
+aws:
+  access-key: ${AWS_ACCESS_KEY:testKey}
+  secret-key: ${AWS_SECRET_KEY:secretKey}
+  ses:
+    region: ${AWS_SES_REGION:ap-northeast-2}
+    verified-email: ${AWS_SES_VERIFIED_EMAIL:}
+  s3:
+    bucket: ${AWS_S3_BUCKET:bucket}
+    private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
+    base-url: ${AWS_S3_BASE_URL:base-url}
+ncp:
+  access-key: ${NCP_ACCESS_KEY}
+  secret-key: ${NCP_SECRET_KEY}
+  mail-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
+  sender-address: ${NCP_SENDER_ADDRESS:}
+
 spring:
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD:}
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: 587
+    username: ${GMAIL_ADDRESS:ymecca730135@gmail.com}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
-    url: ${SLACK_WEBHOOK_URL:}
     id: ${SLACK_WEBHOOK_ID:}
     channel :  ${SLACK_SERVICE_CHANNEL_ID:}
     username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}
@@ -17,12 +43,6 @@ slack:
     channel: ${SLACK_TF_SERVICE_CHANNEL_ID:}
     username: ${SLACK_TF_WEBHOOK_USERNAME:Recruit_알림요정}
     icon-url: ${SLACK_TF_WEBHOOK_ICON_URL:}
-
-ncp:
-  service-id: ${NCP_SERVICE_ID:}
-  access-key: ${NCP_ACCESS_KEY:}
-  secret-key: ${NCP_SECRET_KEY:}
-  plus-friend-id: ${NCP_PLUS_FRIEND_ID:}
 
 ---
 spring:
