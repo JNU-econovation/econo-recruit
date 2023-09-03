@@ -1,7 +1,11 @@
 "use client";
 
 import { ApplicantReq } from "@/src/apis/applicant/applicant";
-import { postApplicant, postApplicantTimeline } from "@/src/apis/application";
+import {
+  postApplicant,
+  postApplicantBackup,
+  postApplicantTimeline,
+} from "@/src/apis/application";
 import { CURRENT_GENERATION } from "@/src/constants";
 import { ApplicationQuestion } from "@/src/constants/application/type";
 import { localStorage } from "@/src/functions/localstorage";
@@ -81,6 +85,7 @@ export const postApplication = async (
     const applicantId = await postApplicant(Array.from(applicationData));
 
     await postApplicantTimeline(applicantId, timeline);
+    await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);
     return false;

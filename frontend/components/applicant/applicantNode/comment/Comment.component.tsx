@@ -29,16 +29,10 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <div className="text-lg font-semibold">댓글</div>
-          <div className="text-sm">{data.length}개</div>
-        </div>
-        <button>
-          <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
-        </button>
-      </div>
-      <ApplicantCommentInputForm applicantId={postId} />
+      <ApplicantCommentInputForm
+        applicantId={postId}
+        commentLength={data.length}
+      />
       <div className="flex flex-col gap-8 pt-8">
         {data.map((comment) => (
           <ApplicantCommentDetail comment={comment} key={comment.id} />

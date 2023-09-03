@@ -42,3 +42,15 @@ export const deleteComment = async (commentId: string) => {
   });
   return data;
 };
+
+export const getCardsByCardId = async (cardId: string) => {
+  const { data } = await https.get<CommentRes[]>(`/cards/${cardId}/comments`);
+  return data;
+};
+
+export const getCardsByApplicantId = async (applicantId: string) => {
+  const { data } = await https.get<CommentRes[]>(
+    `/applicants/${applicantId}/comments`
+  );
+  return data;
+};

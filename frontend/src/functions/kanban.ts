@@ -48,11 +48,11 @@ export const getFromToIndex = (
     const from = result.source;
     const to = result.destination;
 
-    console.log(kanbanData[+from.droppableId - 1].card[from.index]);
-    console.log(kanbanData[+from.droppableId - 1].card[0]);
+    // console.log(kanbanData[+from.droppableId - 1].card[from.index]);
+    // console.log(kanbanData[+from.droppableId - 1].card[0]);
 
-    console.log(kanbanData[+to.droppableId - 1].card[to.index]);
-    console.log(kanbanData[+to.droppableId - 1].card[0]);
+    // console.log(kanbanData[+to.droppableId - 1].card[to.index]);
+    // console.log(kanbanData[+to.droppableId - 1].card[0]);
 
     const boardId =
       kanbanData[+from.droppableId - 1].card[from.index]?.id ??

@@ -1,13 +1,13 @@
 import { https } from "@/src/functions/axios";
 
 export const getCommentsIsLike = async (commentId: string) => {
-  const { data } = await https.get<boolean>(`/comments/is-like`);
+  const { data } = await https.get<boolean>(`/comments/${commentId}/is-like`);
 
   return data;
 };
 
 export const postCommentsLike = async (commentId: string) => {
-  const { data } = await https.post<string>(`/comments/likes`, {
+  const { data } = await https.post<string>(`/comments/${commentId}/likes`, {
     params: { commentId: commentId },
   });
 

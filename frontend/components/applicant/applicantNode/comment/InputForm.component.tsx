@@ -40,10 +40,12 @@ const InputCheckBox = ({
 
 interface ApplicantCommentInputFormProps {
   applicantId: string;
+  commentLength: number;
 }
 
 const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
   applicantId,
+  commentLength,
 }) => {
   const [isNocomment, setIsNocomment] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(false);
@@ -90,6 +92,15 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
         mutate();
       }}
     >
+      <div className="flex justify-between items-center pb-2">
+        <div className="flex gap-4 items-center">
+          <div className="text-lg font-semibold">댓글</div>
+          <div className="text-sm">{commentLength}개</div>
+        </div>
+        <button>
+          <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
+        </button>
+      </div>
       <Editor
         className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
         height="6rem"
@@ -106,7 +117,6 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
         }}
         ref={editorRef}
       />
-      <textarea className="hidden"></textarea>
       <div className="font-normal">
         <InputCheckBox
           name="question"
