@@ -3,11 +3,12 @@ package com.econovation.recruit.api.comment.usecase;
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
+import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import java.util.List;
 
 @UseCase
 public interface CommentUseCase {
-    Comment saveComment(Comment comment);
+    Comment saveComment(CommentRegisterDto comment);
 
     void deleteComment(Long commentId);
 

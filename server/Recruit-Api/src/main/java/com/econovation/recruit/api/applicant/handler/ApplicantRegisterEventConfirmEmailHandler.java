@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruit.api.user.helper.NcpMailHelper;
 import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.card.domain.Card;
@@ -27,9 +28,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 @Slf4j
 public class ApplicantRegisterEventConfirmEmailHandler {
-    private final GoogleMailProperties googleMailProperties;
-    private final EmailSenderService emailSenderService;
-    private final AwsSesUtils awsSesUtils;
+    private final NcpMailHelper ncpMailHelper;
     @Async
     @TransactionalEventListener(
             classes = ApplicantRegisterEvent.class,
@@ -37,16 +36,10 @@ public class ApplicantRegisterEventConfirmEmailHandler {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(ApplicantRegisterEvent applicantRegistEvent) {
         log.info("%s님의 지원서가 접수되었습니다.", applicantRegistEvent.getUserName());
-        try{
-            SendRawEmailDto sendData = SendRawEmailDto.builder()
-                    .bodyHtml(generateConfirmRegisterEmailBody(applicantRegistEvent.getEmail(), applicantRegistEvent.getUserName()))
-                    .recipient(applicantRegistEvent.getEmail())
-                    .subject("[Econovation] 에코노베이션 지원서 접수 확인 메일")
-                    .build();
-            awsSesUtils.sendRawEmails(sendData);
-        } catch (MessagingException e) {
-            log.error("메일 content 생성에 실패하였습니다.. {}", e.getMessage());
-        }
+        ncpMailHelper.sendMail(
+                "[Econovation] 에코노베이션 지원서 접수 확인 메일",
+                generateConfirmRegisterEmailBody(applicantRegistEvent.getUserName()),
+                applicantRegistEvent.getEmail());
     }
 //
 //        MimeMessage mimeMessage = generateConfirmRegisterEmail(
@@ -69,7 +62,7 @@ public class ApplicantRegisterEventConfirmEmailHandler {
         return message;
     }*/
 
-    private String generateConfirmRegisterEmailBody(String email, String userName) {
+    private String generateConfirmRegisterEmailBody(String userName) {
         return String.format(
                 "안녕하세요 %s님,\n\n"
                         + "저희 에코노베이션에 지원해주셔서 진심으로 감사드립니다.\n\n"

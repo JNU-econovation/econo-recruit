@@ -36,24 +36,6 @@ public class AwsSesUtils {
     private final SesClient sesClient;
     private final SpringTemplateEngine templateEngine;
 
-/*    public void singleEmailRequest(
-            EmailUserInfo emailUserInfo, String subject, String template, Context context) {
-        // 이메일 수신거부시 발송안함
-        if (!emailUserInfo.getReceiveAgree()) {
-            return;
-        }
-        String html = templateEngine.process(template, context);
-
-        Builder sendEmailRequestBuilder = SendEmailRequest.builder();
-        sendEmailRequestBuilder.destination(
-                Destination.builder().toAddresses(emailUserInfo.getEmail()).build());
-        sendEmailRequestBuilder
-                .message(newMessage(subject, html))
-                .source("econovation@recruit.com")
-                .build();
-
-        sesClient.sendEmail(sendEmailRequestBuilder.build());
-    }*/
 
     private Message newMessage(String subject, String html) {
         Content content = Content.builder().data(subject).build();
@@ -63,31 +45,6 @@ public class AwsSesUtils {
                 .build();
     }
     // The HTML body of the email.
-
-    public void sendRawEmails(SendRawEmailDto sendRawEmailDto) throws MessagingException {
-
-        Session session = Session.getDefaultInstance(new Properties());
-        // Create a new MimeMessage object.
-        MimeMessage message = new MimeMessage(session);
-        // 제목 송신, 수신자 설정
-        setRawEmailBaseInfo(sendRawEmailDto, message);
-        // Create a multipart/mixed parent container.
-        MimeMultipart msg = new MimeMultipart("mixed");
-        // Add the parent container to the message.
-        message.setContent(msg);
-        // Define the HTML part.
-        setBodyHtml(sendRawEmailDto, msg);
-
-        setAttachments(sendRawEmailDto, msg);
-        // Try to send the email.
-        try {
-            // Send the email.
-            sesClient.sendRawEmail(buildSendRawEmailRequest(message));
-        } catch (Exception ex) {
-            log.info(ex.toString());
-            ex.printStackTrace();
-        }
-    }
 
     private static SendRawEmailRequest buildSendRawEmailRequest(MimeMessage message)
             throws IOException, MessagingException {
@@ -102,19 +59,6 @@ public class AwsSesUtils {
         return rawEmailRequest;
     }
 
-    private void setAttachments(SendRawEmailDto sendRawEmailDto, MimeMultipart msg) {
-        List<RawEmailAttachmentDto> rawEmailAttachments = sendRawEmailDto.getRawEmailAttachments();
-        rawEmailAttachments.forEach(
-                rawEmailAttachmentDto -> setAttachmentToMessage(msg, rawEmailAttachmentDto));
-    }
-
-    private void setBodyHtml(SendRawEmailDto sendRawEmailDto, MimeMultipart msg)
-            throws MessagingException {
-        MimeBodyPart htmlPart = new MimeBodyPart();
-        htmlPart.setContent(sendRawEmailDto.getBodyHtml(), "text/html; charset=UTF-8");
-        // html 추가
-        msg.addBodyPart(htmlPart);
-    }
 
     private void setAttachmentToMessage(
             MimeMultipart msg, RawEmailAttachmentDto rawEmailAttachmentDto) {
@@ -130,14 +74,5 @@ public class AwsSesUtils {
             log.info(e.toString());
             e.printStackTrace();
         }
-    }
-
-    private void setRawEmailBaseInfo(SendRawEmailDto sendRawEmailDto, MimeMessage message)
-            throws MessagingException {
-        // Add subject, from and to lines.
-        message.setSubject(sendRawEmailDto.getSubject(), "UTF-8");
-        message.setFrom(new InternetAddress(sendRawEmailDto.getSender()));
-        message.setRecipients(
-                RecipientType.TO, InternetAddress.parse(sendRawEmailDto.getRecipient()));
     }
 }

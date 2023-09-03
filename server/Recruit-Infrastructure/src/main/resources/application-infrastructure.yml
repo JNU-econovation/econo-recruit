@@ -8,6 +8,11 @@ aws:
     bucket: ${AWS_S3_BUCKET:bucket}
     private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
     base-url: ${AWS_S3_BASE_URL:base-url}
+ncp:
+  access-key: ${NCP_ACCESS_KEY}
+  secret-key: ${NCP_SECRET_KEY}
+  mail-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com/api/v1}
+  sender-address: ${NCP_SENDER_ADDRESS:}
 
 spring:
   redis:
@@ -38,12 +43,6 @@ slack:
     channel: ${SLACK_TF_SERVICE_CHANNEL_ID:}
     username: ${SLACK_TF_WEBHOOK_USERNAME:Recruit_알림요정}
     icon-url: ${SLACK_TF_WEBHOOK_ICON_URL:}
-
-ncp:
-  service-id: ${NCP_SERVICE_ID:}
-  access-key: ${NCP_ACCESS_KEY:}
-  secret-key: ${NCP_SECRET_KEY:}
-  plus-friend-id: ${NCP_PLUS_FRIEND_ID:}
 
 ---
 spring:

@@ -36,7 +36,7 @@ public class CommentController {
     @ApiErrorExceptionsExample(CommentExceptionDocs.class)
     @PostMapping("/comments")
     public ResponseEntity createComment(@RequestBody CommentRegisterDto commentRegisterDto) {
-        commentUseCase.saveComment(CommentRegisterDto.from(commentRegisterDto));
+        commentUseCase.saveComment(commentRegisterDto);
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 

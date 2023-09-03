@@ -9,6 +9,7 @@ import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
+import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
@@ -17,6 +18,7 @@ import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,18 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @Transactional
-    public Comment saveComment(Comment comment) {
+    public Comment saveComment(CommentRegisterDto commentDto) {
         Long userId = SecurityUtils.getCurrentUserId();
-        comment.setIdpId(userId);
+        Comment comment = Comment.builder()
+                .content(commentDto.getContent())
+                .applicantId(commentDto.getApplicantId())
+                .cardId(commentDto.getCardId())
+                .parentId(commentDto.getParentCommentId())
+                .idpId(userId)
+                .isDeleted(false)
+                .likeCount(0)
+                .build();
+
         Comment loadedComment = commentRecordPort.saveComment(comment);
         // 지원서 카드면 카드 타입이지만
         if (comment.isApplicantComment()) {
@@ -135,7 +146,7 @@ public class CommentService implements CommentUseCase {
                 .map(
                         comment -> {
                             boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
-                            Boolean canEdit = comment.getInterviewerId().equals(currentUserId);
+                            Boolean canEdit = comment.getIdpId().equals(currentUserId);
                             String interviewerName =
                                     interviewers.stream()
                                             .filter(
@@ -192,7 +203,8 @@ public class CommentService implements CommentUseCase {
                                                                     && commentLike
                                                                             .getIdpId()
                                                                             .equals(idpId));
-                            Boolean canEdit = comment.getInterviewerId().equals(idpId);
+
+                            Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
                             String interviewersName =
                                     interviewers.stream()
                                             .filter(
