@@ -52,6 +52,8 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
       if (key === "name" && value !== "timeline") {
         if ("require" in node) {
           if (node.require) {
+            console.log(value);
+
             applicationName.add(value);
           }
         }
@@ -68,9 +70,19 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
 
     getApplicationName(applicationData[applicationIndex], applicationName);
     const applicationNameArray = Array.from(applicationName);
+
     for (let i = 0; i < applicationNameArray.length; i++) {
       const name = applicationNameArray[i];
+
       if (localStorage.get(name, "") === "") {
+        alert("필수 항목을 입력해주세요.");
+        return false;
+      }
+      if (
+        name === "channel" &&
+        localStorage.get(name, "").length === 0 &&
+        localStorage.get("channelEtc", "").length === 0
+      ) {
         alert("필수 항목을 입력해주세요.");
         return false;
       }
