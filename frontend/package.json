@@ -33,6 +33,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "html-pdf": "^3.0.1",
     "jotai": "^2.2.3",
     "next": "13.4.17-canary.0",
     "postcss": "8.4.27",
