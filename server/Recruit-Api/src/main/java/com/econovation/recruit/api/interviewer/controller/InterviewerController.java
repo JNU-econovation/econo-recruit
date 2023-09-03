@@ -62,6 +62,15 @@ public class InterviewerController {
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
+    @Operation(description = "내 Interviewer 조회", summary = "내(면접관) 정보 조회")
+    @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
+    @GetMapping("/interviewers/me")
+    public ResponseEntity<InterviewerResponseDto> findMyInterviewer() {
+        InterviewerResponseDto interviewer = interviewerUseCase.findMe();
+        return new ResponseEntity(interviewer, HttpStatus.OK);
+    }
+
+
     @Operation(description = "Interviewer Role 변경")
     @PutMapping("/interviewers/{idp-id}/roles")
     public ResponseEntity<String> updateRole(

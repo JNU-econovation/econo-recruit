@@ -18,4 +18,6 @@ public interface InterviewerUseCase {
     List<InterviewerResponseDto> findAll();
 
     void createTempInterviewers();
+
+    InterviewerResponseDto findMe();
 }
