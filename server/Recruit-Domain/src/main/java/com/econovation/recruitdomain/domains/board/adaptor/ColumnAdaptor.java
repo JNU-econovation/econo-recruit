@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.domains.board.exception.ColumnsNotFoundExce
 import com.econovation.recruitdomain.out.ColumnLoadPort;
 import com.econovation.recruitdomain.out.ColumnRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,11 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
             return null;
         }
         return byNavigationId;
+    }
+
+    @Override
+    public Optional<Columns> getByNextColumnsId(Integer nextColumnId) {
+        return columnRepository.findByNextColumnsId(nextColumnId);
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     List<Columns> findByNavigationId(Integer navigationId);
 
     Optional<Columns> findByNextColumnsIdAndNavigationId(Integer nextColLoc, Integer navigationId);
+
+    Optional<Columns> findByNextColumnsId(Integer nextColumnsId);
 }

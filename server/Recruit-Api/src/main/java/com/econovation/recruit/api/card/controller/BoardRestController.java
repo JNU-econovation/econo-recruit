@@ -20,6 +20,7 @@ import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -103,6 +104,16 @@ public class BoardRestController {
         boardRecordUseCase.createColumn(title, navigationId);
         return new ResponseEntity(COLUMN_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
+
+    @Operation(summary = "지원서 칸반보드 열(세로줄) 위치 변경", description = "지원서 칸반보드 열(세로줄) 위치 변경")
+    @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
+    @PutMapping("/boards/columns")
+    public ResponseEntity<String> updateBoardColumn(
+        @RequestBody UpdateLocationColumnDto updateLocationDto){
+        boardRecordUseCase.updateColumnLocation(updateLocationDto);
+        return new ResponseEntity(COLUMN_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
+    }
+
 
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",

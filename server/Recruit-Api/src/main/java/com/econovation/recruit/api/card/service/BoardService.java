@@ -16,6 +16,7 @@ import com.econovation.recruitdomain.domains.board.exception.BoardInvisibleMovin
 import com.econovation.recruitdomain.domains.board.exception.BoardSameLocationException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
 import com.econovation.recruitdomain.out.BoardRecordPort;
 import com.econovation.recruitdomain.out.ColumnLoadPort;
@@ -330,6 +331,26 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
         updateNextBoardIds(currentBoard, targetBoard);
+    }
+
+    @Override
+    @Transactional
+    public void updateColumnLocation(UpdateLocationColumnDto updateLocationDto) {
+        Columns currentColumn = columnLoadPort.findById(updateLocationDto.getColumnId());
+        Columns targetColumn = columnLoadPort.findById(updateLocationDto.getTargetColumnId());
+
+        updateNextColumnIds(currentColumn, targetColumn);
+    }
+
+    private void updateNextColumnIds(Columns currentColumn, Columns targetColumn) {
+        columnLoadPort
+                .getByNextColumnsId(currentColumn.getId())
+                .ifPresent(
+                        column -> {
+                            column.updateNextColumnsId(currentColumn.getNextColumnsId());
+                        });
+        currentColumn.updateNextColumnsId(targetColumn.getNextColumnsId());
+        targetColumn.updateNextColumnsId(currentColumn.getId());
     }
 
     private void updateNextBoardIds(Board board1, Board board2) {
