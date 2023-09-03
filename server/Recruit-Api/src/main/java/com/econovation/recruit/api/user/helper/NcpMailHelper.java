@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.user.helper;
 
 import com.econovation.recruitcommon.annotation.Helper;
+import com.econovation.recruitcommon.exception.RecruitDynamicException;
 import com.econovation.recruitinfrastructure.ncp.NcpClient;
 import com.econovation.recruitinfrastructure.ncp.NcpProperties;
 import com.econovation.recruitinfrastructure.ses.RecipientForRequest;
@@ -11,13 +12,13 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.commons.codec.binary.Base64;
 
 @Helper
 @RequiredArgsConstructor
@@ -25,39 +26,45 @@ public class NcpMailHelper {
     private final NcpProperties ncpProperties;
     private final NcpClient ncpClient;
 
-    @SneakyThrows
+    static String method = "POST"; // method
+    static String space = " "; // space
+    static String newLine = "\n"; // new line
+
+
     public void sendMail(String title, String body, String recipientAddress) {
         String timeStamp = String.valueOf(Instant.now().toEpochMilli());
-        ncpClient.sendMail(timeStamp, ncpProperties.getAccessKey(), makeSignature(timeStamp),createSendRawEmailDto(title, body, recipientAddress));
+        String signature = makeSignature(ncpProperties.getAccessKey(), ncpProperties.getSecretKey(), ncpProperties.getSendUrl(), timeStamp);
+        SendRawEmailDto sendRawEmailDto = createSendRawEmailDto(title, body, recipientAddress);
+        ncpClient.sendMail(ncpProperties.getAccessKey(), timeStamp,  signature, sendRawEmailDto);
     }
-    public String makeSignature(String timeStamp) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
-        String space = " ";  // 공백
-        String newLine = "\n";  // 줄바꿈
-        String method = "POST";  // HTTP 메소드
-        String url = "/api/v1/mails";  // 도메인을 제외한 "/" 아래 전체 url (쿼리스트링 포함)
-        String timestamp = timeStamp;  // 현재 타임스탬프 (epoch, millisecond)
-        String accessKey = ncpProperties.getAccessKey();  // access key id (from portal or sub account)
-        String secretKey = ncpProperties.getSecretKey();  // secret key (from portal or sub account)
+    public String makeSignature(
+            String accessKey, String secretKey, String url, String timeStamp) {
+        String result;
+        try {
+            String message =
+                    new StringBuilder()
+                            .append(method)
+                            .append(space)
+                            .append(url)
+                            .append(newLine)
+                            .append(timeStamp)
+                            .append(newLine)
+                            .append(accessKey)
+                            .toString();
 
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
+            SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(signingKey);
 
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
+            byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
+            String encodeBase64String = Base64.encodeBase64String(rawHmac);
 
-        byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-        String encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
+            result = encodeBase64String;
 
-        return encodeBase64String;
-
+        } catch (Exception ex) {
+            throw new RecruitDynamicException(0, "400", ex.getMessage());
+        }
+        return result;
     }
 
     public SendRawEmailDto createSendRawEmailDto(String title, String body, String recipientAddress) {

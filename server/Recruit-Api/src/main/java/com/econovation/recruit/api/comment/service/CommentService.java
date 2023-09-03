@@ -133,21 +133,30 @@ public class CommentService implements CommentUseCase {
 
     @Override
     public List<CommentPairVo> findByCardId(Long cardId) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
+        Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findById(cardId);
         List<Comment> comments = commentLoadPort.findByCardId(card.getId());
 
-        List<Long> commentIdpIds =
-                comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
+        List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIdpIds);
-
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
                         comment -> {
-                            boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
-                            Boolean canEdit = comment.getIdpId().equals(currentUserId);
-                            String interviewerName =
+                            Boolean isLiked =
+                                    commentLikes.stream()
+                                            .anyMatch(
+                                                    commentLike ->
+                                                            commentLike
+                                                                    .getCommentId()
+                                                                    .equals(comment.getId())
+                                                                    && commentLike
+                                                                    .getIdpId()
+                                                                    .equals(idpId));
+
+                            Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
+                            String interviewersName =
                                     interviewers.stream()
                                             .filter(
                                                     interviewer ->
@@ -157,7 +166,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewerName, canEdit);
+                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
                         })
                 .collect(Collectors.toList());
     }
@@ -187,9 +196,9 @@ public class CommentService implements CommentUseCase {
     public List<CommentPairVo> findByApplicantId(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
-        List<Long> commentIds = comments.stream().map(Comment::getId).collect(Collectors.toList());
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(commentIds);
-        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(commentIds);
+        List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
                         comment -> {

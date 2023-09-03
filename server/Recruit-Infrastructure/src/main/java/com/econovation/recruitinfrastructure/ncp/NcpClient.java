@@ -12,8 +12,8 @@ public interface NcpClient {
             path = "/mails",
             consumes = "application/json; charset=UTF-8")
     public void sendMail(
-                  @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
                   @RequestHeader("x-ncp-iam-access-key") String accessKey,
+                  @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
                   @RequestHeader("x-ncp-apigw-signature-v2") String signature,
                   @RequestBody SendRawEmailDto sendRawEmailDto);
 
