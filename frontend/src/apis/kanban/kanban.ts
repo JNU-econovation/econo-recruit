@@ -80,20 +80,22 @@ export const getAllKanbanData = async (
   const columnsData = await getColums(navigationId);
   const cardsData = await getKanbanCards(navigationId);
 
-  return columnsData.map((column) => ({
-    id: column.columnsId,
-    title: column.title,
-    card: cardsData
+  return columnsData.map((column) => {
+    const columnCardsData = cardsData
       .filter((card) => card.columnId === column.columnsId)
-      .sort((a, b) =>
-        a.nextBoardId === null
-          ? 1
-          : b.nextBoardId === null
-          ? -1
-          : a.nextBoardId - b.nextBoardId
+      .sort((a, _) => (a.cardType === "INVISIBLE" ? -1 : 1));
+
+    const locationSortedCardsData = columnCardsData
+      .map(
+        (card) =>
+          cardsData.find((nextCard) => nextCard.id === card.nextBoardId) ?? card
       )
-      .sort((a, b) => (a.cardType === "INVISIBLE" ? -1 : 1))
-      .map((card) => ({
+      .reverse();
+
+    return {
+      id: column.columnsId,
+      title: column.title,
+      card: locationSortedCardsData.map((card) => ({
         id: card.boardId,
         cardType: card.cardType,
         title: card.title,
@@ -107,5 +109,6 @@ export const getAllKanbanData = async (
         heart: card.labelCount,
         isHearted: card.isLabeled,
       })),
-  }));
+    };
+  });
 };
