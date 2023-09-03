@@ -45,7 +45,7 @@ const KanbanColumnComponent = ({
                   {...provided.droppableProps}
                 >
                   {columnData.map((column, colIndex) =>
-                    column?.cardType === "INVISIBLE" ? (
+                    column?.cardType === "INVISIBLaaE" ? (
                       <Draggable
                         draggableId={`${index}-${-1}`}
                         index={0}

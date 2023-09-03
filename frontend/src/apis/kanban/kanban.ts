@@ -81,34 +81,47 @@ export const getAllKanbanData = async (
   const cardsData = await getKanbanCards(navigationId);
 
   return columnsData.map((column) => {
-    const columnCardsData = cardsData
+    const columnCardData = cardsData
       .filter((card) => card.columnId === column.columnsId)
-      .sort((a, _) => (a.cardType === "INVISIBLE" ? -1 : 1));
+      .filter((card) => card.cardType === "INVISIBLE");
 
-    const locationSortedCardsData = columnCardsData
-      .map(
-        (card) =>
-          cardsData.find((nextCard) => nextCard.id === card.nextBoardId) ?? card
-      )
-      .reverse();
+    const findLocationData = (
+      columnCardsData: KanbanCardReq[]
+    ): KanbanCardReq[] => {
+      if (columnCardsData[columnCardsData.length - 1].nextBoardId === null) {
+        return columnCardsData;
+      }
+      const nextBoardId =
+        columnCardsData[columnCardsData.length - 1].nextBoardId;
+      const nextColumnCardsData = cardsData.filter(
+        (card) => card.boardId === nextBoardId
+      );
+
+      return findLocationData([...columnCardsData, ...nextColumnCardsData]);
+    };
 
     return {
       id: column.columnsId,
       title: column.title,
-      card: locationSortedCardsData.map((card) => ({
-        id: card.boardId,
-        cardType: card.cardType,
-        title: card.title,
-        major: card.major.split('"').join(""),
-        applicantId: card.applicantId,
-        apply: [
-          card.firstPriority.split('"').join(""),
-          card.secondPriority.split('"').join(""),
-        ].filter((apply) => apply !== ""),
-        comment: card.commentCount,
-        heart: card.labelCount,
-        isHearted: card.isLabeled,
-      })),
+      card: findLocationData(columnCardData)
+        .map((card) => {
+          if (!card) return null;
+          return {
+            id: card.boardId,
+            cardType: card.cardType,
+            title: card.title,
+            major: card.major.split('"').join(""),
+            applicantId: card.applicantId,
+            apply: [
+              card.firstPriority.split('"').join(""),
+              card.secondPriority.split('"').join(""),
+            ].filter((apply) => apply !== ""),
+            comment: card.commentCount,
+            heart: card.labelCount,
+            isHearted: card.isLabeled,
+          };
+        })
+        .filter((card) => card !== null),
     };
   });
 };
