@@ -55,7 +55,7 @@ public class UserController {
 
     @Operation(summary = "로그인합니다.", description = "accessToken, refreshToken을 발급합니다.")
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
