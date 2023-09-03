@@ -87,6 +87,7 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
+    @Transactional
     public void createCommentLike(Long commentId) {
         // 기존에 눌렀으면 취소 처리
         Long idpId = SecurityUtils.getCurrentUserId();
@@ -114,6 +115,7 @@ public class CommentService implements CommentUseCase {
 
     @Override
     @RedissonLock(LockName = "댓글좋아요", identifier = "commentId")
+    @Transactional
     public void deleteCommentLike(Long commentId) {
         // 현재 내가 눌렀던 댓글만 삭제할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();

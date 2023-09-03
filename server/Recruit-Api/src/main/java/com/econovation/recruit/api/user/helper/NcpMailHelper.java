@@ -31,11 +31,11 @@ public class NcpMailHelper {
     static String newLine = "\n"; // new line
 
 
+    @SneakyThrows
     public void sendMail(String title, String body, String recipientAddress) {
         String timeStamp = String.valueOf(Instant.now().toEpochMilli());
         String signature = makeSignature(ncpProperties.getAccessKey(), ncpProperties.getSecretKey(), ncpProperties.getSendUrl(), timeStamp);
-        SendRawEmailDto sendRawEmailDto = createSendRawEmailDto(title, body, recipientAddress);
-        ncpClient.sendMail(ncpProperties.getAccessKey(), timeStamp,  signature, sendRawEmailDto);
+        ncpClient.sendMail(ncpProperties.getAccessKey(), timeStamp,  signature, createSendRawEmailDto(title, body, recipientAddress));
     }
     public String makeSignature(
             String accessKey, String secretKey, String url, String timeStamp) {

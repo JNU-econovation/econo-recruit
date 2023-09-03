@@ -15,11 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class ColumnsResponseDto {
     private Integer columnsId;
     private String title;
+    private Integer nextColumnsId;
     private Integer navigationId;
 
     public static ColumnsResponseDto from(Columns columns) {
         return new ColumnsResponseDto(
-                columns.getId(), columns.getTitle(), columns.getNavigationId());
+                columns.getId(), columns.getTitle(), columns.getNextColumnsId(), columns.getNavigationId());
     }
 
     public static List<ColumnsResponseDto> from(List<Columns> columns) {
