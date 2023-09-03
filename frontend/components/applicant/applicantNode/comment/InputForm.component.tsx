@@ -5,7 +5,7 @@ import React from "react";
 import { Editor } from "@toast-ui/react-editor";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postComment } from "@/src/apis/comment/comment";
 
 type InputCheckBoxProps = {
@@ -41,15 +41,18 @@ const InputCheckBox = ({
 interface ApplicantCommentInputFormProps {
   applicantId: string;
   commentLength: number;
+  generation: string;
 }
 
 const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
   applicantId,
   commentLength,
+  generation,
 }) => {
   const [isNocomment, setIsNocomment] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(false);
   const [content, setContent] = useState("");
+  const queryClient = useQueryClient();
   const editorRef = React.useRef<Editor>(null);
 
   const { mutate } = useMutation(
@@ -61,7 +64,16 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
         parentCommentId: 0,
       });
     },
-    { onSettled: () => {} }
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["applicantComment", applicantId],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["kanbanDataArray", generation],
+        });
+      },
+    }
   );
 
   const onNocommentCheck = useCallback(() => {
@@ -75,7 +87,7 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
 
   const prevSubmit = () => {
     const content = editorRef.current?.getInstance().getMarkdown();
-    setContent((hasQuestion ? "**[질문]**" : "") + content);
+    setContent((hasQuestion ? "**[질문]** " : "") + content);
   };
 
   useEffect(() => {
@@ -88,8 +100,10 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
   return (
     <form
       onSubmit={(e) => {
+        e.preventDefault();
         prevSubmit();
         mutate();
+        editorRef.current?.getInstance().reset();
       }}
     >
       <div className="flex justify-between items-center pb-2">

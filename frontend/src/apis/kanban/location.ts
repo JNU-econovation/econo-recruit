@@ -10,3 +10,14 @@ export const postLocations = async (body: LocationReq) => {
 
   return data;
 };
+
+interface LocationcolumnReq {
+  columnId: number;
+  targetColumnId: number;
+}
+
+export const putColumnsLocations = async (body: LocationcolumnReq) => {
+  const { data } = await https.put("/boards/columns", body);
+
+  return data;
+};

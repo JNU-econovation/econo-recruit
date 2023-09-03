@@ -8,15 +8,16 @@ import ApplicantCommentDetail from "./CommentDetail.component";
 
 interface ApplicantCommentProps {
   postId: string;
+  generation: string;
 }
 
-const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
+const ApplicantComment: FC<ApplicantCommentProps> = ({
+  postId,
+  generation,
+}) => {
   const { data, error, isLoading } = useQuery(
     ["applicantComment", postId],
-    () => getAllCommentById(postId),
-    {
-      enabled: !!postId,
-    }
+    () => getAllCommentById(postId)
   );
 
   if (!data || isLoading) {
@@ -32,10 +33,16 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({ postId }) => {
       <ApplicantCommentInputForm
         applicantId={postId}
         commentLength={data.length}
+        generation={generation}
       />
       <div className="flex flex-col gap-8 pt-8">
         {data.map((comment) => (
-          <ApplicantCommentDetail comment={comment} key={comment.id} />
+          <ApplicantCommentDetail
+            generation={generation}
+            comment={comment}
+            postId={postId}
+            key={comment.id}
+          />
         ))}
       </div>
     </>

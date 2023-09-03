@@ -9,10 +9,6 @@ export interface ApplicantReq {
 export const postApplicant = async (body: ApplicantReq[]) => {
   const { data } = await https.post(`/applicants`, body);
 
-  if (data satisfies string) {
-    return data;
-  }
-
   return data;
 };
 

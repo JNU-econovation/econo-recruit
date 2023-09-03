@@ -87,6 +87,8 @@ export const postApplication = async (
     await postApplicantTimeline(applicantId, timeline);
     await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
+    console.log(e);
+
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);
     return false;
   }

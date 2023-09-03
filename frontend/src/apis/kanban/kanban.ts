@@ -31,6 +31,7 @@ interface KanbanNavigationReq {
   columnsId: number;
   title: string;
   navigationId: number;
+  nextColumnsId: number;
 }
 
 export const getColums = async (navigationId: string) => {
@@ -38,10 +39,24 @@ export const getColums = async (navigationId: string) => {
     `/boards/navigations/${navigationId}/columns`
   );
 
-  return data;
+  const startColumn = data.filter((column) => column.nextColumnsId === null);
+
+  const locationSort = (
+    column: KanbanNavigationReq[]
+  ): KanbanNavigationReq[] => {
+    if (column.length === data.length) return column;
+
+    const nextColumnId = column[column.length - 1].columnsId;
+    const nextColumn = data.filter(
+      (column) => column.nextColumnsId === nextColumnId
+    );
+
+    return locationSort([...column, ...nextColumn]);
+  };
+
+  return locationSort(startColumn).reverse();
 };
 
-// export interface
 interface addColumnReq {
   navigationId: string;
   title: string;
