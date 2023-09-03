@@ -320,10 +320,12 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         // 기준 보드는 이동이 불가하다.
         if (invisibleBoard.contains(updateLocationBoardDto.getBoardId()))
             throw BoardInvisibleMovingException.EXCEPTION;
+
         Board currentBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getBoardId());
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
+
         // 같은 board 끼리는 위치 변경이 불가하다.
-        if (currentBoard.getId().equals(targetBoard.getId()))
+        if (currentBoard.getId().equals(targetBoard.getId()) && targetBoard.getNextBoardId().equals(currentBoard.getId()))
             throw BoardSameLocationException.EXCEPTION;
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
