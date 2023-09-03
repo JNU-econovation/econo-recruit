@@ -39,7 +39,7 @@ public class ApplicantRegisterEventHandler {
                 applicantRegistEvent.getApplicantId(),
                 applicantRegistEvent.getHopeField(),
                 card.getId());
-//        slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
+        slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
     }
 
     private String generateApplicantRegisterMessage(ApplicantRegisterEvent applicantRegistEvent) {

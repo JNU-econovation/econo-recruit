@@ -1,3 +1,4 @@
+/*
 package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
@@ -47,6 +48,7 @@ public class ApplicantRegisterEventConfirmEmailHandler {
 //                applicantRegistEvent.getUserName());
 //        emailSenderService.sendEmail(mimeMessage);
 
+*/
 /*    private SimpleMailMessage generateConfirmRegisterEmail(
             String email, String userName) {
         SimpleMailMessage message = emailSenderService.
@@ -60,7 +62,8 @@ public class ApplicantRegisterEventConfirmEmailHandler {
             log.error("메일 content 생성에 실패하였습니다.. {}", e.getMessage());
         }
         return message;
-    }*/
+    }*//*
+
 
     private String generateConfirmRegisterEmailBody(String userName) {
         return String.format(
@@ -75,3 +78,4 @@ public class ApplicantRegisterEventConfirmEmailHandler {
                 userName);
     }
 }
+*/

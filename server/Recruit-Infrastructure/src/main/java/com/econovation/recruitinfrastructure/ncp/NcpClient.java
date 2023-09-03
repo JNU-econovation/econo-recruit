@@ -14,9 +14,10 @@ public interface NcpClient {
     @PostMapping(
             path = "/api/v1/mails",
             consumes = "application/json; charset=UTF-8")
-    ResponseEntity<Response> sendMail(
+    ResponseEntity<Response> createMailRequest(
             @RequestHeader("x-ncp-iam-access-key") String accessKey,
             @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
             @RequestHeader("x-ncp-apigw-signature-v2") String signature,
+            @RequestHeader("x-ncp-lang") String lang,
             @RequestBody SendRawEmailDto sendRawEmailDto);
 }

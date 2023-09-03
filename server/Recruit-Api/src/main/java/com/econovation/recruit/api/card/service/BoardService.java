@@ -343,6 +343,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     private void updateNextColumnIds(Columns currentColumn, Columns targetColumn) {
+        if (currentColumn.getId() == targetColumn.getId() || targetColumn.getNextColumnsId() == currentColumn.getId())
+            throw BoardSameLocationException.EXCEPTION;
         columnLoadPort
                 .getByNextColumnsId(currentColumn.getId())
                 .ifPresent(
