@@ -325,7 +325,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
 
         // 같은 board 끼리는 위치 변경이 불가하다.
-        if (currentBoard.getId().equals(targetBoard.getId()) && targetBoard.getNextBoardId().equals(currentBoard.getId()))
+        if (currentBoard.getId().equals(targetBoard.getId()) || targetBoard.getNextBoardId().equals(currentBoard.getId()))
             throw BoardSameLocationException.EXCEPTION;
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
