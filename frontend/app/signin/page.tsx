@@ -3,6 +3,7 @@
 import SignInForm from "@/components/user/SignInForm.component";
 import { signIn } from "@/src/apis/user";
 import { localStorage } from "@/src/functions/localstorage";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useReducer, useState } from "react";
 
@@ -42,6 +43,12 @@ const SignInPage = () => {
     <div className="flex flex-col justify-center items-center w-screen h-screen">
       <SignInForm onSubmit={onSubmit} data={signInData} setForm={setForm} />
       {error && <p className="text-red-500 text-sm my-2">{error}</p>}
+      <div className="mt-4">
+        계정이 없으신가요? &nbsp;
+        <Link className="text-gray-400" href="/signup">
+          회원가입
+        </Link>
+      </div>
     </div>
   );
 };

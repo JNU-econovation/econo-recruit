@@ -1,12 +1,17 @@
 import { https } from "@/src/functions/axios";
 import { localStorage } from "@/src/functions/localstorage";
 
+interface SignInReq {
+  email: string;
+  password: string;
+}
+
 interface SignInRes {
   accessToken: "string";
   refreshToken: "string";
 }
 
-export const signIn = async ({ email = "", password = "" }) => {
+export const signIn = async ({ email, password }: SignInReq) => {
   try {
     const { data } = await https.post<SignInRes>("/login", { email, password });
     if (data satisfies SignInRes) {
