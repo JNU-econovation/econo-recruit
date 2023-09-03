@@ -135,6 +135,7 @@ public class CommentService implements CommentUseCase {
                 .map(
                         comment -> {
                             boolean isLiked = commentLikeLoadPort.getByIdpId(currentUserId);
+                            Boolean canEdit = comment.getInterviewerId().equals(currentUserId);
                             String interviewerName =
                                     interviewers.stream()
                                             .filter(
@@ -145,8 +146,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-
-                            return CommentPairVo.of(comment, isLiked, interviewerName);
+                            return CommentPairVo.of(comment, isLiked, interviewerName, canEdit);
                         })
                 .collect(Collectors.toList());
     }
@@ -192,6 +192,7 @@ public class CommentService implements CommentUseCase {
                                                                     && commentLike
                                                                             .getIdpId()
                                                                             .equals(idpId));
+                            Boolean canEdit = comment.getInterviewerId().equals(idpId);
                             String interviewersName =
                                     interviewers.stream()
                                             .filter(
@@ -202,7 +203,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewersName);
+                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
                         })
                 .collect(Collectors.toList());
     }

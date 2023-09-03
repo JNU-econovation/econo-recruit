@@ -43,6 +43,9 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "idp_id")
     private Long idpId;
 
+    @Column(name = "interviewer_id")
+    private String interviewerId;
+
     public void delete() {
         this.isDeleted = true;
     }
