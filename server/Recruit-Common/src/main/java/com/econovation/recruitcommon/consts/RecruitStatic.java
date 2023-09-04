@@ -66,6 +66,6 @@ public class RecruitStatic {
         "/api-docs"
     };
     public static final String[] RolePattern = {
-        "ROLE_TF", "ROLE_PRESIDENT", "ROLE_OPERATION",
+        "ROLE_TF", "ROLE_PRESIDENT", "ROLE_OPERATION", "ROLE_SWAGGER"
     };
 }

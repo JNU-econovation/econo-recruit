@@ -36,7 +36,7 @@ public class Interviewer {
 
     @PrePersist
     public void prePersist() {
-        this.role = Role.ROLE_TF;
+        this.role = Role.ROLE_GUEST;
     }
 
     public void updateRole(Role role) {
