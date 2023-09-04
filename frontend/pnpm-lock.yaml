@@ -19,6 +19,9 @@ dependencies:
   '@toast-ui/react-editor':
     specifier: ^3.2.3
     version: 3.2.3(react@18.2.0)
+  '@types/crypto-js':
+    specifier: ^4.1.1
+    version: 4.1.1
   '@types/node':
     specifier: 20.4.6
     version: 20.4.6
@@ -43,6 +46,9 @@ dependencies:
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
+  crypto-js:
+    specifier: ^4.1.1
+    version: 4.1.1
   eslint:
     specifier: ^8.47.0
     version: 8.47.0
@@ -506,6 +512,10 @@ packages:
     engines: {node: '>= 6'}
     dev: false
     optional: true
+
+  /@types/crypto-js@4.1.1:
+    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+    dev: false
 
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
@@ -1261,6 +1271,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: false
+
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
   /css-box-model@1.2.1:
