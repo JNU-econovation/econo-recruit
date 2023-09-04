@@ -17,8 +17,10 @@ export const POST = async (req: NextRequest) => {
   await db.run(queryString, JSON.stringify(body));
 
   sendSms({
-    name: body.find((value) => value.name === "name")?.answer ?? "",
-    phone: (body.find((value) => value.name === "contacted")?.answer ?? "")
+    name: JSON.parse(body.find((value) => value.name === "name")?.answer ?? ""),
+    phone: JSON.parse(
+      body.find((value) => value.name === "contacted")?.answer ?? ""
+    )
       .split("-")
       .join(""),
   });
@@ -50,7 +52,7 @@ const sendSms = async ({ name, phone }: { name: string; phone: string }) => {
   const method = "POST";
   const serviceId = process.env.NCP_SMS_SERVICE_ID;
   const uri = `/sms/v2/services/${serviceId}/messages`;
-  const timestamp = new Date().getTime().toString();
+  const timestamp = Date.now().toString();
 
   const accessKey = process.env.NCP_SMS_ACCESS_KEY ?? "";
   const secretKey = process.env.NCP_SMS_SECRET_KEY ?? "";
@@ -61,8 +63,8 @@ const sendSms = async ({ name, phone }: { name: string; phone: string }) => {
 
   const apiUrl = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
   const response = await axios({
-    url: apiUrl,
     method: "POST",
+    url: apiUrl,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "x-ncp-apigw-timestamp": timestamp,
@@ -70,6 +72,7 @@ const sendSms = async ({ name, phone }: { name: string; phone: string }) => {
       "x-ncp-apigw-signature-v2": signature,
     },
     data: body,
+  }).catch((err) => {
+    console.log(err);
   });
-  console.log(response.data.statusName);
 };
