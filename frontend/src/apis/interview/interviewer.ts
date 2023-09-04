@@ -42,3 +42,16 @@ export const getAllInterviewer = async () => {
 
   return data;
 };
+
+interface ApplicantReq {
+  id: number;
+  name: string;
+  year: number;
+  email: string;
+  role: "ROLE_GUEST" | "ROLE_TF" | "ROLE_OPERATION" | "ROLE_PRESIDENT";
+}
+
+export const getMyInfo = async () => {
+  const { data } = await https.get<ApplicantReq>("/interviewers/me");
+  return data;
+};
