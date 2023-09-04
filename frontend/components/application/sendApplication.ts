@@ -83,7 +83,6 @@ export const postApplication = async (
     }
 
     const applicantId = await postApplicant(Array.from(applicationData));
-
     await postApplicantTimeline(applicantId, timeline);
     await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
