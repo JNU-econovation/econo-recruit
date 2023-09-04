@@ -1,8 +1,12 @@
+"use client";
+
+import AdminBoard from "@/components/admin/Board.component";
 import AdminSearch from "@/components/admin/Search.component";
 import PageNavbarComponent from "@/components/common/PageNavbar.component";
 import SortListComponent from "@/components/common/SortList.component";
 import CommonNavbar from "@/components/common/navbar/Navbar.component";
-import InterviewListComponent from "@/components/interview/List.component";
+import { getAllInterviewer } from "@/src/apis/interview/interviewer";
+import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 
 interface AdminPageProps {
@@ -27,6 +31,20 @@ const AdminPage: FC<AdminPageProps> = ({
 }) => {
   const { generation } = params;
 
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useQuery(["interviewers"], () => getAllInterviewer());
+
+  if (!userData || isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (isError) {
+    return <div>에러 발생</div>;
+  }
+
   return (
     <div className="px-24 w-max-[1280px] flex p-12">
       <CommonNavbar generation={generation} />
@@ -35,9 +53,9 @@ const AdminPage: FC<AdminPageProps> = ({
           <AdminSearch />
           <SortListComponent sortList={orderMenu} selected={order} />
         </div>
-        <InterviewListComponent />
+        <AdminBoard />
         <PageNavbarComponent
-          maxLength={4}
+          maxLength={Math.floor(userData.length / 8) + 1}
           page={+page}
           url={`/admin/${generation}?type=${type}&order=${order}`}
         />
