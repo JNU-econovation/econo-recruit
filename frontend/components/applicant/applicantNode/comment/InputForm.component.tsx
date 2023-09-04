@@ -115,22 +115,24 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
           <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
         </button>
       </div>
-      <Editor
-        className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
-        height="6rem"
-        initialEditType="markdown"
-        usageStatistics={false}
-        language="ko-KR"
-        onChange={() => {
-          isNocomment &&
-            editorRef.current?.getInstance().getMarkdown() !==
-              "지인이므로 코멘트 삼가겠습니다." &&
-            editorRef.current
-              ?.getInstance()
-              .setMarkdown("지인이므로 코멘트 삼가겠습니다.");
-        }}
-        ref={editorRef}
-      />
+      <div className="py-4">
+        <Editor
+          className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
+          height="6rem"
+          initialEditType="markdown"
+          usageStatistics={false}
+          language="ko-KR"
+          onChange={() => {
+            isNocomment &&
+              editorRef.current?.getInstance().getMarkdown() !==
+                "지인이므로 코멘트 삼가겠습니다." &&
+              editorRef.current
+                ?.getInstance()
+                .setMarkdown("지인이므로 코멘트 삼가겠습니다.");
+          }}
+          ref={editorRef}
+        />
+      </div>
       <div className="font-normal">
         <InputCheckBox
           name="question"
