@@ -12,6 +12,6 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class NcpProperties{
     private String accessKey;
     private String secretKey;
-    private String sendUrl;
     private String senderAddress;
+    private String sendUrl;
 }

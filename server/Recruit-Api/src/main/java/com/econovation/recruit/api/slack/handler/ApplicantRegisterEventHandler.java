@@ -41,7 +41,6 @@ public class ApplicantRegisterEventHandler {
                 card.getId());
         slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
     }
-
     private String generateApplicantRegisterMessage(ApplicantRegisterEvent applicantRegistEvent) {
         return String.format(
                 ":clapping: 지원자가 등록되었습니다.:clapping:\n"

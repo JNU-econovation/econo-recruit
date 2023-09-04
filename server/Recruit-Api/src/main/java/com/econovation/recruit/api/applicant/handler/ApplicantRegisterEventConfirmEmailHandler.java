@@ -48,21 +48,20 @@ public class ApplicantRegisterEventConfirmEmailHandler {
 //                applicantRegistEvent.getUserName());
 //        emailSenderService.sendEmail(mimeMessage);
 
-*/
-/*    private SimpleMailMessage generateConfirmRegisterEmail(
-            String email, String userName) {
-        SimpleMailMessage message = emailSenderService.
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-        try {
-            helper.setFrom(googleMailProperties.getUsername());
-            helper.setTo(email);
-            helper.setSubject("[Econovation] 에코노베이션 지원서 접수 확인 메일");
-            helper.setText(generateConfirmRegisterEmailBody(email, userName), true);
-        } catch (MessagingException e) {
-            log.error("메일 content 생성에 실패하였습니다.. {}", e.getMessage());
-        }
-        return message;
-    }*//*
+//    private SimpleMailMessage generateConfirmRegisterEmail(
+//            String email, String userName) {
+//        SimpleMailMessage message = emailSenderService.get
+//        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+//        try {
+//            helper.setFrom(googleMailProperties.getUsername());
+//            helper.setTo(email);
+//            helper.setSubject("[Econovation] 에코노베이션 지원서 접수 확인 메일");
+//            helper.setText(generateConfirmRegisterEmailBody(email, userName), true);
+//        } catch (MessagingException e) {
+//            log.error("메일 content 생성에 실패하였습니다.. {}", e.getMessage());
+//        }
+//        return message;
+//    }
 
 
     private String generateConfirmRegisterEmailBody(String userName) {

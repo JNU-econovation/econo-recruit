@@ -42,9 +42,6 @@ public class JwtTokenProvider {
     }
 
     private Key getSecretKey() {
-        log.info(jwtProperties.getSecretKey());
-        //        return
-        // Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
         return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
     }
 

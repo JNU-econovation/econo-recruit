@@ -11,8 +11,8 @@ aws:
 ncp:
   access-key: ${NCP_ACCESS_KEY}
   secret-key: ${NCP_SECRET_KEY}
-  mail-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
   sender-address: ${NCP_SENDER_ADDRESS:}
+  send-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
 
 spring:
   redis:

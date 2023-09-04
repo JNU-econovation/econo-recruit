@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "NcpClient", url = "https://mail.apigw.gov-ntruss.com", configuration = NcpConfig.class)
+@FeignClient(name = "NcpClient", url = "${ncp.send-url}", configuration = NcpConfig.class)
 @Headers("Content-Type: application/json; charset=UTF-8")
 public interface NcpClient {
     @PostMapping(
