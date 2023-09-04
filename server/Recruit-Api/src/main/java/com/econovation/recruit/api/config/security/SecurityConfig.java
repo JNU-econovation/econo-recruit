@@ -78,6 +78,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/*/timetables")
                 .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*/timetables")
+                .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
