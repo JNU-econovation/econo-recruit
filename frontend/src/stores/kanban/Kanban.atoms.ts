@@ -8,7 +8,7 @@ export type KanbanColumnData = {
 
 export type KanbanCardData = {
   id: number;
-  cardType: string;
+  cardType: "WORK_CARD" | "APPLICANT" | "INVISIBLE";
   major: string;
   title: string;
   apply: string[];

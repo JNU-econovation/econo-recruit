@@ -59,7 +59,8 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
           <div className="flex flex-col justify-between">
             {kanbanDataArray[+detailCard].card.map(
               (col) =>
-                col && (
+                col &&
+                col.cardType !== "INVISIBLE" && (
                   <div className="my-2" key={col.id}>
                     <KanbanCardComponent data={col} cardId={+detailCard + 1} />
                   </div>

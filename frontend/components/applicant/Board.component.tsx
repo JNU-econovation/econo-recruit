@@ -1,11 +1,7 @@
 "use client";
 
 import Board from "@/components/common/board/Board.component";
-import {
-  getAllApplicant,
-  getApplicantByIdWithField,
-  getApplicantByPage,
-} from "@/src/apis/applicant/applicant";
+import { getApplicantByPage } from "@/src/apis/applicant/applicant";
 import ApplicantDetailRight from "./DetailRight.component";
 import ApplicantDetailLeft from "./DetailLeft.component";
 import { FC, useState } from "react";

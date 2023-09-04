@@ -47,14 +47,16 @@ const ApplicantCommentEditorOrViewer: FC<
         />
       ) : (
         <>
-          <Editor
-            className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
-            height="6rem"
-            initialEditType="markdown"
-            usageStatistics={false}
-            language="ko-KR"
-            ref={editorRef}
-          />
+          <div className="my-4">
+            <Editor
+              className="w-full my-4 border-[1px] rounded border-[#DBDBDB] p-3 text-sm"
+              height="6rem"
+              initialEditType="markdown"
+              usageStatistics={false}
+              language="ko-KR"
+              ref={editorRef}
+            />
+          </div>
           <button
             className="py-2 px-4 bg-slate-100 my-2 rounded-md border"
             onClick={onEdit}
