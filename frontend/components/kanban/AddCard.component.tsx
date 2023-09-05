@@ -7,14 +7,10 @@ import { useAtomValue } from "jotai";
 import { useState } from "react";
 
 type KanbanAddCardComponent = {
-  AddCardCallBack: () => {};
   columnId: number;
 };
 
-function KanbanAddCardComponent({
-  AddCardCallBack,
-  columnId,
-}: KanbanAddCardComponent) {
+function KanbanAddCardComponent({ columnId }: KanbanAddCardComponent) {
   const [title, setTitle] = useState("");
   const [isOpenAddCard, setIsOpenAddCard] = useState(false);
   const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
@@ -52,7 +48,7 @@ function KanbanAddCardComponent({
             <button type="button" onClick={() => setIsOpenAddCard(false)}>
               <img src="/icons/ellipsis.multiply.svg" alt="" />
             </button>
-            <button type="submit" onClick={AddCardCallBack}>
+            <button type="submit">
               <img src="/icons/arrow.forward.circle.fill.svg" alt="" />
             </button>
           </div>

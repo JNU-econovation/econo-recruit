@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
   let queryString = "INSERT INTO applicant (applicant_data) VALUES(?)";
   await db.run(queryString, JSON.stringify(body));
 
-  sendSms({
+  await sendSms({
     name: JSON.parse(body.find((value) => value.name === "name")?.answer ?? ""),
     phone: JSON.parse(
       body.find((value) => value.name === "contacted")?.answer ?? ""
@@ -25,10 +25,9 @@ export const POST = async (req: NextRequest) => {
       .join(""),
   });
 
-  semdEmail({
-    applicantId: JSON.parse(
-      body.find((value) => value.name === "applicantId")?.answer ?? ""
-    ),
+  await sendEmail({
+    applicantId:
+      body.find((value) => value.name === "applicantId")?.answer ?? "",
     email: JSON.parse(
       body.find((value) => value.name === "email")?.answer ?? ""
     ),
@@ -86,17 +85,19 @@ const sendSms = async ({ name, phone }: { name: string; phone: string }) => {
   });
 };
 
-const semdEmail = async ({
+const sendEmail = async ({
   applicantId,
   email,
 }: {
   applicantId: string;
   email: string;
 }) => {
-  await axios({
-    url: "/api/v1/applicants/mail",
+  const response = await axios({
+    url: process.env.NEXT_PUBLIC_API_URL + "/api/v1/applicants/mail",
     method: "POST",
     data: { email, applicantId },
     headers: { "Content-Type": "application/json; charset=utf-8" },
+  }).catch((err) => {
+    console.log(err);
   });
 };

@@ -29,11 +29,5 @@ export const postApplicantTimeline = async (
 };
 
 export const postApplicantBackup = async (body: ApplicantReq[]) => {
-  const { data } = await axios.post(`/application/backup`, body);
-
-  if (data satisfies string) {
-    return data;
-  }
-
-  return data;
+  await axios.post(`/application/backup`, body);
 };
