@@ -51,6 +51,7 @@ export const postApplication = async (
   if (!isSend) return false;
 
   const applicationData = new Set<ApplicantReq>();
+  let applicantId: string;
 
   try {
     extractApplicantData(applicationQuestions, applicationData);
@@ -82,8 +83,14 @@ export const postApplication = async (
       throw new Error("시간표가 존재하지 않습니다.");
     }
 
-    const applicantId = await postApplicant(Array.from(applicationData));
+    applicantId = await postApplicant(Array.from(applicationData));
     await postApplicantTimeline(applicantId, timeline);
+
+    applicationData.add({
+      name: "applicantId",
+      answer: applicantId,
+    });
+
     await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
     console.log(e);
@@ -93,7 +100,7 @@ export const postApplication = async (
   }
 
   window.localStorage.clear();
-  window.history.pushState(null, "", "/application/done");
+  window.history.pushState(null, "", "/application/done?id=" + applicantId);
   window.history.go(0);
   return true;
 };

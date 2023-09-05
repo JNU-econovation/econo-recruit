@@ -4,6 +4,7 @@ import { getDB } from "@/database/accecer";
 import { HmacSHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
 import axios from "axios";
+import { readFile } from "fs";
 
 let db: Database;
 
@@ -23,6 +24,15 @@ export const POST = async (req: NextRequest) => {
     )
       .split("-")
       .join(""),
+  });
+
+  semdEmail({
+    applicantId: JSON.parse(
+      body.find((value) => value.name === "applicantId")?.answer ?? ""
+    ),
+    email: JSON.parse(
+      body.find((value) => value.name === "email")?.answer ?? ""
+    ),
   });
 
   return NextResponse.json({ success: true, response: null, error: null });
@@ -74,5 +84,20 @@ const sendSms = async ({ name, phone }: { name: string; phone: string }) => {
     data: body,
   }).catch((err) => {
     console.log(err);
+  });
+};
+
+const semdEmail = async ({
+  applicantId,
+  email,
+}: {
+  applicantId: string;
+  email: string;
+}) => {
+  await axios({
+    url: "/api/v1/applicants/mail",
+    method: "POST",
+    data: { email, applicantId },
+    headers: { "Content-Type": "application/json; charset=utf-8" },
   });
 };
