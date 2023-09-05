@@ -11,18 +11,24 @@ aws:
 ncp:
   access-key: ${NCP_ACCESS_KEY}
   secret-key: ${NCP_SECRET_KEY}
-  mail-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
   sender-address: ${NCP_SENDER_ADDRESS:}
-
+  send-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
+commons:
+  email:
+    host: ${COMMONS_EMAIL_HOST:smtp.naver.com}
+    port: 587
+    sender-name: ${COMMONS_EMAIL_SENDER_USERNAME:}
+    sender-address: ${COMMONS_EMAIL_SENDER_ADDRESS:}
+    password: ${COMMONS_EMAIL_PASSWORD:}
 spring:
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD:}
   mail:
-    host: ${MAIL_HOST:smtp.gmail.com}
+    host: ${MAIL_HOST:smtp.naver.com}
     port: 587
-    username: ${GMAIL_ADDRESS:ymecca730135@gmail.com}
+    username: ${GMAIL_ADDRESS:}
     password: ${GMAIL_PASSWORD}
     properties:
       mail:

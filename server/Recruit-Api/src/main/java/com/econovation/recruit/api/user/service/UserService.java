@@ -8,6 +8,7 @@ import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAlreadySubmitException;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
@@ -37,7 +38,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     public TokenResponse refresh(String refreshToken) {
         Long idpId = jwtTokenProvider.parseRefreshToken(refreshToken);
         Interviewer account = interviewerLoadPort.loadInterviewById(idpId);
-        return jwtTokenProvider.        createToken(account.getId(), account.getRole().name());
+        return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
     }
 
     private void checkPassword(String password, String encodePassword) {
@@ -57,6 +58,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
                         .name(signUpRequestDto.getName())
                         .email(signUpRequestDto.getEmail())
                         .password(encededPassword)
+                        .role(Role.ROLE_GUEST)
                         .build();
         interviewerRecordPort.save(interviewer);
     }

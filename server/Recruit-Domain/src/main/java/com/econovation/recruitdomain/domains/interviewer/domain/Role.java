@@ -7,7 +7,9 @@ import lombok.Getter;
 public enum Role {
     ROLE_PRESIDENT("PRESIDENT"),
     ROLE_OPERATION("OPERATION"),
-    ROLE_TF("TF");
+    ROLE_TF("TF"),
+    ROLE_GUEST("GUEST"),
+    ;
     private final String role;
 
     Role(String role) {
@@ -22,10 +24,8 @@ public enum Role {
         for (Role os : Role.values()) {
             if (os.getRole().equals(name)) {
                 return os;
-            } else {
-                throw InterviewerInvalidRoleException.EXCEPTION;
             }
         }
-        return null;
+        throw InterviewerInvalidRoleException.EXCEPTION;
     }
 }

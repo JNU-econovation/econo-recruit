@@ -68,7 +68,19 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers(SwaggerPatterns)
                 .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/mail")
+                .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*")
+                .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/token")
+                .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/timetables")
+                .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/timetables")
+                .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/*/timetables")
+                .permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*/timetables")
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
                 .permitAll()
@@ -96,7 +108,7 @@ public class SecurityConfig {
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF > ROLE_SWAGGER");
+        roleHierarchy.setHierarchy("ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF > ROLE_SWAGGER > ROLE_GUEST");
         return roleHierarchy;
     }
 

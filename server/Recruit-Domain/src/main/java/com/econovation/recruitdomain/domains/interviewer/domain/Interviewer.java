@@ -34,10 +34,10 @@ public class Interviewer {
     @Column(name = "role")
     private Role role;
 
-    @PrePersist
-    public void prePersist() {
-        this.role = Role.ROLE_TF;
-    }
+//    @PrePersist
+//    public void prePersist() {
+//        this.role = Role.ROLE_GUEST;
+//    }
 
     public void updateRole(Role role) {
         this.role = role;

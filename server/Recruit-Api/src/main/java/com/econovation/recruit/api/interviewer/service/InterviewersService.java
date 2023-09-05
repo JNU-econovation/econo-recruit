@@ -3,6 +3,7 @@ package com.econovation.recruit.api.interviewer.service;
 import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.interviewer.helper.IdpHelper;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
+import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
 import com.econovation.recruitdomain.domains.dto.InterviewerResponseDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
@@ -22,6 +23,7 @@ public class InterviewersService implements InterviewerUseCase {
     private final InterviewerLoadPort interviewerLoadPort;
     private final InterviewerRecordPort interviewerRecordPort;
     private final IdpHelper idpHelper;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public List<Interviewer> createInterviewers(List<Long> idpIds) {
@@ -40,6 +42,8 @@ public class InterviewersService implements InterviewerUseCase {
     public void updateRole(Long idpId, String role) {
         Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
         interviewer.updateRole(Role.getByName(role));
+        // 해당 유저를 logOut 시킨다
+
     }
 
     @Override

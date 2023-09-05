@@ -24,6 +24,7 @@ import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -38,10 +39,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private final NavigationLoadPort navigationLoadPort;
     private final BoardRecordPort boardRecordPort;
     private final BoardLoadPort boardLoadPort;
-    private final SimpMessagingTemplate messagingTemplate;
-    private final BoardRepository boardRepository;
-    private final AnswerLoadUseCase answerLoadUseCase;
-
     private final ColumnLoadPort columnLoadPort;
     private final ColumnRecordPort columnRecordPort;
 
@@ -262,52 +259,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         return ColumnsResponseDto.from(columns);
     }
 
-    //    @Override
-    //    public Board updateLocation(Board board, Integer targetBoardId) {
-    //        Columns columns = columnLoadPort.findById(board.getColumnId());
-    //        Integer navigationId = columns.getNavigationId();
-    //        Board destinationBoard =
-    // boardLoadPort.getBoardByNavLavigationIdAndColLoc(navigationId, colLoc).stream()
-    //                .filter(board1 -> board1.getPrevLowLoc() == lowLoc - 1 &&
-    // board1.getNextBoardId() == lowLoc + 1).findFirst().get();
-    //        Columns destinationColumn = columnLoadPort.findById(destinationBoard.getColumnId());
-    //
-    //        // 같은 column 에 low 만 다를 경우
-    //        if(board.getColumnId().equals(destinationBoard.getColumnId()) &&
-    //                !(board.getPrevLowLoc().equals(lowLoc-1) &&
-    // board.getNextBoardId().equals(lowLoc+1))
-    //        ) {
-    //            // 1. low 만 수정한다
-    //            board.updateLocation(lowLoc-1, lowLoc+1);
-    //            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
-    //        }
-    //        // 다른 column 에 low 가 같을 경우
-    //        else if(!board.getColum nId().equals(destinationBoard.getColumnId()) &&
-    //                board.getPrevLowLoc().equals(lowLoc-1) &&
-    // board.getNextBoardId().equals(lowLoc+1)
-    //        ) {
-    //            // 1. column 을 바꾼다.
-    //            columns.updateLocation(colLoc-1, colLoc+1);
-    //            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
-    //        }
-    //        // 다른 column 에 low 가 다를 경우
-    //        else if(!board.getColumnId().equals(destinationBoard.getColumnId()) &&
-    //                !(board.getPrevLowLoc().equals(lowLoc-1) &&
-    // board.getNextBoardId().equals(lowLoc+1))
-    //        ) {
-    //            // 1. column 을 수정한다.
-    //            // 2. low 를 수정한다.
-    //            board.updateLocation(lowLoc-1, lowLoc+1);
-    //            columns.updateLocation(colLoc-1, colLoc+1);
-    //            destinationBoard.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
-    //            destinationColumn.updateLocation(board.getPrevLowLoc(), board.getNextBoardId());
-    //        }
-    //        // 소켓서버로 전송
-    //        messagingTemplate.convertAndSend("/sub/boards/", );
-    //        return save;
-    //        return null;
-    //    }
-
     @Override
     @Transactional
     @RedissonLock(
@@ -336,6 +287,36 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     @Transactional
     public void updateColumnLocation(UpdateLocationColumnDto updateLocationDto) {
+        // 첫번째로 옮기는 경우 (nextColumnId == 0)
+        if(updateLocationDto.getTargetColumnId().equals(0)){
+            Columns currentColumn = columnLoadPort.findById(updateLocationDto.getColumnId());
+            // 첫번째 column 조회
+            List<Columns> columns = columnLoadPort.getColumnByNavigationId(currentColumn.getNavigationId());
+
+            // 첫번째 칼럼 찾기
+            Integer firstIndex = currentColumn.getId();
+            while (true) {
+                Integer finalFirstIndex = firstIndex;
+                Columns nextColumn = columns.stream()
+                        .filter(column -> column.getNextColumnsId() == finalFirstIndex)
+                        .findFirst()
+                        .orElse(null);
+                if(nextColumn == null) break;
+                firstIndex = nextColumn.getId();
+            }
+
+            // 현재 칼럼을 가리키는 칼럼의 nextColumnId를 현재 칼럼의 nextColumnId로 변경
+            columns.stream()
+                    .filter(column -> column.getNextColumnsId() == currentColumn.getId())
+                    .findFirst()
+                    .ifPresent(
+                            column -> {
+                                column.updateNextColumnsId(currentColumn.getNextColumnsId());
+                            });
+            // 현재 칼럼의 nextColumnId를 처음 칼럼의 id로 변경
+            currentColumn.updateNextColumnsId(firstIndex);
+            return;
+        }
         Columns currentColumn = columnLoadPort.findById(updateLocationDto.getColumnId());
         Columns targetColumn = columnLoadPort.findById(updateLocationDto.getTargetColumnId());
 
