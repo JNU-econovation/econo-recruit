@@ -4,7 +4,6 @@ import { getDB } from "@/database/accecer";
 import { HmacSHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
 import axios from "axios";
-import { readFile } from "fs";
 
 let db: Database;
 

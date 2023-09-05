@@ -74,12 +74,11 @@ const ApplicationNextButton: FC<ApplicationNextButtonProps> = ({
 
       if (localStorage.get(name, "") === "") {
         if (
-          !(
-            name === "channel" &&
-            localStorage.get("channelEtc", "").length === 0
-          )
+          name === "channel" &&
+          localStorage.get("channelEtc", "").length === 0
         ) {
-          return true;
+          alert("필수 항목을 입력해주세요.");
+          return false;
         }
 
         alert("필수 항목을 입력해주세요.");
