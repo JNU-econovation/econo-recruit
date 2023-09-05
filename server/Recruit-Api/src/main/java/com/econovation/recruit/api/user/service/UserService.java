@@ -38,7 +38,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     public TokenResponse refresh(String refreshToken) {
         Long idpId = jwtTokenProvider.parseRefreshToken(refreshToken);
         Interviewer account = interviewerLoadPort.loadInterviewById(idpId);
-        return jwtTokenProvider.        createToken(account.getId(), account.getRole().name());
+        return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
     }
 
     private void checkPassword(String password, String encodePassword) {

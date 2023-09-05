@@ -6,6 +6,7 @@ import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsUseCase;
+import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
@@ -44,6 +45,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     @Override
     @Transactional(readOnly = true)
     public List<BoardCardResponseDto> getByNavigationId(Integer navigationId) {
+        Long userId = SecurityUtils.getCurrentUserId();
         List<Columns> columns = columnsUseCase.getByNavigationId(navigationId);
 
         List<Integer> columnsIds =
@@ -65,7 +67,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         Map<Long, Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
-                        cards.stream().map(Card::getId).collect(Collectors.toList()));
+                        cards.stream().map(Card::getId)
+                        .distinct()
+                        .collect(Collectors.toList()));
 
         for (Board board : boards) {
             if (board.getCardType().equals(CardType.INVISIBLE)) {
