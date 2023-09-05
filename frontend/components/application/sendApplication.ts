@@ -90,6 +90,10 @@ export const postApplication = async (
       name: "applicantId",
       answer: applicantId,
     });
+    applicationData.add({
+      name: "timeline",
+      answer: JSON.stringify(timeline),
+    });
 
     await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
