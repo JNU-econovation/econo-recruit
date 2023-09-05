@@ -1,23 +1,12 @@
-/*
 package com.econovation.recruit.api.applicant.handler;
 
-import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.user.helper.NcpMailHelper;
 import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
-import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
-import com.econovation.recruitdomain.domains.card.domain.Card;
-import com.econovation.recruitinfrastructure.mail.EmailSenderService;
-import com.econovation.recruitinfrastructure.mail.GoogleMailProperties;
-import com.econovation.recruitinfrastructure.ses.AwsSesUtils;
-import com.econovation.recruitinfrastructure.ses.SendRawEmailDto;
-import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
-import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
+import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,17 +19,25 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Slf4j
 public class ApplicantRegisterEventConfirmEmailHandler {
     private final NcpMailHelper ncpMailHelper;
+    private final CommonsEmailSender commonsEmailSender;
     @Async
     @TransactionalEventListener(
             classes = ApplicantRegisterEvent.class,
             phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void handle(ApplicantRegisterEvent applicantRegistEvent) {
+    public void handle(ApplicantRegisterEvent applicantRegistEvent){
         log.info("%s님의 지원서가 접수되었습니다.", applicantRegistEvent.getUserName());
-        ncpMailHelper.sendMail(
-                "[Econovation] 에코노베이션 지원서 접수 확인 메일",
-                generateConfirmRegisterEmailBody(applicantRegistEvent.getUserName()),
-                applicantRegistEvent.getEmail());
+//        ncpMailHelper.sendMail(
+//                "[Econovation] 에코노베이션 지원서 접수 확인 메일",
+//                generateConfirmRegisterEmailBody(applicantRegistEvent.getUserName()),
+//                applicantRegistEvent.getEmail());
+//
+
+        commonsEmailSender.send(
+                applicantRegistEvent.getEmail(),
+                applicantRegistEvent.getUserName(),
+                generateConfirmRegisterEmailBody(applicantRegistEvent.getUserName())
+                );
     }
 //
 //        MimeMessage mimeMessage = generateConfirmRegisterEmail(
@@ -63,18 +60,18 @@ public class ApplicantRegisterEventConfirmEmailHandler {
 //        return message;
 //    }
 
-
+//    안녕하세요, (지원자이름)님
+//2023년 2학기 에코노베이션 26기 신입회원 모집에 지원해주셔서 감사드립니다.
+//    지원서는 수정 불가능하며, 서류 합격 여부 및 면접 시간은 9월 19일 화요일에 안내될 예정입니다.
+//    더 궁금하신 내용은 카카오톡 채널 "에코노베이션"으로 문의 주시길 바랍니다.
+//    감사합니다.
     private String generateConfirmRegisterEmailBody(String userName) {
         return String.format(
-                "안녕하세요 %s님,\n\n"
-                        + "저희 에코노베이션에 지원해주셔서 진심으로 감사드립니다.\n\n"
-                        + "귀하의 지원이 성공적으로 접수되었음을 알려드립니다. "
-                        + "저희 팀은 지원서를 신중히 검토한 후, 빠른 시일 내에 연락드리겠습니다.\n\n"
-                        + "혹시 궁금한 사항이 있으시면 언제든지 저희에게 연락주시기 바랍니다.\n\n"
-                        + "다시 한번 감사의 말씀을 드리며, 좋은 결과가 있기를 바랍니다.\n\n"
-                        + "감사합니다,\n"
-                        + "- 에코노베이션 Recruit팀",
+                "안녕하세요, %s님\n"
+                        + "2023년 2학기 에코노베이션 26기 신입회원 모집에 지원해주셔서 감사드립니다.\n\n"
+                        + "지원서는 수정 불가능하며, 서류 합격 여부 및 면접 시간은 9월 19일 화요일에 안내될 예정입니다.\n\n"
+                        + "더 궁금하신 내용은 카카오톡 채널 \"에코노베이션\"으로 문의 주시길 바랍니다.\n\n"
+                        + "감사합니다.",
                 userName);
     }
 }
-*/

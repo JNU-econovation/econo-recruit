@@ -14,8 +14,10 @@ import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
+import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
+import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -42,6 +44,7 @@ public class ApplicantController {
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final QuestionRegisterUseCase questionRegisterUseCase;
     private final AnswerLoadUseCase answerLoadUseCase;
+    private final CommonsEmailSender commonsEmailSender;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -112,4 +115,14 @@ public class ApplicantController {
         return new ResponseEntity(
                 timeTableLoadUseCase.findAllSimpleApplicantWithTimeTable(), HttpStatus.OK);
     }
+
+    @Operation(summary = "지원서 제출한 html을 email 로 전송합니다.")
+    @PostMapping("/applicants/mail")
+    public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
+        commonsEmailSender.send(
+                emailSendDto.getEmail(),
+                emailSendDto.getApplicantId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

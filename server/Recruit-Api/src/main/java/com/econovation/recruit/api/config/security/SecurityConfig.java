@@ -68,6 +68,8 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers(SwaggerPatterns)
                 .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/mail")
+                .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*")
                 .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/token")
