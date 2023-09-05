@@ -2,7 +2,6 @@
 
 import AdminBoard from "@/components/admin/Board.component";
 import AdminSearch from "@/components/admin/Search.component";
-import PageNavbarComponent from "@/components/common/PageNavbar.component";
 import SortListComponent from "@/components/common/SortList.component";
 import CommonNavbar from "@/components/common/navbar/Navbar.component";
 import { getAllInterviewer } from "@/src/apis/interview/interviewer";
@@ -54,11 +53,6 @@ const AdminPage: FC<AdminPageProps> = ({
           <SortListComponent sortList={orderMenu} selected={order} />
         </div>
         <AdminBoard />
-        <PageNavbarComponent
-          maxLength={Math.floor(userData.length / 8) + 1}
-          page={+page}
-          url={`/admin/${generation}?type=${type}&order=${order}`}
-        />
       </div>
     </div>
   );

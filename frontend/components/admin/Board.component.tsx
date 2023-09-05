@@ -15,18 +15,21 @@ const roleKeys: (keyof typeof roleMap)[] = [
   "ROLE_OPERATION",
   "ROLE_PRESIDENT",
   "ROLE_TF",
+  "ROLE_GUEST",
 ];
 
 const roleUpdateMap = {
   ROLE_OPERATION: "OPERATION",
   ROLE_PRESIDENT: "PRESIDENT",
   ROLE_TF: "TF",
+  ROLE_GUEST: "GUEST",
 } as const;
 
 const roleMap = {
   ROLE_OPERATION: "관리자",
   ROLE_PRESIDENT: "회장단",
   ROLE_TF: "TF",
+  ROLE_GUEST: "게스트",
 } as const;
 
 const roleTranslater = (role: keyof typeof roleMap) => roleMap[role];
@@ -101,7 +104,7 @@ const AdminBoard = () => {
             Member Name
           </Txt>
           <Txt className="flex-[2_0_0] text-left text-[#B5B7C0]">기수</Txt>
-          <Txt className="w-[21rem] text-left text-[#B5B7C0]">Status</Txt>
+          <Txt className="w-[28.5rem] text-left text-[#B5B7C0]">Status</Txt>
         </div>
       </div>
       {userData.map((user, index) => (
@@ -111,16 +114,9 @@ const AdminBoard = () => {
           </Txt>
           <Txt className="flex-[2_0_0] text-left truncate">{`${user.year}기`}</Txt>
           <div className="flex gap-6">
-            {roleKeys.map(
-              (role, index) =>
-                user.role !== "ROLE_GUEST" && (
-                  <InterViewerUpdateButton
-                    role={role}
-                    user={user}
-                    key={index}
-                  />
-                )
-            )}
+            {roleKeys.map((role, index) => (
+              <InterViewerUpdateButton role={role} user={user} key={index} />
+            ))}
           </div>
         </div>
       ))}
