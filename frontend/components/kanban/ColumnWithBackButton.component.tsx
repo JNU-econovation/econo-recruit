@@ -62,7 +62,7 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
                 col &&
                 col.cardType !== "INVISIBLE" && (
                   <div className="my-2" key={col.id}>
-                    <KanbanCardComponent data={col} cardId={+detailCard + 1} />
+                    <KanbanCardComponent data={col} cardId={+detailCard} />
                   </div>
                 )
             )}
