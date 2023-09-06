@@ -60,13 +60,14 @@ const Board: FC<PropsWithChildren<BoardProps>> = ({
           },
           overlay: {
             padding: "0",
+            position: "absolute",
           },
         }}
         isOpen={isOpen}
         onRequestClose={closeModel}
         ariaHideApp={false}
       >
-        <button className="fixed z-10" onClick={closeModel}>
+        <button className="absolute z-10" onClick={closeModel}>
           <Image src={CloseImage} alt="close" />
         </button>
         <div
