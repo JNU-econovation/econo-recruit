@@ -111,7 +111,7 @@ const ApplicantLabelButton: FC<ApplicantLabelButtonProps> = ({
     <button
       key={label.name}
       className={classNames(
-        "py-1 px-4 rounded-full",
+        "py-1 px-4 rounded-full w-max",
         label.active
           ? "text-[#2160FF] bg-[#E8EFFF]"
           : "text-[#777777] bg-[#EFEFEF]"

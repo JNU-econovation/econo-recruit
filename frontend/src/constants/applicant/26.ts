@@ -25,6 +25,7 @@ const APPLICANT = [
         { name: "doubleMajor" },
         { name: "minor" },
         { name: "grade" },
+        { name: "semester" },
       ],
     },
   } as ApplicantCustomHumanNode,

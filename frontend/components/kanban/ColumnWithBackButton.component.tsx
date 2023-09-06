@@ -36,7 +36,7 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
   }
 
   const cardTitle = kanbanDataArray[+detailCard].title;
-  const cardCount = kanbanDataArray[+detailCard].card.length;
+  const cardCount = kanbanDataArray[+detailCard].card.length - 1;
 
   return (
     <div className="max-h-[calc(100vh-20rem)]">
