@@ -42,17 +42,21 @@ const ApplicantResource: FC<ApplicantResourceProps> = ({ data }) => {
       </div>
       <div className="flex flex-col gap-4">
         <Txt typography="h4">포트폴리오</Txt>
-        <div className="flex">
+        <div className="flex gap-4">
           <div className="flex-1 flex flex-col">
             <Txt typography="h6">링크</Txt>
             <Link href={applicantDataFinder(data, "portfolio")} target="_blank">
-              <Txt>{applicantDataFinder(data, "portfolio")}</Txt>
+              <Txt className="break-all">
+                {applicantDataFinder(data, "portfolio")}
+              </Txt>
             </Link>
           </div>
           <div className="flex-1 flex flex-col">
             <Txt typography="h6">파일</Txt>
             <Link href={applicantDataFinder(data, "fileUrl")} target="_blank">
-              <Txt>{applicantDataFinder(data, "fileUrl")}</Txt>
+              <Txt className="break-all">
+                {applicantDataFinder(data, "fileUrl")}
+              </Txt>
             </Link>
           </div>
         </div>
