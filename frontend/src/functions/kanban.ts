@@ -43,8 +43,13 @@ export const getFromToIndexColumn = (
   const fromIndex = result.source.index;
   const toIndex = result.destination.index;
 
-  const columnId = kanbanData[+fromIndex - 1].id ?? kanbanData[0].id ?? 0;
-  const targetColumnId = kanbanData[+toIndex - 1].id ?? kanbanData[0].id ?? 0;
+  const columnId = kanbanData[+fromIndex]?.id ?? 0;
+  const targetColumnId =
+    +toIndex < +fromIndex
+      ? kanbanData[+toIndex - 1]?.id ?? 0
+      : +toIndex < 1
+      ? 0
+      : kanbanData[+toIndex]?.id ?? 0;
 
   return { columnId, targetColumnId };
 };
@@ -59,14 +64,17 @@ export const getFromToIndexDefault = (
   const to = result.destination;
 
   const boardId =
-    kanbanData[+from.droppableId - 1].card[from.index]?.id ??
-    kanbanData[+from.droppableId - 1].card[0]?.id ??
+    kanbanData[+from.droppableId].card[from.index]?.id ??
+    kanbanData[+from.droppableId].card[0]?.id ??
     0;
+
   const targetBoardId =
-    kanbanData[+to.droppableId - 1].card.length === 1
-      ? kanbanData[+to.droppableId - 1].card[to.index]?.id ?? 0
-      : kanbanData[+to.droppableId - 1].card[to.index - 1]?.id ??
-        kanbanData[+from.droppableId - 1].card[0]?.id ??
+    to.index < 1
+      ? kanbanData[+to.droppableId].card[to.index]?.id ??
+        kanbanData[+to.droppableId].card[0]?.id ??
+        0
+      : kanbanData[+to.droppableId].card[to.index - 1]?.id ??
+        kanbanData[+to.droppableId].card[0]?.id ??
         0;
 
   return { boardId, targetBoardId };
