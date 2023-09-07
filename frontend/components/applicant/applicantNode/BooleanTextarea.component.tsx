@@ -24,7 +24,7 @@ const ApplicantBooleanTextarea: FC<ApplicantBooleanTextareaProps> = ({
         {selectedValue}
       </Txt>
       <Txt typography="h6" className="m-6">
-        {selectedValue
+        {selectedValue === "있다"
           ? booleantextareaData.subtitle[0]
           : booleantextareaData.subtitle[1]}
       </Txt>
