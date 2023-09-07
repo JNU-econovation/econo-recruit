@@ -16,15 +16,15 @@ const NavbarUserInfo = () => {
   const { data, isLoading, isError } = useQuery(["user"], () => getMyInfo());
 
   if (!data || isLoading) {
-    return <div className="absolute bottom-12">loading...</div>;
+    return <div className="fixed bottom-12">loading...</div>;
   }
 
   if (isError) {
-    return <div className="absolute bottom-12">error</div>;
+    return <div className="fixed bottom-12">error</div>;
   }
 
   return (
-    <div className="absolute bottom-12">
+    <div className="fixed bottom-12">
       <div>
         <Txt className="font-medium">{data.name}</Txt>
       </div>
