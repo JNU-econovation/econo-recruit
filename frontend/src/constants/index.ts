@@ -63,7 +63,7 @@ export const MainNavbar = [
   },
   {
     title: "지난 신입모집",
-    short_title: "자난 모집",
+    short_title: "지난 모집",
     type: "history",
     target: "_blank",
     href: "#",
