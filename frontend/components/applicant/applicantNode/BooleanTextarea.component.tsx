@@ -21,7 +21,7 @@ const ApplicantBooleanTextarea: FC<ApplicantBooleanTextareaProps> = ({
   return (
     <>
       <Txt typography="h5" className="block font-normal m-6">
-        {selectedValue ? "있다" : "없다"}
+        {selectedValue}
       </Txt>
       <Txt typography="h6" className="m-6">
         {selectedValue
