@@ -313,7 +313,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                             column -> {
                                 column.updateNextColumnsId(currentColumn.getNextColumnsId());
                             });
-            // 현재 칼럼의 nextColumnId를 처음 칼럼의 id로 변경
+            // 현재 칼럼의 nextColumnId를 처음 칼럼의 nextColumnid로 변경
+            if(firstIndex.equals(currentColumn.getId())) return;
             currentColumn.updateNextColumnsId(firstIndex);
             return;
         }
