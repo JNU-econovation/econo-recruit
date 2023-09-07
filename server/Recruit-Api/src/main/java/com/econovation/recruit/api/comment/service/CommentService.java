@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,9 +72,8 @@ public class CommentService implements CommentUseCase {
         Comment comment = commentLoadPort.findById(commentId);
         // 본인이 만든 댓글만 삭제가 가능하다
         if (comment.isHost(idpId)) {
+            cardLoadPort.findById(comment.getCardId()).minusCommentCount();
             commentRecordPort.deleteComment(comment);
-            // 관련된 commentLike 삭제 처리
-            // TODO : Event 처리로 변경
             List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
             commentLikeRecordPort.deleteAll(commentLikes);
         } else {
@@ -140,6 +140,11 @@ public class CommentService implements CommentUseCase {
         Card card = cardLoadPort.findById(cardId);
         List<Comment> comments = commentLoadPort.findByCardId(card.getId());
 
+        return getCommentPairVo(idpId, comments);
+    }
+
+    @NotNull
+    private List<CommentPairVo> getCommentPairVo(Long idpId, List<Comment> comments) {
         List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
@@ -200,36 +205,6 @@ public class CommentService implements CommentUseCase {
     public List<CommentPairVo> findByApplicantId(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
-        List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
-        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
-        return comments.stream()
-                .map(
-                        comment -> {
-                            Boolean isLiked =
-                                    commentLikes.stream()
-                                            .anyMatch(
-                                                    commentLike ->
-                                                            commentLike
-                                                                            .getCommentId()
-                                                                            .equals(comment.getId())
-                                                                    && commentLike
-                                                                            .getIdpId()
-                                                                            .equals(idpId));
-
-                            Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
-                            String interviewersName =
-                                    interviewers.stream()
-                                            .filter(
-                                                    interviewer ->
-                                                            interviewer
-                                                                    .getId()
-                                                                    .equals(comment.getIdpId()))
-                                            .findFirst()
-                                            .map(Interviewer::getName)
-                                            .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
-                        })
-                .collect(Collectors.toList());
+        return getCommentPairVo(idpId, comments);
     }
 }
