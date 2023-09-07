@@ -1,58 +1,9 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import KanbanCardComponent from "./Card.component";
+import KanbanCardComponent from "./card/Card.component";
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddCardComponent from "./AddCard.component";
 import { FC } from "react";
-
-interface KanbanColumnInvisible {
-  columnIndex: number;
-  index: number;
-}
-
-const KanbanColumnInvisible: FC<KanbanColumnInvisible> = ({
-  columnIndex,
-  index,
-}) => {
-  return (
-    <Draggable draggableId={`${columnIndex}-${index}`} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className="py-1"
-        ></div>
-      )}
-    </Draggable>
-  );
-};
-
-interface KanbanColumnApplicant {
-  columnIndex: number;
-  index: number;
-  column: KanbanCardData;
-}
-
-const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
-  index,
-  columnIndex,
-  column,
-}) => {
-  return (
-    <Draggable draggableId={`${index}-${column?.id}`} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className="my-4"
-        >
-          <KanbanCardComponent data={column} cardId={columnIndex} />
-        </div>
-      )}
-    </Draggable>
-  );
-};
+import { KanbanCard } from "./card";
 
 interface KanbanColumnComponentProps {
   columnIndex: number;
@@ -79,26 +30,29 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
-          {columnData.map((column, index) =>
-            column !== null ? (
-              column.cardType === "INVISIBLE" ? (
-                <KanbanColumnInvisible
-                  key={column?.id}
-                  index={index}
-                  columnIndex={columnIndex}
-                />
-              ) : (
-                <KanbanColumnApplicant
-                  key={column?.id}
-                  column={column}
-                  columnIndex={columnIndex}
-                  index={index}
-                />
-              )
-            ) : (
-              <></>
-            )
-          )}
+          {columnData.map((column, index) => {
+            switch (column?.cardType) {
+              case "INVISIBLE":
+                return (
+                  <KanbanCard.Invisible
+                    key={column?.id}
+                    index={index}
+                    columnIndex={columnIndex}
+                  />
+                );
+              case "APPLICANT":
+                return (
+                  <KanbanCard.Applicant
+                    key={column?.id}
+                    column={column}
+                    columnIndex={columnIndex}
+                    index={index}
+                  />
+                );
+              default:
+                return <></>;
+            }
+          })}
           {provided.placeholder}
         </div>
       )}
