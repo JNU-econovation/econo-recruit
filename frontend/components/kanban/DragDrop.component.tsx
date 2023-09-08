@@ -7,11 +7,11 @@ import {
   getFromToIndexDefault,
   getMovedKanbanData,
 } from "@/src/functions/kanban";
-import KanbanAddColumnComponent from "./AddColumn.component";
+import KanbanAddColumnComponent from "./column/AddColumn.component";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 import { getAllKanbanData } from "@/src/apis/kanban/kanban";
-import KanbanColumnComponent from "./Column.component";
+import KanbanColumnComponent from "./column/Column.component";
 import { useAtomValue } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
 import { postLocations, putColumnsLocations } from "@/src/apis/kanban/location";

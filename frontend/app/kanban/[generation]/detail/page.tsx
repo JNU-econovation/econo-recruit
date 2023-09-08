@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import KanbanDetailColumn from "@/components/kanban/ColumnWithBackButton.component";
-import KanbanDetailContent from "@/components/kanban/detail/Content.component";
+import KanbanDetailContent from "@/components/kanban/detail/ContentApplicant.component";
 import Validate from "@/components/user/Validate.component";
 
 interface KanbanBoardDetailPageProps {
