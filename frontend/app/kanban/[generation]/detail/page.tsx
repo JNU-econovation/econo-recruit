@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import KanbanDetailColumn from "@/components/kanban/ColumnWithBackButton.component";
+import KanbanColumnDetailCard from "@/components/kanban/column/ColumnWithBackButton.component";
 import KanbanDetailContent from "@/components/kanban/detail/ContentApplicant.component";
 import Validate from "@/components/user/Validate.component";
 
@@ -27,7 +27,7 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
   return (
     <div className="flex mt-8 overflow-auto pt-12 pl-12">
       <Validate />
-      <KanbanDetailColumn detailCard={detailCard} generation={generation} />
+      <KanbanColumnDetailCard detailCard={detailCard} generation={generation} />
       <KanbanDetailContent detailId={detailId} generation={generation} />
     </div>
   );

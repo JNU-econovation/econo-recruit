@@ -1,5 +1,3 @@
-"use client";
-
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import { useParams, useRouter } from "next/navigation";
 
@@ -16,11 +14,20 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
     return <></>;
   }
 
-  const { title, apply, comment, isHearted, heart, major, applicantId } = data;
+  const {
+    title,
+    apply,
+    comment,
+    isHearted,
+    heart,
+    major,
+    applicantId,
+    cardType,
+  } = data;
 
   const onClickDetail = () => {
     navigate.push(
-      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}`
+      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}&type=${cardType}`
     );
   };
 
