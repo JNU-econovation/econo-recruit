@@ -7,12 +7,12 @@ import { FC } from "react";
 import { APPLICANT_KEYS } from "@/src/constants/";
 import { useQuery } from "@tanstack/react-query";
 
-interface KanbanDetailContentProps {
+interface KanbanDetailApplicantProps {
   detailId: string;
   generation: string;
 }
 
-const KanbanDetailContent: FC<KanbanDetailContentProps> = ({
+const KanbanDetailApplicant: FC<KanbanDetailApplicantProps> = ({
   detailId,
   generation,
 }) => {
@@ -51,4 +51,4 @@ const KanbanDetailContent: FC<KanbanDetailContentProps> = ({
   );
 };
 
-export default KanbanDetailContent;
+export default KanbanDetailApplicant;

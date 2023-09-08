@@ -2,8 +2,9 @@
 
 import { FC } from "react";
 import KanbanColumnDetailCard from "@/components/kanban/column/ColumnWithBackButton.component";
-import KanbanDetailContent from "@/components/kanban/detail/ContentApplicant.component";
+import KanbanDetailContent from "@/components/kanban/content/DetailApplicant.component";
 import Validate from "@/components/user/Validate.component";
+import { KanbanCardReq } from "@/src/apis/kanban/kanban";
 
 interface KanbanBoardDetailPageProps {
   params: {
@@ -12,23 +13,19 @@ interface KanbanBoardDetailPageProps {
   searchParams: {
     id: string;
     card: string;
+    type: KanbanCardReq["cardType"];
   };
 }
 
 const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
-  params,
-  searchParams,
+  params: { generation },
+  searchParams: { card, id, type },
 }) => {
-  const { generation } = params;
-
-  const detailId = searchParams.id ?? "0";
-  const detailCard = searchParams.card ?? "0";
-
   return (
     <div className="flex mt-8 overflow-auto pt-12 pl-12">
       <Validate />
-      <KanbanColumnDetailCard detailCard={detailCard} generation={generation} />
-      <KanbanDetailContent detailId={detailId} generation={generation} />
+      <KanbanColumnDetailCard detailCard={card ?? 0} generation={generation} />
+      <KanbanDetailContent detailId={id ?? 0} generation={generation} />
     </div>
   );
 };
