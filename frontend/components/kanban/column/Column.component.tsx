@@ -1,9 +1,8 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import KanbanCardComponent from "./card/Card.component";
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
-import KanbanAddCardComponent from "./AddCard.component";
+import KanbanAddCardComponent from "../card/AddCard.component";
 import { FC } from "react";
-import { KanbanCard } from "./card";
+import { KanbanCard } from "../card";
 
 interface KanbanColumnComponentProps {
   columnIndex: number;
@@ -41,6 +40,7 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
                   />
                 );
               case "APPLICANT":
+              case "WORK_CARD":
                 return (
                   <KanbanCard.Applicant
                     key={column?.id}

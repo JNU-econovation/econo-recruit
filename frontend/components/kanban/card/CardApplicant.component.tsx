@@ -1,3 +1,5 @@
+"use client";
+
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import { Draggable } from "@hello-pangea/dnd";
 import { FC } from "react";
