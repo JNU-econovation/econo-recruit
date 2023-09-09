@@ -18,6 +18,7 @@ import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
 import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
@@ -129,7 +130,6 @@ public class BoardRestController {
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PostMapping("/boards/work-cards")
     public ResponseEntity<String> createWorkBoard(
-            // TODO : navigation 확장 예정
             @RequestBody CreateWorkCardDto createWorkCardDto) {
         cardRegisterUseCase.saveWorkCard(createWorkCardDto);
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
@@ -151,6 +151,12 @@ public class BoardRestController {
             @PathVariable(name = "card-id") Long cardId, @RequestBody String title) {
         cardRegisterUseCase.updateTitle(cardId, title);
         return new ResponseEntity(BOARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
+    }
+    @Operation(summary = "업무 카드 조회", description = "업무 카드 조회")
+    @GetMapping("/cards/{card-id}")
+    public ResponseEntity<CardResponseDto> getWorkCard(
+            @PathVariable(name = "card-id") Long cardId) {
+        return new ResponseEntity<>(cardLoadUseCase.findCardById(cardId), HttpStatus.OK);
     }
 
     @Operation(summary = "지원서 칸반보드 위치 수정")

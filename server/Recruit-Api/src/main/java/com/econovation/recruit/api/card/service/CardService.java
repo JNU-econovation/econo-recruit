@@ -12,6 +12,7 @@ import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
+import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.out.CardLoadPort;
@@ -103,6 +104,12 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                             card, board, firstPriority, secondPriority, major, isLabeled));
         }
         return result;
+    }
+
+    @Override
+    public CardResponseDto findCardById(Long cardId) {
+        Card card = cardLoadPort.findById(cardId);
+        return CardResponseDto.from(card);
     }
 
     @Override
