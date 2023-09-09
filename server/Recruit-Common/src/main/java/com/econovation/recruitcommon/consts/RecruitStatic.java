@@ -18,7 +18,7 @@ public class RecruitStatic {
     public static final Integer PLANNER_COLUMNS_ID = 3;
     //    itemsPerPage
     public static final Integer COUNTS_PER_PAGE = 8;
-    public static final Integer ANSWER_COUNTS_PER_PERSON = 39;
+    public static final Integer ANSWER_COUNTS_PER_PERSON = 31;
 
     public static final int MILLI_TO_SECOND = 1000;
     public static final int BAD_REQUEST = 400;

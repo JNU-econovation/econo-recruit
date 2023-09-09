@@ -28,10 +28,10 @@ public class ApplicantRegisterEventConfirmEmailHandler {
     public void handle(ApplicantRegisterEvent applicantRegistEvent){
         log.info("%s님의 지원서가 접수되었습니다.", applicantRegistEvent.getUserName());
         String email = applicantRegistEvent.getEmail().replace("\"", "");
-        commonsEmailSender.send(
-                email,
-                applicantRegistEvent.getApplicantId()
-                );
+//        commonsEmailSender.send(
+//                email,
+//                applicantRegistEvent.getApplicantId()
+//                );
     }
 
     private String generateConfirmRegisterEmailBody(String userName) {

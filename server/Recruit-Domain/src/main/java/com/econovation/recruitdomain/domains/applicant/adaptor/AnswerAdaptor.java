@@ -33,7 +33,7 @@ public class AnswerAdaptor {
     }
 
     public AnswerPageResponseDto findAll(Integer page) {
-        // 그룹별로 28개씩 묶어서 8개씩 조회하도록 페이징 설정
+        // 그룹별로 31개씩 묶어서 8개씩 조회하도록 페이징 설정
         PageRequest pageRequest =
                 PageRequest.of(page - 1, COUNTS_PER_PAGE * ANSWER_COUNTS_PER_PERSON, Sort.by("createdAt"));
         Page<Answer> content = answerRepository.findAll(pageRequest);
