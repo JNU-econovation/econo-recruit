@@ -3,8 +3,8 @@
 import { FC } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCommentById } from "@/src/apis/comment/comment";
 import ApplicantCommentDetail from "./CommentDetail.component";
+import { getAllCommentById } from "../../../../src/apis/comment/comment";
 
 interface ApplicantCommentProps {
   postId: string;

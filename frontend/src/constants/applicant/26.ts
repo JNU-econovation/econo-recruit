@@ -41,8 +41,7 @@ const APPLICANT = [
 ] as ApplicantNode[];
 
 const INTERVIEW_SCORE_KEYWOARD = [
-  { title: "열정", name: "passion" },
-  { title: "실천력", name: "energy" },
+  { title: "열정/실천력", name: "passion" },
   { title: "협업", name: "collaboration" },
   { title: "동아리 집중", name: "clubFocus" },
   { title: "간절함", name: "earnestness" },

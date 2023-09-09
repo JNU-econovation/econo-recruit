@@ -49,7 +49,7 @@ const ApplicantInterviewerScore = () => {
           <div className="flex justify-between text-sm text-[#4F4F4F] mb-12 mt-4 px-4">
             {INTERVIEW_SCORE_KEYWOARD.map((keyword) => (
               <div key={keyword.name} className="flex flex-col items-center">
-                <div className="text-2xl">-</div>
+                <input placeholder="-" className="placeholder-gray-500 border-none text-2xl outline-none w-16 bg-slate-200 " type="number"/>
                 <div>{keyword.title}</div>
               </div>
             ))}
