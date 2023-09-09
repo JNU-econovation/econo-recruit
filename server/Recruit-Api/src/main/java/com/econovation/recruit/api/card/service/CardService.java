@@ -65,11 +65,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         Map<String, HashMap<String, String>> answers =
                 answerLoadPort.findAllApplicantVo(List.of("field1", "field2", "major"));
 
-        Map<Long, Label> labels =
+        List<Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
-                        cards.stream().map(Card::getId)
-                        .distinct()
-                        .collect(Collectors.toList()));
+                        cards.stream().map(Card::getId).collect(Collectors.toList()));
 
         for (Board board : boards) {
             if (board.getCardType().equals(CardType.INVISIBLE)) {
@@ -96,7 +94,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 secondPriority = "";
                 major = "";
             }
-            Boolean isLabeled = labels.containsKey(card.getId()) ? true : false;
+            Boolean isLabeled = labels.stream().anyMatch(
+                    label -> label.getCardId().equals(card.getId())
+                            && label.getIdpId().equals(userId));
 
             result.add(
                     BoardCardResponseDto.from(

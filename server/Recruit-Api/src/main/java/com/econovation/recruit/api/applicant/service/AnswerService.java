@@ -4,9 +4,11 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruitcommon.exception.OutOfIndexException;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
+import com.econovation.recruitdomain.domains.dto.AnswerPageResponseDto;
 import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,11 +17,12 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.COUNTS_PER_PAGE;
+
 @Service
 @RequiredArgsConstructor
 public class AnswerService implements AnswerLoadUseCase {
     private final AnswerAdaptor answerAdaptor;
-    private final ScoreAdaptor scoreAdaptor;
 
     @Override
     public Map<String, String> execute(String applicantId) {
@@ -95,24 +98,23 @@ public class AnswerService implements AnswerLoadUseCase {
     }
 
     private List<Map<String, String>> splitByAnswersInApplicantId(List<Answer> answers) {
-        return answers.stream()
-                .collect(
-                        Collectors.groupingBy(
-                                Answer::getApplicantId,
-                                Collectors.toMap(
-                                        answer -> answer.getQuestion().getName(),
-                                        Answer::getAnswer,
-                                        (existing, replacement) -> existing,
-                                        HashMap::new)))
-                .entrySet()
-                .stream()
-                .map(
-                        entry -> {
-                            LinkedHashMap<String, String> map = new LinkedHashMap<>();
-                            map.put("id", entry.getKey());
-                            entry.getValue().forEach(map::put);
-                            return map;
-                        })
+        // First, group the answers by applicant ID
+        Map<String, List<Answer>> grouped = answers.stream()
+                .collect(Collectors.groupingBy(Answer::getApplicantId));
+
+        // ApplicantId (지원자) 별로 그룹화 한 후에 CreatedAt으로 오름차순 정렬하여 Map을 생성한다
+        return grouped.entrySet().stream()
+                .sorted(Comparator.comparing(e -> e.getValue().stream()
+                        .max(Comparator.comparing(Answer::getCreatedAt))
+                        .get()
+                        .getCreatedAt()))
+                .map(entry -> {
+                    LinkedHashMap<String, String> map = new LinkedHashMap<>();
+                    map.put("id", entry.getKey());
+                    entry.getValue().forEach(answer ->
+                            map.put(answer.getQuestion().getName(), answer.getAnswer()));
+                    return map;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -131,23 +133,13 @@ public class AnswerService implements AnswerLoadUseCase {
     @Override
     public ApplicantPaginationResponseDto execute(Integer page) {
         if (page < 1) throw OutOfIndexException.EXCEPTION;
-        List<Answer> answers = answerAdaptor.findAll(page);
-        List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
+        AnswerPageResponseDto answers = answerAdaptor.findAll(page);
+        List<Map<String, String>> results = splitByAnswersInApplicantId(answers.getContent());
         // maxPage
-        Integer maxPage = results.size() / 8;
         return ApplicantPaginationResponseDto.builder()
                 .applicants(results)
-                .maxPage(maxPage + 1)
+                .maxPage(answers.getMaxPage())
                 .build();
-
-        //        if (sortType.equals("score")) {
-        // Map -> id
-        /*            List<List<Score>> scores = results.stream().map(map -> map.get("id"))
-                .map(scoreAdaptor::findByApplicantId).collect(Collectors.toList());
-        // groupBy applicant 평균 점수
-        Map<String, Double> averageScore = scores.stream().mapToDouble(list -> list.stream()
-                        .mapToDouble(Score::getScore).average().orElse(0)).boxed()
-                .collect(Collectors.toMap(*/
     }
 
     @Override

@@ -31,7 +31,7 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "parent_id")
     private Long parentId;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "is_deleted")

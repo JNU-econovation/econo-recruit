@@ -43,7 +43,6 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
         Optional<Label> label = labelRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         if (label.isEmpty()) {
             return null;
-            //            throw LabelNotFoundException.EXCEPTION;
         }
         return label.get();
     }
@@ -54,8 +53,8 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
-    public Map<Long, Label> loadLabelByCardIdIn(List<Long> cardIds) {
-        List<Label> labels = labelRepository.findByCardIdIn(cardIds);
-        return labels.stream().collect(Collectors.toMap(Label::getCardId, label -> label));
+    public List<Label> loadLabelByCardIdIn(List<Long> cardIds) {
+        return labelRepository.findByCardIdIn(cardIds);
+//        return labels.stream().collect(Collectors.toMap(Label::getCardId, label -> label));
     }
 }
