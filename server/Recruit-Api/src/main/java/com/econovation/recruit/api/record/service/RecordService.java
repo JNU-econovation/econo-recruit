@@ -22,7 +22,7 @@ public class RecordService implements RecordUseCase {
 
     @Override
     public Record createRecord(CreateRecordDto recordDto) {
-        if (answerLoadUseCase.execute(recordDto.getApplicantId()).isEmpty()) {
+        if (answerLoadUseCase.execute(recordDto.getApplicantId()) == null) {
             throw ApplicantNotFoundException.EXCEPTION;
         }
         if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()) != null) {

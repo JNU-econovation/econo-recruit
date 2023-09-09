@@ -88,7 +88,7 @@ public class CommentService implements CommentUseCase {
     }
 
     private void decreaseCommentCount(Comment comment) {
-        if (comment.getCardId() == null) {
+        if (comment.getCardId() == 0 || comment.getCardId() == null) {
             cardLoadPort.findByApplicantId(comment.getApplicantId()).minusCommentCount();
         } else {
             cardLoadPort.findById(comment.getCardId()).minusCommentCount();
