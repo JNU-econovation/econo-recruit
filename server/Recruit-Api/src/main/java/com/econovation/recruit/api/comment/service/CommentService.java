@@ -70,14 +70,28 @@ public class CommentService implements CommentUseCase {
     public void deleteComment(Long commentId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
-        // 본인이 만든 댓글만 삭제가 가능하다
-        if (comment.isHost(idpId)) {
-            cardLoadPort.findById(comment.getCardId()).minusCommentCount();
-            commentRecordPort.deleteComment(comment);
-            List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
-            commentLikeRecordPort.deleteAll(commentLikes);
-        } else {
+        // 댓글 작성자만 삭제가 가능하다.
+        validateHost(comment, idpId);
+
+        decreaseCommentCount(comment);
+
+        commentRecordPort.deleteComment(comment);
+
+        List<CommentLike> commentLikes = commentLikeLoadPort.getByCommentId(commentId);
+        commentLikeRecordPort.deleteAll(commentLikes);
+    }
+
+    private void validateHost(Comment comment, Long idpId) {
+        if (!comment.isHost(idpId)) {
             throw CommentNotHostException.EXCEPTION;
+        }
+    }
+
+    private void decreaseCommentCount(Comment comment) {
+        if (comment.getCardId() == null) {
+            cardLoadPort.findByApplicantId(comment.getApplicantId()).minusCommentCount();
+        } else {
+            cardLoadPort.findById(comment.getCardId()).minusCommentCount();
         }
     }
 
@@ -151,17 +165,14 @@ public class CommentService implements CommentUseCase {
         List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
-                        comment -> {
-                            Boolean isLiked =
-                                    commentLikes.stream()
-                                            .anyMatch(
-                                                    commentLike ->
-                                                            commentLike
-                                                                    .getCommentId()
-                                                                    .equals(comment.getId())
-                                                                    && commentLike
-                                                                    .getIdpId()
-                                                                    .equals(idpId));
+                    comment -> {
+                        Boolean isLiked =
+                            commentLikes.stream()
+                                .anyMatch(
+                                    commentLike ->
+                                        commentLike.getCommentId().equals(comment.getId())
+                                            &&
+                                            commentLike.getIdpId().equals(idpId));
 
                             Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
                             String interviewersName =
@@ -192,11 +203,9 @@ public class CommentService implements CommentUseCase {
         // 내가 작성한 comment 만 수정할 수 있다.
         Long idpId = SecurityUtils.getCurrentUserId();
         Comment comment = commentLoadPort.findById(commentId);
-        if (comment.getIdpId() == idpId) {
-            comment.updateContent(content);
-        } else {
-            throw CommentNotHostException.EXCEPTION;
-        }
+
+        validateHost(comment, idpId);
+        comment.updateContent(content);
     }
 
     //
