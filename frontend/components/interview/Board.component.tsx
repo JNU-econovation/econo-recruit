@@ -4,13 +4,16 @@ import InterviewDetailLeftComponent from "./modal/DetailLeft.component";
 import Board from "../common/board/Board.component";
 import InterviewDetailRightComponent from "./modal/DetailRight.component";
 import { applicantDataFinder } from "@/src/functions/finder";
-import { getAllApplicant } from "@/src/apis/applicant/applicant";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { interViewApplicantIdState } from "@/src/stores/interview/Interview.atom";
+import { getApplicantByPage } from "@/src/apis/applicant/applicant";
+import { useSearchParams } from "next/navigation";
 
 const InterviewBoardComponent = () => {
   const [applicantId, setApplicantId] = useAtom(interViewApplicantIdState);
+  const searchParams = useSearchParams();
+  const pageIndex = searchParams.get("page") || "1";
 
   const queryClient = useQueryClient();
 
@@ -24,16 +27,18 @@ const InterviewBoardComponent = () => {
     });
   };
 
-  const { data: allData, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["allApplicant"],
-    queryFn: () => getAllApplicant(),
+    queryFn: () => getApplicantByPage(+pageIndex),
   });
 
-  if (!allData || isLoading) {
+  if (!data || isLoading) {
     return <div>loading...</div>;
   }
 
-  const boardData = allData.map((value) => ({
+  const { maxPage, applicants } = data;
+
+  const boardData = applicants.map((value) => ({
     id: applicantDataFinder(value, "id"),
     title: `[${applicantDataFinder(value, "field")}] ${applicantDataFinder(
       value,

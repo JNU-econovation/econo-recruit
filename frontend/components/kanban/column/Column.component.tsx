@@ -5,7 +5,6 @@ import { FC } from "react";
 import { KanbanCard } from "../card";
 
 interface KanbanColumnComponentProps {
-  columnIndex: number;
   title: string;
   columnCount: number;
   columnData: (KanbanCardData | null)[];
@@ -36,7 +35,7 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
                   <KanbanCard.Invisible
                     key={column?.id}
                     index={index}
-                    columnIndex={columnIndex}
+                    columnIndex={column.id}
                   />
                 );
               case "APPLICANT":
@@ -61,17 +60,18 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
 };
 
 const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
-  columnIndex,
   columnData,
   title,
   columnCount,
   columnId,
 }) => {
+  console.log(columnData);
+
   return (
     <Draggable
-      draggableId={`${columnIndex}`}
-      index={columnIndex}
-      key={`column-${columnIndex}`}
+      draggableId={`${columnId}`}
+      index={columnId}
+      key={`column-${columnId}`}
     >
       {(provided) => (
         <div
@@ -94,7 +94,7 @@ const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
           <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
             <KanbanColumnDroppable
               columnData={columnData}
-              columnIndex={columnIndex}
+              columnIndex={columnId}
             />
           </div>
           <KanbanAddCardComponent columnId={columnId} />

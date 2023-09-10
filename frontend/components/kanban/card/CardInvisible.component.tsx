@@ -11,7 +11,7 @@ const KanbanColumnInvisible: FC<KanbanColumnInvisible> = ({
   index,
 }) => {
   return (
-    <Draggable draggableId={`${columnIndex}-${index}`} index={index}>
+    <Draggable draggableId={`${columnIndex}-${index}`} index={columnIndex}>
       {(provided) => (
         <div
           ref={provided.innerRef}

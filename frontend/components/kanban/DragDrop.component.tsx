@@ -34,6 +34,7 @@ const KanbanColumnView = () => {
   if (isError) {
     return <div>에러 발생</div>;
   }
+
   return (
     <>
       {kanbanData.map((column, index) => (
@@ -42,7 +43,6 @@ const KanbanColumnView = () => {
           title={column.title}
           columnCount={column.card.length - 1}
           columnData={column.card}
-          columnIndex={index}
           columnId={column.id}
         />
       ))}
@@ -120,7 +120,7 @@ const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
             {...provided.droppableProps}
           >
             <KanbanColumnView />
-            <KanbanAddColumnComponent AddColumnCallBack={() => {}} />
+            <KanbanAddColumnComponent />
             {provided.placeholder}
           </div>
         )}

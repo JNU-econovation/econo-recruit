@@ -17,7 +17,7 @@ const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
   column,
 }) => {
   return (
-    <Draggable draggableId={`${index}-${column?.id}`} index={index}>
+    <Draggable draggableId={`${index}-${column?.id}`} index={column.id}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -25,7 +25,7 @@ const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
           {...provided.dragHandleProps}
           className="my-4"
         >
-          <KanbanCardComponent data={column} cardId={columnIndex} />
+          <KanbanCardComponent data={column} cardId={column.id} />
         </div>
       )}
     </Draggable>
