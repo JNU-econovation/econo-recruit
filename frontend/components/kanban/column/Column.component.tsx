@@ -65,8 +65,6 @@ const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
   columnCount,
   columnId,
 }) => {
-  console.log(columnData);
-
   return (
     <Draggable
       draggableId={`${columnId}`}

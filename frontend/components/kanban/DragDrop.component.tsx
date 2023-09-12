@@ -1,20 +1,15 @@
 "use client";
 
-import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { KanbanColumnData } from "@/src/stores/kanban/Kanban.atoms";
-import {
-  getFromToIndexColumn,
-  getFromToIndexDefault,
-  getMovedKanbanData,
-} from "@/src/functions/kanban";
 import KanbanAddColumnComponent from "./column/AddColumn.component";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import { getAllKanbanData } from "@/src/apis/kanban/kanban";
 import KanbanColumnComponent from "./column/Column.component";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { KanbanSelectedButtonNumberState } from "@/src/stores/kanban/Navbar.atoms";
-import { postLocations, putColumnsLocations } from "@/src/apis/kanban/location";
+import useDragDrop from "@/src/hooks/useDragDrop.hook";
 
 const KanbanColumnView = () => {
   const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
@@ -57,57 +52,8 @@ interface KanbanBoardDragDropProps {
 const KanbanBoardDragDropComponent: FC<KanbanBoardDragDropProps> = ({
   generation,
 }) => {
-  const navbarId = useAtomValue(KanbanSelectedButtonNumberState);
-  const queryClient = useQueryClient();
-
-  const { mutate: relocation } = useMutation(postLocations, {
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["kanbanDataArray", navbarId],
-      });
-    },
-  });
-
-  const { mutate: relocationColumn } = useMutation(putColumnsLocations, {
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["kanbanDataArray", navbarId],
-      });
-    },
-  });
-
-  const onDragEnd = (result: DropResult) => {
-    const kanbanData = queryClient.getQueryData<KanbanColumnData[]>([
-      "kanbanDataArray",
-      navbarId,
-    ]) as KanbanColumnData[];
-
-    if (result.type === "card") {
-      relocationColumn(getFromToIndexColumn(kanbanData, result), {
-        onSuccess: () => {
-          queryClient.setQueryData<KanbanColumnData[]>(
-            ["kanbanDataArray", navbarId],
-            (oldData) => {
-              return getMovedKanbanData(oldData as KanbanColumnData[], result);
-            }
-          );
-        },
-      });
-    }
-
-    if (result.type === "DEFAULT") {
-      relocation(getFromToIndexDefault(kanbanData, result), {
-        onSuccess: () => {
-          queryClient.setQueryData<KanbanColumnData[]>(
-            ["kanbanDataArray", navbarId],
-            (oldData) => {
-              return getMovedKanbanData(oldData as KanbanColumnData[], result);
-            }
-          );
-        },
-      });
-    }
-  };
+  const [navbarId] = useAtom(KanbanSelectedButtonNumberState);
+  const { onDragEnd } = useDragDrop();
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

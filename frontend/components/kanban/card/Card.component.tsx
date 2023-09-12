@@ -3,10 +3,10 @@ import { useParams, useRouter } from "next/navigation";
 
 type KanbanCardComponentType = {
   data: KanbanCardData | null;
-  cardId: number;
+  columnIndex: number;
 };
 
-function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
+function KanbanCardComponent({ data, columnIndex }: KanbanCardComponentType) {
   const { generation } = useParams();
   const navigate = useRouter();
 
@@ -27,7 +27,7 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
 
   const onClickDetail = () => {
     navigate.push(
-      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}&type=${cardType}`
+      `/kanban/${generation}/detail?id=${applicantId}&columnIndex=${columnIndex}&type=${cardType}`
     );
   };
 

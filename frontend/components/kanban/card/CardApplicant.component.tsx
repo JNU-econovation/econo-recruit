@@ -25,7 +25,7 @@ const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
           {...provided.dragHandleProps}
           className="my-4"
         >
-          <KanbanCardComponent data={column} cardId={column.id} />
+          <KanbanCardComponent data={column} columnIndex={columnIndex} />
         </div>
       )}
     </Draggable>

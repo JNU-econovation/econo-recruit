@@ -108,6 +108,7 @@ export const getAllKanbanData = async (
       }
       const nextBoardId =
         columnCardsData[columnCardsData.length - 1].nextBoardId;
+
       const nextColumnCardsData = cardsData.filter(
         (card) => card.boardId === nextBoardId
       );
