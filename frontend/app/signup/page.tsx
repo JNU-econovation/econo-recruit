@@ -46,7 +46,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
       <SignUpForm onSubmit={onSubmit} data={signUpData} setForm={setForm} />
       {error && <p className="text-red-500 text-sm my-2">{error}</p>}
     </div>

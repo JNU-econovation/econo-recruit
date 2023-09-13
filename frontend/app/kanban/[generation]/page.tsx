@@ -12,7 +12,7 @@ interface KanbanBoardPageProps {
 const KanbanBoardPage: FC<KanbanBoardPageProps> = ({ params }) => {
   const { generation } = params;
   return (
-    <div className="pl-24 flex py-12">
+    <main className="pl-24 flex py-12">
       <CommonNavbar generation={generation} isShort />
       <div className="ml-32 overflow-auto w-full">
         <div className="w-full pt-12 pb-6 text-3xl font-bold border-b-4">
@@ -25,7 +25,7 @@ const KanbanBoardPage: FC<KanbanBoardPageProps> = ({ params }) => {
           <KanbanBoardDragDropComponent generation={generation} />
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

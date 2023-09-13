@@ -12,21 +12,54 @@ interface KanbanBoardDetailPageProps {
   };
   searchParams: {
     id: string;
-    card: string;
+    columnIndex: string;
     type: KanbanCardReq["cardType"];
   };
 }
 
+interface DetailContentProps {
+  applicantId: string;
+  generation: string;
+  type: KanbanCardReq["cardType"];
+}
+
+const DetailContentJunction: FC<DetailContentProps> = ({
+  applicantId,
+  generation,
+  type,
+}) => {
+  if (type === "APPLICANT") {
+    return (
+      <KanbanDetailContent
+        detailId={applicantId ?? 0}
+        generation={generation}
+      />
+    );
+  }
+  if (type === "WORK_CARD") {
+    return <></>;
+  }
+
+  return <></>;
+};
+
 const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
   params: { generation },
-  searchParams: { card, id, type },
+  searchParams: { columnIndex, id, type },
 }) => {
   return (
-    <div className="flex mt-8 overflow-auto pt-12 pl-12">
+    <main className="flex mt-8 overflow-auto pt-12 pl-12">
       <Validate />
-      <KanbanColumnDetailCard detailCard={card ?? 0} generation={generation} />
-      <KanbanDetailContent detailId={id ?? 0} generation={generation} />
-    </div>
+      <KanbanColumnDetailCard
+        columnIndex={+columnIndex ?? 0}
+        generation={generation}
+      />
+      <DetailContentJunction
+        applicantId={id}
+        generation={generation}
+        type={type}
+      />
+    </main>
   );
 };
 

@@ -7,6 +7,7 @@ import KanbanCardComponent from "./Card.component";
 
 interface KanbanColumnApplicant {
   columnIndex: number;
+  cardIndex: number;
   index: number;
   column: KanbanCardData;
 }
@@ -15,9 +16,10 @@ const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
   index,
   columnIndex,
   column,
+  cardIndex,
 }) => {
   return (
-    <Draggable draggableId={`${index}-${column?.id}`} index={index}>
+    <Draggable draggableId={`${index}-${column.id}`} index={cardIndex}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -25,7 +27,7 @@ const KanbanColumnApplicant: FC<KanbanColumnApplicant> = ({
           {...provided.dragHandleProps}
           className="my-4"
         >
-          <KanbanCardComponent data={column} cardId={columnIndex} />
+          <KanbanCardComponent data={column} columnIndex={columnIndex} />
         </div>
       )}
     </Draggable>

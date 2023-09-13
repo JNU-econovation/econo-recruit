@@ -6,13 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import React, { useState } from "react";
 
-type KanbanAddColumnComponent = {
-  AddColumnCallBack: React.Dispatch<React.SetStateAction<number>>;
-};
-
-function KanbanAddColumnComponent({
-  AddColumnCallBack,
-}: KanbanAddColumnComponent) {
+function KanbanAddColumnComponent() {
   const [title, setTitle] = useState("");
   const [isOpenAddColumn, setIsOpenAddColumn] = useState(false);
   const navigationId = useAtomValue(KanbanSelectedButtonNumberState);

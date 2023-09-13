@@ -10,15 +10,16 @@ import KanbanDetailBackButton from "../BackButton.component";
 import KanbanCardComponent from "../card/Card.component";
 
 interface KanbanDetailCardProps {
-  detailCard: string;
+  columnIndex: number;
   generation: string;
 }
 
 const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
-  detailCard,
+  columnIndex,
   generation,
 }) => {
   const [navbarId] = useAtom(KanbanSelectedButtonNumberState);
+
   const {
     data: kanbanDataArray,
     isError,
@@ -35,8 +36,8 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
     return <div>에러 발생</div>;
   }
 
-  const cardTitle = kanbanDataArray[+detailCard].title;
-  const cardCount = kanbanDataArray[+detailCard].card.length - 1;
+  const cardTitle = kanbanDataArray[columnIndex].title;
+  const cardCount = kanbanDataArray[columnIndex].card.length - 1;
 
   return (
     <div className="max-h-[calc(100vh-20rem)]">
@@ -57,12 +58,12 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
             </button>
           </div>
           <div className="flex flex-col justify-between">
-            {kanbanDataArray[+detailCard].card.map(
+            {kanbanDataArray[+columnIndex].card.map(
               (col) =>
                 col &&
                 col.cardType !== "INVISIBLE" && (
                   <div className="my-2" key={col.id}>
-                    <KanbanCardComponent data={col} cardId={+detailCard} />
+                    <KanbanCardComponent data={col} columnIndex={columnIndex} />
                   </div>
                 )
             )}
