@@ -3,14 +3,6 @@ import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddCardComponent from "../card/AddCard.component";
 import { FC } from "react";
 import { KanbanCard } from "../card";
-
-interface KanbanColumnComponentProps {
-  title: string;
-  columnCount: number;
-  columnData: (KanbanCardData | null)[];
-  columnId: number;
-}
-
 interface KanbanColumnProps {
   columnIndex: number;
   columnData: (KanbanCardData | null)[];
@@ -35,7 +27,7 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
                   <KanbanCard.Invisible
                     key={column?.id}
                     index={index}
-                    columnIndex={column.id}
+                    columnIndex={columnIndex}
                   />
                 );
               case "APPLICANT":
@@ -46,6 +38,7 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
                     column={column}
                     columnIndex={columnIndex}
                     index={index}
+                    cardIndex={index}
                   />
                 );
               default:
@@ -59,17 +52,24 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
   );
 };
 
+interface KanbanColumnComponentProps {
+  title: string;
+  columnCount: number;
+  columnData: (KanbanCardData | null)[];
+  columnIndex: number;
+}
+
 const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
   columnData,
   title,
   columnCount,
-  columnId,
+  columnIndex,
 }) => {
   return (
     <Draggable
-      draggableId={`${columnId}`}
-      index={columnId}
-      key={`column-${columnId}`}
+      draggableId={`${columnIndex}`}
+      index={columnIndex}
+      key={`column-${columnIndex}`}
     >
       {(provided) => (
         <div
@@ -92,10 +92,10 @@ const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
           <div className="flex flex-col justify-between overflow-auto max-h-[calc(100vh-24rem)]">
             <KanbanColumnDroppable
               columnData={columnData}
-              columnIndex={columnId}
+              columnIndex={columnIndex}
             />
           </div>
-          <KanbanAddCardComponent columnId={columnId} />
+          <KanbanAddCardComponent columnId={columnIndex + 1} />
         </div>
       )}
     </Draggable>

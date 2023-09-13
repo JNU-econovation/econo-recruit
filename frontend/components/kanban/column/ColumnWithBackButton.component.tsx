@@ -36,8 +36,8 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
     return <div>에러 발생</div>;
   }
 
-  const cardTitle = kanbanDataArray[columnIndex - 1].title;
-  const cardCount = kanbanDataArray[columnIndex - 1].card.length - 1;
+  const cardTitle = kanbanDataArray[columnIndex].title;
+  const cardCount = kanbanDataArray[columnIndex].card.length - 1;
 
   return (
     <div className="max-h-[calc(100vh-20rem)]">
@@ -58,7 +58,7 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
             </button>
           </div>
           <div className="flex flex-col justify-between">
-            {kanbanDataArray[+columnIndex - 1].card.map(
+            {kanbanDataArray[+columnIndex].card.map(
               (col) =>
                 col &&
                 col.cardType !== "INVISIBLE" && (

@@ -5,7 +5,6 @@ import { KanbanColumnData } from "../stores/kanban/Kanban.atoms";
 import {
   getFromToIndexColumn,
   getFromToIndexDefault,
-  getMovedKanbanData,
 } from "../functions/kanban";
 import { useAtom } from "jotai";
 import { KanbanSelectedButtonNumberState } from "../stores/kanban/Navbar.atoms";
@@ -37,30 +36,13 @@ const useDragDrop = () => {
     ]) as KanbanColumnData[];
 
     if (result.type === "card") {
-      relocationColumn(getFromToIndexColumn(kanbanData, result), {
-        onSuccess: () => {
-          queryClient.setQueryData<KanbanColumnData[]>(
-            ["kanbanDataArray", navbarId],
-            (oldData) => {
-              return getMovedKanbanData(oldData as KanbanColumnData[], result);
-            }
-          );
-        },
-      });
+      relocationColumn(getFromToIndexColumn(kanbanData, result));
     }
     if (result.type === "DEFAULT") {
-      relocation(getFromToIndexDefault(kanbanData, result), {
-        onSuccess: () => {
-          queryClient.setQueryData<KanbanColumnData[]>(
-            ["kanbanDataArray", navbarId],
-            (oldData) => {
-              return getMovedKanbanData(oldData as KanbanColumnData[], result);
-            }
-          );
-        },
-      });
+      relocation(getFromToIndexDefault(kanbanData, result));
     }
   };
+  // getMovedKanbanData(kanbanData, result);
   return { onDragEnd };
 };
 
