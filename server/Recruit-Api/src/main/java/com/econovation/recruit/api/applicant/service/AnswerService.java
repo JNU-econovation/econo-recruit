@@ -130,7 +130,7 @@ public class AnswerService implements AnswerLoadUseCase {
         return splitByAnswersInApplicantId(answers);
     }
 
-    @Override
+/*    @Override
     public ApplicantPaginationResponseDto execute(Integer page) {
         if (page < 1) throw OutOfIndexException.EXCEPTION;
         AnswerPageResponseDto answers = answerAdaptor.findAll(page);
@@ -139,6 +139,23 @@ public class AnswerService implements AnswerLoadUseCase {
         return ApplicantPaginationResponseDto.builder()
                 .applicants(results)
                 .maxPage(answers.getMaxPage())
+                .build();
+    }*/
+    @Override
+    public ApplicantPaginationResponseDto execute(Integer page) {
+        if (page < 1) throw OutOfIndexException.EXCEPTION;
+        List<Answer> answers = answerAdaptor.findAll();
+
+        List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
+        Integer maxPage = results.size() / COUNTS_PER_PAGE;
+        results = results.stream()
+                .skip((page - 1) * COUNTS_PER_PAGE)
+                .limit(COUNTS_PER_PAGE)
+                .collect(Collectors.toList());
+        // maxPage
+        return ApplicantPaginationResponseDto.builder()
+                .applicants(results)
+                .maxPage(maxPage + 1)
                 .build();
     }
 

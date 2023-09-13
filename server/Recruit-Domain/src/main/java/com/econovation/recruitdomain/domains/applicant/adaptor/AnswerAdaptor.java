@@ -4,12 +4,19 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.ANSWER_COUNTS_P
 import static com.econovation.recruitcommon.consts.RecruitStatic.COUNTS_PER_PAGE;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
+import com.econovation.recruitcommon.exception.OutOfIndexException;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.AnswerRepository;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.dto.AnswerPageResponseDto;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,14 +39,14 @@ public class AnswerAdaptor {
         return answerRepository.findAll();
     }
 
-    public AnswerPageResponseDto findAll(Integer page) {
+/*    public AnswerPageResponseDto findAll(Integer page) {
         // 그룹별로 31개씩 묶어서 8개씩 조회하도록 페이징 설정
         PageRequest pageRequest =
                 PageRequest.of(page - 1, COUNTS_PER_PAGE * ANSWER_COUNTS_PER_PERSON, Sort.by("createdAt"));
         Page<Answer> content = answerRepository.findAll(pageRequest);
         Integer maxPage = content.getTotalPages();
         return AnswerPageResponseDto.of(maxPage, content.getContent());
-    }
+    }*/
 
     public List<Answer> findByAnswerIds(List<String> applicantIds) {
         List<Answer> applicants = answerRepository.findByApplicantIdIn(applicantIds);
