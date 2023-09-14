@@ -2,16 +2,18 @@
 
 import { FC } from "react";
 import KanbanColumnDetailCard from "@/components/kanban/column/ColumnWithBackButton.component";
-import KanbanDetailContent from "@/components/kanban/content/DetailApplicant.component";
+import KanbanDetailApplicant from "@/components/kanban/content/DetailApplicant.component";
 import Validate from "@/components/user/Validate.component";
 import { KanbanCardReq } from "@/src/apis/kanban/kanban";
+import KanbanDetailWork from "@/components/kanban/content/DetailWork.component";
 
 interface KanbanBoardDetailPageProps {
   params: {
     generation: string;
   };
   searchParams: {
-    id: string;
+    applicantId: string;
+    cardId: string;
     columnIndex: string;
     type: KanbanCardReq["cardType"];
   };
@@ -21,23 +23,25 @@ interface DetailContentProps {
   applicantId: string;
   generation: string;
   type: KanbanCardReq["cardType"];
+  cardId: string;
 }
 
 const DetailContentJunction: FC<DetailContentProps> = ({
   applicantId,
   generation,
+  cardId,
   type,
 }) => {
   if (type === "APPLICANT") {
     return (
-      <KanbanDetailContent
+      <KanbanDetailApplicant
         detailId={applicantId ?? 0}
         generation={generation}
       />
     );
   }
   if (type === "WORK_CARD") {
-    return <></>;
+    return <KanbanDetailWork cardId={cardId ?? 0} generation={generation} />;
   }
 
   return <></>;
@@ -45,7 +49,7 @@ const DetailContentJunction: FC<DetailContentProps> = ({
 
 const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
   params: { generation },
-  searchParams: { columnIndex, id, type },
+  searchParams: { columnIndex, applicantId, type, cardId },
 }) => {
   return (
     <main className="flex mt-8 overflow-auto pt-12 pl-12">
@@ -55,7 +59,8 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
         generation={generation}
       />
       <DetailContentJunction
-        applicantId={id}
+        applicantId={applicantId}
+        cardId={cardId}
         generation={generation}
         type={type}
       />

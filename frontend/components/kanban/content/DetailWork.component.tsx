@@ -1,23 +1,22 @@
 "use client";
 
-import ApplicantDetailLeft from "@/components/applicant/DetailLeft.component";
-import ApplicantDetailRight from "@/components/applicant/DetailRight.component";
-import { getApplicantByIdWithField } from "@/src/apis/applicant/applicant";
 import { FC } from "react";
-import { APPLICANT_KEYS } from "@/src/constants/";
 import { useQuery } from "@tanstack/react-query";
+import { getWork } from "@/src/apis/work/work";
+import WorkDetailLeft from "./work/WorkDetailLeft.component";
+import WorkDetailRight from "./work/WorkDetailRight.component";
 
 interface KanbanDetailWorkProps {
-  detailId: string;
+  cardId: string;
   generation: string;
 }
 
 const KanbanDetailWork: FC<KanbanDetailWorkProps> = ({
-  detailId,
+  cardId,
   generation,
 }) => {
-  const { data, isLoading, isError } = useQuery(["applicant", detailId], () =>
-    getApplicantByIdWithField(detailId, APPLICANT_KEYS)
+  const { data, isLoading, isError } = useQuery(["work", cardId], () =>
+    getWork(cardId)
   );
 
   if (!data || isLoading) {
@@ -37,12 +36,16 @@ const KanbanDetailWork: FC<KanbanDetailWorkProps> = ({
         <div className="flex flex-1 pl-12 h-[calc(100vh-12rem)]">
           <div className="flex flex-1 min-h-0">
             <div className="flex-1 overflow-auto px-12 min-w-[35rem]">
-              <ApplicantDetailLeft data={data} generation={generation} />
+              <WorkDetailLeft
+                data={data}
+                cardId={+cardId}
+                generation={generation}
+              />
             </div>
           </div>
           <div className="flex flex-1 min-h-0 [box-shadow:0px_0px_6px_1px_rgba(0,0,0,0.14)] mr-12">
             <div className="flex-1 overflow-auto p-12 min-w-[40rem]">
-              <ApplicantDetailRight data={data} />
+              <WorkDetailRight data={data.content} cardId={+cardId} />
             </div>
           </div>
         </div>
