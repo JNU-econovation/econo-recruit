@@ -42,6 +42,7 @@ public class CommentController {
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
+
     @Operation(summary = "cardId 로 댓글 조회")
     @ApiErrorExceptionsExample(CommentExceptionDocs.class)
     @GetMapping("/cards/{card-id}/comments")

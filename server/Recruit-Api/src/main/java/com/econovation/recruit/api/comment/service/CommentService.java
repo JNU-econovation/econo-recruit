@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
+import com.econovation.recruitdomain.domains.comment.exception.CommentInvalidCreatedException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
@@ -40,16 +41,8 @@ public class CommentService implements CommentUseCase {
     @Transactional
     public Comment saveComment(CommentRegisterDto commentDto) {
         Long userId = SecurityUtils.getCurrentUserId();
-        Comment comment = Comment.builder()
-                .content(commentDto.getContent())
-                .applicantId(commentDto.getApplicantId())
-                .cardId(commentDto.getCardId())
-                .parentId(commentDto.getParentCommentId())
-                .idpId(userId)
-                .isDeleted(false)
-                .likeCount(0)
-                .build();
-
+        // applicantId null 이면 "" 으로 바꿔준다. cardId 가 null 이면 0 으로 바꿔준다.
+        Comment comment = convertComment(commentDto, userId);
         Comment loadedComment = commentRecordPort.saveComment(comment);
         // 지원서 카드면 카드 타입이지만
         if (comment.isApplicantComment()) {
@@ -63,6 +56,28 @@ public class CommentService implements CommentUseCase {
             card.plusCommentCount();
             return loadedComment;
         }
+    }
+
+    private Comment convertComment(CommentRegisterDto commentDto, Long userId) {
+        if (commentDto.getApplicantId() == null) {
+            return Comment.builder()
+                    .content(commentDto.getContent())
+                    .applicantId("")
+                    .cardId(commentDto.getCardId())
+                    .parentId(commentDto.getParentCommentId())
+                    .idpId(userId)
+                    .build();
+        }
+        else if(commentDto.getCardId() == null){
+            return Comment.builder()
+                    .content(commentDto.getContent())
+                    .applicantId(commentDto.getApplicantId())
+                    .cardId(0L)
+                    .parentId(commentDto.getParentCommentId())
+                    .idpId(userId)
+                    .build();
+        }
+        throw CommentInvalidCreatedException.EXCEPTION;
     }
 
     @Override

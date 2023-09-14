@@ -76,6 +76,6 @@ public class Comment extends BaseTimeEntity {
     }
 
     public Boolean isApplicantComment() {
-        return this.applicantId != null;
+        return !this.applicantId.equals("");
     }
 }

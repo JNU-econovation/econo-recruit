@@ -125,7 +125,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     public void saveWorkCard(CreateWorkCardDto createWorkCardDto) {
         Card card =
                 Card.builder()
-                        .title(createWorkCardDt정o.getTitle())
+                        .title(createWorkCardDto.getTitle())
                         .content(createWorkCardDto.getContent())
                         .applicantId("")
                         .build();
