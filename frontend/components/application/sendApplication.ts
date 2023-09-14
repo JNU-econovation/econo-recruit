@@ -83,7 +83,7 @@ export const postApplication = async (
       throw new Error("시간표가 존재하지 않습니다.");
     }
 
-    if (Date.now() > Date.UTC(2023, 9, 15, 15, 0, 0)) {
+    if (Date.now() > Date.UTC(2023, 8, 15, 15, 0, 0)) {
       throw new Error("지원 기간이 종료되었습니다.");
     }
 
