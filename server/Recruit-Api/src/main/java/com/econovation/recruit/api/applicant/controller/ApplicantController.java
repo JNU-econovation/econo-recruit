@@ -13,6 +13,7 @@ import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfDateException;
 import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
@@ -20,11 +21,19 @@ import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +46,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
     private final ApplicantRegisterUseCase applicantRegisterUseCase;
@@ -52,10 +62,27 @@ public class ApplicantController {
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(
             @RequestBody @Valid List<BlockRequestDto> blockElements) {
+        validateOutdated();
         UUID applicantId = applicantRegisterUseCase.execute(blockElements);
         return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
 
+    private void validateOutdated() {
+        // 현재 한국 시간 가져오기
+        ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
+        ZonedDateTime currentKoreaTime = ZonedDateTime.now(koreaZoneId);
+        log.info("지원 현재 한국 시간: {}", currentKoreaTime);
+
+        // 비교할 날짜와 시간 설정 (2023년 09월 16일 00시 00분 00초, 한국 시간)
+        LocalDateTime outdatedDateTime = LocalDateTime.of(2023, 9, 16, 0, 0, 0);
+        ZonedDateTime outdatedKoreaTime = ZonedDateTime.of(outdatedDateTime, koreaZoneId);
+
+        // 현재 시간이 2023년 09월 16일 00시 00분 00초 (한국 시간) 이후인지 확인
+        boolean isOutdated = currentKoreaTime.isAfter(outdatedKoreaTime);
+        if(isOutdated) {
+            throw ApplicantOutOfDateException.EXCEPTION;
+        }
+    }
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
     @GetMapping("/applicants/{applicant-id}")
     public ResponseEntity<Map<String, String>> getApplicantById(

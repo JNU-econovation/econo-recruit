@@ -77,6 +77,7 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
+    @Transactional
     public Boolean createLabelByCardId(Long cardId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findById(cardId);
