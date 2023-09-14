@@ -7,6 +7,8 @@ import com.econovation.recruitdomain.domains.dto.UpdateWorkCardDto;
 @UseCase
 public interface CardRegisterUseCase {
     void deleteById(Long cardId);
+
     void saveWorkCard(CreateWorkCardDto createWorkCardDto);
+
     void update(Long cardId, UpdateWorkCardDto updateWorkCardDto);
 }

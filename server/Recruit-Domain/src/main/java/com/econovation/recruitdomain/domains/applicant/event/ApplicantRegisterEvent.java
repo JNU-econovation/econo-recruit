@@ -14,7 +14,8 @@ public class ApplicantRegisterEvent extends DomainEvent {
     private final String userName;
     private final String email;
 
-    public static ApplicantRegisterEvent of(String applicantId, String userName, String hopeField, String email){
+    public static ApplicantRegisterEvent of(
+            String applicantId, String userName, String hopeField, String email) {
         return ApplicantRegisterEvent.builder()
                 .applicantId(applicantId)
                 .hopeField(hopeField)

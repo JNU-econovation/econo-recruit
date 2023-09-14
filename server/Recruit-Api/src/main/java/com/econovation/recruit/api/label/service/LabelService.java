@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,23 +54,10 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> findByApplicantId(String applicantId) {
         List<Label> labels = labelLoadPort.loadLabelByApplicantId(applicantId);
-
-        if (labels.isEmpty())
-            return Collections.emptyList();
-
-        List<Long> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
-        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
-
-        Map<Long, String> interviewerMap =
-                interviewers.stream()
-                        .collect(Collectors.toMap(Interviewer::getId, Interviewer::getName));
-
-        return labels.stream()
-                .map(label -> interviewerMap.get(label.getIdpId()))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        return getInterviewerNamesByLabels(labels);
     }
 
     @Override
@@ -93,9 +81,9 @@ public class LabelService implements LabelUseCase {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findById(cardId);
         // 라벨 중복 처리 : 라벨이 있으면 라벨을 삭제한다.
-        Label label2 = labelLoadPort.loadLabelByCardIdAndIdpId(cardId, idpId);
-        if (label2 != null) {
-            labelRecordPort.delete(label2);
+        Label alreadyLabel = labelLoadPort.loadLabelByCardIdAndIdpId(cardId, idpId);
+        if (alreadyLabel != null) {
+            labelRecordPort.delete(alreadyLabel);
             card.minusLabelCount();
             return false;
         }
@@ -103,5 +91,30 @@ public class LabelService implements LabelUseCase {
         labelRecordPort.save(label);
         card.plusLabelCount();
         return true;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<String> findByCardId(Long cardId) {
+        List<Label> labels = labelLoadPort.loadLabelByCardId(cardId);
+        return getInterviewerNamesByLabels(labels);
+    }
+
+    @NotNull
+    private List<String> getInterviewerNamesByLabels(List<Label> labels) {
+        if (labels == null || labels.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<Long> idpIds = labels.stream().map(Label::getIdpId).collect(Collectors.toList());
+        List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
+
+        Map<Long, String> interviewerMap =
+                interviewers.stream()
+                        .collect(Collectors.toMap(Interviewer::getId, Interviewer::getName));
+
+        return labels.stream()
+                .map(label -> interviewerMap.get(label.getIdpId()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 }

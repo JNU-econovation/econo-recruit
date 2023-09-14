@@ -111,11 +111,10 @@ public class BoardRestController {
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
     @PutMapping("/boards/columns")
     public ResponseEntity<String> updateBoardColumn(
-        @RequestBody UpdateLocationColumnDto updateLocationDto){
+            @RequestBody UpdateLocationColumnDto updateLocationDto) {
         boardRecordUseCase.updateColumnLocation(updateLocationDto);
         return new ResponseEntity(COLUMN_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
     }
-
 
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",
@@ -140,7 +139,8 @@ public class BoardRestController {
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
     @PutMapping("/boards/cards/{card-id}")
     public ResponseEntity<String> updateWorkBoardContent(
-            @PathVariable(name = "card-id") Long cardId, @RequestBody UpdateWorkCardDto updateWorkCardDto) {
+            @PathVariable(name = "card-id") Long cardId,
+            @RequestBody UpdateWorkCardDto updateWorkCardDto) {
         cardRegisterUseCase.update(cardId, updateWorkCardDto);
         return new ResponseEntity(WORK_CARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }

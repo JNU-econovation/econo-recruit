@@ -1,7 +1,5 @@
 package com.econovation.recruitdomain.domains.card.dto;
 
-import com.econovation.recruitdomain.domains.board.domain.Board;
-import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +15,6 @@ public class CardResponseDto {
     private String content;
 
     public static CardResponseDto from(Card card) {
-        return new CardResponseDto(
-            card.getTitle(),
-            card.getContent()
-        );
+        return new CardResponseDto(card.getTitle(), card.getContent());
     }
 }

@@ -1,14 +1,11 @@
 package com.econovation.recruit.utils;
 
-import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
@@ -44,13 +41,14 @@ public class DataInit {
         log.info(sql);
         ScriptUtils.executeSqlScript(dataSource.getConnection(), resource);
         String encededPassword = passwordEncoder.encode(adminPassword);
-        Interviewer admin = Interviewer.builder()
-                .name("이서현")
-                .role(Role.ROLE_OPERATION)
-                .year(21)
-                .email(adminEmail)
-                .password(encededPassword)
-                .build();
+        Interviewer admin =
+                Interviewer.builder()
+                        .name("이서현")
+                        .role(Role.ROLE_OPERATION)
+                        .year(21)
+                        .email(adminEmail)
+                        .password(encededPassword)
+                        .build();
         interviewerRecordPort.save(admin);
     }
 }

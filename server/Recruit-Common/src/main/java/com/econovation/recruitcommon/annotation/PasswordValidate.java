@@ -12,13 +12,15 @@ import javax.validation.Payload;
 @Documented
 @Constraint(validatedBy = PasswordValidateAspect.class)
 @Target({
-//        ElementType.METHOD,
-        ElementType.FIELD,
-         ElementType.PARAMETER,
-    })
+    //        ElementType.METHOD,
+    ElementType.FIELD,
+    ElementType.PARAMETER,
+})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordValidate {
     String message() default "Invalid password";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

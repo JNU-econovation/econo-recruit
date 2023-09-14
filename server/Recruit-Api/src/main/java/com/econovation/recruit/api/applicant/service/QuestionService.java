@@ -33,7 +33,8 @@ public class QuestionService implements QuestionRegisterUseCase {
                                                         q ->
                                                                 q.getName()
                                                                         .equals(
-                                                                                question.getName())))
+                                                                                question
+                                                                                        .getName())))
                         .map(
                                 question ->
                                         Question.builder()

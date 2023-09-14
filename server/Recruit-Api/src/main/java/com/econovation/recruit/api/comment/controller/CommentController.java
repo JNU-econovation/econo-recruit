@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SecurityRequirement(name = "access-token")
@@ -41,7 +40,6 @@ public class CommentController {
         commentUseCase.saveComment(commentRegisterDto);
         return new ResponseEntity(COMMENT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
-
 
     @Operation(summary = "cardId 로 댓글 조회")
     @ApiErrorExceptionsExample(CommentExceptionDocs.class)
@@ -86,7 +84,8 @@ public class CommentController {
     @Operation(summary = "댓글 수정")
     @PutMapping("/comments/{comment-id}")
     public ResponseEntity updateComment(
-            @PathVariable(name = "comment-id") Long commentId, @RequestBody Map<String, String> content) {
+            @PathVariable(name = "comment-id") Long commentId,
+            @RequestBody Map<String, String> content) {
         commentUseCase.updateCommentContent(commentId, content);
         return new ResponseEntity<>(COMMENT_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }

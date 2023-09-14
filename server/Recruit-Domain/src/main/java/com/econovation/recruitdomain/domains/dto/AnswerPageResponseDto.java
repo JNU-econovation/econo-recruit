@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import java.util.List;
-import javax.annotation.Nullable;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -15,9 +14,6 @@ public class AnswerPageResponseDto {
     private List<Answer> content;
 
     public static AnswerPageResponseDto of(Integer maxPage, List<Answer> content) {
-        return AnswerPageResponseDto.builder()
-                .maxPage(maxPage)
-                .content(content)
-                .build();
+        return AnswerPageResponseDto.builder().maxPage(maxPage).content(content).build();
     }
 }

@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.out;
 
 import com.econovation.recruitdomain.domains.label.domain.Label;
 import java.util.List;
-import java.util.Map;
 
 public interface LabelLoadPort {
     List<Label> loadLabelByApplicantId(String applicantId);
@@ -14,4 +13,6 @@ public interface LabelLoadPort {
     List<Label> loadLabelByCardIdIn(List<Long> cardIds);
 
     Label loadLabelByCardIdAndIdpId(Long cardId, Long idpId);
+
+    List<Label> loadLabelByCardId(Long cardId);
 }

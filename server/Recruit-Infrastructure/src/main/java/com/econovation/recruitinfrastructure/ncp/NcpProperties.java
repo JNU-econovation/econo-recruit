@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "ncp")
 @ConstructorBinding
-public class NcpProperties{
+public class NcpProperties {
     private String accessKey;
     private String secretKey;
     private String senderAddress;

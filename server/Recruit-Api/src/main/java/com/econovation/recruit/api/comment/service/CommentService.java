@@ -67,8 +67,7 @@ public class CommentService implements CommentUseCase {
                     .parentId(commentDto.getParentCommentId())
                     .idpId(userId)
                     .build();
-        }
-        else if(commentDto.getCardId() == null){
+        } else if (commentDto.getCardId() == null) {
             return Comment.builder()
                     .content(commentDto.getContent())
                     .applicantId(commentDto.getApplicantId())
@@ -177,17 +176,22 @@ public class CommentService implements CommentUseCase {
         List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
-        List<CommentLike> commentLikes = commentLikeLoadPort.findByCommentIds(comments.stream().map(Comment::getId).collect(Collectors.toList()));
+        List<CommentLike> commentLikes =
+                commentLikeLoadPort.findByCommentIds(
+                        comments.stream().map(Comment::getId).collect(Collectors.toList()));
         return comments.stream()
                 .map(
-                    comment -> {
-                        Boolean isLiked =
-                            commentLikes.stream()
-                                .anyMatch(
-                                    commentLike ->
-                                        commentLike.getCommentId().equals(comment.getId())
-                                            &&
-                                            commentLike.getIdpId().equals(idpId));
+                        comment -> {
+                            Boolean isLiked =
+                                    commentLikes.stream()
+                                            .anyMatch(
+                                                    commentLike ->
+                                                            commentLike
+                                                                            .getCommentId()
+                                                                            .equals(comment.getId())
+                                                                    && commentLike
+                                                                            .getIdpId()
+                                                                            .equals(idpId));
 
                             Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
                             String interviewersName =

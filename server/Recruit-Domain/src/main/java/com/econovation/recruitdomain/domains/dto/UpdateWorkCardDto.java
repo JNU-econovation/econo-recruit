@@ -5,8 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class UpdateWorkCardDto {
-    @Nullable
-    private String title;
-    @Nullable
-    private String content;
+    @Nullable private String title;
+    @Nullable private String content;
 }

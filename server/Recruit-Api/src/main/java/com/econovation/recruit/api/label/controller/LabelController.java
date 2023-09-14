@@ -35,6 +35,14 @@ public class LabelController {
         return new ResponseEntity(interviewerNames, HttpStatus.OK);
     }
 
+    @Operation(summary = "cardId 로 라벨 조회")
+    @ApiErrorExceptionsExample(LabelExceptionDocs.class)
+    @GetMapping("/cards/{card-id}/labels")
+    public ResponseEntity<List<String>> findByCardId(@PathVariable(name = "card-id") Long cardId) {
+        List<String> interviewerNames = labelUseCase.findByCardId(cardId);
+        return new ResponseEntity(interviewerNames, HttpStatus.OK);
+    }
+
     @Operation(summary = "지원자의 라벨을 생성합니다. , 라벨이 이미 존재할 경우 삭제합니다.(토글)")
     @PostMapping("/applicants/{applicant-id}/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
@@ -51,8 +59,7 @@ public class LabelController {
     @Operation(summary = "cardId 로 라벨 생성", description = "라벨이 이미 존재할 경우 삭제합니다.(토글)")
     @PostMapping("/cards/{card-id}/labels")
     @ApiErrorExceptionsExample(LabelExceptionDocs.class)
-    public ResponseEntity<String> createLabelByCardId(
-            @PathVariable(name = "card-id") Long cardId) {
+    public ResponseEntity<String> createLabelByCardId(@PathVariable(name = "card-id") Long cardId) {
         Boolean success = labelUseCase.createLabelByCardId(cardId);
         if (success) {
             return new ResponseEntity<>(LABEL_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);

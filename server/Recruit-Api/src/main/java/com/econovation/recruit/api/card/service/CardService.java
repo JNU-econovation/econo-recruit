@@ -38,6 +38,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final ColumnsUseCase columnsUseCase;
     private final AnswerLoadUseCase answerLoadPort;
     private final LabelLoadPort labelLoadPort;
+
     @Override
     @Transactional(readOnly = true)
     public List<Card> findAll() {
@@ -96,9 +97,12 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 secondPriority = "";
                 major = "";
             }
-            Boolean isLabeled = labels.stream().anyMatch(
-                    label -> label.getCardId().equals(card.getId())
-                            && label.getIdpId().equals(userId));
+            Boolean isLabeled =
+                    labels.stream()
+                            .anyMatch(
+                                    label ->
+                                            label.getCardId().equals(card.getId())
+                                                    && label.getIdpId().equals(userId));
 
             result.add(
                     BoardCardResponseDto.from(
@@ -137,7 +141,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     @Transactional
     public void update(Long cardId, UpdateWorkCardDto updateWorkCardDto) {
         Card card = cardLoadPort.findById(cardId);
-//        단 title 이 null일 수도 있고, content가 null일 수도 있다.
+        //        단 title 이 null일 수도 있고, content가 null일 수도 있다.
         if (updateWorkCardDto.getTitle() != null) {
             card.updateTitle(updateWorkCardDto.getTitle());
         }

@@ -14,4 +14,6 @@ public interface LabelRepository extends JpaRepository<Label, Long> {
     List<Label> findByCardIdIn(List<Long> cardIds);
 
     Optional<Label> findByCardIdAndIdpId(Long cardId, Long idpId);
+
+    List<Label> findByCardId(Long cardId);
 }

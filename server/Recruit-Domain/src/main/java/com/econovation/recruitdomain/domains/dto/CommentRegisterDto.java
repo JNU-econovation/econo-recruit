@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.dto;
 
-import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import javax.annotation.Nullable;
 import lombok.Data;
 import lombok.Getter;
@@ -12,5 +11,4 @@ public class CommentRegisterDto {
     private Long parentCommentId;
     @Nullable private String applicantId;
     @Nullable private Long cardId;
-
 }

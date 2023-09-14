@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,7 +16,8 @@ public class CommentPairVo {
     private Integer likeCount;
     private Boolean canEdit;
 
-    public static CommentPairVo of(Comment comment, Boolean isLike, String interviewerName, Boolean canEdit) {
+    public static CommentPairVo of(
+            Comment comment, Boolean isLike, String interviewerName, Boolean canEdit) {
         return CommentPairVo.builder()
                 .id(comment.getId())
                 .createdAt(String.valueOf(Timestamp.valueOf(comment.getCreatedAt()).getTime()))

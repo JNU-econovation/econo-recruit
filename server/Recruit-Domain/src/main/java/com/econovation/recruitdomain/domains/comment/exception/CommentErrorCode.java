@@ -18,7 +18,8 @@ public enum CommentErrorCode implements BaseErrorCode {
     COMMENT_NOT_FOUND(NOT_FOUND, "COMMENT_404_1", "존재하지 않는 댓글입니다."),
     COMMENT_NOT_HOST(BAD_REQUEST, "COMMENT_400_2", "댓글의 작성자가 아닙니다."),
     COMMENT_NOT_APPLICANT(BAD_REQUEST, "COMMENT_400_3", "댓글이 지원서 댓글이 아닙니다."),
-    COMMENT_INVALID_CREATED(BAD_REQUEST, "COMMENT_400_4", "댓글을 생성할 수 없습니다.(cardId, applicantId 둘 중 하나는 필수입니다.)"),
+    COMMENT_INVALID_CREATED(
+            BAD_REQUEST, "COMMENT_400_4", "댓글을 생성할 수 없습니다.(cardId, applicantId 둘 중 하나는 필수입니다.)"),
     ;
     private Integer status;
     private String code;
