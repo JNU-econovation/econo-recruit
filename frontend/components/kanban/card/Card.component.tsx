@@ -15,6 +15,7 @@ function KanbanCardComponent({ data, columnIndex }: KanbanCardComponentType) {
   }
 
   const {
+    id,
     title,
     apply,
     comment,
@@ -27,7 +28,7 @@ function KanbanCardComponent({ data, columnIndex }: KanbanCardComponentType) {
 
   const onClickDetail = () => {
     navigate.push(
-      `/kanban/${generation}/detail?id=${applicantId}&columnIndex=${columnIndex}&type=${cardType}`
+      `/kanban/${generation}/detail?applicantId=${applicantId}&columnIndex=${columnIndex}&type=${cardType}&cardId=${id}`
     );
   };
 

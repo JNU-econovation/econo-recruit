@@ -42,12 +42,14 @@ interface ApplicantCommentInputFormProps {
   applicantId: string;
   commentLength: number;
   generation: string;
+  cardId: number;
 }
 
 const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
   applicantId,
   commentLength,
   generation,
+  cardId,
 }) => {
   const [isNocomment, setIsNocomment] = useState(false);
   const [hasQuestion, setHasQuestion] = useState(false);
@@ -60,14 +62,14 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
       return postComment({
         content,
         applicantId,
-        cardId: 0,
+        cardId,
         parentCommentId: 0,
       });
     },
     {
       onSettled: () => {
         queryClient.invalidateQueries({
-          queryKey: ["applicantComment", applicantId],
+          queryKey: ["applicantComment", applicantId, cardId],
         });
         queryClient.invalidateQueries({
           queryKey: ["kanbanDataArray", generation],
@@ -133,21 +135,23 @@ const ApplicantCommentInputForm: FC<ApplicantCommentInputFormProps> = ({
           ref={editorRef}
         />
       </div>
-      <div className="font-normal">
-        <InputCheckBox
-          name="question"
-          id="question"
-          title="질문드립니다."
-          onChange={() => setHasQuestion((prev) => !prev)}
-        />
-        <InputCheckBox
-          name="nocomment"
-          id="nocomment"
-          title="지인이므로 코멘트 삼가겠습니다."
-          checked={isNocomment}
-          onChange={onNocommentCheck}
-        />
-      </div>
+      {applicantId !== "" && (
+        <div className="font-normal">
+          <InputCheckBox
+            name="question"
+            id="question"
+            title="질문드립니다."
+            onChange={() => setHasQuestion((prev) => !prev)}
+          />
+          <InputCheckBox
+            name="nocomment"
+            id="nocomment"
+            title="지인이므로 코멘트 삼가겠습니다."
+            checked={isNocomment}
+            onChange={onNocommentCheck}
+          />
+        </div>
+      )}
     </form>
   );
 };
