@@ -92,8 +92,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/login")
                 .permitAll()
-//                .mvcMatchers("/**")
-//                .permitAll()
+                //                .mvcMatchers("/**")
+                //                .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다
                 // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
@@ -108,7 +108,8 @@ public class SecurityConfig {
     @Bean
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF > ROLE_SWAGGER > ROLE_GUEST");
+        roleHierarchy.setHierarchy(
+                "ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF > ROLE_SWAGGER > ROLE_GUEST");
         return roleHierarchy;
     }
 

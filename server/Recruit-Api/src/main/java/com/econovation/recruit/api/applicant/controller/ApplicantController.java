@@ -119,10 +119,7 @@ public class ApplicantController {
     @Operation(summary = "지원서 제출한 html을 email 로 전송합니다.")
     @PostMapping("/applicants/mail")
     public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
-        commonsEmailSender.send(
-                emailSendDto.getEmail(),
-                emailSendDto.getApplicantId());
+        commonsEmailSender.send(emailSendDto.getEmail(), emailSendDto.getApplicantId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

@@ -2,12 +2,10 @@ package com.econovation.recruit.api.card.service;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
-import com.econovation.recruitdomain.domains.board.domain.BoardRepository;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
 import com.econovation.recruitdomain.domains.board.domain.Navigation;
@@ -24,10 +22,8 @@ import com.econovation.recruitdomain.out.ColumnRecordPort;
 import com.econovation.recruitdomain.out.NavigationLoadPort;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -277,7 +273,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Board targetBoard = boardLoadPort.getBoardById(updateLocationBoardDto.getTargetBoardId());
 
         // 같은 board 끼리는 위치 변경이 불가하다.
-        if (currentBoard.getId() == targetBoard.getId() || targetBoard.getNextBoardId() == currentBoard.getId())
+        if (currentBoard.getId() == targetBoard.getId()
+                || targetBoard.getNextBoardId() == currentBoard.getId())
             throw BoardSameLocationException.EXCEPTION;
 
         currentBoard.updateColumnId(targetBoard.getColumnId());
@@ -288,20 +285,22 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Transactional
     public void updateColumnLocation(UpdateLocationColumnDto updateLocationDto) {
         // 첫번째로 옮기는 경우 (nextColumnId == 0)
-        if(updateLocationDto.getTargetColumnId().equals(0)){
+        if (updateLocationDto.getTargetColumnId().equals(0)) {
             Columns currentColumn = columnLoadPort.findById(updateLocationDto.getColumnId());
             // 첫번째 column 조회
-            List<Columns> columns = columnLoadPort.getColumnByNavigationId(currentColumn.getNavigationId());
+            List<Columns> columns =
+                    columnLoadPort.getColumnByNavigationId(currentColumn.getNavigationId());
 
             // 첫번째 칼럼 찾기
             Integer firstIndex = currentColumn.getId();
             while (true) {
                 Integer finalFirstIndex = firstIndex;
-                Columns nextColumn = columns.stream()
-                        .filter(column -> column.getNextColumnsId() == finalFirstIndex)
-                        .findFirst()
-                        .orElse(null);
-                if(nextColumn == null) break;
+                Columns nextColumn =
+                        columns.stream()
+                                .filter(column -> column.getNextColumnsId() == finalFirstIndex)
+                                .findFirst()
+                                .orElse(null);
+                if (nextColumn == null) break;
                 firstIndex = nextColumn.getId();
             }
 
@@ -314,7 +313,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                                 column.updateNextColumnsId(currentColumn.getNextColumnsId());
                             });
             // 현재 칼럼의 nextColumnId를 처음 칼럼의 nextColumnid로 변경
-            if(firstIndex.equals(currentColumn.getId())) return;
+            if (firstIndex.equals(currentColumn.getId())) return;
             currentColumn.updateNextColumnsId(firstIndex);
             return;
         }
@@ -325,7 +324,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     private void updateNextColumnIds(Columns currentColumn, Columns targetColumn) {
-        if (currentColumn.getId() == targetColumn.getId() || targetColumn.getNextColumnsId() == currentColumn.getId())
+        if (currentColumn.getId() == targetColumn.getId()
+                || targetColumn.getNextColumnsId() == currentColumn.getId())
             throw BoardSameLocationException.EXCEPTION;
         columnLoadPort
                 .getByNextColumnsId(currentColumn.getId())

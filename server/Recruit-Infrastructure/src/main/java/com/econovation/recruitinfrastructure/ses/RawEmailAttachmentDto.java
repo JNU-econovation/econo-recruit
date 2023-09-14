@@ -1,6 +1,5 @@
 package com.econovation.recruitinfrastructure.ses;
 
-
 import lombok.Builder;
 import lombok.Getter;
 

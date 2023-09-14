@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,6 +66,7 @@ public class UserController {
         userRegisterUseCase.signUp(signUpRequestDto);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_SIGNUP_MESSAGE, HttpStatus.OK);
     }
+
     @Operation(summary = "토큰 재발행", description = "refreshToken을 이용하여 accessToken을 재발행합니다.")
     @PostMapping("/token/refresh")
     public ResponseEntity<TokenResponse> refresh(@RequestParam String refreshToken) {
@@ -76,7 +76,8 @@ public class UserController {
 
     @Operation(summary = "비밀번호 수정", description = "비밀번호를 수정합니다.")
     @PostMapping("/password")
-    public ResponseEntity<String> changePassword(@RequestParam @Valid @PasswordValidate String password) {
+    public ResponseEntity<String> changePassword(
+            @RequestParam @Valid @PasswordValidate String password) {
         userRegisterUseCase.changePassword(password);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
     }

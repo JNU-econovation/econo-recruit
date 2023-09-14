@@ -1,0 +1,567 @@
+2023-09-11 07:35:18.075 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:35:18.076 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:21.769 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:21.770 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1106665501<open>)] for JPA transaction
+2023-09-11 07:39:21.770 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.createCommentLike]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2023-09-11 07:39:21.771 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@41d28d99]
+2023-09-11 07:39:21.776  INFO 1 --- [nio-8080-exec-4] c.e.r.c.a.redissonLock.RedissonLockAop   : redisson 락 안으로 진입 댓글좋아요:126쓰레드 아이디107
+2023-09-11 07:39:21.777 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1106665501<open>)] for JPA transaction
+2023-09-11 07:39:21.777 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Suspending current transaction, creating new transaction with name [com.econovation.recruitdomain.common.aop.redissonLock.RedissonCallNewTransaction.proceed]
+2023-09-11 07:39:21.777 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1790827492<open>)] for JPA transaction
+2023-09-11 07:39:21.778 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@5fd08f83]
+2023-09-11 07:39:21.784 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1790827492<open>)] for JPA transaction
+2023-09-11 07:39:21.784 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:21.787 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1790827492<open>)] for JPA transaction
+2023-09-11 07:39:21.787 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:21.793 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:21.793 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1790827492<open>)]
+2023-09-11 07:39:21.796 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1790827492<open>)] after transaction
+2023-09-11 07:39:21.796 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2023-09-11 07:39:21.797 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:21.797 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1106665501<open>)]
+2023-09-11 07:39:21.798 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:21.798 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:21.813 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:21.813 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1269058101<open>)] for JPA transaction
+2023-09-11 07:39:21.813 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:21.814 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@30695fb0]
+2023-09-11 07:39:21.815 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1269058101<open>)] for JPA transaction
+2023-09-11 07:39:21.815 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:21.816 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:21.816 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1269058101<open>)]
+2023-09-11 07:39:21.818 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:21.819 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:23.747 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:23.748 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(130087200<open>)] for JPA transaction
+2023-09-11 07:39:23.748 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.createCommentLike]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2023-09-11 07:39:23.749 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@32edaf21]
+2023-09-11 07:39:23.750  INFO 1 --- [nio-8080-exec-6] c.e.r.c.a.redissonLock.RedissonLockAop   : redisson 락 안으로 진입 댓글좋아요:126쓰레드 아이디109
+2023-09-11 07:39:23.750 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(130087200<open>)] for JPA transaction
+2023-09-11 07:39:23.750 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Suspending current transaction, creating new transaction with name [com.econovation.recruitdomain.common.aop.redissonLock.RedissonCallNewTransaction.proceed]
+2023-09-11 07:39:23.750 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(419327757<open>)] for JPA transaction
+2023-09-11 07:39:23.751 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@1ff7790e]
+2023-09-11 07:39:23.752 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(419327757<open>)] for JPA transaction
+2023-09-11 07:39:23.752 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:23.764 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(419327757<open>)] for JPA transaction
+2023-09-11 07:39:23.764 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:23.765 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:23.766 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(419327757<open>)]
+2023-09-11 07:39:23.770 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(419327757<open>)] after transaction
+2023-09-11 07:39:23.770 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2023-09-11 07:39:23.771 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:23.771 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(130087200<open>)]
+2023-09-11 07:39:23.772 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:23.772 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:23.785 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:23.786 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1225617191<open>)] for JPA transaction
+2023-09-11 07:39:23.786 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:23.786 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@29c1e6fb]
+2023-09-11 07:39:23.787 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1225617191<open>)] for JPA transaction
+2023-09-11 07:39:23.787 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:23.788 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:23.789 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1225617191<open>)]
+2023-09-11 07:39:23.789 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:23.789 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.208 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.210 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.211 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1918051062<open>)] for JPA transaction
+2023-09-11 07:39:31.212 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:31.212 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1735477471<open>)] for JPA transaction
+2023-09-11 07:39:31.213 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:31.214 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@18b8fe58]
+2023-09-11 07:39:31.214 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@54e113fa]
+2023-09-11 07:39:31.214 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1918051062<open>)] for JPA transaction
+2023-09-11 07:39:31.215 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:31.216 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:31.217 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1918051062<open>)]
+2023-09-11 07:39:31.217 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:31.218 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.232 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.232 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1722737757<open>)] for JPA transaction
+2023-09-11 07:39:31.232 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:31.233 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@3d8c72f0]
+2023-09-11 07:39:31.233 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1722737757<open>)] for JPA transaction
+2023-09-11 07:39:31.233 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:31.234 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:31.234 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1722737757<open>)]
+2023-09-11 07:39:31.235 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:31.235 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:31.274 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:31.274 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1735477471<open>)]
+2023-09-11 07:39:31.275 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:31.275 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.310 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.311 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.312 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(330216761<open>)] for JPA transaction
+2023-09-11 07:39:33.312 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:33.312 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1312764503<open>)] for JPA transaction
+2023-09-11 07:39:33.313 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:33.314 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@41e83098]
+2023-09-11 07:39:33.314 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@18d39760]
+2023-09-11 07:39:33.314 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1312764503<open>)] for JPA transaction
+2023-09-11 07:39:33.315 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:33.317 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:33.317 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1312764503<open>)]
+2023-09-11 07:39:33.319 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:33.319 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.320 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:33.321 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(330216761<open>)]
+2023-09-11 07:39:33.321 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:33.322 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.330 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:33.331 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1348440194<open>)] for JPA transaction
+2023-09-11 07:39:33.331 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:33.331 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6868a190]
+2023-09-11 07:39:33.332 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1348440194<open>)] for JPA transaction
+2023-09-11 07:39:33.332 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:33.332 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:33.333 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1348440194<open>)]
+2023-09-11 07:39:33.333 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:33.333 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.386 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.387 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.387 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1193945145<open>)] for JPA transaction
+2023-09-11 07:39:34.388 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:34.387 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(704706425<open>)] for JPA transaction
+2023-09-11 07:39:34.388 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:34.389 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@30c263a1]
+2023-09-11 07:39:34.389 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4cf6c599]
+2023-09-11 07:39:34.390 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1193945145<open>)] for JPA transaction
+2023-09-11 07:39:34.390 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:34.391 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:34.391 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(704706425<open>)]
+2023-09-11 07:39:34.391 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:34.392 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1193945145<open>)]
+2023-09-11 07:39:34.392 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:34.393 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:34.393 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.397 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.410 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.414 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.722 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:34.722 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(530236851<open>)] for JPA transaction
+2023-09-11 07:39:34.723 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:34.723 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7fc62df4]
+2023-09-11 07:39:34.724 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(530236851<open>)] for JPA transaction
+2023-09-11 07:39:34.724 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:34.725 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:34.725 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(530236851<open>)]
+2023-09-11 07:39:34.725 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:34.726 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.234 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.236 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.237 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(283720532<open>)] for JPA transaction
+2023-09-11 07:39:39.237 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:39.236 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.237 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1550746430<open>)] for JPA transaction
+2023-09-11 07:39:39.238 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:39.238 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(121076463<open>)] for JPA transaction
+2023-09-11 07:39:39.238 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:39:39.239 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4951584e]
+2023-09-11 07:39:39.240 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@2fee68c4]
+2023-09-11 07:39:39.240 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7ecb5da9]
+2023-09-11 07:39:39.240 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1550746430<open>)] for JPA transaction
+2023-09-11 07:39:39.240 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:39.242 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(283720532<open>)] for JPA transaction
+2023-09-11 07:39:39.242 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:39:39.242 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:39.243 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(121076463<open>)]
+2023-09-11 07:39:39.242 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:39.243 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1550746430<open>)]
+2023-09-11 07:39:39.244 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:39.244 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:39.245 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.245 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:39:39.245 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(283720532<open>)]
+2023-09-11 07:39:39.245 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.247 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:39:39.247 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.259 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:39:39.260 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.582 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.586 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.587 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.591 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(406336793<open>)] for JPA transaction
+2023-09-11 07:40:19.592 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:19.589 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.593 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2081028694<open>)] for JPA transaction
+2023-09-11 07:40:19.593 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:19.589 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.593 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1070616984<open>)] for JPA transaction
+2023-09-11 07:40:19.593 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@1c430515]
+2023-09-11 07:40:19.594 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:19.595 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(406336793<open>)] for JPA transaction
+2023-09-11 07:40:19.597 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:19.595 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@32ba01cc]
+2023-09-11 07:40:19.597 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7c9a892b]
+2023-09-11 07:40:19.598 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:19.600 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(406336793<open>)]
+2023-09-11 07:40:19.598 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1070616984<open>)] for JPA transaction
+2023-09-11 07:40:19.601 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:19.600 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:19.601 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2081028694<open>)]
+2023-09-11 07:40:19.602 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:19.602 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:19.603 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.605 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.603 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.606 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:19.608 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1070616984<open>)]
+2023-09-11 07:40:19.610 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:19.610 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.611 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.616 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.617 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.621 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:19.621 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1031195313<open>)] for JPA transaction
+2023-09-11 07:40:19.622 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.card.service.CardService.getByNavigationId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:19.622 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@70dec197]
+2023-09-11 07:40:19.623 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1031195313<open>)] for JPA transaction
+2023-09-11 07:40:19.623 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:19.625 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1031195313<open>)] for JPA transaction
+2023-09-11 07:40:19.625 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:19.635 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:19.635 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1031195313<open>)]
+2023-09-11 07:40:19.635 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:19.636 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:22.414 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:22.415 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(866096157<open>)] for JPA transaction
+2023-09-11 07:40:22.415 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.createCommentLike]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2023-09-11 07:40:22.416 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@35851b7f]
+2023-09-11 07:40:22.443  INFO 1 --- [nio-8080-exec-9] c.e.r.c.a.redissonLock.RedissonLockAop   : redisson 락 안으로 진입 댓글좋아요:138쓰레드 아이디112
+2023-09-11 07:40:22.443 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(866096157<open>)] for JPA transaction
+2023-09-11 07:40:22.444 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Suspending current transaction, creating new transaction with name [com.econovation.recruitdomain.common.aop.redissonLock.RedissonCallNewTransaction.proceed]
+2023-09-11 07:40:22.450 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(192891906<open>)] for JPA transaction
+2023-09-11 07:40:22.450 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@163cf0f1]
+2023-09-11 07:40:22.451 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(192891906<open>)] for JPA transaction
+2023-09-11 07:40:22.452 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:22.452 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(192891906<open>)] for JPA transaction
+2023-09-11 07:40:22.453 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:22.455 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:22.455 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(192891906<open>)]
+2023-09-11 07:40:22.459 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(192891906<open>)] after transaction
+2023-09-11 07:40:22.460 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2023-09-11 07:40:22.460 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:22.461 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(866096157<open>)]
+2023-09-11 07:40:22.461 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:22.461 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:22.481 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:22.481 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(596588366<open>)] for JPA transaction
+2023-09-11 07:40:22.481 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:22.483 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6d1ddce3]
+2023-09-11 07:40:22.484 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(596588366<open>)] for JPA transaction
+2023-09-11 07:40:22.485 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:22.486 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:22.486 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(596588366<open>)]
+2023-09-11 07:40:22.486 DEBUG 1 --- [nio-8080-exec-7] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:22.487 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.878 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.881 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.882 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1713716312<open>)] for JPA transaction
+2023-09-11 07:40:28.882 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.882 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:28.883 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1858153308<open>)] for JPA transaction
+2023-09-11 07:40:28.883 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:28.884 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@756320cb]
+2023-09-11 07:40:28.884 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@25b36f02]
+2023-09-11 07:40:28.884 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1713716312<open>)] for JPA transaction
+2023-09-11 07:40:28.885 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:28.886 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1858153308<open>)] for JPA transaction
+2023-09-11 07:40:28.887 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:40:28.886 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:28.887 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1713716312<open>)]
+2023-09-11 07:40:28.887 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:28.888 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.888 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(539797665<open>)] for JPA transaction
+2023-09-11 07:40:28.889 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:40:28.889 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4fbbe2f2]
+2023-09-11 07:40:28.890 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:28.890 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1858153308<open>)]
+2023-09-11 07:40:28.890 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:40:28.891 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(539797665<open>)]
+2023-09-11 07:40:28.892 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:28.892 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:40:28.892 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.892 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.902 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:40:28.903 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:02.148 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:02.149 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2024558895<open>)] for JPA transaction
+2023-09-11 07:41:02.149 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.createCommentLike]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2023-09-11 07:41:02.149 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@48961480]
+2023-09-11 07:41:02.151  INFO 1 --- [nio-8080-exec-4] c.e.r.c.a.redissonLock.RedissonLockAop   : redisson 락 안으로 진입 댓글좋아요:140쓰레드 아이디107
+2023-09-11 07:41:02.151 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2024558895<open>)] for JPA transaction
+2023-09-11 07:41:02.151 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Suspending current transaction, creating new transaction with name [com.econovation.recruitdomain.common.aop.redissonLock.RedissonCallNewTransaction.proceed]
+2023-09-11 07:41:02.151 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(266913633<open>)] for JPA transaction
+2023-09-11 07:41:02.152 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@3174d0fa]
+2023-09-11 07:41:02.153 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(266913633<open>)] for JPA transaction
+2023-09-11 07:41:02.153 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:02.154 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(266913633<open>)] for JPA transaction
+2023-09-11 07:41:02.154 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:02.155 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:02.155 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(266913633<open>)]
+2023-09-11 07:41:02.158 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(266913633<open>)] after transaction
+2023-09-11 07:41:02.158 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2023-09-11 07:41:02.159 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:02.159 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2024558895<open>)]
+2023-09-11 07:41:02.160 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:02.160 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:02.178 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:02.178 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(403463911<open>)] for JPA transaction
+2023-09-11 07:41:02.178 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:02.179 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@127582c7]
+2023-09-11 07:41:02.180 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(403463911<open>)] for JPA transaction
+2023-09-11 07:41:02.180 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:02.181 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:02.181 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(403463911<open>)]
+2023-09-11 07:41:02.182 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:02.182 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.194 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.197 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(559235692<open>)] for JPA transaction
+2023-09-11 07:41:21.197 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:21.197 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.198 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(899527395<open>)] for JPA transaction
+2023-09-11 07:41:21.198 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:21.199 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.199 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@86b89c3]
+2023-09-11 07:41:21.199 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@7470c817]
+2023-09-11 07:41:21.200 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(899527395<open>)] for JPA transaction
+2023-09-11 07:41:21.200 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:21.201 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(267574639<open>)] for JPA transaction
+2023-09-11 07:41:21.201 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:21.202 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(559235692<open>)] for JPA transaction
+2023-09-11 07:41:21.202 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:21.201 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:21.203 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(899527395<open>)]
+2023-09-11 07:41:21.202 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6e19ad0e]
+2023-09-11 07:41:21.204 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:21.204 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:21.205 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(267574639<open>)]
+2023-09-11 07:41:21.204 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.206 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:21.206 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:21.206 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(559235692<open>)]
+2023-09-11 07:41:21.208 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:21.208 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.208 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.214 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:21.215 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.868 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.871 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.872 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.873 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2136796852<open>)] for JPA transaction
+2023-09-11 07:41:28.873 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:28.873 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(58259403<open>)] for JPA transaction
+2023-09-11 07:41:28.873 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:28.874 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@1bd10bc3]
+2023-09-11 07:41:28.874 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@902febe]
+2023-09-11 07:41:28.872 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1152832417<open>)] for JPA transaction
+2023-09-11 07:41:28.875 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:28.877 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:28.877 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(58259403<open>)]
+2023-09-11 07:41:28.877 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2136796852<open>)] for JPA transaction
+2023-09-11 07:41:28.878 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:28.878 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@62330503]
+2023-09-11 07:41:28.879 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1152832417<open>)] for JPA transaction
+2023-09-11 07:41:28.879 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:28.879 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:28.880 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:28.880 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1152832417<open>)]
+2023-09-11 07:41:28.881 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.881 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:28.882 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:28.882 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2136796852<open>)]
+2023-09-11 07:41:28.882 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.883 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:28.883 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.904 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:28.906 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:35.999 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:36.000 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(922307867<open>)] for JPA transaction
+2023-09-11 07:41:36.000 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.createCommentLike]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+2023-09-11 07:41:36.001 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@612bb6a0]
+2023-09-11 07:41:36.003  INFO 1 --- [nio-8080-exec-4] c.e.r.c.a.redissonLock.RedissonLockAop   : redisson 락 안으로 진입 댓글좋아요:143쓰레드 아이디107
+2023-09-11 07:41:36.003 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(922307867<open>)] for JPA transaction
+2023-09-11 07:41:36.003 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Suspending current transaction, creating new transaction with name [com.econovation.recruitdomain.common.aop.redissonLock.RedissonCallNewTransaction.proceed]
+2023-09-11 07:41:36.003 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(366447845<open>)] for JPA transaction
+2023-09-11 07:41:36.004 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@29f5a649]
+2023-09-11 07:41:36.005 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(366447845<open>)] for JPA transaction
+2023-09-11 07:41:36.005 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:36.006 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(366447845<open>)] for JPA transaction
+2023-09-11 07:41:36.006 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:36.009 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:36.009 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(366447845<open>)]
+2023-09-11 07:41:36.012 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(366447845<open>)] after transaction
+2023-09-11 07:41:36.012 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Resuming suspended transaction after completion of inner transaction
+2023-09-11 07:41:36.013 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:36.013 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(922307867<open>)]
+2023-09-11 07:41:36.014 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:36.014 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:36.026 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:36.026 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(121987190<open>)] for JPA transaction
+2023-09-11 07:41:36.026 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:36.027 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@42e7187b]
+2023-09-11 07:41:36.028 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(121987190<open>)] for JPA transaction
+2023-09-11 07:41:36.029 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:36.030 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:36.030 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(121987190<open>)]
+2023-09-11 07:41:36.031 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:36.031 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.562 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.565 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2020865900<open>)] for JPA transaction
+2023-09-11 07:41:45.564 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.566 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1529520406<open>)] for JPA transaction
+2023-09-11 07:41:45.566 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:45.565 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.567 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1111653172<open>)] for JPA transaction
+2023-09-11 07:41:45.567 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:45.566 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:41:45.568 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@27012f96]
+2023-09-11 07:41:45.569 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@6299115f]
+2023-09-11 07:41:45.570 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@77730ad6]
+2023-09-11 07:41:45.571 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1529520406<open>)] for JPA transaction
+2023-09-11 07:41:45.571 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:45.571 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:45.571 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1111653172<open>)]
+2023-09-11 07:41:45.571 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(2020865900<open>)] for JPA transaction
+2023-09-11 07:41:45.572 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:41:45.573 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:45.573 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(2020865900<open>)]
+2023-09-11 07:41:45.573 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:45.574 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.574 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:45.575 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:41:45.575 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1529520406<open>)]
+2023-09-11 07:41:45.575 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.576 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:41:45.576 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.587 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:41:45.587 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.144 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.149 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1147744276<open>)] for JPA transaction
+2023-09-11 07:42:04.149 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:04.150 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@348de586]
+2023-09-11 07:42:04.150 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.150 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1147744276<open>)] for JPA transaction
+2023-09-11 07:42:04.151 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:04.151 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1669071637<open>)] for JPA transaction
+2023-09-11 07:42:04.152 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:04.151 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.152 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(168732079<open>)] for JPA transaction
+2023-09-11 07:42:04.153 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:04.154 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@4186bd19]
+2023-09-11 07:42:04.153 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:04.154 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1147744276<open>)]
+2023-09-11 07:42:04.155 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@ff6b85b]
+2023-09-11 07:42:04.156 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:04.156 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1669071637<open>)] for JPA transaction
+2023-09-11 07:42:04.157 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:04.157 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.157 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:04.158 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(168732079<open>)]
+2023-09-11 07:42:04.159 DEBUG 1 --- [nio-8080-exec-6] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:04.159 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.160 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:04.160 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1669071637<open>)]
+2023-09-11 07:42:04.160 DEBUG 1 --- [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:04.161 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.168 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:04.169 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.006 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.008 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.009 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(661235660<open>)] for JPA transaction
+2023-09-11 07:42:13.009 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [org.springframework.data.jpa.repository.support.SimpleJpaRepository.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:13.008 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1454098019<open>)] for JPA transaction
+2023-09-11 07:42:13.009 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:13.011 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@3b85033a]
+2023-09-11 07:42:13.011 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@75bb716f]
+2023-09-11 07:42:13.011 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1454098019<open>)] for JPA transaction
+2023-09-11 07:42:13.012 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:13.013 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:13.014 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1454098019<open>)]
+2023-09-11 07:42:13.014 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:13.015 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.026 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.026 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(578791191<open>)] for JPA transaction
+2023-09-11 07:42:13.026 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findMe]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:13.027 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@213cf848]
+2023-09-11 07:42:13.027 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(578791191<open>)] for JPA transaction
+2023-09-11 07:42:13.027 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:13.028 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:13.028 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(578791191<open>)]
+2023-09-11 07:42:13.028 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:13.029 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.037 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:13.037 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(661235660<open>)]
+2023-09-11 07:42:13.038 DEBUG 1 --- [io-8080-exec-10] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:13.038 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.934 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.936 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1906920186<open>)] for JPA transaction
+2023-09-11 07:42:13.936 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.936 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:13.937 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1313765153<open>)] for JPA transaction
+2023-09-11 07:42:13.937 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:13.938 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@772a236e]
+2023-09-11 07:42:13.938 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@5c1d8315]
+2023-09-11 07:42:13.938 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1906920186<open>)] for JPA transaction
+2023-09-11 07:42:13.939 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:13.940 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:13.940 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1313765153<open>)]
+2023-09-11 07:42:13.940 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:13.941 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1906920186<open>)]
+2023-09-11 07:42:13.941 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:13.942 DEBUG 1 --- [nio-8080-exec-8] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:13.942 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.942 DEBUG 1 --- [nio-8080-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.953 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:13.954 DEBUG 1 --- [nio-8080-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:14.242 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:14.243 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1006897590<open>)] for JPA transaction
+2023-09-11 07:42:14.243 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:42:14.244 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@37b48382]
+2023-09-11 07:42:14.245 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1006897590<open>)] for JPA transaction
+2023-09-11 07:42:14.245 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:42:14.246 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:42:14.246 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1006897590<open>)]
+2023-09-11 07:42:14.253 DEBUG 1 --- [nio-8080-exec-3] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:42:14.253 DEBUG 1 --- [nio-8080-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:42:38.097  INFO 1 --- [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 76]
+2023-09-11 07:49:02.672 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.678 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.681 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(205159988<open>)] for JPA transaction
+2023-09-11 07:49:02.681 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.interviewer.service.InterviewersService.findAll]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:49:02.679 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.682 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(690573026<open>)] for JPA transaction
+2023-09-11 07:49:02.682 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.comment.service.CommentService.findByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:49:02.680 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.680 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.684 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(1449325858<open>)] for JPA transaction
+2023-09-11 07:49:02.685 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.applicant.service.TimeTableService.getTimeTableByApplicantId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:49:02.687 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@696cb992]
+2023-09-11 07:49:02.687 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(205159988<open>)] for JPA transaction
+2023-09-11 07:49:02.687 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:49:02.688 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@5e332620]
+2023-09-11 07:49:02.688 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@169cad96]
+2023-09-11 07:49:02.690 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:49:02.690 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1449325858<open>)]
+2023-09-11 07:49:02.691 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:49:02.692 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(205159988<open>)]
+2023-09-11 07:49:02.690 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(690573026<open>)] for JPA transaction
+2023-09-11 07:49:02.693 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Participating in existing transaction
+2023-09-11 07:49:02.692 DEBUG 1 --- [nio-8080-exec-9] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:49:02.694 DEBUG 1 --- [nio-8080-exec-4] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:49:02.694 DEBUG 1 --- [nio-8080-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.694 DEBUG 1 --- [nio-8080-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.698 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+2023-09-11 07:49:02.698 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(690573026<open>)]
+2023-09-11 07:49:02.699 DEBUG 1 --- [nio-8080-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.700 DEBUG 1 --- [nio-8080-exec-2] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+2023-09-11 07:49:02.701 DEBUG 1 --- [nio-8080-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.701 DEBUG 1 --- [nio-8080-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.710 DEBUG 1 --- [io-8080-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.712 DEBUG 1 --- [nio-8080-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2023-09-11 07:49:02.712 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(534303659<open>)] for JPA transaction
+2023-09-11 07:49:02.712 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [com.econovation.recruit.api.card.service.CardService.getByNavigationId]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT,readOnly
+2023-09-11 07:49:02.713 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@25e7cfce]
+2023-09-11 07:49:02.714 DEBUG 1 --- [nio-8080-exec-5] o.s.orm.jpa.JpaTransactionManager        : Found thread-bound EntityManager [SessionImpl(534303659<open>)] for JPA transaction
+2023-09-11 07:49:02.714 DEBUG 1 --- [nio-8080-exec-5] o.s

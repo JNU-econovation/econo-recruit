@@ -2,9 +2,7 @@ package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.user.helper.NcpMailHelper;
 import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
-
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -20,18 +18,16 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class ApplicantRegisterEventConfirmEmailHandler {
     private final NcpMailHelper ncpMailHelper;
     private final CommonsEmailSender commonsEmailSender;
+
     @Async
     @TransactionalEventListener(
             classes = ApplicantRegisterEvent.class,
             phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void handle(ApplicantRegisterEvent applicantRegistEvent){
+    public void handle(ApplicantRegisterEvent applicantRegistEvent) {
         log.info("%s님의 지원서가 접수되었습니다.", applicantRegistEvent.getUserName());
         String email = applicantRegistEvent.getEmail().replace("\"", "");
-        commonsEmailSender.send(
-                email,
-                applicantRegistEvent.getApplicantId()
-                );
+        commonsEmailSender.send(email, applicantRegistEvent.getApplicantId());
     }
 
     private String generateConfirmRegisterEmailBody(String userName) {

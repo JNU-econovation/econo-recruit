@@ -11,4 +11,8 @@ public interface LabelUseCase {
     List<String> findByApplicantId(String applicantId);
 
     void deleteLabel(String applicantId);
+
+    Boolean createLabelByCardId(Long cardId);
+
+    List<String> findByCardId(Long cardId);
 }

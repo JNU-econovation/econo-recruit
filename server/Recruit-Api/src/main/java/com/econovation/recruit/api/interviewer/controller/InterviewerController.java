@@ -70,7 +70,6 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
-
     @Operation(description = "Interviewer Role 변경")
     @PutMapping("/interviewers/{idp-id}/roles")
     public ResponseEntity<String> updateRole(

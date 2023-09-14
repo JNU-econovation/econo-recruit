@@ -22,6 +22,7 @@ import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
+import com.econovation.recruitdomain.domains.dto.UpdateWorkCardDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -110,11 +111,10 @@ public class BoardRestController {
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
     @PutMapping("/boards/columns")
     public ResponseEntity<String> updateBoardColumn(
-        @RequestBody UpdateLocationColumnDto updateLocationDto){
+            @RequestBody UpdateLocationColumnDto updateLocationDto) {
         boardRecordUseCase.updateColumnLocation(updateLocationDto);
         return new ResponseEntity(COLUMN_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
     }
-
 
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",
@@ -135,23 +135,16 @@ public class BoardRestController {
         return new ResponseEntity(BOARD_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "업무 칸반보드 내용 수정", description = "업무 칸반(지원자가 아닌) 내용 수정")
+    @Operation(summary = "업무 칸반보드 수정", description = "업무 칸반(지원자가 아닌) 내용,제목 ( 둘중 하나만 보내주셔도 됩니다 ) 수정")
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
-    @PutMapping("/boards/cards/{card-id}/contents")
+    @PutMapping("/boards/cards/{card-id}")
     public ResponseEntity<String> updateWorkBoardContent(
-            @PathVariable(name = "card-id") Long cardId, @RequestBody String content) {
-        cardRegisterUseCase.updateContent(cardId, content);
-        return new ResponseEntity(BOARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
+            @PathVariable(name = "card-id") Long cardId,
+            @RequestBody UpdateWorkCardDto updateWorkCardDto) {
+        cardRegisterUseCase.update(cardId, updateWorkCardDto);
+        return new ResponseEntity(WORK_CARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "업무 칸반보드 제목 수정", description = "업무 칸반(지원자가 아닌) 제목 수정")
-    @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)
-    @PutMapping("/boards/cards/{card-id}/titles")
-    public ResponseEntity<String> updateWorkBoardTitle(
-            @PathVariable(name = "card-id") Long cardId, @RequestBody String title) {
-        cardRegisterUseCase.updateTitle(cardId, title);
-        return new ResponseEntity(BOARD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
-    }
     @Operation(summary = "업무 카드 조회", description = "업무 카드 조회")
     @GetMapping("/cards/{card-id}")
     public ResponseEntity<CardResponseDto> getWorkCard(

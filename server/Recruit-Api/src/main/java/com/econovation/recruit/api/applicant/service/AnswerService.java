@@ -1,12 +1,12 @@
 package com.econovation.recruit.api.applicant.service;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.COUNTS_PER_PAGE;
+
 import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruitcommon.exception.OutOfIndexException;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
-import com.econovation.recruitdomain.domains.dto.AnswerPageResponseDto;
 import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
-import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.COUNTS_PER_PAGE;
 
 @Service
 @RequiredArgsConstructor
@@ -99,22 +97,30 @@ public class AnswerService implements AnswerLoadUseCase {
 
     private List<Map<String, String>> splitByAnswersInApplicantId(List<Answer> answers) {
         // First, group the answers by applicant ID
-        Map<String, List<Answer>> grouped = answers.stream()
-                .collect(Collectors.groupingBy(Answer::getApplicantId));
+        Map<String, List<Answer>> grouped =
+                answers.stream().collect(Collectors.groupingBy(Answer::getApplicantId));
 
         // ApplicantId (지원자) 별로 그룹화 한 후에 CreatedAt으로 오름차순 정렬하여 Map을 생성한다
         return grouped.entrySet().stream()
-                .sorted(Comparator.comparing(e -> e.getValue().stream()
-                        .max(Comparator.comparing(Answer::getCreatedAt))
-                        .get()
-                        .getCreatedAt()))
-                .map(entry -> {
-                    LinkedHashMap<String, String> map = new LinkedHashMap<>();
-                    map.put("id", entry.getKey());
-                    entry.getValue().forEach(answer ->
-                            map.put(answer.getQuestion().getName(), answer.getAnswer()));
-                    return map;
-                })
+                .sorted(
+                        Comparator.comparing(
+                                e ->
+                                        e.getValue().stream()
+                                                .max(Comparator.comparing(Answer::getCreatedAt))
+                                                .get()
+                                                .getCreatedAt()))
+                .map(
+                        entry -> {
+                            LinkedHashMap<String, String> map = new LinkedHashMap<>();
+                            map.put("id", entry.getKey());
+                            entry.getValue()
+                                    .forEach(
+                                            answer ->
+                                                    map.put(
+                                                            answer.getQuestion().getName(),
+                                                            answer.getAnswer()));
+                            return map;
+                        })
                 .collect(Collectors.toList());
     }
 
@@ -130,7 +136,7 @@ public class AnswerService implements AnswerLoadUseCase {
         return splitByAnswersInApplicantId(answers);
     }
 
-/*    @Override
+    /*    @Override
     public ApplicantPaginationResponseDto execute(Integer page) {
         if (page < 1) throw OutOfIndexException.EXCEPTION;
         AnswerPageResponseDto answers = answerAdaptor.findAll(page);
@@ -148,10 +154,11 @@ public class AnswerService implements AnswerLoadUseCase {
 
         List<Map<String, String>> results = splitByAnswersInApplicantId(answers);
         Integer maxPage = results.size() / COUNTS_PER_PAGE;
-        results = results.stream()
-                .skip((page - 1) * COUNTS_PER_PAGE)
-                .limit(COUNTS_PER_PAGE)
-                .collect(Collectors.toList());
+        results =
+                results.stream()
+                        .skip((page - 1) * COUNTS_PER_PAGE)
+                        .limit(COUNTS_PER_PAGE)
+                        .collect(Collectors.toList());
         // maxPage
         return ApplicantPaginationResponseDto.builder()
                 .applicants(results)

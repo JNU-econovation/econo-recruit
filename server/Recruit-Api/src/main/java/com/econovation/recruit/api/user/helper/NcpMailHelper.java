@@ -27,27 +27,36 @@ public class NcpMailHelper {
     static String space = " "; // space
     static String newLine = "\n"; // new line
 
-
     @SneakyThrows
     public void sendMail(String title, String body, String recipientAddress) {
         String timeStamp = String.valueOf(Instant.now().toEpochMilli());
-        String signature = makeSignature(timeStamp, ncpProperties.getAccessKey(), ncpProperties.getSecretKey());
-        ncpClient.createMailRequest(ncpProperties.getAccessKey(), timeStamp,  signature,"ko-KR", createSendRawEmailDto(title, body, recipientAddress));
+        String signature =
+                makeSignature(
+                        timeStamp, ncpProperties.getAccessKey(), ncpProperties.getSecretKey());
+        ncpClient.createMailRequest(
+                ncpProperties.getAccessKey(),
+                timeStamp,
+                signature,
+                "ko-KR",
+                createSendRawEmailDto(title, body, recipientAddress));
     }
-    public String makeSignature(String timeStamp, String accessKey, String secretKey) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
-        String space = " ";  // 공백
-        String newLine = "\n";  // 줄바꿈
-        String method = "POST";  // HTTP 메소드
-        String url = "/api/v1/mails";  // 도메인을 제외한 "/" 아래 전체 url (쿼리스트링 포함)
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timeStamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
+
+    public String makeSignature(String timeStamp, String accessKey, String secretKey)
+            throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        String space = " "; // 공백
+        String newLine = "\n"; // 줄바꿈
+        String method = "POST"; // HTTP 메소드
+        String url = "/api/v1/mails"; // 도메인을 제외한 "/" 아래 전체 url (쿼리스트링 포함)
+        String message =
+                new StringBuilder()
+                        .append(method)
+                        .append(space)
+                        .append(url)
+                        .append(newLine)
+                        .append(timeStamp)
+                        .append(newLine)
+                        .append(accessKey)
+                        .toString();
 
         SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -57,9 +66,10 @@ public class NcpMailHelper {
         String encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
 
         return encodeBase64String;
-
     }
-    public SendRawEmailDto createSendRawEmailDto(String title, String body, String recipientAddress) {
+
+    public SendRawEmailDto createSendRawEmailDto(
+            String title, String body, String recipientAddress) {
         return SendRawEmailDto.builder()
                 .senderAddress(ncpProperties.getSenderAddress())
                 .title(title)
@@ -67,14 +77,12 @@ public class NcpMailHelper {
                 .recipients(createRecipientForRequest(List.of(recipientAddress)))
                 .build();
     }
+
     public List<RecipientForRequest> createRecipientForRequest(List<String> recipientAddress) {
         List<RecipientForRequest> recipients = new java.util.ArrayList<>(Collections.emptyList());
         for (String address : recipientAddress) {
-            recipients.add(RecipientForRequest.builder()
-                    .address(address)
-                    .build());
+            recipients.add(RecipientForRequest.builder().address(address).build());
         }
         return recipients;
     }
-
 }

@@ -1,19 +1,13 @@
 package com.econovation.recruitinfrastructure.ses;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.List;
-import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import lombok.AllArgsConstructor;
@@ -36,7 +30,6 @@ public class AwsSesUtils {
     private final SesClient sesClient;
     private final SpringTemplateEngine templateEngine;
 
-
     private Message newMessage(String subject, String html) {
         Content content = Content.builder().data(subject).build();
         return Message.builder()
@@ -58,7 +51,6 @@ public class AwsSesUtils {
                 SendRawEmailRequest.builder().rawMessage(rawMessage).build();
         return rawEmailRequest;
     }
-
 
     private void setAttachmentToMessage(
             MimeMultipart msg, RawEmailAttachmentDto rawEmailAttachmentDto) {

@@ -9,5 +9,6 @@ import lombok.Getter;
 public class UpdateLocationColumnDto {
     @Min(1)
     private Integer columnId;
+
     private Integer targetColumnId;
 }

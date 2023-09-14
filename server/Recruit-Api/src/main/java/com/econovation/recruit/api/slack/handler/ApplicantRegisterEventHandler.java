@@ -42,12 +42,12 @@ public class ApplicantRegisterEventHandler {
 
         slackMessageProvider.sendMessage(slackProperties.getUrl(), message);
     }
+
     private String generateApplicantRegisterMessage(ApplicantRegisterEvent applicantRegistEvent) {
         return String.format(
                 ":clapping: 지원자가 등록되었습니다.:clapping:\n"
                         + ":chikorita: 지원자 이름: %s\n"
                         + ":chikorita:희망 분야: %s",
-
                 applicantRegistEvent.getUserName(), applicantRegistEvent.getHopeField());
     }
 

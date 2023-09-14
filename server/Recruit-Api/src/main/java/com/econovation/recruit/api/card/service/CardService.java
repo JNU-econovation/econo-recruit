@@ -14,6 +14,7 @@ import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateWorkCardDto;
+import com.econovation.recruitdomain.domains.dto.UpdateWorkCardDto;
 import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
@@ -37,6 +38,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final ColumnsUseCase columnsUseCase;
     private final AnswerLoadUseCase answerLoadPort;
     private final LabelLoadPort labelLoadPort;
+
     @Override
     @Transactional(readOnly = true)
     public List<Card> findAll() {
@@ -95,9 +97,12 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 secondPriority = "";
                 major = "";
             }
-            Boolean isLabeled = labels.stream().anyMatch(
-                    label -> label.getCardId().equals(card.getId())
-                            && label.getIdpId().equals(userId));
+            Boolean isLabeled =
+                    labels.stream()
+                            .anyMatch(
+                                    label ->
+                                            label.getCardId().equals(card.getId())
+                                                    && label.getIdpId().equals(userId));
 
             result.add(
                     BoardCardResponseDto.from(
@@ -126,20 +131,22 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 Card.builder()
                         .title(createWorkCardDto.getTitle())
                         .content(createWorkCardDto.getContent())
+                        .applicantId("")
                         .build();
         Card savedCard = cardRecordPort.save(card);
         boardRegisterUseCase.createWorkBoard(createWorkCardDto.getColumnId(), savedCard.getId());
     }
 
     @Override
-    public void updateContent(Long cardId, String content) {
+    @Transactional
+    public void update(Long cardId, UpdateWorkCardDto updateWorkCardDto) {
         Card card = cardLoadPort.findById(cardId);
-        card.updateContent(content);
-    }
-
-    @Override
-    public void updateTitle(Long cardId, String title) {
-        Card card = cardLoadPort.findById(cardId);
-        card.updateTitle(title);
+        //        단 title 이 null일 수도 있고, content가 null일 수도 있다.
+        if (updateWorkCardDto.getTitle() != null) {
+            card.updateTitle(updateWorkCardDto.getTitle());
+        }
+        if (updateWorkCardDto.getContent() != null) {
+            card.updateContent(updateWorkCardDto.getContent());
+        }
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class PasswordValidateAspect implements ConstraintValidator<PasswordValidate, String>  {
+public class PasswordValidateAspect implements ConstraintValidator<PasswordValidate, String> {
 
     private boolean isValidPassword(String password) {
         if (password == null || password.length() < 10) {

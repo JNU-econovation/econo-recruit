@@ -9,6 +9,5 @@ import lombok.Getter;
 public class CreateWorkCardDto {
     private Integer columnId;
     private String title;
-    @Nullable
-    private String content;
+    @Nullable private String content;
 }

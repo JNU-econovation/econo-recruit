@@ -89,13 +89,14 @@ public class ApplicantService implements ApplicantRegisterUseCase {
                         .findFirst()
                         .map(Answer::getAnswer)
                         .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
-        String email = results.stream()
-                .filter(answer -> answer.getQuestion().getName().equals("email"))
-                .findFirst()
-                .map(Answer::getAnswer)
-                .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
+        String email =
+                results.stream()
+                        .filter(answer -> answer.getQuestion().getName().equals("email"))
+                        .findFirst()
+                        .map(Answer::getAnswer)
+                        .orElseThrow(() -> AnswerEmptyFieldException.EXCEPTION);
         ApplicantRegisterEvent applicantRegisterEvent =
-                ApplicantRegisterEvent.of(applicantId.toString(), name, hopeField,email);
+                ApplicantRegisterEvent.of(applicantId.toString(), name, hopeField, email);
         Events.raise(applicantRegisterEvent);
         return applicantId;
     }

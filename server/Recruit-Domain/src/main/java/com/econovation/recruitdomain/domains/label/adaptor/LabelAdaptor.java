@@ -7,9 +7,7 @@ import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundExcept
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -55,6 +53,23 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     @Override
     public List<Label> loadLabelByCardIdIn(List<Long> cardIds) {
         return labelRepository.findByCardIdIn(cardIds);
-//        return labels.stream().collect(Collectors.toMap(Label::getCardId, label -> label));
+    }
+
+    @Override
+    public Label loadLabelByCardIdAndIdpId(Long cardId, Long idpId) {
+        Optional<Label> label = labelRepository.findByCardIdAndIdpId(cardId, idpId);
+        if (label.isEmpty()) {
+            return null;
+        }
+        return label.get();
+    }
+
+    @Override
+    public List<Label> loadLabelByCardId(Long cardId) {
+        List<Label> labels = labelRepository.findByCardId(cardId);
+        if (labels.isEmpty()) {
+            return null;
+        }
+        return labels;
     }
 }

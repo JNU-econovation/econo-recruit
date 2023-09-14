@@ -20,7 +20,10 @@ public class ColumnsResponseDto {
 
     public static ColumnsResponseDto from(Columns columns) {
         return new ColumnsResponseDto(
-                columns.getId(), columns.getTitle(), columns.getNextColumnsId(), columns.getNavigationId());
+                columns.getId(),
+                columns.getTitle(),
+                columns.getNextColumnsId(),
+                columns.getNavigationId());
     }
 
     public static List<ColumnsResponseDto> from(List<Columns> columns) {
