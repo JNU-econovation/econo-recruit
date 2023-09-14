@@ -63,8 +63,6 @@ export const getFromToIndexDefault = (
   const from = result.source;
   const to = result.destination;
 
-  console.log(from, to);
-
   const boardId = kanbanData[+from.droppableId].card[from.index]?.id ?? 0;
 
   const targetBoardId =

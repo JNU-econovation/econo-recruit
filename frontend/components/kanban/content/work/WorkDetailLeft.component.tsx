@@ -4,6 +4,7 @@ import ApplicantLabel from "@/components/applicant/applicantNode/Label.component
 import { Work } from "@/src/apis/work/work";
 import dynamic from "next/dynamic";
 import Txt from "@/components/common/Txt.component";
+import WorkLabel from "./Label.component";
 
 interface WorkDetailLeftProps {
   cardId: number;
@@ -27,6 +28,7 @@ const WorkDetailLeft: FC<WorkDetailLeftProps> = ({
       <div className="flex flex-col gap-1 mb-8">
         <Txt typography="h2">{data.title}</Txt>
       </div>
+      <WorkLabel cardId={cardId} generation={generation} />
       <ApplicantComment cardId={cardId} postId="" generation={generation} />
     </>
   );
