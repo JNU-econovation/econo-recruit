@@ -83,6 +83,10 @@ export const postApplication = async (
       throw new Error("시간표가 존재하지 않습니다.");
     }
 
+    if (Date.now() > Date.UTC(2023, 9, 15, 15, 0, 0)) {
+      throw new Error("지원 기간이 종료되었습니다.");
+    }
+
     applicantId = await postApplicant(Array.from(applicationData));
     await postApplicantTimeline(applicantId, timeline);
 
@@ -94,11 +98,8 @@ export const postApplication = async (
       name: "timeline",
       answer: JSON.stringify(timeline),
     });
-
-    await postApplicantBackup(Array.from(applicationData));
   } catch (e) {
-    console.log(e);
-
+    await postApplicantBackup(Array.from(applicationData));
     alert(`지원서 제출에 실패했습니다. 관리자에게 문의해주세요.\n ${e}`);
     return false;
   }
