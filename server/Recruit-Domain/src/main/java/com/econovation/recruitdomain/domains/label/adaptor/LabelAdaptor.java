@@ -57,4 +57,13 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
         return labelRepository.findByCardIdIn(cardIds);
 //        return labels.stream().collect(Collectors.toMap(Label::getCardId, label -> label));
     }
+
+    @Override
+    public Label loadLabelByCardIdAndIdpId(Long cardId, Long idpId) {
+        Optional<Label> label = labelRepository.findByCardIdAndIdpId(cardId, idpId);
+        if (label.isEmpty()) {
+            return null;
+        }
+        return label.get();
+    }
 }

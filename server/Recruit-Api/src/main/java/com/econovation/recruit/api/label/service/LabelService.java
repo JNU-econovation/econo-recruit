@@ -87,4 +87,21 @@ public class LabelService implements LabelUseCase {
         cardLoadPort.findByApplicantId(applicantId).minusLabelCount();
         labelRecordPort.delete(label);
     }
+
+    @Override
+    public Boolean createLabelByCardId(Long cardId) {
+        Long idpId = SecurityUtils.getCurrentUserId();
+        Card card = cardLoadPort.findById(cardId);
+        // 라벨 중복 처리 : 라벨이 있으면 라벨을 삭제한다.
+        Label label2 = labelLoadPort.loadLabelByCardIdAndIdpId(cardId, idpId);
+        if (label2 != null) {
+            labelRecordPort.delete(label2);
+            card.minusLabelCount();
+            return false;
+        }
+        Label label = Label.builder().idpId(idpId).cardId(cardId).applicantId("").build();
+        labelRecordPort.save(label);
+        card.plusLabelCount();
+        return true;
+    }
 }

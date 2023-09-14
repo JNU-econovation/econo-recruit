@@ -12,4 +12,6 @@ public interface LabelLoadPort {
     List<Label> findAll();
 
     List<Label> loadLabelByCardIdIn(List<Long> cardIds);
+
+    Label loadLabelByCardIdAndIdpId(Long cardId, Long idpId);
 }

@@ -75,4 +75,9 @@ public class Card extends BaseTimeEntity {
     public void updateTitle(String title) {
         this.title = title;
     }
+
+    public void updateWorkCard(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

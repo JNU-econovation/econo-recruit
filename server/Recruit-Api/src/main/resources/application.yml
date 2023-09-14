@@ -76,6 +76,10 @@ spring:
     activate:
       on-profile: dev
 
+# DEBUG log level
+logging:
+  level:
+    root: info
 ---
 spring:
   config:

@@ -48,6 +48,19 @@ public class LabelController {
         }
     }
 
+    @Operation(summary = "cardId 로 라벨 생성", description = "라벨이 이미 존재할 경우 삭제합니다.(토글)")
+    @PostMapping("/cards/{card-id}/labels")
+    @ApiErrorExceptionsExample(LabelExceptionDocs.class)
+    public ResponseEntity<String> createLabelByCardId(
+            @PathVariable(name = "card-id") Long cardId) {
+        Boolean success = labelUseCase.createLabelByCardId(cardId);
+        if (success) {
+            return new ResponseEntity<>(LABEL_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(LABEL_SUCCESS_DELETE_IN_CREATE_MESSAGE, HttpStatus.OK);
+        }
+    }
+
     @Operation(summary = "지원자의 라벨을 취소합니다.")
     @DeleteMapping("/applicants/{applicant-id}/labels")
     @ApiErrorExceptionsExample(LabelDeleteExceptionDocs.class)
