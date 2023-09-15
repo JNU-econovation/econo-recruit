@@ -29,7 +29,7 @@ public class RedissonLockAop {
     private final RedissonClient redissonClient;
     private final CallTransactionFactory callTransactionFactory;
 
-    @Around("@annotation(com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock)")
+    @Around(value = "@annotation(com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock)")
     public Object lock(final ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

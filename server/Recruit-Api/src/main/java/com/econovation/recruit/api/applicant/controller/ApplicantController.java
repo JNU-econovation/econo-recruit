@@ -21,16 +21,12 @@ import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,10 +75,11 @@ public class ApplicantController {
 
         // 현재 시간이 2023년 09월 16일 00시 00분 00초 (한국 시간) 이후인지 확인
         boolean isOutdated = currentKoreaTime.isAfter(outdatedKoreaTime);
-        if(isOutdated) {
+        if (isOutdated) {
             throw ApplicantOutOfDateException.EXCEPTION;
         }
     }
+
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
     @GetMapping("/applicants/{applicant-id}")
     public ResponseEntity<Map<String, String>> getApplicantById(
