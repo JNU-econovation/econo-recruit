@@ -18,7 +18,7 @@ export interface CommentReq {
 }
 
 export const getAllComment = async (cardId: number, applicantId: string) => {
-  if (cardId === 0) {
+  if (cardId <= 0) {
     const { data } = await https.get<CommentRes[]>(
       `/applicants/${applicantId}/comments`
     );

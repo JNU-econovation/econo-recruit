@@ -1,6 +1,4 @@
 import { FC } from "react";
-import { applicantDataFinder } from "@/src/functions/finder";
-import ApplicantLabel from "@/components/applicant/applicantNode/Label.component";
 import { Work } from "@/src/apis/work/work";
 import dynamic from "next/dynamic";
 import Txt from "@/components/common/Txt.component";
