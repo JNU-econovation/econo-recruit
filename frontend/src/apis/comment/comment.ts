@@ -29,6 +29,10 @@ export const getAllComment = async (cardId: number, applicantId: string) => {
 };
 
 export const postComment = async (body: CommentReq) => {
+  if (!(body.applicantId === "" || body.cardId <= 0)) {
+    console.log("잘못된 요청입니다.");
+  }
+
   let reqData: Object = body;
   if (body.applicantId === "") {
     reqData = {
@@ -36,7 +40,7 @@ export const postComment = async (body: CommentReq) => {
       applicantId: null,
     };
   }
-  if (body.cardId === 0) {
+  if (body.cardId <= 0) {
     reqData = {
       ...body,
       cardId: null,
