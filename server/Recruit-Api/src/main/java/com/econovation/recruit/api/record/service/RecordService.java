@@ -4,6 +4,7 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
+import com.econovation.recruitdomain.domains.dto.UpdateRecordDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.domains.record.exception.RecordDuplicateCreatedException;
 import com.econovation.recruitdomain.out.RecordLoadPort;
@@ -11,6 +12,7 @@ import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +23,12 @@ public class RecordService implements RecordUseCase {
     private final AnswerLoadUseCase answerLoadUseCase;
 
     @Override
+    @Transactional
     public Record createRecord(CreateRecordDto recordDto) {
         if (answerLoadUseCase.execute(recordDto.getApplicantId()) == null) {
             throw ApplicantNotFoundException.EXCEPTION;
         }
-        if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()) != null) {
+        if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()).isPresent()) {
             throw RecordDuplicateCreatedException.EXCEPTION;
         }
         Record record = CreateRecordDto.toRecord(recordDto);
@@ -39,20 +42,41 @@ public class RecordService implements RecordUseCase {
 
     @Override
     public Record findByApplicantId(String applicantId) {
-        return recordLoadPort.findByApplicantId(applicantId);
+        return recordLoadPort.findByApplicantId(applicantId).get();
     }
 
     @Override
+    @Transactional
     public void updateRecordUrl(String applicantId, String url) {
-        Record record = recordLoadPort.findByApplicantId(applicantId);
-        record.updateUrl(url);
-        recordRecordPort.save(record);
+        recordLoadPort.findByApplicantId(applicantId).ifPresent(
+                record -> {
+                    record.updateUrl(url);
+                }
+        );
     }
 
     @Override
+    @Transactional
     public void updateRecordContents(String applicantId, String contents) {
-        Record record = recordLoadPort.findByApplicantId(applicantId);
-        record.updateRecord(contents);
-        recordRecordPort.save(record);
+        recordLoadPort.findByApplicantId(applicantId).ifPresent(
+                record -> {
+                    record.updateRecord(contents);
+                }
+        );
+    }
+
+    @Override
+    @Transactional
+    public void updateRecord(String applicantId, UpdateRecordDto updateRecordDto) {
+        recordLoadPort.findByApplicantId(applicantId).ifPresent(
+                record -> {
+                    if(updateRecordDto.getUrl() != null){
+                        record.updateUrl(updateRecordDto.getUrl());
+                    }
+                    if(updateRecordDto.getRecord() != null){
+                        record.updateRecord(updateRecordDto.getRecord());
+                    }
+                }
+        );
     }
 }
