@@ -42,7 +42,7 @@ jobs:
           cd ..
 
       - name: Test with Gradle
-        run: SPRING_PROFILES_ACTIVE=[test] ./gradlew test
+        run: SPRING_PROFILES_ACTIVE=[test] ./server/gradlew test
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
