@@ -30,6 +30,11 @@ export const putWork = async ({
   return response.data;
 };
 
+export const deleteWork = async (cardId: string) => {
+  const response = await https.post(`/cards/${cardId}/delete`);
+  return response.data;
+};
+
 export interface WorkLabelReq {
   name: string;
   active: boolean;

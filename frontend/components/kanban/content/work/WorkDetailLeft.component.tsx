@@ -1,5 +1,5 @@
 import { FC, use, useEffect, useState } from "react";
-import { Work, putWork } from "@/src/apis/work/work";
+import { Work, deleteWork, putWork } from "@/src/apis/work/work";
 import dynamic from "next/dynamic";
 import Txt from "@/components/common/Txt.component";
 import WorkLabel from "./Label.component";
@@ -34,10 +34,23 @@ const WorkDetailLeft: FC<WorkDetailLeftProps> = ({
     },
   });
 
+  const { mutate: deleteWorkCard } = useMutation(deleteWork, {
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["work", cardId],
+      });
+    },
+  });
+
   const addCardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     changeWorkCardTitle({ cardId, title });
     setIsOpenAddCard(false);
+  };
+
+  const onDeleteWorkCard = () => {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+    deleteWorkCard(`${cardId}`);
   };
 
   useEffect(() => {
@@ -69,9 +82,18 @@ const WorkDetailLeft: FC<WorkDetailLeftProps> = ({
           ) : (
             <Txt typography="h2">{data.title}</Txt>
           )}
-          <div className="flex text-sm gap-2 text-[#666666] items-center">
-            <button onClick={() => setIsOpenAddCard((prev) => !prev)}>
+          <div className="flex gap-2 w-[8rem] justify-end">
+            <button
+              className="text-sm text-[#666666] items-center w-fit"
+              onClick={() => setIsOpenAddCard((prev) => !prev)}
+            >
               수정
+            </button>
+            <button
+              className="text-sm text-[#666666] items-center w-fit"
+              onClick={onDeleteWorkCard}
+            >
+              삭제
             </button>
           </div>
         </div>
