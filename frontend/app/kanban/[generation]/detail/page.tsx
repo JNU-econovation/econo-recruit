@@ -57,6 +57,8 @@ const KanbanBoardDetailPage: FC<KanbanBoardDetailPageProps> = ({
       <KanbanColumnDetailCard
         columnIndex={+columnIndex ?? 0}
         generation={generation}
+        cardId={cardId}
+        applicantId={applicantId}
       />
       <DetailContentJunction
         applicantId={applicantId}

@@ -12,11 +12,15 @@ import KanbanCardComponent from "../card/Card.component";
 interface KanbanDetailCardProps {
   columnIndex: number;
   generation: string;
+  cardId: string;
+  applicantId: string;
 }
 
 const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
   columnIndex,
   generation,
+  cardId,
+  applicantId,
 }) => {
   const [navbarId] = useAtom(KanbanSelectedButtonNumberState);
 
@@ -63,7 +67,12 @@ const KanbanColumnDetailCard: FC<KanbanDetailCardProps> = ({
                 col &&
                 col.cardType !== "INVISIBLE" && (
                   <div className="my-2" key={col.id}>
-                    <KanbanCardComponent data={col} columnIndex={columnIndex} />
+                    <KanbanCardComponent
+                      data={col}
+                      columnIndex={columnIndex}
+                      cardId={cardId}
+                      applicantId={applicantId}
+                    />
                   </div>
                 )
             )}
