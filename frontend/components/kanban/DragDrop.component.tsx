@@ -39,6 +39,7 @@ const KanbanColumnView = () => {
           columnCount={column.card.length - 1}
           columnData={column.card}
           columnIndex={index}
+          columnId={column.id}
         />
       ))}
     </>

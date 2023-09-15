@@ -57,6 +57,7 @@ interface KanbanColumnComponentProps {
   columnCount: number;
   columnData: (KanbanCardData | null)[];
   columnIndex: number;
+  columnId: number;
 }
 
 const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
@@ -64,6 +65,7 @@ const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
   title,
   columnCount,
   columnIndex,
+  columnId,
 }) => {
   return (
     <Draggable
@@ -95,7 +97,7 @@ const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
               columnIndex={columnIndex}
             />
           </div>
-          <KanbanAddCardComponent columnId={columnIndex + 1} />
+          <KanbanAddCardComponent columnId={columnId} />
         </div>
       )}
     </Draggable>
