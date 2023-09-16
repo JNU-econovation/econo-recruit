@@ -9,7 +9,7 @@ spring:
     hikari:
       maxLifetime: 580000
       maximum-pool-size: 20
-    password: ${MYSQL_PASSWORD:}
+    password: ${MYSQL_PASSWORD:dltjgus119@@}
     username: ${MYSQL_USERNAME:root}
   jpa:
     hibernate:

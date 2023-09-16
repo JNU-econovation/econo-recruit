@@ -77,6 +77,16 @@ public class LabelService implements LabelUseCase {
     }
 
     @Override
+    @Transactional
+    public void deleteLabelByCardId(Long cardId) {
+        List<Label> labels = labelLoadPort.loadLabelByCardId(cardId);
+        if (!labels.isEmpty()) {
+            labelRecordPort.deleteAll(labels);
+        }
+    }
+
+    @Override
+    @Transactional
     public Boolean createLabelByCardId(Long cardId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Card card = cardLoadPort.findById(cardId);

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 @ApiIntegrateSpringBootTest
 class RecruitApplicationTests {
-
     @Test
     void contextLoads() {}
 }

@@ -4,6 +4,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
@@ -256,6 +257,17 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Board getBoardByCardId(Long cardId) {
+        return boardLoadPort.getBoardByCardId(cardId);
+    }
+
+    @Override
+    public Result<Board> getBoardByNextBoardId(Integer boardId) {
+        return Result.of(boardLoadPort.getByNextBoardId(boardId).get());
+    }
+
+    @Override
     @Transactional
     @RedissonLock(
             LockName = "보드 위치 변경",
@@ -321,6 +333,11 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Columns targetColumn = columnLoadPort.findById(updateLocationDto.getTargetColumnId());
 
         updateNextColumnIds(currentColumn, targetColumn);
+    }
+
+    @Override
+    public void delete(Board board) {
+        boardRecordPort.delete(board);
     }
 
     private void updateNextColumnIds(Columns currentColumn, Columns targetColumn) {

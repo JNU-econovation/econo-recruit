@@ -100,28 +100,4 @@ public class ApplicantService implements ApplicantRegisterUseCase {
         Events.raise(applicantRegisterEvent);
         return applicantId;
     }
-
-    private String convertToSubmitApplicantEventTitle(List<Answer> results) {
-        final String HOPE_FIELD_QUESTION_KEY = "field";
-        final String NAME_QUESTION_KEY = "name";
-
-        StringBuilder titleBuilder = new StringBuilder();
-        String hopeField = "";
-        String name = "";
-
-        for (Answer answer : results) {
-            String question = answer.getQuestion().getName();
-            String userInputValue = answer.getAnswer();
-
-            if (question.equals(HOPE_FIELD_QUESTION_KEY)) {
-                hopeField = userInputValue;
-            }
-            if (question.equals(NAME_QUESTION_KEY)) {
-                name = userInputValue;
-            }
-        }
-
-        titleBuilder.append("[").append(hopeField).append("] ").append(name);
-        return titleBuilder.toString();
-    }
 }

@@ -9,6 +9,7 @@ import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
 import com.econovation.recruitdomain.domains.dto.RecordResponseDto;
+import com.econovation.recruitdomain.domains.dto.UpdateRecordDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,22 +56,13 @@ public class RecordController {
         return new ResponseEntity(RecordResponseDto.from(records), HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 면접기록의 면접 영상 url을 수정합니다.")
-    @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
-    @PutMapping("/applicants/{applicant-id}/records/url")
-    public ResponseEntity<String> updateRecordUrl(
-            @PathVariable(name = "applicant-id") String applicantId, @RequestParam String url) {
-        recordUseCase.updateRecordUrl(applicantId, url);
-        return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
-    }
-
-    @Operation(summary = "지원자의 면접기록의 면접기록을 수정합니다.")
+    @Operation(summary = "지원자의 면접기록의 면접 영상 url및 면접기록을 수정합니다.")
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records")
-    public ResponseEntity<String> updateRecord(
+    public ResponseEntity<String> updateRecordUrl(
             @PathVariable(name = "applicant-id") String applicantId,
-            @RequestParam String contents) {
-        recordUseCase.updateRecordContents(applicantId, contents);
+            @RequestBody UpdateRecordDto updateRecordDto) {
+        recordUseCase.updateRecord(applicantId, updateRecordDto);
         return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 }

@@ -37,6 +37,7 @@ out/
 ### VS Code ###
 .vscode/
 server/.env
+.env
 .env.*
 
 *.xlsx

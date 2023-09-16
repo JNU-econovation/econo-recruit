@@ -15,4 +15,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     Optional<Board> findByNextBoardId(Integer nextBoardId);
 
     List<Board> findByColumnIdIn(List<Integer> columnsIds);
+
+    Optional<Board> findByCardId(Long cardId);
 }

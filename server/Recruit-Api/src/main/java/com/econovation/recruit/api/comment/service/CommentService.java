@@ -235,4 +235,17 @@ public class CommentService implements CommentUseCase {
         List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
         return getCommentPairVo(idpId, comments);
     }
+
+    @Override
+    @Transactional
+    public void deleteCommentByCardId(Long cardId) {
+        List<Comment> comments = commentLoadPort.findByCardId(cardId);
+        if (comments.isEmpty()) {
+            return;
+        }
+        commentRecordPort.deleteCommentsAll(comments);
+        commentLikeRecordPort.deleteAll(
+                commentLikeLoadPort.findByCommentIds(
+                        comments.stream().map(Comment::getId).collect(Collectors.toList())));
+    }
 }

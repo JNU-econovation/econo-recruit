@@ -17,6 +17,7 @@ public enum AnswerErrorCode implements BaseErrorCode {
     ANSWER_NOT_FOUND(NOT_FOUND, "ANSWER_NOT_FOUND", "지원자를 찾을 수 없습니다."),
     ANSWER_EMPTY_FIELD(BAD_REQUEST, "ANSWER_400_0", "필수 입력값이 없습니다."),
     ANSWER_DUPLICATE_SUBMIT(BAD_REQUEST, "ANSWER_400_1", "이미 지원한 지원자입니다."),
+    APPLICANT_OUT_OF_DATE(BAD_REQUEST, "ANSWER_400_2", "지원 기간이 만료되었습니다."),
     ;
 
     private Integer status;

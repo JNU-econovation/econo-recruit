@@ -6,6 +6,7 @@ import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateNavigationExceptionDocs;
+import com.econovation.recruit.api.card.docs.DeleteBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.FindBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.FindNavigationExceptionDocs;
 import com.econovation.recruit.api.card.docs.UpdateBoardExceptionDocs;
@@ -32,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -189,8 +191,9 @@ public class BoardRestController {
         return new ResponseEntity<>(answerLoadUseCase.execute(applicantId, fields), HttpStatus.OK);
     }
 
-    @Operation(summary = "카드 삭제", description = "카드를 삭제합니다")
-    @PostMapping("/boards/cards/{card-id}/delete")
+    @Operation(summary = "카드 삭제", description = "업무 카드를 삭제합니다(지원서 삭제는 불가합니다.)")
+    @ApiErrorExceptionsExample(DeleteBoardExceptionDocs.class)
+    @DeleteMapping("/cards/{card-id}")
     public ResponseEntity<String> deleteCard(@PathVariable(name = "card-id") Long cardId) {
         cardRegisterUseCase.deleteById(cardId);
         return new ResponseEntity<>(BOARD_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);

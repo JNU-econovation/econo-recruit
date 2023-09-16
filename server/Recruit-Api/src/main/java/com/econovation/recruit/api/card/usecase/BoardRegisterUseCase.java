@@ -21,4 +21,6 @@ public interface BoardRegisterUseCase {
     void relocateCard(UpdateLocationBoardDto updateLocationBoardDto);
 
     void updateColumnLocation(UpdateLocationColumnDto updateLocationDto);
+
+    void delete(Board board);
 }
