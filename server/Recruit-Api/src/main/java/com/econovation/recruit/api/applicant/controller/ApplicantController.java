@@ -58,7 +58,7 @@ public class ApplicantController {
     @PostMapping("/applicants")
     public ResponseEntity registerApplicant(
             @RequestBody @Valid List<BlockRequestDto> blockElements) {
-        validateOutdated();
+//        validateOutdated();
         UUID applicantId = applicantRegisterUseCase.execute(blockElements);
         return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
