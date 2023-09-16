@@ -96,7 +96,7 @@ export const getAllKanbanData = async (
   const cardsData = await getKanbanCards(navigationId);
 
   return columnsData.map((column) => {
-    const columnCardData = cardsData
+    const startColumnCardData = cardsData
       .filter((card) => card.columnId === column.columnsId)
       .filter((card) => card.cardType === "INVISIBLE");
 
@@ -106,23 +106,28 @@ export const getAllKanbanData = async (
       if (columnCardsData[columnCardsData.length - 1].nextBoardId === null) {
         return columnCardsData;
       }
+
       const nextBoardId =
         columnCardsData[columnCardsData.length - 1].nextBoardId;
-      const nextColumnCardsData = cardsData.filter(
+
+      const nextColumnCardsData = cardsData.find(
         (card) => card.boardId === nextBoardId
       );
 
-      return findLocationData([...columnCardsData, ...nextColumnCardsData]);
+      if (!nextColumnCardsData) return columnCardsData;
+
+      return findLocationData([...columnCardsData, nextColumnCardsData]);
     };
 
     return {
       id: column.columnsId,
       title: column.title,
-      card: findLocationData(columnCardData)
+      card: findLocationData(startColumnCardData)
         .map((card) => {
           if (!card) return null;
           return {
-            id: card.boardId,
+            id: card.id,
+            boardId: card.boardId,
             cardType: card.cardType,
             title: card.title,
             major: card.major.split('"').join(""),

@@ -8,13 +8,13 @@ import { postCommentsLike } from "@/src/apis/comment/commentLike";
 
 interface CommentDeleteButtonProps {
   commentId: string;
-  postId: string;
+  cardId: number;
   generation: string;
 }
 
 const CommentDeleteButton: FC<CommentDeleteButtonProps> = ({
   commentId,
-  postId,
+  cardId,
   generation,
 }) => {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ const CommentDeleteButton: FC<CommentDeleteButtonProps> = ({
   const { mutate: onDelete } = useMutation(() => deleteComment(commentId), {
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["applicantComment", postId],
+        queryKey: ["applicantComment", "", cardId],
       });
       queryClient.invalidateQueries({
         queryKey: ["kanbanDataArray", generation],
@@ -45,14 +45,14 @@ interface ApplicantCommentReq {
 
 type ApplicantCommentDetailProps = {
   comment: ApplicantCommentReq;
-  postId: string;
+  cardId: number;
   generation: string;
 };
 
 const ApplicantCommentDetail: FC<ApplicantCommentDetailProps> = ({
   comment,
   generation,
-  postId,
+  cardId,
 }) => {
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
@@ -62,7 +62,7 @@ const ApplicantCommentDetail: FC<ApplicantCommentDetailProps> = ({
     {
       onSettled: () => {
         queryClient.invalidateQueries({
-          queryKey: ["applicantComment", postId],
+          queryKey: ["applicantComment", "", cardId],
         });
       },
     }
@@ -101,7 +101,7 @@ const ApplicantCommentDetail: FC<ApplicantCommentDetailProps> = ({
           <div className="border-x-[0.5px] h-4 !w-0 border-[#666666]"></div>
           <CommentDeleteButton
             commentId={comment.id}
-            postId={postId}
+            cardId={cardId}
             generation={generation}
           />
         </div>

@@ -3,21 +3,23 @@
 import { FC } from "react";
 import ApplicantCommentInputForm from "./InputForm.component";
 import { useQuery } from "@tanstack/react-query";
+import { getAllComment } from "@/src/apis/comment/comment";
 import ApplicantCommentDetail from "./CommentDetail.component";
-import { getAllCommentById } from "../../../../src/apis/comment/comment";
 
 interface ApplicantCommentProps {
   postId: string;
+  cardId: number;
   generation: string;
 }
 
 const ApplicantComment: FC<ApplicantCommentProps> = ({
   postId,
+  cardId,
   generation,
 }) => {
   const { data, error, isLoading } = useQuery(
-    ["applicantComment", postId],
-    () => getAllCommentById(postId)
+    ["applicantComment", "", cardId],
+    () => getAllComment(cardId, postId)
   );
 
   if (!data || isLoading) {
@@ -32,6 +34,7 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({
     <>
       <ApplicantCommentInputForm
         applicantId={postId}
+        cardId={cardId}
         commentLength={data.length}
         generation={generation}
       />
@@ -40,7 +43,7 @@ const ApplicantComment: FC<ApplicantCommentProps> = ({
           <ApplicantCommentDetail
             generation={generation}
             comment={comment}
-            postId={postId}
+            cardId={cardId}
             key={comment.id}
           />
         ))}

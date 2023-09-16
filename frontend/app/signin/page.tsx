@@ -40,7 +40,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
       <SignInForm onSubmit={onSubmit} data={signInData} setForm={setForm} />
       {error && <p className="text-red-500 text-sm my-2">{error}</p>}
       <div className="mt-4">

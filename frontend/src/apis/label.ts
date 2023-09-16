@@ -19,11 +19,3 @@ export const postLabel = async (id: string) => {
 
   return data;
 };
-
-export const deleteLabel = async (id: string, idpId: string) => {
-  const { data } = await https.delete<string>(`/labels`, {
-    params: { applicantId: id, idpId: idpId },
-  });
-
-  return data;
-};

@@ -17,15 +17,36 @@ export interface CommentReq {
   cardId: number;
 }
 
-export const getAllCommentById = async (applicantId: string) => {
-  const { data } = await https.get<CommentRes[]>(
-    `/applicants/${applicantId}/comments`
-  );
+export const getAllComment = async (cardId: number, applicantId: string) => {
+  if (cardId <= 0) {
+    const { data } = await https.get<CommentRes[]>(
+      `/applicants/${applicantId}/comments`
+    );
+    return data;
+  }
+  const { data } = await https.get<CommentRes[]>(`/cards/${cardId}/comments`);
   return data;
 };
 
 export const postComment = async (body: CommentReq) => {
-  const { data } = await https.post<string>(`/comments`, body);
+  if (!(body.applicantId === "" || body.cardId <= 0)) {
+    console.log("잘못된 요청입니다.");
+  }
+
+  let reqData: Object = body;
+  if (body.applicantId === "") {
+    reqData = {
+      ...body,
+      applicantId: null,
+    };
+  }
+  if (body.cardId <= 0) {
+    reqData = {
+      ...body,
+      cardId: null,
+    };
+  }
+  const { data } = await https.post<string>(`/comments`, reqData);
   return data;
 };
 

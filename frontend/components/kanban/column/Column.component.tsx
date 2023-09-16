@@ -3,15 +3,6 @@ import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
 import KanbanAddCardComponent from "../card/AddCard.component";
 import { FC } from "react";
 import { KanbanCard } from "../card";
-
-interface KanbanColumnComponentProps {
-  columnIndex: number;
-  title: string;
-  columnCount: number;
-  columnData: (KanbanCardData | null)[];
-  columnId: number;
-}
-
 interface KanbanColumnProps {
   columnIndex: number;
   columnData: (KanbanCardData | null)[];
@@ -47,6 +38,7 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
                     column={column}
                     columnIndex={columnIndex}
                     index={index}
+                    cardIndex={index}
                   />
                 );
               default:
@@ -60,11 +52,19 @@ const KanbanColumnDroppable: FC<KanbanColumnProps> = ({
   );
 };
 
+interface KanbanColumnComponentProps {
+  title: string;
+  columnCount: number;
+  columnData: (KanbanCardData | null)[];
+  columnIndex: number;
+  columnId: number;
+}
+
 const KanbanColumnComponent: FC<KanbanColumnComponentProps> = ({
-  columnIndex,
   columnData,
   title,
   columnCount,
+  columnIndex,
   columnId,
 }) => {
   return (

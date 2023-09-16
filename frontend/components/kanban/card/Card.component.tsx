@@ -1,12 +1,20 @@
 import { KanbanCardData } from "@/src/stores/kanban/Kanban.atoms";
+import classNames from "classnames";
 import { useParams, useRouter } from "next/navigation";
 
 type KanbanCardComponentType = {
   data: KanbanCardData | null;
-  cardId: number;
+  columnIndex: number;
+  cardId?: string;
+  applicantId?: string;
 };
 
-function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
+function KanbanCardComponent({
+  data,
+  columnIndex,
+  applicantId,
+  cardId,
+}: KanbanCardComponentType) {
   const { generation } = useParams();
   const navigate = useRouter();
 
@@ -15,29 +23,36 @@ function KanbanCardComponent({ data, cardId }: KanbanCardComponentType) {
   }
 
   const {
+    id,
     title,
     apply,
     comment,
     isHearted,
     heart,
     major,
-    applicantId,
+    applicantId: dataApplicantId,
     cardType,
   } = data;
 
   const onClickDetail = () => {
     navigate.push(
-      `/kanban/${generation}/detail?id=${applicantId}&card=${cardId}&type=${cardType}`
+      `/kanban/${generation}/detail?applicantId=${dataApplicantId}&columnIndex=${columnIndex}&type=${cardType}&cardId=${id}`
     );
   };
 
   return (
     <div
-      className="border-[1px] border-[#F0F0F0] w-full p-3 rounded-lg drop-shadow-md bg-white hover:border-[#7AA0FF]"
+      className={classNames(
+        "border-[1px] w-[16em] p-3 rounded-lg drop-shadow-md bg-white hover:border-[#7AA0FF]",
+        (applicantId !== "" && dataApplicantId == applicantId) ||
+          `${id}` == cardId
+          ? "border-[#2160FF]"
+          : "border-[#F0F0F0]"
+      )}
       onClick={onClickDetail}
     >
       <div className="text-xs text-[#666666]">{major}</div>
-      <div className="font-bold">{title}</div>
+      <div className="font-bold truncate">{title}</div>
       <div className="mt-2 flex justify-between items-center text-sm text-[#666666]">
         <div className="text-sm">{apply.join(" / ")}</div>
         <div className="flex gap-3">
