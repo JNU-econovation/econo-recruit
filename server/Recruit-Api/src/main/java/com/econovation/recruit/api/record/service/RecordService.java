@@ -48,35 +48,38 @@ public class RecordService implements RecordUseCase {
     @Override
     @Transactional
     public void updateRecordUrl(String applicantId, String url) {
-        recordLoadPort.findByApplicantId(applicantId).ifPresent(
-                record -> {
-                    record.updateUrl(url);
-                }
-        );
+        recordLoadPort
+                .findByApplicantId(applicantId)
+                .ifPresent(
+                        record -> {
+                            record.updateUrl(url);
+                        });
     }
 
     @Override
     @Transactional
     public void updateRecordContents(String applicantId, String contents) {
-        recordLoadPort.findByApplicantId(applicantId).ifPresent(
-                record -> {
-                    record.updateRecord(contents);
-                }
-        );
+        recordLoadPort
+                .findByApplicantId(applicantId)
+                .ifPresent(
+                        record -> {
+                            record.updateRecord(contents);
+                        });
     }
 
     @Override
     @Transactional
     public void updateRecord(String applicantId, UpdateRecordDto updateRecordDto) {
-        recordLoadPort.findByApplicantId(applicantId).ifPresent(
-                record -> {
-                    if(updateRecordDto.getUrl() != null){
-                        record.updateUrl(updateRecordDto.getUrl());
-                    }
-                    if(updateRecordDto.getRecord() != null){
-                        record.updateRecord(updateRecordDto.getRecord());
-                    }
-                }
-        );
+        recordLoadPort
+                .findByApplicantId(applicantId)
+                .ifPresent(
+                        record -> {
+                            if (updateRecordDto.getUrl() != null) {
+                                record.updateUrl(updateRecordDto.getUrl());
+                            }
+                            if (updateRecordDto.getRecord() != null) {
+                                record.updateRecord(updateRecordDto.getRecord());
+                            }
+                        });
     }
 }

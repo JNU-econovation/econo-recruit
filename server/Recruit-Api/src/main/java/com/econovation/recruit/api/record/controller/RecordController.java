@@ -60,7 +60,8 @@ public class RecordController {
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
     @PutMapping("/applicants/{applicant-id}/records")
     public ResponseEntity<String> updateRecordUrl(
-            @PathVariable(name = "applicant-id") String applicantId, @RequestBody UpdateRecordDto updateRecordDto) {
+            @PathVariable(name = "applicant-id") String applicantId,
+            @RequestBody UpdateRecordDto updateRecordDto) {
         recordUseCase.updateRecord(applicantId, updateRecordDto);
         return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }

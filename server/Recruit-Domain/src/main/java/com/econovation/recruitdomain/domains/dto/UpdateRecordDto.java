@@ -5,9 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class UpdateRecordDto {
-    @Nullable
-    private String url;
-    @Nullable
-    private String record;
-
+    @Nullable private String url;
+    @Nullable private String record;
 }

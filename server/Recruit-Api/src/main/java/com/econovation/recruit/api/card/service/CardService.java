@@ -7,6 +7,10 @@ import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.CardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.ColumnsUseCase;
 import com.econovation.recruit.api.config.security.SecurityUtils;
+import com.econovation.recruitcommon.utils.Result;
+import com.econovation.recruitdomain.common.aop.domainEvent.Events;
+import com.econovation.recruitdomain.common.events.WorkCardDeletedEvent;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantProhibitDeleteException;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
@@ -120,8 +124,21 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     @Override
     @Transactional
     public void deleteById(Long cardId) {
-        // 본인 댓글만 삭제할 수 있다.
-        cardRecordPort.delete(cardId);
+        Board board = boardLoadUseCase.getBoardByCardId(cardId);
+        Result<Board> prevBoard = boardLoadUseCase.getBoardByNextBoardId(board.getId());
+        // 지원서 카드는 삭제가 불가능하다. -> 업무 카드만 삭제가 가능하다.
+        if (board.getCardType().equals(CardType.WORK_CARD)) {
+            prevBoard.onSuccess(
+                    prev -> {
+                        prev.updateNextBoardID(board.getNextBoardId());
+                    });
+            boardRegisterUseCase.delete(board);
+            cardRecordPort.delete(cardId);
+            // Work 관련된 댓글 및 라벨을 전체 삭제 Cascade를 Event 로 동작
+            Events.raise(WorkCardDeletedEvent.of(board.getCardId()));
+        } else {
+            throw ApplicantProhibitDeleteException.EXCEPTION;
+        }
     }
 
     @Override

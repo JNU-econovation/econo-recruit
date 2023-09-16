@@ -86,6 +86,11 @@ public class CommentAdapter
     }
 
     @Override
+    public void deleteCommentsAll(List<Comment> comments) {
+        commentRepository.deleteAll(comments);
+    }
+
+    @Override
     public List<CommentLike> getByCommentId(Long commentId) {
         return commentLikeRepository.findByCommentId(commentId);
     }

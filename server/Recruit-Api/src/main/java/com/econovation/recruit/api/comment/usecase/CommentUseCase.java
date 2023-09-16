@@ -26,4 +26,6 @@ public interface CommentUseCase {
     void updateCommentContent(Long commentId, Map<String, String> contents);
 
     List<CommentPairVo> findByApplicantId(String applicantId);
+
+    void deleteCommentByCardId(Long cardId);
 }

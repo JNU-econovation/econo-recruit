@@ -6,6 +6,7 @@ import com.econovation.recruitdomain.domains.label.domain.LabelRepository;
 import com.econovation.recruitdomain.domains.label.exception.LabelNotFoundException;
 import com.econovation.recruitdomain.out.LabelLoadPort;
 import com.econovation.recruitdomain.out.LabelRecordPort;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     @Override
     public void delete(Label label) {
         labelRepository.delete(label);
+    }
+
+    @Override
+    public void deleteAll(List<Label> labels) {
+        labelRepository.deleteAll(labels);
     }
 
     @Override
@@ -68,7 +74,7 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     public List<Label> loadLabelByCardId(Long cardId) {
         List<Label> labels = labelRepository.findByCardId(cardId);
         if (labels.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
         return labels;
     }

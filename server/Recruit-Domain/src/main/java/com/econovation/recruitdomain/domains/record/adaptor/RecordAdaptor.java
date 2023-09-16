@@ -26,7 +26,6 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
 
     @Override
     public Optional<Record> findByApplicantId(String applicantId) {
-        return recordRepository
-                .findByApplicantId(applicantId);
+        return recordRepository.findByApplicantId(applicantId);
     }
 }
