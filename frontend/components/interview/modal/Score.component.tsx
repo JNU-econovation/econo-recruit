@@ -1,7 +1,7 @@
 "use client";
 import { FC, useState } from "react";
 import InterviewScoreCellComponent from "./ScoreCell.component";
-import { ScoreRes, scoreDetail } from "@/src/apis/interview/score";
+import { ScoreRes, scoreDetail } from "@/src/apis/score";
 
 interface InterviewScoreProps {
   score: ScoreRes;
