@@ -52,7 +52,7 @@ export const putInterviewUrl = async ({
   url,
 }: putInterviewReq) => {
   const { data } = await https.put<string>(
-    `/applicants/${applicantId}/records/url`,
+    `/applicants/${applicantId}/records`,
     { url }
   );
 
