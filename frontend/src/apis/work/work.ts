@@ -20,18 +20,21 @@ export const putWork = async ({
   title?: string;
   content?: string;
 }) => {
-  const data =
-    title === "" || !title
-      ? { content }
-      : content === "" || !content
-      ? {}
-      : { title, content };
-  const response = await https.put<Work>(`/boards/cards/${cardId}`, data);
+  let resData = {};
+  if (title === "" || !title) {
+    resData = { content };
+  } else if (content === "" || !content) {
+    resData = { title };
+  } else {
+    resData = { title, content };
+  }
+
+  const response = await https.put<Work>(`/boards/cards/${cardId}`, resData);
   return response.data;
 };
 
 export const deleteWork = async (cardId: string) => {
-  const response = await https.post(`/cards/${cardId}/delete`);
+  const response = await https.delete(`/cards/${cardId}`);
   return response.data;
 };
 
