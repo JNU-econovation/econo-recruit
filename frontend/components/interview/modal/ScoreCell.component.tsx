@@ -1,4 +1,4 @@
-import { scoreDetail } from "@/src/apis/interview/score";
+import { scoreDetail } from "@/src/apis/score";
 
 type InterviewScoreCellComponent = {
   item: [string, scoreDetail[]];

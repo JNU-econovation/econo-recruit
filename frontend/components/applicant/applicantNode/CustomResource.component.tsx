@@ -7,9 +7,10 @@ import ApplicantInterviewerScore from "./InterviewerScore.component";
 
 interface ApplicantResourceProps {
   data: ApplicantReq[];
+  postId: string;
 }
 
-const ApplicantResource: FC<ApplicantResourceProps> = ({ data }) => {
+const ApplicantResource: FC<ApplicantResourceProps> = ({ data, postId }) => {
   return (
     <>
       <div className="flex flex-col gap-1 mb-2">
@@ -21,7 +22,7 @@ const ApplicantResource: FC<ApplicantResourceProps> = ({ data }) => {
           "field"
         )}] ${applicantDataFinder(data, "name")}`}</Txt>
       </div>
-      <ApplicantInterviewerScore />
+      <ApplicantInterviewerScore postId={postId}/>
       <div className="flex gap-4 mb-8">
         <div className="flex gap-1">
           <Txt typography="h3" color="gray" className="font-normal">

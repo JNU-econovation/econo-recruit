@@ -12,7 +12,14 @@ export const minimumIntegerDigits = (value: number, digits: number) =>
     useGrouping: false,
   });
 
-export type ReplacerType = "cellPhoneNumber" | "undergradeNumber";
+const scoreNumberReplacer = (value: string) => {
+  const score = value.replace(/[^0-5]/g, "");
+  if (!score) return "";
+  return score[1] ?? score[0];
+};
+  
+
+export type ReplacerType = "cellPhoneNumber" | "undergradeNumber" | "scoreNumber";
 
 export const replacer = (value: string, type: ReplacerType) => {
   switch (type) {
@@ -20,6 +27,8 @@ export const replacer = (value: string, type: ReplacerType) => {
       return cellPhoneNumberReplacer(value);
     case "undergradeNumber":
       return undergradeNumberReplacer(value);
+    case "scoreNumber":
+      return scoreNumberReplacer(value);
     default:
       return value;
   }

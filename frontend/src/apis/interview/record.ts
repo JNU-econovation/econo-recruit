@@ -42,10 +42,8 @@ export const putInterviewRecord = async ({
 }: putInterviewReq) => {
   const { data } = await https.put<string>(
     `/applicants/${applicantId}/records`,
-    null,
-    { params: { contents: record } }
+    { record },
   );
-
   return data;
 };
 
@@ -55,8 +53,7 @@ export const putInterviewUrl = async ({
 }: putInterviewReq) => {
   const { data } = await https.put<string>(
     `/applicants/${applicantId}/records/url`,
-    null,
-    { params: { url } }
+    { url }
   );
 
   return data;

@@ -25,7 +25,7 @@ const ApplicantDetailLeft: FC<ApplicantDetailLeftProps> = ({
 
   return (
     <>
-      <ApplicantResource data={data} />
+      <ApplicantResource data={data} postId={postId} />
       <ApplicantLabel postId={postId} generation={generation} />
       <ApplicantComment
         cardId={cardId}
