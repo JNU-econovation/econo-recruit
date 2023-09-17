@@ -21,8 +21,16 @@ export const MAIN_MENU = [
     subtitle: "신입모집 지원현황",
     href: `/applicant/${CURRENT_GENERATION}`,
   },
-  { title: "SHARE POINT", subtitle: "신입모집 쉐어포인트", href: "#" },
-  { title: "HISTORY", subtitle: "지난 신입모집", href: "#" },
+  {
+    title: "SHARE POINT",
+    subtitle: "신입모집 쉐어포인트",
+    href: "https://ejnu.sharepoint.com/sites/msteams_bbf640/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2Fmsteams_bbf640%2FShared%20Documents%2F2023%EB%85%84%2F1%ED%95%99%EA%B8%B0%2F%EC%8B%A0%EC%9E%85%EB%AA%A8%EC%A7%91&p=true&ga=1",
+  },
+  {
+    title: "HISTORY",
+    subtitle: "지난 신입모집",
+    href: "https://trello.com/b/ioPTFCHN/2023-econovation-1%ED%95%99%EA%B8%B0-%EC%8B%A0%EC%9E%85%EB%AA%A8%EC%A7%91-tf%ED%8C%80",
+  },
 ] as const;
 
 export const MainNavbar = [
@@ -59,14 +67,14 @@ export const MainNavbar = [
     short_title: "쉐어포인트",
     type: "sharepoint",
     target: "_blank",
-    href: "#",
+    href: "https://ejnu.sharepoint.com/sites/msteams_bbf640/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2Fmsteams_bbf640%2FShared%20Documents%2F2023%EB%85%84%2F1%ED%95%99%EA%B8%B0%2F%EC%8B%A0%EC%9E%85%EB%AA%A8%EC%A7%91&p=true&ga=1",
   },
   {
     title: "지난 신입모집",
     short_title: "지난 모집",
     type: "history",
     target: "_blank",
-    href: "#",
+    href: "https://trello.com/b/ioPTFCHN/2023-econovation-1%ED%95%99%EA%B8%B0-%EC%8B%A0%EC%9E%85%EB%AA%A8%EC%A7%91-tf%ED%8C%80",
   },
 ] as const;
 

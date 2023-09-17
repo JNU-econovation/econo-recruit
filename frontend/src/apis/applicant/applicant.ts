@@ -83,13 +83,15 @@ export const getApplicantLabel = async (id: string) => {
 
   try {
     const { data } = await https.get<string[]>(`/applicants/${id}/labels`);
-    return allInterviewers.map((interviewer) => {
-      const label = data.find((label) => label === interviewer.name);
-      return {
-        name: interviewer.name,
-        active: !!label,
-      };
-    });
+    return allInterviewers
+      .map((interviewer) => {
+        const label = data.find((label) => label === interviewer.name);
+        return {
+          name: interviewer.name,
+          active: !!label,
+        };
+      })
+      .sort((a, b) => (a.active === b.active ? 0 : a.active ? -1 : 1));
   } catch (e) {
     return allInterviewers.map((interviewer) => ({
       name: interviewer.name,
