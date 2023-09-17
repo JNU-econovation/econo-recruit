@@ -40,11 +40,19 @@ const APPLICANT = [
   } as ApplicantShortSplitNode,
 ] as ApplicantNode[];
 
-const INTERVIEW_SCORE_KEYWOARD = [
-  { title: "열정/실천력", name: "passion" },
+export type ScoreKeyword = "실천력" | "동아리애착" | "협업" | "기타";
+type ScoreKeywordName = "passion" | "clubFocus" | "collaboration" | "earnestness";
+
+type ScoreKeywordType = {
+  title: ScoreKeyword;
+  name: ScoreKeywordName;
+};
+
+const INTERVIEW_SCORE_KEYWOARD: ScoreKeywordType[] = [
+  { title: "실천력", name: "passion" },
   { title: "협업", name: "collaboration" },
-  { title: "동아리 집중", name: "clubFocus" },
-  { title: "간절함", name: "earnestness" },
+  { title: "동아리애착", name: "clubFocus" },
+  { title: "기타", name: "earnestness" },
 ];
 
 export { INTERVIEW_SCORE_KEYWOARD, APPLICANT };
