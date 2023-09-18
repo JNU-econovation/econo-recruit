@@ -1,7 +1,7 @@
 "use client";
 
 import { getScore, postScore } from "@/src/apis/score";
-import { INTERVIEW_SCORE_KEYWOARD } from "@/src/constants/applicant/26";
+import { INTERVIEW_SCORE_KEYWOARD, ScoreKeyword } from "@/src/constants/applicant/26";
 import { replacer } from "@/src/functions/replacer";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -14,13 +14,11 @@ interface ApplicantInterviewerScoreProps {
 const ApplicantInterviewerScore:FC<ApplicantInterviewerScoreProps> = ({postId}) => {
   const [isShow, setIsShow] = useState(false);
   const [scores, setScores] = useState<Scores>({
-    "열정/실천력": "",
+    "실천력": "",
     "협업": "",
-    "동아리 집중": "",
-    "간절함": "",
+    "동아리애착": "",
+    "기타": "",
   });
-
-  type ScoreKeyword = "열정/실천력" | "협업" | "동아리 집중" | "간절함";
 
   type Scores =  {
     [key in ScoreKeyword]: string;
