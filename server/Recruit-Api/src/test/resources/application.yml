@@ -1,0 +1,16 @@
+spring:
+  h2:
+    console:
+      enabled: true # H2 콘솔 활성화 여부 설정 (필요한 경우)
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+data:
+  init:
+    disabled: true # 테스트 데이터 초기화 여부 설정 (필요한 경우)
+app:
+  auth:
+    tokenSecret: secretkeysecretkeysecretkeysecretkeysecretkeysecretkey
+    tokenExpiry: 2592000000
+swagger:
+  user: user
+  password: password

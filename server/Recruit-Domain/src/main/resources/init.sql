@@ -1,0 +1,13 @@
+INSERT INTO columns (columns_id, created_at, updated_at, navigation_id, next_columns_id, title) VALUES (1,NOW(),NOW(), 1, 2,"개발자");
+INSERT INTO columns (columns_id, created_at, updated_at, navigation_id, next_columns_id, title) VALUES (2,NOW(),NOW(), 1, 3,"디자이너");
+INSERT INTO columns (columns_id, created_at, updated_at, navigation_id, next_columns_id, title) VALUES (3,NOW(),NOW(), 1, null, "기획자");
+INSERT INTO board (board_id, created_at, updated_at, card_id,card_type,column_id,navigation_id,next_board_id) VALUES (1,NOW(),NOW(),null,"INVISIBLE",1,1,null);
+INSERT INTO board (board_id, created_at, updated_at, card_id,card_type,column_id,navigation_id,next_board_id) VALUES (2,NOW(),NOW(),null,"INVISIBLE",2,1,null);
+INSERT INTO board (board_id, created_at, updated_at, card_id,card_type,column_id,navigation_id,next_board_id) VALUES (3,NOW(),NOW(),null,"INVISIBLE",3,1,null);
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (1,NOW(),NOW(),"공통");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (2,NOW(),NOW(),"회장단");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (3,NOW(),NOW(),"운영팀");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (4,NOW(),NOW(),"홍보 및 디자인팀");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (5,NOW(),NOW(),"지원자 대응팀");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (6,NOW(),NOW(),"OT 담당팀");
+INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (7,NOW(),NOW(),"기타 참고");

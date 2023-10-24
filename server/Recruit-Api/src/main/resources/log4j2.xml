@@ -1,0 +1,6 @@
+<Configuration>
+    <Loggers>
+        <Logger name="org.springframework.orm.jpa" level="error"/>
+        <Logger name="com.zaxxer.hikari" level="error"/>
+    </Loggers>
+</Configuration>
