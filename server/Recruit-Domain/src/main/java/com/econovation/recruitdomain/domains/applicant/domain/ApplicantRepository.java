@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.domain;
 
-import com.econovation.recruitdomain.domain.applicant.Applicant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
