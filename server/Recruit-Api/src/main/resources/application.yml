@@ -58,6 +58,8 @@ swagger:
 mail:
   destination:
     url: ${MAIL_DESTINATION_URL:http://localhost:8080}
+econovation:
+  year: ${ECONOVATION_YEAR:27}
 ---
 spring:
   config:

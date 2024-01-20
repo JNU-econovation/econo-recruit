@@ -1,4 +1,4 @@
-package com.econovation.recruitdomain.domain.applicant;
+package com.econovation.recruitdomain.domains.applicant.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;
@@ -22,6 +22,7 @@ public class Applicant extends BaseTimeEntity {
     // 희망분야
     @Column(name = "hope_field")
     private String hopeField;
+
     // 1지망
     @Column(name = "first_priority")
     private String firstPriority;

@@ -92,6 +92,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/login")
                 .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/register")
+                .permitAll()
                 //                .mvcMatchers("/**")
                 //                .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다

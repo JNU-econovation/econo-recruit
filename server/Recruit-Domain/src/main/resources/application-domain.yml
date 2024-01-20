@@ -9,8 +9,12 @@ spring:
     hikari:
       maxLifetime: 580000
       maximum-pool-size: 20
-    password: ${MYSQL_PASSWORD:dltjgus119@@}
+    password: ${MYSQL_PASSWORD:}
     username: ${MYSQL_USERNAME:root}
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017}
+      database: ${MONGODB_DATABASE:applicant}
   jpa:
     hibernate:
       ddl-auto: update
