@@ -7,5 +7,4 @@ import javax.validation.Valid;
 @UseCase
 public interface ApplicantMongoRegisterUseCase {
     void execute(Map<String, Object> blocks);
-
 }

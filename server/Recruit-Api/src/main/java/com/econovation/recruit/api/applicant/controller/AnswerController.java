@@ -33,7 +33,7 @@ public class AnswerController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
   @Operation(summary = "지원자 id로 지원서를 조회합니다.")
-  @GetMapping("/applicants/{applicant-id}")
+  @GetMapping("/applicants/mongo/{applicant-id}")
   public ResponseEntity<Map<String, Object>> getApplicantById(
       @PathVariable(value = "applicant-id") String applicantId) {
     return new ResponseEntity<>(applicantMongoLoadUseCase.execute(applicantId), HttpStatus.OK);
