@@ -1,4 +1,4 @@
-name: Build Api Server
+name: 빌드하기 && 정적분석, testCoverage 측정
 on:
   push:
     branches:
@@ -62,3 +62,21 @@ jobs:
           push: true
           tags: blackbean99/econo-recruit:latest
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: check
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+      - name: SonarCloud scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./server/gradlew sonar --info --stacktrace
