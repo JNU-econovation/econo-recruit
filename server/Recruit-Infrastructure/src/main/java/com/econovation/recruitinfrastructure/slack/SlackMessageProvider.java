@@ -26,6 +26,7 @@ public class SlackMessageProvider {
         try {
             doSend(url, text);
         } catch (Exception ignored) {
+            log.error("SlackMessageProvider.sendMessage failed : ", ignored);
         }
     }
 
@@ -53,7 +54,7 @@ public class SlackMessageProvider {
             throw error;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

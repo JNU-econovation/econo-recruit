@@ -7,7 +7,11 @@ import java.util.Optional;
 
 public class FpUtils {
     public static <T> Either<RecruitCodeException, T> toEither(Optional<T> optional) {
-        return optional.map(Either::<RecruitCodeException, T>right).orElseGet(() -> Either.left(new RecruitCodeException(
-            GlobalErrorCode.INTERNAL_SERVER_ERROR)));
+        return optional.map(Either::<RecruitCodeException, T>right)
+                .orElseGet(
+                        () ->
+                                Either.left(
+                                        new RecruitCodeException(
+                                                GlobalErrorCode.INTERNAL_SERVER_ERROR)));
     }
 }

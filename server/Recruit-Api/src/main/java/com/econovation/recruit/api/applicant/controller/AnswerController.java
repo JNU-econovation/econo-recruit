@@ -21,21 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AnswerController {
-  private final ApplicantMongoRegisterUseCase applicantMongoRegisterUseCase;
-  private final ApplicantMongoLoadUseCase applicantMongoLoadUseCase;
-  @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
-  @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
-  @XssProtected
-  @PostMapping("/register")
-  public ResponseEntity registerMongoApplicant(
-      @RequestBody Map<String, Object> qna) {
-    applicantMongoRegisterUseCase.execute(qna);
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-  @Operation(summary = "지원자 id로 지원서를 조회합니다.")
-  @GetMapping("/applicants/mongo/{applicant-id}")
-  public ResponseEntity<Map<String, Object>> getApplicantById(
-      @PathVariable(value = "applicant-id") String applicantId) {
-    return new ResponseEntity<>(applicantMongoLoadUseCase.execute(applicantId), HttpStatus.OK);
-  }
+    private final ApplicantMongoRegisterUseCase applicantMongoRegisterUseCase;
+    private final ApplicantMongoLoadUseCase applicantMongoLoadUseCase;
+
+    @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
+    @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @XssProtected
+    @PostMapping("/register")
+    public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
+        applicantMongoRegisterUseCase.execute(qna);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
+    @GetMapping("/applicants/mongo/{applicant-id}")
+    public ResponseEntity<Map<String, Object>> getApplicantById(
+            @PathVariable(value = "applicant-id") String applicantId) {
+        return new ResponseEntity<>(applicantMongoLoadUseCase.execute(applicantId), HttpStatus.OK);
+    }
 }

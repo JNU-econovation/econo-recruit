@@ -5,5 +5,5 @@ import java.util.Map;
 
 @UseCase
 public interface ApplicantMongoLoadUseCase {
-  Map<String, Object> execute(String applicantId);
+    Map<String, Object> execute(String applicantId);
 }
