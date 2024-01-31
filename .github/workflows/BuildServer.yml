@@ -10,7 +10,7 @@ on:
 env:
   IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
   ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
-  IMAGE_NAME: ${{ inputs.image-name || econo-recruit }}
+  IMAGE_NAME: ${{ inputs.image-name || 'econo-recruit' }}
 
 jobs:
   build:
