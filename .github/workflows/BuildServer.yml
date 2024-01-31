@@ -22,7 +22,9 @@ jobs:
         java-version: [ 17 ]
     outputs:
       version: ${{ steps.get_version.outputs.BRANCH_NAME }}
-
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Check Out The Repository
         uses: actions/checkout@v3
@@ -57,10 +59,13 @@ jobs:
           # cd ./server
           # ./gradlew :Recruit-Api:build --no-daemon -x test
           # cd ..
+          echo "Logging in to Docker Hub"
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
           echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
           cd ./server &&
           chmod +x ./gradlew &&
-          ./gradlew jib &&
+          ./gradlew jib --warning-mode all &&
           cd ..
 
 
