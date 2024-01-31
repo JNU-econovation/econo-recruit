@@ -46,8 +46,10 @@ jobs:
           # ./gradlew :Recruit-Api:build --no-daemon -x test
           # cd ..
           echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
-          chmod +x ./server/gradlew &&
-          ./server/gradlew jib
+          cd ./server
+          chmod +x ./gradlew &&
+          ./gradlew jib
+          cd ..
 
 
       #- name: Test with Gradle
