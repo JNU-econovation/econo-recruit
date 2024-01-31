@@ -7,6 +7,11 @@ on:
       - backend
       - feature/*
       - hotfix/*
+env:
+  IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
+  ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
+  IMAGE_NAME: ${{ inputs.image-name }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,9 +42,13 @@ jobs:
 
       - name: Execute Gradle build
         run: |
-          cd ./server
-          ./gradlew :Recruit-Api:build --no-daemon -x test
-          cd ..
+          # cd ./server
+          # ./gradlew :Recruit-Api:build --no-daemon -x test
+          # cd ..
+          echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
+          chmod +x ./gradlew &&
+          ./gradlew jib
+
 
       #- name: Test with Gradle
       #  run: SPRING_PROFILES_ACTIVE=[test] ./server/gradlew test
