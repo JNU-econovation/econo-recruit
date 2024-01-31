@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.7'
     id 'com.diffplug.spotless' version '6.11.0'
-    id "org.sonarqube" version "3.5.0.2730"
+    id "org.sonarqube" version "4.4.1.3373"
 }
 
 bootJar.enabled = false
@@ -15,9 +15,9 @@ apply plugin: 'org.sonarqube'
 
 sonarqube {
     properties {
-        property 'sonar.projectKey', 'Econovation_Recruit_Backend'
-        property 'sonar.organization', 'econovation'
-        property 'sonar.host.url', 'https://sonarcloud.io'
+        property "sonar.projectKey", "JNU-econovation_econo-recruit"
+        property "sonar.organization", "jnu-econovation"
+        property "sonar.host.url", "https://sonarcloud.io"
         property 'sonar.sources', 'src'
         property 'sonar.language', 'java'
         property 'sonar.sourceEncoding', 'UTF-8'
