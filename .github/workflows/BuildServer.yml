@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [ 11 ]
+        java-version: [ 17 ]
     outputs:
       version: ${{ steps.get_version.outputs.BRANCH_NAME }}
 
@@ -20,11 +20,11 @@ jobs:
       - name: Check Out The Repository
         uses: actions/checkout@v3
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: 'corretto'
+          distribution: 'adopt'
 
       - name: Get the version
         id: get_version
