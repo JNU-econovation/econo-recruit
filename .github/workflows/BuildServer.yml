@@ -10,7 +10,7 @@ on:
 env:
   IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
   ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
-  IMAGE_NAME: ${{ inputs.image-name }}
+  IMAGE_NAME: ${{ inputs.image-name || econo-recruit }}
 
 jobs:
   build:
@@ -46,8 +46,8 @@ jobs:
           # ./gradlew :Recruit-Api:build --no-daemon -x test
           # cd ..
           echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
-          chmod +x ./gradlew &&
-          ./gradlew jib
+          chmod +x ./server/gradlew &&
+          ./server/gradlew jib
 
 
       #- name: Test with Gradle
@@ -63,13 +63,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # docker build / push to DockerHub Container Registry
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: ./server/Recruit-Api
+      #- name: Build and push
+        #  uses: docker/build-push-action@v3
+        #with:
+          #  context: ./server/Recruit-Api
           # image push 최적화
-          push: true
-          tags: blackbean99/econo-recruit:latest
+          #push: true
+          #tags: blackbean99/econo-recruit:latest
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
