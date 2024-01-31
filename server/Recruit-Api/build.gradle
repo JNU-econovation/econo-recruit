@@ -49,8 +49,8 @@ dependencies {
 
 jib {
     def serverPort = "8080"
-    def dockerUsername = System.getenv("DOCKER_USERNAME")
-    def dockerPassword = System.getenv("DOCKER_PASSWORD")
+    def dockerUsername = System.getenv("DOCKERHUB_USERNAME")
+    def dockerPassword = System.getenv("DOCKERHUB_PASSWORD")
     def imageName = System.getenv("IMAGE_NAME")
     def imageTag = System.getenv("IMAGE_TAG")
 
@@ -59,7 +59,7 @@ jib {
     }
     to {
         image = imageName + ":latest" // docker image
-        tags = ['latest', imageTag] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
+        tags = ['latest'] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
         auth { // docker auth
             username = dockerUsername ? dockerUsername : ""
             password = dockerPassword ? dockerPassword : ""
