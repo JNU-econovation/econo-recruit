@@ -11,6 +11,8 @@ env:
   IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
   ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
   IMAGE_NAME: ${{ inputs.image-name || 'econo-recruit' }}
+# nvironment map contains null values for key(s): MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, JWT_SECRET
+
 
 jobs:
   build:
@@ -37,18 +39,29 @@ jobs:
           RELEASE_VERSION_WITHOUT_V="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
           echo ::set-output name=VERSION::$RELEASE_VERSION_WITHOUT_V 
 
-      - name: Gradle Build
+      - name: Gradle 애드온 준비
         uses: gradle/gradle-build-action@v2
 
-      - name: Execute Gradle build
+      - name: Jib 이미지 빌드 & 푸시
+        id: build-image
+        env:
+          IMAGE_NAME: ${{ inputs.image-name }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           # cd ./server
           # ./gradlew :Recruit-Api:build --no-daemon -x test
           # cd ..
           echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
-          cd ./server
+          cd ./server &&
           chmod +x ./gradlew &&
-          ./gradlew jib
+          ./gradlew jib &&
           cd ..
 
 
