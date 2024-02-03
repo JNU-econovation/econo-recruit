@@ -29,11 +29,16 @@ jobs:
       - name: Check Out The Repository
         uses: actions/checkout@v3
 
-      - name: Set up Java 17
+      #- name: Set up Java 17
+        #  uses: actions/setup-java@v3
+        #with:
+        #  java-version: ${{ matrix.java-version }}
+ #         distribution: 'adopt'
+      - name: JDK17 준비하기
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.java-version }}
-          distribution: 'adopt'
+          java-version: '17'
+          distribution: 'temurin'
 
       - name: Get the version
         id: get_version
