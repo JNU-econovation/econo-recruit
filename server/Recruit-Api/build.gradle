@@ -60,13 +60,10 @@ jib {
     to {
         image = imageName + ":latest" // docker image
         tags = ['latest'] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
-        auth { // docker auth
-            // print
-            print("dockerUsername : " + dockerUsername)
-            print("dockerPassword : " + dockerPassword)
-            username = dockerUsername ? dockerUsername : ""
-            password = dockerPassword ? dockerPassword : ""
-        }
+//        auth { // docker auth
+//            username = dockerUsername ? dockerUsername : ""
+//            password = dockerPassword ? dockerPassword : ""
+//        }
     }
     container {
         jvmFlags = [
