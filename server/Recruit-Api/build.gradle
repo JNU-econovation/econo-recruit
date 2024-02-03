@@ -58,7 +58,7 @@ jib {
         image = 'amazoncorretto:17-alpine3.17-jdk'
     }
     to {
-        image = imageName // docker image
+        image = dockerUsername + "/" + imageName
         tags = ['latest'] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
         auth { // docker auth
             username = dockerUsername ? dockerUsername : ""
