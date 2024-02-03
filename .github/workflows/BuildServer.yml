@@ -49,8 +49,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Login to Docker Hub
-          run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      
       - name: Jib 이미지 빌드 & 푸시
         id: build-image
         env:
@@ -77,8 +76,8 @@ jobs:
       #- name: Test with Gradle
       #  run: SPRING_PROFILES_ACTIVE=[test] ./server/gradlew test
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      #- name: Set up Docker Buildx
+        #  uses: docker/setup-buildx-action@v2
 
       # docker build / push to DockerHub Container Registry
       #- name: Build and push
