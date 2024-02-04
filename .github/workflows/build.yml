@@ -1,17 +1,25 @@
 name: 빌드하기 && 정적분석, testCoverage 측정
 on:
-  push:
-    branches:
-      - develop
-      - release/*
-      - backend
-      - feature/*
-      - hotfix/*
+  workflow_call:
+    inputs:
+      image-name:
+        required: true
+        type: string
+      image-tag:
+        required: true
+        type: string
+      spring-profile-active:
+        required: true
+        type: string
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
 env:
   IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
   ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
   IMAGE_NAME: ${{ inputs.image-name || 'econo-recruit' }}
-# nvironment map contains null values for key(s): MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, JWT_SECRET
 
 
 jobs:
@@ -29,11 +37,6 @@ jobs:
       - name: Check Out The Repository
         uses: actions/checkout@v3
 
-      #- name: Set up Java 17
-        #  uses: actions/setup-java@v3
-        #with:
-        #  java-version: ${{ matrix.java-version }}
- #         distribution: 'adopt'
       - name: JDK17 준비하기
         uses: actions/setup-java@v3
         with:
@@ -67,57 +70,12 @@ jobs:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          # cd ./server
-          # ./gradlew :Recruit-Api:build --no-daemon -x test
-          # cd ..
           echo "DOCKERHUB USERNAME : $DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD : $DOCKERHUB_PASSWORD"
           echo "IMAGE_TAG=$IMAGE_TAG, ACTIVE_PROFILE=$ACTIVE_PROFILE, IMAGE_NAME=$IMAGE_NAME" &&
           cd ./server &&
           chmod +x ./gradlew &&
           ./gradlew jib --warning-mode all -Djib.useOnlyProjectCache=true &&
           cd ..
-
-
-      #- name: Test with Gradle
-      #  run: SPRING_PROFILES_ACTIVE=[test] ./server/gradlew test
-
-      #- name: Set up Docker Buildx
-        #  uses: docker/setup-buildx-action@v2
-
-      # docker build / push to DockerHub Container Registry
-      #- name: Build and push
-        #  uses: docker/build-push-action@v3
-        #with:
-          #  context: ./server/Recruit-Api
-          # image push 최적화
-          #push: true
-          #tags: blackbean99/econo-recruit:latest
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: SonarCloud scan
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          cd ./server
-          ./gradlew sonar --info --stacktrace
-          cd ..

@@ -1,0 +1,75 @@
+name: Deploy
+#on:
+#  push:
+#    branches:
+#      - master
+#      - develop
+#  pull_request:
+#    branches:
+#      - develop
+#      - release
+jobs:
+  deploy-production:
+    name: Deploy(Production)
+    runs-on: ubuntu-latest
+    environment: Recruit-Production
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: create env file
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_VARS }}" >> .env
+      - name: create remote directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: mkdir -p ~/srv/ubuntu
+
+      - name: copy source via ssh key
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          remote_path: ~/srv/ubuntu/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.KEY }}
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          port: 10022 # SSH 포트를 여기에 지정하세요.
+          script_start: |
+            cd ~/econo-recruit/server # 원하는 경로로 변경하세요.
+          script: |
+            echo "start deploy: restart server econovation-server"
+            sudo docker-compose
+            cat .env
+            sudo sh deploy.sh
+      - name: Notify on success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_COLOR: '#703CDE'
+          SLACK_USERNAME: 서현이의 배포요정
+#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: "서버 Build succeeded 🎉 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"
+      - name: Notify on failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_COLOR: '#F33D63'
+          SLACK_USERNAME: 서현이의 배포요정
+#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: "서버 Build failed 🥲 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"

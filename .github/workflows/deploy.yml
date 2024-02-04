@@ -1,75 +1,108 @@
-name: Deploy
+name: 서비스 배포
+
 on:
-  push:
-    branches:
-      - master
-      - develop
-  pull_request:
-    branches:
-      - develop
-      - release
+  workflow_call:
+    secrets:
+      SSH_HOST:
+        required: true
+      SSH_USERNAME:
+        required: true
+      SSH_KEY:
+        required: true
+      SSH_PORT:
+        required: true
+      SLACK_WEBHOOK_URL:
+        required: true
+    inputs:
+      environment:
+        required: true
+        type: string
+      image-tag:
+        required: true
+        type: string
+      spring-profile-active:
+        required: true
+        type: string
+      image-name:
+        required: true
+        type: string
+      service-name:
+        required: true
+        type: string
+
+env:
+  IMAGE_TAG: 'latest'
+  ACTIVE_PROFILE: ${{ inputs.spring-profile-active || 'local' }}
+  ENVIRONMENT: ${{ inputs.environment || 'local' }}
+
 jobs:
-  deploy-production:
-    name: Deploy(Production)
-    runs-on: ubuntu-latest
-    environment: Recruit-Production
+  deploy:
+    runs-on: [ ubuntu-latest ]
+    name: 서비스 배포하기
+    environment: ${{ inputs.environment }}
+
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
-      - name: checkout
+      - name: GitHub 에서 레포 받아오기
         uses: actions/checkout@v3
 
-      - name: create env file
-        run: |
-          touch .env
-          echo "${{ secrets.ENV_VARS }}" >> .env
-      - name: create remote directory
+      - name: 배포 스크립트 실행
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: mkdir -p ~/srv/ubuntu
-
-      - name: copy source via ssh key
-        uses: burnett01/rsync-deployments@4.1
-        with:
-          switches: -avzr --delete
-          remote_path: ~/srv/ubuntu/
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.KEY }}
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          port: 10022 # SSH 포트를 여기에 지정하세요.
-          script_start: |
-            cd ~/econo-recruit/server # 원하는 경로로 변경하세요.
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
-            echo "start deploy: restart server econovation-server"
-            sudo docker-compose
-            cat .env
-            sudo sh deploy.sh
-      - name: Notify on success
-        if: ${{ success() }}
-        uses: rtCamp/action-slack-notify@v2
+            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            
+            # Remove origin was container 
+            sudo docker rm -f quokka-prod-was
+            
+            # Pull and Deploy new built docker image with new tag
+            sudo docker pull ${{ inputs.image-name }}:latest
+            sudo docker-compose up -d
+            
+            # Remove all unused docker image
+            sudo docker image prune -a -f
+
+      - name: 배포 완료 슬랙 알림 보내기
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: author, workflowRun, pullRequest
+          custom_payload: |
+            {
+              attachments: [{
+                color: '#59f764',
+                title: '서버 배포 알림',
+                text: `quokka-was 서버 배포 성공!`,
+                fields: [
+                  {
+                    title: '배포 환경',
+                    value: `${process.env.ENVIRONMENT}`,
+                    short: true,
+                  },
+                  {
+                    title: '배포자',
+                    value: `${process.env.AS_AUTHOR}`,
+                    short: true,
+                  },
+                  {
+                    title: '워크플로 링크',
+                    value: `${process.env.AS_WORKFLOW_RUN}`,
+                    short: true,
+                  },
+                  {
+                    title: 'PR 링크',
+                    value: `${process.env.AS_PULL_REQUEST}`,
+                    short: true,
+                  }
+                ]
+              }]
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-          SLACK_COLOR: '#703CDE'
-          SLACK_USERNAME: 서현이의 배포요정
-#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-          SLACK_TITLE: Message
-          SLACK_MESSAGE: "서버 Build succeeded 🎉 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"
-      - name: Notify on failure
-        if: ${{ failure() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-          SLACK_COLOR: '#F33D63'
-          SLACK_USERNAME: 서현이의 배포요정
-#          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-          SLACK_TITLE: Message
-          SLACK_MESSAGE: "서버 Build failed 🥲 \n\n *CommitMessage* \n ${{ join(github.event.commits.*.message, '\n') }}"
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

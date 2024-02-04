@@ -1,0 +1,101 @@
+name: 배포 워크플로우
+on:
+  push:
+    branches:
+      - release
+      - backend
+      - feature*
+
+env:
+  SPRING_PROFILES_ACTIVE: prod
+  ENVIRONMENT: production
+  IMAGE_NAME: blackbean99/econo-recruit
+  SERVICE_NAME: Econovation_Recruit_Server
+
+concurrency:
+  group: production
+
+
+jobs:
+  prepare-environments:
+    name: 환경 변수 설정
+    runs-on: ubuntu-latest
+    outputs:
+      image-name: ${{ steps.setup-env.outputs.image-name }}
+      image-tag: ${{ steps.setup-env.outputs.image-tag }}
+      spring-profile-active: ${{ steps.setup-env.outputs.spring-profile-active }}
+      environment: ${{ steps.setup-env.outputs.environment }}
+      service-name: ${{ steps.setup-env.outputs.service-name }}
+
+    steps:
+      - name: Github에서 레포 받아오기
+        uses: actions/checkout@v3
+
+      - name: 환경 변수 설정
+        id: setup-env
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        run: |
+          echo "image-name=$IMAGE_NAME" >> $GITHUB_OUTPUT
+          echo "image-tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "spring-profile-active=$SPRING_PROFILES_ACTIVE" >> $GITHUB_OUTPUT
+          echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "service-name=$SERVICE_NAME" >> $GITHUB_OUTPUT
+          echo "::set-env name=DOCKER_USERNAME::${{ secrets.DOCKERHUB_USERNAME }}"
+          echo "::set-env name=DOCKER_PASSWORD::${{ secrets.DOCKERHUB_PASSWORD }}"
+          echo "::set-env name=MYSQL_HOST::${{ secrets.MYSQL_HOST }}"
+          echo "::set-env name=MYSQL_PORT::${{ secrets.MYSQL_PORT }}"
+          echo "::set-env name=MYSQL_DATABASE::${{ secrets.MYSQL_DATABASE }}"
+          echo "::set-env name=MYSQL_USERNAME::${{ secrets.MYSQL_USERNAME }}"
+          echo "::set-env name=MYSQL_PASSWORD::${{ secrets.MYSQL_PASSWORD }}"
+          echo "::set-env name=JWT_SECRET::${{ secrets.JWT_SECRET }}"
+
+  call-ci-check-workflow:
+    if: github.event_name == 'push'
+    name: CI_CHECK(spotless, sonar) 정적분석
+    uses: ./.github/workflows/ci_check.yml
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+  call-build-workflow:
+    if: github.event_name == 'push'
+    needs: [ prepare-environments ]
+    name: 서비스 빌드
+    uses: ./.github/workflows/build.yml
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      image-tag: ${{ needs.prepare-environments.outputs.image-tag }}
+      spring-profile-active: ${{ needs.prepare-environments.outputs.spring-profile-active }}
+      image-name: ${{ needs.prepare-environments.outputs.image-name }}
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+  call-deploy-workflow:
+    if: github.event_name == 'push'
+    needs: [ prepare-environments, call-build-workflow ]
+    name: 서비스 배포
+    uses: ./.github/workflows/deploy.yml
+    permissions:
+      id-token: write
+      contents: read
+    secrets:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    with:
+      image-tag: ${{ needs.prepare-environments.outputs.image-tag }}
+      spring-profile-active: ${{ needs.prepare-environments.outputs.spring-profile-active }}
+      environment: ${{ needs.prepare-environments.outputs.environment }}
+      image-name: ${{ needs.prepare-environments.outputs.image-name }}
+      service-name: ${{ needs.prepare-environments.outputs.service-name }}
+
