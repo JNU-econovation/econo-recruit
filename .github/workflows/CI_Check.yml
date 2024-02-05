@@ -2,9 +2,9 @@ name: 'spotless & Sonar analyze'
 
 on:
   workflow_call:
-    secrets:
-      SONAR_TOKEN:
-        required: true
+    # secrets:
+    # SONAR_TOKEN:
+    #   required: true
 
 jobs:
   spotless-sonar:
