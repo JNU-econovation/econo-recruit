@@ -36,7 +36,8 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         run: |
           echo "image-name=$IMAGE_NAME" >> $GITHUB_OUTPUT
-          echo "image-tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "image-tag=latest" >> $GITHUB_OUTPUT
+          # $(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "spring-profile-active=$SPRING_PROFILES_ACTIVE" >> $GITHUB_OUTPUT
           echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
           echo "service-name=$SERVICE_NAME" >> $GITHUB_OUTPUT
@@ -48,7 +49,7 @@ jobs:
           echo "::set-env name=MYSQL_USERNAME::${{ secrets.MYSQL_USERNAME }}"
           echo "::set-env name=MYSQL_PASSWORD::${{ secrets.MYSQL_PASSWORD }}"
           echo "::set-env name=JWT_SECRET::${{ secrets.JWT_SECRET }}"
-
+          echo "::set-env name=SONAR_TOKEN::${{ secrets.SONAR_TOKEN }}"
   call-ci-check-workflow:
     if: github.event_name == 'push'
     name: CI_CHECK(spotless, sonar) 정적분석
@@ -70,7 +71,8 @@ jobs:
       id-token: write
       contents: read
     with:
-      image-tag: ${{ needs.prepare-environments.outputs.image-tag }}
+      image-tag: 'latest'
+      # ${{ needs.prepare-environments.outputs.image-tag }}
       spring-profile-active: ${{ needs.prepare-environments.outputs.spring-profile-active }}
       image-name: ${{ needs.prepare-environments.outputs.image-name }}
     secrets:
