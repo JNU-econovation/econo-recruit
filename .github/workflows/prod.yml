@@ -57,10 +57,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    #with:
-      #  secrets:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    with:
+      secrets:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   call-build-workflow:
     if: github.event_name == 'push'
