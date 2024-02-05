@@ -76,6 +76,6 @@ jobs:
           chmod +x ./gradlew &&
           ./gradlew jib --warning-mode all &&
           cd ..
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
+        # key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        # restore-keys: |
+# ${{ runner.os }}-gradle-
