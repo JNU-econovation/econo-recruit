@@ -60,7 +60,7 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             
             # Remove origin was container 
-            sudo docker rm -f quokka-prod-was
+            sudo docker rm -f Econovation_Recruit_Server
             
             # Pull and Deploy new built docker image with new tag
             sudo docker pull ${{ inputs.image-name }}:latest
@@ -79,7 +79,7 @@ jobs:
               attachments: [{
                 color: '#59f764',
                 title: '서버 배포 알림',
-                text: `quokka-was 서버 배포 성공!`,
+                text: `Econo-Recruit 서버 배포 성공!`,
                 fields: [
                   {
                     title: '배포 환경',
