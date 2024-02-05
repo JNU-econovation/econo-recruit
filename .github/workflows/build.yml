@@ -12,9 +12,9 @@ on:
         required: true
         type: string
     secrets:
-      DOCKER_USERNAME:
+      DOCKERHUB_USERNAME:
         required: true
-      DOCKER_PASSWORD:
+      DOCKERHUB_PASSWORD:
         required: true
 env:
   IMAGE_TAG: ${{ inputs.image-tag || 'latest' }}
