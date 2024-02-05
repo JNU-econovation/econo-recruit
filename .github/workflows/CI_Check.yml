@@ -35,6 +35,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd ./server
-          ./gradlew sonar --info --stacktrace
+          ./gradlew sonar --info --stacktrace --warning-mode all
           cd ..
 
