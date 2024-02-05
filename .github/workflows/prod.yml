@@ -52,7 +52,7 @@ jobs:
   call-ci-check-workflow:
     if: github.event_name == 'push'
     name: CI_CHECK(spotless, sonar) 정적분석
-    uses: ./.github/workflows/CI_CHECK.yml
+    uses: ./.github/workflows/CI_Check.yml
     permissions:
       id-token: write
       contents: read
