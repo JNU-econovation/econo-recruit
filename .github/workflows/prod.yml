@@ -6,7 +6,7 @@ on:
       - backend
       - feature/**
 env:
-  SPRING_PROFILES_ACTIVE: prod
+  SPRING_PROFILES_ACTIVE: local
   ENVIRONMENT: production
   IMAGE_NAME: blackbean99/econo-recruit
   SERVICE_NAME: Econovation_Recruit_Server

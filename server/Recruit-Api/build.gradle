@@ -67,7 +67,7 @@ jib {
     }
     container {
         jvmFlags = [
-                '-Dspring.profiles.active=prod',
+                '-Dspring.profiles.active=local',
                 '-Dserver.port=' + serverPort,
                 '-Xms2G', '-Xmx2G',
                 '-XX:+UseG1GC',
