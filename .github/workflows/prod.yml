@@ -40,8 +40,8 @@ jobs:
           echo "spring-profile-active=$SPRING_PROFILES_ACTIVE" >> $GITHUB_OUTPUT
           echo "environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
           echo "service-name=$SERVICE_NAME" >> $GITHUB_OUTPUT
-          echo "::set-env name=DOCKER_USERNAME::${{ secrets.DOCKERHUB_USERNAME }}"
-          echo "::set-env name=DOCKER_PASSWORD::${{ secrets.DOCKERHUB_PASSWORD }}"
+          echo "::set-env name=DOCKERHUB_USERNAME::${{ secrets.DOCKERHUB_USERNAME }}"
+          echo "::set-env name=DOCKERHUB_PASSWORD::${{ secrets.DOCKERHUB_PASSWORD }}"
           echo "::set-env name=MYSQL_HOST::${{ secrets.MYSQL_HOST }}"
           echo "::set-env name=MYSQL_PORT::${{ secrets.MYSQL_PORT }}"
           echo "::set-env name=MYSQL_DATABASE::${{ secrets.MYSQL_DATABASE }}"
