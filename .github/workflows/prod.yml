@@ -50,6 +50,7 @@ jobs:
           echo "::set-env name=MYSQL_PASSWORD::${{ secrets.MYSQL_PASSWORD }}"
           echo "::set-env name=JWT_SECRET::${{ secrets.JWT_SECRET }}"
           echo "::set-env name=SONAR_TOKEN::${{ secrets.SONAR_TOKEN }}"
+  
   call-ci-check-workflow:
     if: github.event_name == 'push'
     name: CI_CHECK(spotless, sonar) 정적분석
