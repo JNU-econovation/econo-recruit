@@ -4,7 +4,6 @@ on:
     branches:
       - release
       - backend
-      - feature/**
 env:
   SPRING_PROFILES_ACTIVE: local
   ENVIRONMENT: production
