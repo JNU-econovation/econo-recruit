@@ -58,17 +58,18 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ./econo-recruit/server
-            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            sudo -S docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             
             # Remove origin was container 
-            sudo docker rm -f Econovation_Recruit_Server
-            
+            sudo -S docker rm -f Econovation_Recruit_Server
+           
+            cat ${{ inputs.image-name }}
             # Pull and Deploy new built docker image with new tag
-            sudo docker pull ${{ inputs.image-name }}:latest
-            sudo docker-compose up -d
+            sudo -S docker pull ${{ inputs.image-name }}:latest
+            sudo -S docker-compose up -d
             
             # Remove all unused docker image
-            sudo docker image prune -a -f
+            sudo -S docker image prune -a -f
 
       - name: 배포 완료 슬랙 알림 보내기
         uses: 8398a7/action-slack@v3
