@@ -31,7 +31,11 @@ login:
       url: ${LOGIN_FAILURE_URL:http://localhost:8080/loginFailure}
 acl:
   whiteList: ${ACL_WHITE_LIST:localhost}
-
+axon:
+  serializer:
+    general: xstream
+  axonserver:
+    servers: ${AXON_SERVERS:127.0.0.1:8124}
 springdoc:
   version: v1
   default-produces-media-type: application/json

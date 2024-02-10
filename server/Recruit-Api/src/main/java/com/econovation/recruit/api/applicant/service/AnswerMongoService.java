@@ -5,7 +5,9 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantMongoRegisterUseCa
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
 import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class AnswerMongoService
         implements ApplicantMongoRegisterUseCase, ApplicantMongoLoadUseCase {
     private final MongoAnswerAdaptor answerAdaptor;
+    private final CommandGateway commandGateway;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -22,6 +25,18 @@ public class AnswerMongoService
     public void execute(Map<String, Object> qna) {
         MongoAnswer answer = MongoAnswer.builder().qna(qna).year(year).build();
         answerAdaptor.save(answer);
+    }
+
+    //    public CompletableFuture<String> createApplicant(Map<String, Object> qna) {
+    //        String id = generateUniqueId();
+    //
+    //        CreateAnswerCommand command = new CreateAnswerCommand(id, year, qna);
+    //
+    //        return commandGateway.send(command);
+    //    }
+
+    private String generateUniqueId() {
+        return UUID.randomUUID().toString();
     }
 
     @Override

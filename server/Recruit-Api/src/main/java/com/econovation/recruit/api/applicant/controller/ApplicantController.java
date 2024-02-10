@@ -10,6 +10,7 @@ import com.econovation.recruit.api.applicant.usecase.QuestionRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
+import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
@@ -81,6 +82,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
+    @TimeTrace
     @GetMapping("/applicants/{applicant-id}")
     public ResponseEntity<Map<String, String>> getApplicantById(
             @PathVariable(value = "applicant-id") String applicantId) {

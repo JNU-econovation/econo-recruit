@@ -8,7 +8,7 @@ import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Answer;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
-import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
+import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.applicant.exception.AnswerEmptyFieldException;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
 import com.econovation.recruitdomain.domains.applicant.exception.QuestionNotFoundException;

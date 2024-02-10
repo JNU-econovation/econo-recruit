@@ -3,18 +3,16 @@ services:
   redis:
     image: "redis:alpine"
     network_mode: "host"
-  database:
-    image: "mysql:8.0.20"
-    container_name: database
-    env_file:
-      - .env
-    volumes:
-      - ~/docker/mysql:/var/lib/mysql
-    network_mode: "host"
-    environment:
-      - TZ=Asia/Seoul
+  axon-server:
+    image: axoniq/axonserver:4.6.11
+    container_name: axon-server
+    restart: unless-stopped
+    ports:
+      - "8024:8024"
+      - "8124:8124"
   backend:
-    image: blackbean99/econo-recruit:0.0.1
+    image: blackbean99/econo-recruit:latest
+    restart: unless-stopped
     container_name: backend
     env_file:
       - .env
@@ -22,5 +20,5 @@ services:
     environment:
       - TZ=Asia/Seoul
     depends_on:
-        - database
+        - axon-server
         - redis

@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruit.api.user.helper.NcpMailHelper;
-import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
+import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
