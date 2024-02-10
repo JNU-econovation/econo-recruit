@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.7'
     id 'com.diffplug.spotless' version '6.11.0'
-    id "org.sonarqube" version "3.5.0.2730"
+    id "org.sonarqube" version "4.4.1.3373"
 }
 
 bootJar.enabled = false
@@ -15,9 +15,9 @@ apply plugin: 'org.sonarqube'
 
 sonarqube {
     properties {
-        property 'sonar.projectKey', 'Econovation_Recruit_Backend'
-        property 'sonar.organization', 'econovation'
-        property 'sonar.host.url', 'https://sonarcloud.io'
+        property "sonar.projectKey", "JNU-econovation_econo-recruit"
+        property "sonar.organization", "jnu-econovation"
+        property "sonar.host.url", "https://sonarcloud.io"
         property 'sonar.sources', 'src'
         property 'sonar.language', 'java'
         property 'sonar.sourceEncoding', 'UTF-8'
@@ -31,7 +31,7 @@ sonarqube {
 subprojects {
     group = 'com.econovation'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '11'
+    sourceCompatibility = '17'
 
     apply plugin: 'java'
     // build.gradle에서 api() 를 사용하려면 java-library 사용
@@ -39,8 +39,9 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     // spring boot dependency를 사용하여 사용중인 부트 버전에서 자동으로 의존성을 가져온다.
     apply plugin: 'io.spring.dependency-management'
-
+    apply plugin: 'org.sonarqube'
     apply plugin: 'jacoco'
+
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
@@ -91,8 +92,6 @@ subprojects {
         }
     }
 
-
-
     repositories {
         mavenCentral()
     }
@@ -105,6 +104,8 @@ subprojects {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
+        // vavr
+        implementation 'io.vavr:vavr:0.10.3'
     }
 
     test {

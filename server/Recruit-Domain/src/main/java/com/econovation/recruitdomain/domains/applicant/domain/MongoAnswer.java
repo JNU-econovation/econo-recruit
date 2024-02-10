@@ -19,7 +19,7 @@ public class MongoAnswer {
             generator = "com.econovation.recruitdomain.domains.idGenerator.SnowFlakeGenerator")
     private String id;
 
-    @Field("name")
+    @Field("year")
     private Integer year;
 
     // shemaless
