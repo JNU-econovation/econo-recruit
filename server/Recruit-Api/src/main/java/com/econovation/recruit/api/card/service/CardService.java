@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.card.service;
 
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
 import com.econovation.recruit.api.card.usecase.CardLoadUseCase;
@@ -23,7 +23,6 @@ import com.econovation.recruitdomain.domains.label.domain.Label;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CardRecordPort;
 import com.econovation.recruitdomain.out.LabelLoadPort;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     private final BoardRegisterUseCase boardRegisterUseCase;
     private final BoardLoadUseCase boardLoadUseCase;
     private final ColumnsUseCase columnsUseCase;
-    private final AnswerLoadUseCase answerLoadPort;
+    private final ApplicantQueryUseCase applicantQueryUseCase;
     private final LabelLoadPort labelLoadPort;
 
     @Override
@@ -69,8 +68,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         List<BoardCardResponseDto> result = new LinkedList<>();
 
         // key : applicantId
-        Map<String, HashMap<String, String>> answers =
-                answerLoadPort.findAllApplicantVo(List.of("field1", "field2", "major"));
+        Map<String, Map<String, Object>> answers =
+                applicantQueryUseCase.findAllApplicantVo(List.of("field1", "field2", "major"));
 
         List<Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
@@ -91,11 +90,11 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                                 card, board, firstPriority, secondPriority, "", false));
                 continue;
             }
-            Map<String, String> applicantAnswers = answers.get(card.getApplicantId());
+            Map<String, Object> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
-                major = applicantAnswers.getOrDefault("major", "");
-                firstPriority = applicantAnswers.getOrDefault("field1", "");
-                secondPriority = applicantAnswers.getOrDefault("field2", "");
+                major = applicantAnswers.getOrDefault("major", "").toString();
+                firstPriority = applicantAnswers.getOrDefault("field1", "").toString();
+                secondPriority = applicantAnswers.getOrDefault("field2", "").toString();
             } else {
                 firstPriority = "";
                 secondPriority = "";

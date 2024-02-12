@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.service;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLICANT_FIELD;
 
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
@@ -9,7 +10,6 @@ import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitdomain.domains.timetable.exception.TimeTableNotFoundException;
 import com.econovation.recruitdomain.out.TimeTableLoadPort;
 import com.econovation.recruitdomain.out.TimeTableRecordPort;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoadUseCase {
     private final TimeTableLoadPort timeTableLoadPort;
     private final TimeTableRecordPort timeTableRecordPort;
-    private final AnswerService answerService;
+    private final ApplicantQueryUseCase applicantQueryUseCase;
 
     @Override
     @Transactional(readOnly = true)
@@ -46,7 +46,7 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
                         entry -> {
                             return Map.of(entry.getKey(), entry.getValue());
                         })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -55,9 +55,7 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
         List<TimeTable> timeTableByApplicantId =
                 timeTableLoadPort.getTimeTableByApplicantId(applicantId);
         if (!timeTableByApplicantId.isEmpty()) {
-            return timeTableByApplicantId.stream()
-                    .map(TimeTable::getStartTime)
-                    .collect(Collectors.toList());
+            return timeTableByApplicantId.stream().map(TimeTable::getStartTime).toList();
         }
         throw TimeTableNotFoundException.EXCEPTION;
     }
@@ -66,50 +64,26 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
     @Transactional(readOnly = true)
     public Map<Integer, List<String>> findAllSimpleApplicantWithTimeTable() {
         List<TimeTable> timeTables = timeTableLoadPort.findAll();
-        Map<String, HashMap<String, String>> allApplicantVo =
-                answerService.findAllApplicantVo(TIMETABLE_APPLICANT_FIELD);
+        Map<String, Map<String, Object>> allApplicantVo =
+                applicantQueryUseCase.findAllApplicantVo(TIMETABLE_APPLICANT_FIELD);
         // SimpleApplicant : {applicantId : {name(이름), field(지원분야) }
-        Map<Integer, List<String>> collect =
-                timeTables.stream()
-                        .collect(
-                                Collectors.groupingBy(
-                                        TimeTable::getStartTime,
-                                        Collectors.mapping(
-                                                timeTable -> {
-                                                    return "["
-                                                            + allApplicantVo
-                                                                    .get(timeTable.getApplicantId())
-                                                                    .get("field")
-                                                            + "] : "
-                                                            + allApplicantVo
-                                                                    .get(timeTable.getApplicantId())
-                                                                    .get("name");
-                                                },
-                                                Collectors.toList())));
-        return collect;
+        return timeTables.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                TimeTable::getStartTime,
+                                Collectors.mapping(
+                                        timeTable -> {
+                                            return "["
+                                                    + allApplicantVo
+                                                            .get(timeTable.getApplicantId())
+                                                            .get("field")
+                                                    + "] : "
+                                                    + allApplicantVo
+                                                            .get(timeTable.getApplicantId())
+                                                            .get("name");
+                                        },
+                                        Collectors.toList())));
     }
-
-    /*    private List<TimeTableInsertDto> toList(HashMap<String, Object> param) {
-        List<TimeTableInsertDto> chunkTimeTable = new LinkedList<>();
-        Gson gson = new Gson();
-        // JsonParser Deprecated -> JsonParser static import 변경
-        JsonElement startTime = JsonParser.parseString(param.get("startTime").toString());
-        JsonElement endTime = JsonParser.parseString(param.get("endTime").toString());
-        JsonElement day = JsonParser.parseString(param.get("day").toString());
-        // JsonElement -> List<String>으로 파싱
-
-        List<String> startTimes =
-                gson.fromJson(startTime, (new TypeToken<List<String>>() {}).getType());
-        List<String> endTimes =
-                gson.fromJson(endTime, (new TypeToken<List<String>>() {}).getType());
-        List<String> days = gson.fromJson(day, (new TypeToken<List<String>>() {}).getType());
-
-        for (int i = 0; i < startTimes.size(); i++) {
-            chunkTimeTable.add(
-                    new TimeTableInsertDto(startTimes.get(i)));
-        }
-        return chunkTimeTable;
-    }*/
 
     @Override
     public void execute(String applicantId, List<Integer> startTimes) {

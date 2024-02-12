@@ -2,7 +2,7 @@ package com.econovation.recruit.api.card.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.card.docs.CreateBoardExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateColumnsExceptionDocs;
 import com.econovation.recruit.api.card.docs.CreateNavigationExceptionDocs;
@@ -54,7 +54,7 @@ public class BoardRestController {
     private final CardRegisterUseCase cardRegisterUseCase;
     private final CardLoadUseCase cardLoadUseCase;
     private final NavigationUseCase navigationUseCase;
-    private final AnswerLoadUseCase answerLoadUseCase;
+    private final ApplicantQueryUseCase answerQueryUseCase;
     //    ---------- Navigation ----------
     @Operation(summary = "네비게이션 바 생성", description = "카드 생성 전에 네비게이션 바를 생성하셔야 합니다.")
     @ApiErrorExceptionsExample(value = CreateNavigationExceptionDocs.class)
@@ -174,10 +174,10 @@ public class BoardRestController {
 
     @Operation(summary = "지원서 조회(원하는 field) 만 조회", description = "원하는 field만(리스트) 조회합니다.")
     @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
-    @PostMapping("/boards")
-    public ResponseEntity<List<Map<String, String>>> getBoardByNavigationId(
-            @RequestBody List<String> fields) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(fields), HttpStatus.OK);
+    @PostMapping("/page/{page}/boards")
+    public ResponseEntity<List<Map<String, Object>>> getBoardByNavigationId(
+            @PathVariable(name = "page") Integer page, @RequestBody List<String> fields) {
+        return new ResponseEntity<>(answerQueryUseCase.execute(fields, page), HttpStatus.OK);
     }
 
     @Operation(
@@ -185,10 +185,10 @@ public class BoardRestController {
             description = "특정 지원자에 대하여 원하는 field만(리스트) 조회합니다.")
     @ApiErrorExceptionsExample(FindBoardExceptionDocs.class)
     @PostMapping("/boards/{applicant-id}")
-    public ResponseEntity<Map<String, String>> getBoardByNavigationId(
+    public ResponseEntity<Map<String, Object>> getBoardByNavigationId(
             @PathVariable(name = "applicant-id") String applicantId,
             @RequestBody List<String> fields) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId, fields), HttpStatus.OK);
+        return new ResponseEntity<>(answerQueryUseCase.execute(applicantId, fields), HttpStatus.OK);
     }
 
     @Operation(summary = "카드 삭제", description = "업무 카드를 삭제합니다(지원서 삭제는 불가합니다.)")

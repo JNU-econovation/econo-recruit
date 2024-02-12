@@ -5,7 +5,6 @@ import com.econovation.recruitdomain.domains.applicant.adaptor.QuestionAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.Question;
 import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +41,7 @@ public class QuestionService implements QuestionRegisterUseCase {
                                                 .name(question.getName())
                                                 .parentId(question.getParentId())
                                                 .build())
-                        .collect(Collectors.toList());
+                        .toList();
         questionAdaptor.saveAll(filteredQuestions);
     }
 }

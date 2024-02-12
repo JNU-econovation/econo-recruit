@@ -19,28 +19,32 @@ spring:
     hibernate:
       ddl-auto: update
     generate-ddl: true
-    show-sql: ${SHOW_SQL:true}
+    show-sql: ${SHOW_SQL:false}
     properties:
       hibernate:
 #        format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
-
     sql:
       init:
         mode: always
         continue-on-error: false
+
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #     script 파일이 hibernate 초기화 이후 동작하게 하기 위한 옵션
     defer-datasource-initialization: false
+  main:
+    allow-bean-definition-overriding: true
 
 logging:
   level:
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
-    org.springframework.aop: DEBUG
+    com.zaxxer.hikari.HikariConfig: ERROR
+    com.zaxxer.hikari: ERROR
+    org.springframework.orm.jpa: ERROR
+    org.springframework.transaction: ERROR
+    org.springframework.aop: INFO
+    org:
+      hibernate: ERROR
 
 ---
 spring:
@@ -72,8 +76,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 logging:
   level:
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: ERROR
+    org.springframework.transaction: ERROR
 ---
 spring:
   config:

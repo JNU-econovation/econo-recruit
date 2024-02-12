@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.slack.handler;
 
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
-import com.econovation.recruitdomain.domains.applicant.event.ApplicantRegisterEvent;
+import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;

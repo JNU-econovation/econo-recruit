@@ -1,7 +1,7 @@
 package com.econovation.recruit.utils;
 
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
-import com.econovation.recruit.api.applicant.usecase.ApplicantMongoRegisterUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import io.vavr.concurrent.Future;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,9 +23,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @ConditionalOnProperty(name = "data.init.disabled", havingValue = "false", matchIfMissing = true)
 public class AnswerMongoDBMigration implements ApplicationRunner {
-    private final ApplicantMongoRegisterUseCase applicantMongoRegisterUseCase;
-    //    private final ApplicantMongoLoadUseCase applicantMongoLoadUseCase;
-    private final AnswerLoadUseCase answerLoadUseCase;
+    private final ApplicantCommandUseCase applicantCommandUseCase;
+    private final ApplicantQueryUseCase applicantQueryUseCase;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -38,7 +37,7 @@ public class AnswerMongoDBMigration implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<Map<String, String>> answers = answerLoadUseCase.execute();
+        List<Map<String, Object>> answers = applicantQueryUseCase.execute();
         Future.of(() -> answers)
                 .map(
                         answer -> {
@@ -51,7 +50,7 @@ public class AnswerMongoDBMigration implements ApplicationRunner {
                                                                         Collectors.toMap(
                                                                                 Entry::getKey,
                                                                                 Entry::getValue));
-                                                applicantMongoRegisterUseCase.execute(qna);
+                                                applicantCommandUseCase.execute(qna);
                                                 return qna;
                                             })
                                     .collect(Collectors.toList());
