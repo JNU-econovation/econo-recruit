@@ -78,6 +78,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
+    @TimeTrace
     @GetMapping("/applicants")
     public ResponseEntity<List<Map<String, Object>>> getApplicants() {
         return new ResponseEntity<>(applicantQueryUseCase.execute(), HttpStatus.OK);
@@ -103,6 +104,7 @@ public class ApplicantController {
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @TimeTrace
     @PostMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity registerApplicantTimeTable(
             @PathVariable(value = "applicant-id") String applicantId,
@@ -112,6 +114,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")
+    @TimeTrace
     @GetMapping("/timetables")
     public ResponseEntity<List<Map<String, List<TimeTableVo>>>> getTimeTables() {
         return new ResponseEntity(timeTableLoadUseCase.findAll(), HttpStatus.OK);
@@ -119,6 +122,7 @@ public class ApplicantController {
 
     @Operation(summary = "지원자의 면접 가능 시간을 조회합니다.")
     @GetMapping("/applicants/{applicant-id}/timetables")
+    @TimeTrace
     public ResponseEntity<List<TimeTable>> getTimeTables(
             @PathVariable(name = "applicant-id") String applicantId) {
         List<Integer> timeTableDto = timeTableLoadUseCase.getTimeTableByApplicantId(applicantId);
@@ -126,6 +130,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "면접 가능 시간마다 일치하는 지원자의 정보(희망분야, 이름)를 조회합니다.")
+    @TimeTrace
     @GetMapping("/timetables/applicants")
     public ResponseEntity<Map<Integer, List<String>>> getApplicantsByTimeTable() {
         return new ResponseEntity(
@@ -133,6 +138,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "지원서 제출한 html을 email 로 전송합니다.")
+    @TimeTrace
     @PostMapping("/applicants/mail")
     public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
         commonsEmailSender.send(emailSendDto.getEmail(), emailSendDto.getApplicantId());
