@@ -111,14 +111,6 @@ public class ApplicantController {
         return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    /*    @Operation(summary = "면접관이 면접 질문을 추가합니다.")
-    @PostMapping("/questions")
-    public ResponseEntity registerInterviewQuestion(
-            @RequestBody List<QuestionRequestDto> questions) {
-        questionRegisterUseCase.execute(questions);
-        return new ResponseEntity<>(QUESTION_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
-    }*/
-
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")
     @GetMapping("/timetables")
     public ResponseEntity<List<Map<String, List<TimeTableVo>>>> getTimeTables() {

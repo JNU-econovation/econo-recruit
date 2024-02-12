@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.applicant.domain;
 
-import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @Getter
 @Builder
-public class MongoAnswer extends BaseTimeEntity {
+public class MongoAnswer extends MongoBaseTimeEntity {
     @Id
-    //    @GeneratedValue(
-    //            generator =
-    // "com.econovation.recruitdomain.domains.idGenerator.SnowFlakeGenerator")
+    /* @GeneratedValue(
+               generator =
+    "com.econovation.recruitdomain.domains.idGenerator.SnowFlakeGenerator")*/
     private String id;
 
     @Field("year")
