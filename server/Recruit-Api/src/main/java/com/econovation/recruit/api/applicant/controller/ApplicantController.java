@@ -1,23 +1,19 @@
 package com.econovation.recruit.api.applicant.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.QUESTION_SUCCESS_REGISTER_MESSAGE;
 
+import com.econovation.recruit.api.applicant.command.CreateAnswerCommand;
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
-import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
-import com.econovation.recruit.api.applicant.usecase.QuestionRegisterUseCase;
+import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
-import com.econovation.recruitdomain.domains.applicant.dto.BlockRequestDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfDateException;
-import com.econovation.recruitdomain.domains.dto.ApplicantPaginationResponseDto;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
-import com.econovation.recruitdomain.domains.dto.QuestionRequestDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,9 +24,9 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,23 +42,47 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
-    private final ApplicantRegisterUseCase applicantRegisterUseCase;
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
-    private final QuestionRegisterUseCase questionRegisterUseCase;
-    private final AnswerLoadUseCase answerLoadUseCase;
+    private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
+    private final CommandGateway commandGateway;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @XssProtected
     @PostMapping("/applicants")
-    public ResponseEntity registerApplicant(
-            @RequestBody @Valid List<BlockRequestDto> blockElements) {
-        //        validateOutdated();
-        UUID applicantId = applicantRegisterUseCase.execute(blockElements);
-        return new ResponseEntity<>(applicantId, HttpStatus.OK);
+    @TimeTrace
+    public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
+        // validateOutdated();
+        commandGateway.send(new CreateAnswerCommand(UUID.randomUUID().toString(), 21, qna));
+        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
+
+    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
+    @TimeTrace
+    @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @GetMapping("/applicants/{applicant-id}")
+    public ResponseEntity<Map<String, Object>> getApplicantById(
+            @PathVariable(value = "applicant-id") String applicantId) {
+        return new ResponseEntity<>(applicantQueryUseCase.execute(applicantId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자 기수로 지원서를 조회합니다. / page는 1부터 시작합니다.")
+    @TimeTrace
+    @GetMapping("/page/{page}/year/{year}/applicants")
+    public ResponseEntity<AnswersResponseDto> getApplicantsByYear(
+            @PathVariable(value = "year") Integer year,
+            @PathVariable(value = "page") Integer page) {
+        return new ResponseEntity<>(applicantQueryUseCase.execute(year, page), HttpStatus.OK);
+    }
+
+    @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
+    @GetMapping("/applicants")
+    public ResponseEntity<List<Map<String, Object>>> getApplicants() {
+        return new ResponseEntity<>(applicantQueryUseCase.execute(), HttpStatus.OK);
+    }
+    //    ------------------------------
 
     private void validateOutdated() {
         // 현재 한국 시간 가져오기
@@ -81,45 +101,23 @@ public class ApplicantController {
         }
     }
 
-    @Operation(summary = "지원자 id로 지원서를 조회합니다.")
-    @TimeTrace
-    @GetMapping("/applicants/{applicant-id}")
-    public ResponseEntity<Map<String, String>> getApplicantById(
-            @PathVariable(value = "applicant-id") String applicantId) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(applicantId), HttpStatus.OK);
-    }
-
-    @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
-    @GetMapping("/applicants")
-    public ResponseEntity<List<Map<String, String>>> getApplicants() {
-        return new ResponseEntity<>(answerLoadUseCase.execute(), HttpStatus.OK);
-    }
-
-    @Operation(summary = "모든 지원자의 지원서를 페이지 단위로(1페이지당 8개) 조회합니다.")
-    @GetMapping("/page/{page}/applicants")
-    public ResponseEntity<ApplicantPaginationResponseDto> getApplicantsByPage(
-            // TODO 정렬 기준 추가
-            @PathVariable(value = "page") Integer page) {
-        return new ResponseEntity<>(answerLoadUseCase.execute(page), HttpStatus.OK);
-    }
-
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @PostMapping("/applicants/{applicant-id}/timetables")
     public ResponseEntity registerApplicantTimeTable(
-            @PathVariable(value = "applicant-id") UUID applicantId,
+            @PathVariable(value = "applicant-id") String applicantId,
             @RequestBody List<Integer> startTimes) {
-        timeTableRegisterUseCase.execute(applicantId.toString(), startTimes);
+        timeTableRegisterUseCase.execute(applicantId, startTimes);
         return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "면접관이 면접 질문을 추가합니다.")
+    /*    @Operation(summary = "면접관이 면접 질문을 추가합니다.")
     @PostMapping("/questions")
     public ResponseEntity registerInterviewQuestion(
             @RequestBody List<QuestionRequestDto> questions) {
         questionRegisterUseCase.execute(questions);
         return new ResponseEntity<>(QUESTION_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
-    }
+    }*/
 
     @Operation(summary = "모든 면접 가능 시간을 조회합니다.")
     @GetMapping("/timetables")

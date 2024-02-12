@@ -24,7 +24,6 @@ spring:
       hibernate:
 #        format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
-
     sql:
       init:
         mode: always
@@ -33,6 +32,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #     script 파일이 hibernate 초기화 이후 동작하게 하기 위한 옵션
     defer-datasource-initialization: false
+  main:
+    allow-bean-definition-overriding: true
 
 logging:
   level:

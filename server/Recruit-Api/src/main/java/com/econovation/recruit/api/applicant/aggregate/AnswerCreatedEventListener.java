@@ -21,5 +21,7 @@ public class AnswerCreatedEventListener {
                         .qna(event.getQna())
                         .build();
         answerAdaptor.save(answer);
+
+        // email 전송 event처리
     }
 }

@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.record.service;
 
-import com.econovation.recruit.api.applicant.usecase.AnswerLoadUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
@@ -20,12 +20,12 @@ public class RecordService implements RecordUseCase {
     private final RecordRecordPort recordRecordPort;
     private final RecordLoadPort recordLoadPort;
 
-    private final AnswerLoadUseCase answerLoadUseCase;
+    private final ApplicantQueryUseCase answerQueryUseCase;
 
     @Override
     @Transactional
     public Record createRecord(CreateRecordDto recordDto) {
-        if (answerLoadUseCase.execute(recordDto.getApplicantId()) == null) {
+        if (answerQueryUseCase.execute(recordDto.getApplicantId()) == null) {
             throw ApplicantNotFoundException.EXCEPTION;
         }
         if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()).isPresent()) {
