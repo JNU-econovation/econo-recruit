@@ -22,6 +22,11 @@ throttle:
 auth:
     blacklist:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
+notification:
+  email:
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
+  slack:
+    enabled: ${NOTIFICATION_SLACK_ENABLED:true}
 login:
   page:
     url: ${LOGIN_PAGE_URL:http://localhost:8080/login}

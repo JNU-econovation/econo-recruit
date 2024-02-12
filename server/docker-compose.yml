@@ -1,15 +1,20 @@
 version: "3.7"
 services:
   redis:
-    image: "redis:alpine"
+    image: redis:alpine
+    hostname: redis
+    container_name: redis
     network_mode: "host"
+
   axon-server:
     image: axoniq/axonserver:4.6.11
     container_name: axon-server
     restart: unless-stopped
+    network_mode: "host"
     ports:
       - "8024:8024"
       - "8124:8124"
+
   backend:
     image: blackbean99/econo-recruit:latest
     restart: unless-stopped
@@ -20,5 +25,5 @@ services:
     environment:
       - TZ=Asia/Seoul
     depends_on:
-        - axon-server
-        - redis
+      - redis
+      - axon-server

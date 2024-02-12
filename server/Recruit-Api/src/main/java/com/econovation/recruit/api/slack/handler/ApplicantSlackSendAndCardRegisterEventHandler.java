@@ -18,7 +18,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ApplicantRegisterEventHandler {
+public class ApplicantSlackSendAndCardRegisterEventHandler {
     private final SlackMessageProvider slackMessageProvider;
     private final SlackProperties slackProperties;
     private final CardAdaptor cardAdaptor;
@@ -45,7 +45,10 @@ public class ApplicantRegisterEventHandler {
 
     private String generateApplicantRegisterMessage(ApplicantRegisterEvent applicantRegistEvent) {
         return String.format(
-                ":clapping: 지원자가 등록되었습니다.:clapping:\n"
+                ":drum_with_drumsticks:두둥-탁 -!\n"
+                        + ":space_invader::black_small_square::space_invader::black_small_square::space_invader::black_small_square::space_invader::black_small_square::space_invader::black_small_square:\n"
+                        + ":sparkles::eyes:새로운 지원자 등장:eyes::sparkles:\n"
+                        + ":black_small_square::space_invader::black_small_square::space_invader::black_small_square::space_invader::black_small_square::space_invader::black_small_square::space_invader:\n"
                         + ":chikorita: 지원자 이름: %s\n"
                         + ":chikorita:희망 분야: %s",
                 applicantRegistEvent.getUserName(), applicantRegistEvent.getHopeField());
