@@ -12,7 +12,7 @@ ncp:
   access-key: ${NCP_ACCESS_KEY}
   secret-key: ${NCP_SECRET_KEY}
   sender-address: ${NCP_SENDER_ADDRESS:}
-  send-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss.com}
+  send-url: ${NCP_MAIL_URL:https://mail.apigw.gov-ntruss. com}
 commons:
   email:
     host: ${COMMONS_EMAIL_HOST:smtp.naver.com}

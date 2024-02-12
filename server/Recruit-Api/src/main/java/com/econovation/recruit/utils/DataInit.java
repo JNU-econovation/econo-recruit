@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 // @Component
 @RequiredArgsConstructor
 @Slf4j
-// @ConditionalOnProperty(name = "data.init.disabled", havingValue = "false", matchIfMissing = true)
+@ConditionalOnProperty(name = "data.init.disabled", havingValue = "false", matchIfMissing = true)
 public class DataInit {
     private final DataSource dataSource;
     private final InterviewerRecordPort interviewerRecordPort;
