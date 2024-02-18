@@ -1,15 +1,20 @@
 package com.econovation.recruit.api.record.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.record.dto.RecordsResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
+import com.econovation.recruit.utils.sort.SortHelper;
+import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
 import com.econovation.recruitdomain.domains.dto.UpdateRecordDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.domains.record.exception.RecordDuplicateCreatedException;
+import com.econovation.recruitdomain.domains.record.exception.RecordNotFoundException;
 import com.econovation.recruitdomain.out.RecordLoadPort;
 import com.econovation.recruitdomain.out.RecordRecordPort;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +25,13 @@ public class RecordService implements RecordUseCase {
     private final RecordRecordPort recordRecordPort;
     private final RecordLoadPort recordLoadPort;
 
-    private final ApplicantQueryUseCase answerQueryUseCase;
+    private final ApplicantQueryUseCase applicantQueryUseCase;
+    private final SortHelper<Record> sortHelper;
 
     @Override
     @Transactional
     public Record createRecord(CreateRecordDto recordDto) {
-        if (answerQueryUseCase.execute(recordDto.getApplicantId()) == null) {
+        if (applicantQueryUseCase.execute(recordDto.getApplicantId()) == null) {
             throw ApplicantNotFoundException.EXCEPTION;
         }
         if (recordLoadPort.findByApplicantId(recordDto.getApplicantId()).isPresent()) {
@@ -41,8 +47,22 @@ public class RecordService implements RecordUseCase {
     }
 
     @Override
+    public RecordsResponseDto execute(Integer page, String sortType) {
+        List<Record> result = recordLoadPort.findAll(page);
+        PageInfo pageInfo = getPageInfo(page);
+        //        sortHelper.sort(result, sortType);
+        return RecordsResponseDto.of(pageInfo, result);
+    }
+
+    private PageInfo getPageInfo(Integer page) {
+        long totalCount = recordLoadPort.getTotalCount();
+        return new PageInfo(totalCount, page);
+    }
+
+    @Override
     public Record findByApplicantId(String applicantId) {
-        return recordLoadPort.findByApplicantId(applicantId).get();
+        Optional<Record> byApplicantId = recordLoadPort.findByApplicantId(applicantId);
+        return byApplicantId.orElseThrow(() -> RecordNotFoundException.EXCEPTION);
     }
 
     @Override

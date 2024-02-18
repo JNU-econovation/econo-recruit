@@ -5,6 +5,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_
 
 import com.econovation.recruit.api.record.docs.RecordCreateExceptionDocs;
 import com.econovation.recruit.api.record.docs.RecordFindExceptionDocs;
+import com.econovation.recruit.api.record.dto.RecordsResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +56,14 @@ public class RecordController {
     public ResponseEntity<List<RecordResponseDto>> findAll() {
         List<Record> records = recordUseCase.findAll();
         return new ResponseEntity(RecordResponseDto.from(records), HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자의 면접기록을 페이지별로 조회합니다")
+    @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
+    @GetMapping("/page/{page}/records")
+    public ResponseEntity<RecordsResponseDto> findAll(
+            @PathVariable(name = "page") Integer page, @ParameterObject String sortType) {
+        return new ResponseEntity(recordUseCase.execute(page, sortType), HttpStatus.OK);
     }
 
     @Operation(summary = "지원자의 면접기록의 면접 영상 url및 면접기록을 수정합니다.")

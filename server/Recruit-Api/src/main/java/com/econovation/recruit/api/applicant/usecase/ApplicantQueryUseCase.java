@@ -7,17 +7,11 @@ import java.util.Map;
 
 @UseCase
 public interface ApplicantQueryUseCase {
-    // clear
     Map<String, Object> execute(String applicantId);
 
     AnswersResponseDto execute(Integer year, Integer page, String order);
-    //    List<Map<String, String>> execute(List<String> fields, List<String> applicantIds);
 
     List<Map<String, Object>> execute();
-
-    //    ApplicantPaginationResponseDto execute(Integer page);
-
-    //    List<Map<String, String>> execute(Integer page, String sortType);
 
     Map<String, Object> execute(String applicantId, List<String> fields);
 
