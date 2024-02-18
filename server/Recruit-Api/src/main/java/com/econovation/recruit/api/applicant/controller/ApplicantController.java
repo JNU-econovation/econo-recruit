@@ -8,6 +8,7 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
+import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
@@ -47,6 +48,7 @@ public class ApplicantController {
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
     private final CommandGateway commandGateway;
+    private final SortHelper<Map<String, Object>> sortHelper;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -73,8 +75,10 @@ public class ApplicantController {
     @GetMapping("/page/{page}/year/{year}/applicants")
     public ResponseEntity<AnswersResponseDto> getApplicantsByYear(
             @PathVariable(value = "year") Integer year,
-            @PathVariable(value = "page") Integer page) {
-        return new ResponseEntity<>(applicantQueryUseCase.execute(year, page), HttpStatus.OK);
+            @PathVariable(value = "page") Integer page,
+            String order) {
+        AnswersResponseDto result = applicantQueryUseCase.execute(year, page, order);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")

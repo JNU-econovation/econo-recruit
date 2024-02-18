@@ -10,7 +10,7 @@ public interface ApplicantQueryUseCase {
     // clear
     Map<String, Object> execute(String applicantId);
 
-    AnswersResponseDto execute(Integer year, Integer page);
+    AnswersResponseDto execute(Integer year, Integer page, String order);
     //    List<Map<String, String>> execute(List<String> fields, List<String> applicantIds);
 
     List<Map<String, Object>> execute();
@@ -23,7 +23,8 @@ public interface ApplicantQueryUseCase {
 
     List<Map<String, Object>> execute(List<String> fields, Integer page);
 
-    List<Map<String, Object>> execute(List<String> fields, Integer year, Integer page);
+    List<Map<String, Object>> execute(
+            List<String> fields, Integer year, Integer page, String sortedType);
 
     Map<String, Map<String, Object>> findAllApplicantVo(List<String> fields);
 }

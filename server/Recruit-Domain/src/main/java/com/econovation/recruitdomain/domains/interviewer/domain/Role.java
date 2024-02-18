@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum Role {
-    ROLE_PRESIDENT("PRESIDENT"),
-    ROLE_OPERATION("OPERATION"),
+    ROLE_PRESIDENT("PRESIDENT"), // 회장단
+    ROLE_OPERATION("OPERATION"), // 관리자
     ROLE_TF("TF"),
     ROLE_GUEST("GUEST"),
     ;
