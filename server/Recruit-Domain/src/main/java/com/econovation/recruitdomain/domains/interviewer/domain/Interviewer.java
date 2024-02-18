@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.interviewer.domain;
 
+import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Interviewer {
+public class Interviewer extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idp_id")

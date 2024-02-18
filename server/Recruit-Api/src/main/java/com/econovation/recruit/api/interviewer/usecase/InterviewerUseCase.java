@@ -17,6 +17,8 @@ public interface InterviewerUseCase {
 
     List<InterviewerResponseDto> findAll();
 
+    List<InterviewerResponseDto> findAll(String sortType);
+
     void createTempInterviewers();
 
     InterviewerResponseDto findMe();
