@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
         name = "IdpClient",
         url = "https://auth.econovation.kr",
         configuration = IdpConfig.class)
-// @Headers("Content-Type: application/json; charset=UTF-8")
 public interface IdpClient {
     @GetMapping("/api/users")
     List<InterviewerResponse> loadByName(String name);
