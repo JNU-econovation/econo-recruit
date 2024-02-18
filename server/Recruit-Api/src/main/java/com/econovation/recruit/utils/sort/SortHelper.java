@@ -31,7 +31,7 @@ public class SortHelper<T> {
 
         SortStrategy<T> sortStrategy = (SortStrategy<T>) strategies.get(sortType);
         if (sortStrategy == null) {
-            throw new IllegalArgumentException("No sorting strategy found for the given sort type");
+            sortStrategy = (SortStrategy<T>) strategies.get("Newest");
         }
 
         data.sort(sortStrategy::compare);
