@@ -4,6 +4,7 @@ import com.econovation.recruit.api.applicant.aggregate.AnswerAggregate;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.query.AnswerQuery;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ApplicantService implements ApplicantQueryUseCase {
     private final AnswerAdaptor answerAdaptor;
     private final QueryGateway queryGateway;
+    private final SortHelper<MongoAnswer> sortHelper;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -41,17 +43,28 @@ public class ApplicantService implements ApplicantQueryUseCase {
     }
 
     @Transactional(readOnly = true)
-    public AnswersResponseDto execute(Integer year, Integer page) {
+    public AnswersResponseDto execute(Integer year, Integer page, String sortType) {
+        PageInfo pageInfo = getPageInfo(year);
+        List<MongoAnswer> result = answerAdaptor.findByYear(year, page);
+
+        sortHelper.sort(result, sortType);
+        List<Map<String, Object>> sortedResult = result.stream().map(MongoAnswer::getQna).toList();
+
+        if (sortedResult.isEmpty()) {
+            return AnswersResponseDto.of(Collections.emptyList(), pageInfo);
+        }
+        return AnswersResponseDto.of(sortedResult, pageInfo);
+    }
+
+    private PageInfo getPageInfo(Integer year) {
         long totalCount = answerAdaptor.getTotalCountByYear(year);
-        PageInfo pageInfo = new PageInfo(totalCount, page);
-        List<Map<String, Object>> qnas =
-                answerAdaptor.findByYear(year, page).stream().map(MongoAnswer::getQna).toList();
-        return AnswersResponseDto.of(qnas, pageInfo);
+        return new PageInfo(totalCount, 1);
     }
 
     @Override
-    public List<Map<String, Object>> execute(List<String> fields, Integer year, Integer page) {
-        AnswersResponseDto execute = execute(year, page);
+    public List<Map<String, Object>> execute(
+            List<String> fields, Integer year, Integer page, String sortType) {
+        AnswersResponseDto execute = execute(year, page, sortType);
         return splitByAnswerFilteredByFields(fields, execute.getAnswers());
     }
 
