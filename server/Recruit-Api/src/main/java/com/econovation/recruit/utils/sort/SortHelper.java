@@ -1,9 +1,9 @@
 package com.econovation.recruit.utils.sort;
 
-import com.econovation.recruit.utils.sort.strategy.NameAscendingSortingStrategy;
-import com.econovation.recruit.utils.sort.strategy.NewestSortingStrategy;
-import com.econovation.recruit.utils.sort.strategy.ObjectiveSortingStrategy;
 import com.econovation.recruit.utils.sort.strategy.SortStrategy;
+import com.econovation.recruit.utils.sort.strategy.applicant.NameAscendingSortingStrategy;
+import com.econovation.recruit.utils.sort.strategy.applicant.NewestSortingStrategy;
+import com.econovation.recruit.utils.sort.strategy.applicant.ObjectiveSortingStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

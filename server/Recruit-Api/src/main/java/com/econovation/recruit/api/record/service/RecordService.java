@@ -50,7 +50,7 @@ public class RecordService implements RecordUseCase {
     public RecordsResponseDto execute(Integer page, String sortType) {
         List<Record> result = recordLoadPort.findAll(page);
         PageInfo pageInfo = getPageInfo(page);
-        //        sortHelper.sort(result, sortType);
+        sortHelper.sort(result, sortType);
         return RecordsResponseDto.of(pageInfo, result);
     }
 
