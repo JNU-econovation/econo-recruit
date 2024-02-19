@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,8 @@ public class InterviewerController {
     @Operation(description = "Interviewer 전체 조회", summary = "면접관 전체 조회")
     @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
     @GetMapping("/interviewers")
-    public ResponseEntity<List<InterviewerResponseDto>> findAll() {
-        List<InterviewerResponseDto> interviewers = interviewerUseCase.findAll();
+    public ResponseEntity<List<InterviewerResponseDto>> findAll(@ParameterObject String order) {
+        List<InterviewerResponseDto> interviewers = interviewerUseCase.findAll(order);
         return new ResponseEntity(interviewers, HttpStatus.OK);
     }
 

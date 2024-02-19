@@ -3,8 +3,12 @@ package com.econovation.recruit.utils.sort.strategy.record;
 import com.econovation.recruit.utils.sort.strategy.SortStrategy;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-public class ObjectiveSortingStrategy implements SortStrategy<MongoAnswer> {
+@Component
+@Qualifier("answerObjectiveSort")
+public class AnswerObjectiveSortingStrategy implements SortStrategy<MongoAnswer> {
     String[] fieldOrder = {"APP", "WEB", "AI", "GAME"};
 
     @Override
