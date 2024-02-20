@@ -44,7 +44,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
 
     @Transactional(readOnly = true)
     public AnswersResponseDto execute(Integer year, Integer page, String sortType) {
-        PageInfo pageInfo = getPageInfo(year);
+        PageInfo pageInfo = getPageInfo(year, page);
         List<MongoAnswer> result = answerAdaptor.findByYear(year, page);
 
         sortHelper.sort(result, sortType);
@@ -56,9 +56,9 @@ public class ApplicantService implements ApplicantQueryUseCase {
         return AnswersResponseDto.of(sortedResult, pageInfo);
     }
 
-    private PageInfo getPageInfo(Integer year) {
+    private PageInfo getPageInfo(Integer year, Integer page) {
         long totalCount = answerAdaptor.getTotalCountByYear(year);
-        return new PageInfo(totalCount, 1);
+        return new PageInfo(totalCount, page);
     }
 
     @Override
@@ -66,6 +66,12 @@ public class ApplicantService implements ApplicantQueryUseCase {
             List<String> fields, Integer year, Integer page, String sortType) {
         AnswersResponseDto execute = execute(year, page, sortType);
         return splitByAnswerFilteredByFields(fields, execute.getAnswers());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MongoAnswer> execute(List<String> applicantIds) {
+        return answerAdaptor.findByApplicantIds(applicantIds);
     }
 
     @Override

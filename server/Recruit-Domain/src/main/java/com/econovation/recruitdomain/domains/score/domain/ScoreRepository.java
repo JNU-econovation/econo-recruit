@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<Score> findByApplicantId(String ApplicantId);
+
+    List<Score> findByApplicantIdIn(List<String> applicantIds);
 }

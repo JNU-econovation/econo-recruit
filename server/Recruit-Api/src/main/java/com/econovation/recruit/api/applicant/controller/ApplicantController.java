@@ -28,6 +28,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,7 +77,7 @@ public class ApplicantController {
     public ResponseEntity<AnswersResponseDto> getApplicantsByYear(
             @PathVariable(value = "year") Integer year,
             @PathVariable(value = "page") Integer page,
-            String order) {
+            @ParameterObject String order) {
         AnswersResponseDto result = applicantQueryUseCase.execute(year, page, order);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

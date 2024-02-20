@@ -31,7 +31,7 @@ public class AnswerAdaptor {
     public List<MongoAnswer> findByYear(Integer year, Integer page) {
         Query query =
                 new Query()
-                        .with(Sort.by(Sort.Direction.DESC, "createdAt")) // Optional: 정렬 설정
+                        .with(Sort.by(Sort.Direction.DESC, "created_date")) // Optional: 정렬 설정
                         .addCriteria(Criteria.where("year").is(year))
                         .skip((page - 1) * 10L) // offset 설정
                         .limit(10); // 페이지 크기 설정
@@ -40,5 +40,9 @@ public class AnswerAdaptor {
 
     public long getTotalCountByYear(Integer year) {
         return mongoTemplate.count(Query.query(Criteria.where("year").is(year)), MongoAnswer.class);
+    }
+
+    public List<MongoAnswer> findByApplicantIds(List<String> applicantIds) {
+        return answerRepository.findByIdIn(applicantIds);
     }
 }
