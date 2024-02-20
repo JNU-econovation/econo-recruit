@@ -10,6 +10,7 @@ import lombok.Data;
 public class RecordViewResponseDto {
     private String applicantId;
     private Double scores;
+    private String name;
     private String url;
     private String record;
     private String field1;
@@ -19,9 +20,11 @@ public class RecordViewResponseDto {
     private String modifiedAt;
 
     public static RecordViewResponseDto from(Record recordVo, Double score, MongoAnswer applicant) {
+        String name = "[" + applicant.getQna().get("field").toString().replaceAll("\\\"", "") + "] " + applicant.getQna().get("name").toString().replaceAll("\\\"", "");
         return new RecordViewResponseDto(
                 recordVo.getApplicantId(),
                 score,
+                name,
                 recordVo.getUrl(),
                 recordVo.getRecord(),
                 applicant.getQna().get("field1").toString(),

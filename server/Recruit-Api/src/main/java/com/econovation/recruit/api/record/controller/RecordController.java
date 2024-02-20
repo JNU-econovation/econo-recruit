@@ -5,7 +5,6 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_
 
 import com.econovation.recruit.api.record.docs.RecordCreateExceptionDocs;
 import com.econovation.recruit.api.record.docs.RecordFindExceptionDocs;
-import com.econovation.recruit.api.record.dto.RecordsResponseDto;
 import com.econovation.recruit.api.record.dto.RecordsViewResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
@@ -50,6 +49,7 @@ public class RecordController {
         Record record = recordUseCase.findByApplicantId(applicantId);
         return new ResponseEntity<>(RecordResponseDto.from(record), HttpStatus.OK);
     }
+
     @Operation(summary = "지원자의 면접기록을 페이지별로 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/page/{page}/records")
@@ -66,7 +66,6 @@ public class RecordController {
         List<Record> records = recordUseCase.findAll();
         return new ResponseEntity<>(RecordResponseDto.from(records), HttpStatus.OK);
     }
-
 
     @Operation(summary = "지원자의 면접기록의 면접 영상 url및 면접기록을 수정합니다.")
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
