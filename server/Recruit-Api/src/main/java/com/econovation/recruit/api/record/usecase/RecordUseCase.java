@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.record.usecase;
 
-import com.econovation.recruit.api.record.dto.RecordsResponseDto;
+import com.econovation.recruit.api.record.dto.RecordsViewResponseDto;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
 import com.econovation.recruitdomain.domains.dto.UpdateRecordDto;
 import com.econovation.recruitdomain.domains.record.domain.Record;
@@ -11,7 +11,7 @@ public interface RecordUseCase {
 
     List<Record> findAll();
 
-    RecordsResponseDto execute(Integer page, String sortType);
+    RecordsViewResponseDto execute(Integer page, String sortType);
 
     Record findByApplicantId(String applicantId);
 

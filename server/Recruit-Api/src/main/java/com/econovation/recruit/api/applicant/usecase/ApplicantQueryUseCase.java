@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.usecase;
 
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruitcommon.annotation.UseCase;
+import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public interface ApplicantQueryUseCase {
 
     List<Map<String, Object>> execute(
             List<String> fields, Integer year, Integer page, String sortedType);
+
+    List<MongoAnswer> execute(List<String> applicantIds);
 
     Map<String, Map<String, Object>> findAllApplicantVo(List<String> fields);
 }

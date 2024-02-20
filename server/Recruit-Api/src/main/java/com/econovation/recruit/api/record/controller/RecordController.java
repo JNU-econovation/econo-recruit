@@ -6,6 +6,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_
 import com.econovation.recruit.api.record.docs.RecordCreateExceptionDocs;
 import com.econovation.recruit.api.record.docs.RecordFindExceptionDocs;
 import com.econovation.recruit.api.record.dto.RecordsResponseDto;
+import com.econovation.recruit.api.record.dto.RecordsViewResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,32 +39,34 @@ public class RecordController {
     @PostMapping("/records")
     public ResponseEntity<String> createRecord(@RequestBody CreateRecordDto createRecordDto) {
         recordUseCase.createRecord(createRecordDto);
-        return new ResponseEntity(RECORD_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(RECORD_SUCCESS_CREATE_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자의 면접기록을 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
-    @GetMapping("/records")
-    public ResponseEntity<RecordResponseDto> findByApplicantId(@RequestParam String applicantId) {
+    @GetMapping("/records/{applicant-id}")
+    public ResponseEntity<RecordResponseDto> findByApplicantId(
+            @PathVariable(name = "applicant-id") String applicantId) {
         Record record = recordUseCase.findByApplicantId(applicantId);
-        return new ResponseEntity(RecordResponseDto.from(record), HttpStatus.OK);
+        return new ResponseEntity<>(RecordResponseDto.from(record), HttpStatus.OK);
+    }
+    @Operation(summary = "지원자의 면접기록을 페이지별로 조회합니다")
+    @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
+    @GetMapping("/page/{page}/records")
+    public ResponseEntity<RecordsViewResponseDto> findAll(
+            @PathVariable(name = "page") Integer page, @ParameterObject String sortType) {
+        return new ResponseEntity<>(recordUseCase.execute(page, sortType), HttpStatus.OK);
     }
 
     @Operation(summary = "지원자의 면접기록을 전부 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/records/all")
+    @Deprecated(since = "2024-02-20", forRemoval = true)
     public ResponseEntity<List<RecordResponseDto>> findAll() {
         List<Record> records = recordUseCase.findAll();
-        return new ResponseEntity(RecordResponseDto.from(records), HttpStatus.OK);
+        return new ResponseEntity<>(RecordResponseDto.from(records), HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자의 면접기록을 페이지별로 조회합니다")
-    @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
-    @GetMapping("/page/{page}/records")
-    public ResponseEntity<RecordsResponseDto> findAll(
-            @PathVariable(name = "page") Integer page, @ParameterObject String sortType) {
-        return new ResponseEntity(recordUseCase.execute(page, sortType), HttpStatus.OK);
-    }
 
     @Operation(summary = "지원자의 면접기록의 면접 영상 url및 면접기록을 수정합니다.")
     @ApiErrorExceptionsExample(RecordCreateExceptionDocs.class)
@@ -73,6 +75,6 @@ public class RecordController {
             @PathVariable(name = "applicant-id") String applicantId,
             @RequestBody UpdateRecordDto updateRecordDto) {
         recordUseCase.updateRecord(applicantId, updateRecordDto);
-        return new ResponseEntity(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
+        return new ResponseEntity<>(RECORD_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }
 }

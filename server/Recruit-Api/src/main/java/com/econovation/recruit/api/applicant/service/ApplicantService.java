@@ -69,6 +69,12 @@ public class ApplicantService implements ApplicantQueryUseCase {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<MongoAnswer> execute(List<String> applicantIds) {
+        return answerAdaptor.findByApplicantIds(applicantIds);
+    }
+
+    @Override
     public Map<String, Map<String, Object>> findAllApplicantVo(List<String> fields) {
         List<MongoAnswer> answers = answerAdaptor.findAll();
         Map<String, Map<String, Object>> result = new HashMap<>();

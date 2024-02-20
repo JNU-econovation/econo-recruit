@@ -41,4 +41,8 @@ public class AnswerAdaptor {
     public long getTotalCountByYear(Integer year) {
         return mongoTemplate.count(Query.query(Criteria.where("year").is(year)), MongoAnswer.class);
     }
+
+    public List<MongoAnswer> findByApplicantIds(List<String> applicantIds) {
+        return answerRepository.findByIdIn(applicantIds);
+    }
 }

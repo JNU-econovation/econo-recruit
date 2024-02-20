@@ -1,6 +1,5 @@
-package com.econovation.recruit.utils.sort.strategy.record;
+package com.econovation.recruit.utils.sort.strategy;
 
-import com.econovation.recruit.utils.sort.strategy.SortStrategy;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

@@ -27,4 +27,9 @@ public class ScoreAdaptor implements ScoreLoadPort, ScoreRecordPort {
     public List<Score> findByApplicantId(String applicantId) {
         return scoreRepository.findByApplicantId(applicantId);
     }
+
+    @Override
+    public List<Score> findByApplicantIds(List<String> applicantIds) {
+        return scoreRepository.findByApplicantIdIn(applicantIds);
+    }
 }

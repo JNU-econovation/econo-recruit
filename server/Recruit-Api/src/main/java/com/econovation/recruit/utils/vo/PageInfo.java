@@ -1,9 +1,11 @@
 package com.econovation.recruit.utils.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class PageInfo {
     @Schema(description = "현재 페이지")
     private int currentPage; // 현재 페이지
