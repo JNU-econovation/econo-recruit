@@ -24,6 +24,11 @@ public class ScoreAdaptor implements ScoreLoadPort, ScoreRecordPort {
     }
 
     @Override
+    public void deleteByInterviewerId(Long idpId) {
+        scoreRepository.deleteByIdpId(idpId);
+    }
+
+    @Override
     public List<Score> findByApplicantId(String applicantId) {
         return scoreRepository.findByApplicantId(applicantId);
     }

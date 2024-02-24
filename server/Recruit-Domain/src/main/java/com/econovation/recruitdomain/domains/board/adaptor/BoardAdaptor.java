@@ -72,11 +72,6 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
         return board.get();
     }
 
-    //    @Override
-    //    public void batchUpdate(List<Board> boards) {
-    //        boardRepository.saveAll(boards);
-    //    }
-
     @Override
     public Board save(Board board) {
         return boardRepository.save(board);
@@ -91,48 +86,4 @@ public class BoardAdaptor implements BoardLoadPort, BoardRecordPort {
     public void saveAll(List<Board> board) {
         boardRepository.saveAll(board);
     }
-
-    //    @Override
-    //    public void update(Board board) {
-    //        boardRepository.update(board);
-    //    }
-
-    /*    private void batchUpdate(List<Board> boards, String sql) {
-                    jdbcTemplate.batchUpdate(
-                                                    sql,
-                                                    new BatchPreparedStatementSetter() {
-                                                                    @Override
-                                                                    public void setValues(PreparedStatement ps, int i) throws SQLException {
-                                                                                    //                    Board board = boards.get(i);
-                                                                                    ps.setInt(1, boards.get(i).getLowLoc() + 1);
-                                                                                    log.info(String.valueOf(boards.get(i).getLowLoc() + 1));
-                                                                                    //                    ps.setString(2, new Date().toString());
-                                                                    }
-
-                                                                    @Override
-                                                                    public int getBatchSize() {
-                                                                                    return boards.size();
-                                                                    }
-                                                    });
-    }*/
-
-    //
-    //        jdbcTemplate.batchUpdate(sql,
-    //                boards,
-    //                boards.size(),
-    //                (PreparedStatement ps, Board board) -> {
-    //                    @Override
-    //                    public void setValues(PreparedStatement ps, int i) throws SQLException {
-    //                        ps.setInt(1, board.getLowLoc() + 1);
-    //                        ps.setString(2,new Date().toString());
-    //                    }
-    //                    @Override
-    //                    public int getBatchSize() {
-    //                        return subItems.size();
-    //                    }
-    //                    // 아래로 한칸씩만 위치 증가
-    ////                    ps.setInt(1, board.getLowLoc() + 1);
-    ////                    ps.setString(2,new Date().toString());
-    //                });
-    //    }
 }

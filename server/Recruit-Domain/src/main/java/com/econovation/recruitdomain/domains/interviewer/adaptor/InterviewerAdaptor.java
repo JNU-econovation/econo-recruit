@@ -1,10 +1,9 @@
 package com.econovation.recruitdomain.domains.interviewer.adaptor;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_INTERVIEWER_MESSAGE;
-
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.InterviewerRepository;
+import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotFoundException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
@@ -21,7 +20,7 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     public Interviewer loadInterviewById(Long idpId) {
         return interviewerRepository
                 .findById(idpId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_MATCH_INTERVIEWER_MESSAGE));
+                .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
     }
 
     @Override
@@ -46,6 +45,11 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
         return interviewerRepository.findByEmail(email);
     }
 
+    @Override
+    public List<Interviewer> loadInterviewerByRole(Role role) {
+        return interviewerRepository.findByRole(role);
+    }
+
     public List<Interviewer> saveAll(List<Interviewer> interviewer) {
         return interviewerRepository.saveAll(interviewer);
     }
@@ -57,10 +61,6 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
 
     @Override
     public void deleteById(Long idpId) {
-        Interviewer interviewer =
-                interviewerRepository
-                        .findById(idpId)
-                        .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
-        interviewerRepository.delete(interviewer);
+        interviewerRepository.deleteById(idpId);
     }
 }

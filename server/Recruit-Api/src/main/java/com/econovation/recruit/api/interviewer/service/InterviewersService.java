@@ -4,14 +4,18 @@ import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.interviewer.helper.IdpHelper;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruit.utils.sort.SortHelper;
+import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.dto.InterviewerCreateDto;
 import com.econovation.recruitdomain.domains.dto.InterviewerResponseDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
+import com.econovation.recruitdomain.domains.interviewer.domainevent.InterviewerDeleteEvent;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerCanNotDeleteWhenOneException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,7 +92,21 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
+    @Transactional
     public void deleteInterviewer(Long idpId) {
+        validateDelete(idpId);
         interviewerRecordPort.deleteById(idpId);
+    }
+
+    private void validateDelete(Long idpId) {
+        List<Interviewer> interviewers =
+                interviewerLoadPort.loadInterviewerByRole(Role.ROLE_OPERATION);
+        Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
+
+        if (interviewers.size() == 1
+                && Objects.equals(interviewer.getId(), interviewers.get(0).getId())) {
+            throw InterviewerCanNotDeleteWhenOneException.EXCEPTION;
+        }
+        Events.raise(InterviewerDeleteEvent.of(interviewer));
     }
 }

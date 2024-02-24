@@ -7,4 +7,6 @@ public interface ScoreRecordPort {
     Score save(Score score);
 
     List<Score> save(List<Score> scores);
+
+    void deleteByInterviewerId(Long idpId);
 }
