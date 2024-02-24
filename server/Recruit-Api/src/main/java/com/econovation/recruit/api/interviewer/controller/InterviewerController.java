@@ -1,7 +1,9 @@
 package com.econovation.recruit.api.interviewer.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.INTERVIEWER_SUCCESS_DELETE_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.INTERVIEWER_SUCCESS_REGISTER_MESSAGE;
 
+import com.econovation.recruit.api.interviewer.docs.InterviewerDeleteExceptionDocs;
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.interviewer.usecase.InterviewerUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
@@ -77,5 +79,13 @@ public class InterviewerController {
             @PathVariable(name = "idp-id") Long idpId, String role) {
         interviewerUseCase.updateRole(idpId, role);
         return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @Operation(description = "Interviewer 삭제")
+    @ApiErrorExceptionsExample(InterviewerDeleteExceptionDocs.class)
+    @DeleteMapping("/interviewers/{idp-id}")
+    public ResponseEntity<String> deleteInterviewer(@PathVariable(name = "idp-id") Long idpId) {
+        interviewerUseCase.deleteInterviewer(idpId);
+        return new ResponseEntity<>(INTERVIEWER_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }

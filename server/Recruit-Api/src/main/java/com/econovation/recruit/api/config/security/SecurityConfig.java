@@ -94,14 +94,18 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/register")
                 .permitAll()
+                // 면접관 삭제는 회장단 이상부터 가능합니다.
                 //                .mvcMatchers("/**")
                 //                .permitAll()
                 // 스웨거용 인메모리 유저의 권한은 SWAGGER 이다
                 // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
                 // 내부 소스까지 실행을 못함. 권한 문제 때문에.
+                .mvcMatchers(HttpMethod.DELETE, "/api/v1//interviewers/*")
+                .hasAnyRole("OPERATION", "PRESIDENT")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
+
         http.apply(filterConfig);
 
         return http.build();
@@ -111,7 +115,7 @@ public class SecurityConfig {
     public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         roleHierarchy.setHierarchy(
-                "ROLE_PRESIDENT > ROLE_OPERATION > ROLE_TF > ROLE_SWAGGER > ROLE_GUEST");
+                "ROLE_OPERATION > ROLE_PRESIDENT > ROLE_TF > ROLE_SWAGGER > ROLE_GUEST");
         return roleHierarchy;
     }
 

@@ -22,4 +22,6 @@ public interface InterviewerUseCase {
     void createTempInterviewers();
 
     InterviewerResponseDto findMe();
+
+    void deleteInterviewer(Long idpId);
 }

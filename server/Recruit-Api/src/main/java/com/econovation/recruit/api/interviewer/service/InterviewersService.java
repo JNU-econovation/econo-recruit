@@ -86,4 +86,9 @@ public class InterviewersService implements InterviewerUseCase {
         Interviewer interviewer = interviewerLoadPort.loadInterviewById(userId);
         return InterviewerResponseDto.from(interviewer);
     }
+
+    @Override
+    public void deleteInterviewer(Long idpId) {
+        interviewerRecordPort.deleteById(idpId);
+    }
 }

@@ -54,4 +54,13 @@ public class InterviewerAdaptor implements InterviewerRecordPort, InterviewerLoa
     public void save(Interviewer interviewer) {
         interviewerRepository.save(interviewer);
     }
+
+    @Override
+    public void deleteById(Long idpId) {
+        Interviewer interviewer =
+                interviewerRepository
+                        .findById(idpId)
+                        .orElseThrow(() -> InterviewerNotFoundException.EXCEPTION);
+        interviewerRepository.delete(interviewer);
+    }
 }
