@@ -9,4 +9,6 @@ public interface CommentLikeRecordPort {
     void deleteCommentLike(CommentLike commentLike);
 
     void deleteAll(List<CommentLike> commentLikes);
+
+    void deleteByInterviewerId(Long idpId);
 }

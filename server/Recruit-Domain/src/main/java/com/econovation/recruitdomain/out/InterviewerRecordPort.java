@@ -7,4 +7,6 @@ public interface InterviewerRecordPort {
     List<Interviewer> saveAll(List<Interviewer> a);
 
     void save(Interviewer interviewer);
+
+    void deleteById(Long idpId);
 }

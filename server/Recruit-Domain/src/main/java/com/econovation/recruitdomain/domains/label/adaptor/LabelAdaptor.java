@@ -34,6 +34,11 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
     }
 
     @Override
+    public void deleteByInterviewerId(Long idpId) {
+        labelRepository.deleteByIdpId(idpId);
+    }
+
+    @Override
     public List<Label> loadLabelByApplicantId(String applicantId) {
         List<Label> labels = labelRepository.findByApplicantId(applicantId);
         if (labels.isEmpty()) {

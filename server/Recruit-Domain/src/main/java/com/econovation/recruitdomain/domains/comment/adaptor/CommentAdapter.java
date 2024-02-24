@@ -86,6 +86,11 @@ public class CommentAdapter
     }
 
     @Override
+    public void deleteByInterviewerId(Long idpId) {
+        commentRepository.deleteByIdpId(idpId);
+    }
+
+    @Override
     public void deleteCommentsAll(List<Comment> comments) {
         commentRepository.deleteAll(comments);
     }
