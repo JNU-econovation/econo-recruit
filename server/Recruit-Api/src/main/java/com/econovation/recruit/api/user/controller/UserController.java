@@ -16,6 +16,8 @@ import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +56,20 @@ public class UserController {
 
     @Operation(summary = "로그인합니다.", description = "accessToken, refreshToken을 발급합니다.")
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<TokenResponse> login(
+            @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
+        Cookie accessCookie = new Cookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
+        accessCookie.setHttpOnly(true);
+        accessCookie.setPath("/");
+        accessCookie.setMaxAge(60 * 60 * 24 * 7);
+        response.addCookie(accessCookie);
+
+        Cookie refreshCookie = new Cookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(60 * 60 * 24 * 7);
+        response.addCookie(refreshCookie);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
