@@ -59,16 +59,10 @@ public class UserController {
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
-        Cookie accessCookie = new Cookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
-        accessCookie.setHttpOnly(true);
-        accessCookie.setPath("/");
-        accessCookie.setMaxAge(60 * 60 * 24 * 30);
+        Cookie accessCookie = setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
         response.addCookie(accessCookie);
 
-        Cookie refreshCookie = new Cookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(60 * 60 * 24 * 30);
+        Cookie refreshCookie = setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
         response.addCookie(refreshCookie);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
@@ -94,5 +88,13 @@ public class UserController {
             @RequestParam @Valid @PasswordValidate String password) {
         userRegisterUseCase.changePassword(password);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
+    }
+
+    private Cookie setCookie(String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 30);
+        return cookie;
     }
 }
