@@ -62,13 +62,13 @@ public class UserController {
         Cookie accessCookie = new Cookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
         accessCookie.setHttpOnly(true);
         accessCookie.setPath("/");
-        accessCookie.setMaxAge(60 * 60 * 24 * 7);
+        accessCookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(accessCookie);
 
         Cookie refreshCookie = new Cookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
         refreshCookie.setHttpOnly(true);
         refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(60 * 60 * 24 * 7);
+        refreshCookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(refreshCookie);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
