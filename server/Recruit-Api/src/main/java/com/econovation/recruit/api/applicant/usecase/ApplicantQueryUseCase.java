@@ -24,4 +24,6 @@ public interface ApplicantQueryUseCase {
     List<MongoAnswer> execute(List<String> applicantIds);
 
     Map<String, Map<String, Object>> findAllApplicantVo(List<String> fields);
+
+    AnswersResponseDto search(String searchKeyword);
 }
