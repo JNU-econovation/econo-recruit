@@ -88,6 +88,17 @@ public class ApplicantController {
     public ResponseEntity<List<Map<String, Object>>> getApplicants() {
         return new ResponseEntity<>(applicantQueryUseCase.execute(), HttpStatus.OK);
     }
+
+    @Operation(summary = "지원서를 검색합니다.", description = "지원자가 지원서를 작성합니다.")
+    @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @PostMapping("/search/{search-keyword}/applicants")
+    public ResponseEntity<AnswersResponseDto> searchApplicant(
+            @PathVariable(value = "search-keyword") String searchKeyword) {
+        //        validateOutdated();
+        AnswersResponseDto result = applicantQueryUseCase.search(searchKeyword);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     //    ------------------------------
 
     private void validateOutdated() {

@@ -61,7 +61,6 @@ public class UserController {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
         Cookie accessCookie = setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
         response.addCookie(accessCookie);
-
         Cookie refreshCookie = setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
         response.addCookie(refreshCookie);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
@@ -95,6 +94,7 @@ public class UserController {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 30);
+        cookie.setSecure(true);
         return cookie;
     }
 }

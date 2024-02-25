@@ -96,6 +96,14 @@ public class ApplicantService implements ApplicantQueryUseCase {
         return result;
     }
 
+    @Override
+    public AnswersResponseDto search(String searchKeyword) {
+        List<MongoAnswer> answers = answerAdaptor.findBySearchKeyword(searchKeyword);
+        return AnswersResponseDto.of(
+                answers.stream().map(MongoAnswer::getQna).toList(),
+                new PageInfo(answers.size(), 1));
+    }
+
     private List<Map<String, Object>> splitByAnswerFilteredByFields(
             List<String> fields, List<Map<String, Object>> answers) {
         return answers.stream()
