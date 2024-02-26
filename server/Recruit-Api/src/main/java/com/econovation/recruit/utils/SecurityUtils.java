@@ -4,7 +4,7 @@ import org.springframework.http.ResponseCookie;
 
 public class SecurityUtils {
     public static ResponseCookie setCookie(String name, String value) {
-        return ResponseCookie.from(name,value)
+        return ResponseCookie.from(name, value)
                 .secure(true)
                 .sameSite("None")
                 .httpOnly(true)

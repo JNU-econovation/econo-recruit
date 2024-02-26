@@ -17,7 +17,6 @@ import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +59,17 @@ public class UserController {
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
-        response.addHeader("Set-Cookie", new StringBuilder(SecurityUtils.setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken()).toString())
-                .append("; ")
-                .append(SecurityUtils.setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken()))
-                .toString());
+        response.addHeader(
+                "Set-Cookie",
+                new StringBuilder(
+                                SecurityUtils.setCookie(
+                                                "ACCESS_TOKEN", tokenResponse.getAccessToken())
+                                        .toString())
+                        .append("; ")
+                        .append(
+                                SecurityUtils.setCookie(
+                                        "REFRESH_TOKEN", tokenResponse.getRefreshToken()))
+                        .toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
