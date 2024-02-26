@@ -6,6 +6,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.PASSWORD_SUCCES
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
+import com.econovation.recruit.utils.SecurityUtils;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.DevelopOnlyApi;
 import com.econovation.recruitcommon.annotation.PasswordValidate;
@@ -16,7 +17,6 @@ import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +59,17 @@ public class UserController {
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
-        Cookie accessCookie = setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken());
-        response.addCookie(accessCookie);
-        Cookie refreshCookie = setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken());
-        response.addCookie(refreshCookie);
+        response.addHeader(
+                "Set-Cookie",
+                new StringBuilder(
+                                SecurityUtils.setCookie(
+                                                "ACCESS_TOKEN", tokenResponse.getAccessToken())
+                                        .toString())
+                        .append("; ")
+                        .append(
+                                SecurityUtils.setCookie(
+                                        "REFRESH_TOKEN", tokenResponse.getRefreshToken()))
+                        .toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
@@ -87,14 +94,5 @@ public class UserController {
             @RequestParam @Valid @PasswordValidate String password) {
         userRegisterUseCase.changePassword(password);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
-    }
-
-    private Cookie setCookie(String name, String value) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 30);
-        cookie.setSecure(true);
-        return cookie;
     }
 }
