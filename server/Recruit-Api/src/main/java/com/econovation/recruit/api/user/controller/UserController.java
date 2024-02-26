@@ -60,8 +60,10 @@ public class UserController {
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
-        response.addHeader("Set-Cookie", SecurityUtils.setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken()).toString()
-                + "; " + SecurityUtils.setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken()).toString());
+        response.addHeader("Set-Cookie", new StringBuilder(SecurityUtils.setCookie("ACCESS_TOKEN", tokenResponse.getAccessToken()).toString())
+                .append("; ")
+                .append(SecurityUtils.setCookie("REFRESH_TOKEN", tokenResponse.getRefreshToken()))
+                .toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
