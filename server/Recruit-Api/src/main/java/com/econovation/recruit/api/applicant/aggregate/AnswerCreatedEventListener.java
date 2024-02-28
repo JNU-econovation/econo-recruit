@@ -13,7 +13,6 @@ import io.vavr.control.Validation;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnswerCreatedEventListener {
     private final MongoAnswerAdaptor answerAdaptor;
 
-    @Value("${econovation.year}")
-    private Integer year;
+    //    @Value("${econovation.year}")
+    //    private Integer year;
 
     @EventHandler
     @Transactional
@@ -40,12 +39,9 @@ public class AnswerCreatedEventListener {
 
         answerAdaptor.save(answer);
 
-        String name = qna.get("name").toString().replace("\"", "");
-        ;
-        String hopeField = qna.get("field").toString().replace("\"", "");
-        ;
-        String email = qna.get("email").toString().replace("\"", "");
-        ;
+        String name = qna.get("name").toString();
+        String hopeField = qna.get("field").toString();
+        String email = qna.get("email").toString();
 
         // email 전송 event처리
         ApplicantRegisterEvent applicantRegisterEvent =
@@ -61,7 +57,7 @@ public class AnswerCreatedEventListener {
 
     private Validation<RecruitCodeException, Object> validateIsRightPosition(
             Map<String, Object> qna) {
-        String field = qna.get("field").toString().replace("\"", "");
+        String field = qna.get("field").toString();
         ;
         if (field.equals("기획자") || field.equals("개발자") || field.equals("디자이너")) {
             return Validation.valid(qna);
@@ -71,9 +67,8 @@ public class AnswerCreatedEventListener {
 
     private Validation<RecruitCodeException, Map<String, Object>> validateDuplicateSudentId(
             Map<String, Object> qna) {
-        String studentId = qna.get("classOf").toString().replace("\"", "");
-        ;
-        if (answerAdaptor.existsByAnswer(studentId, year)) {
+        String studentId = qna.get("classOf").toString();
+        if (answerAdaptor.existsByAnswer(studentId, 27)) {
             throw ApplicantDuplicateSubmitException.EXCEPTION;
         }
         return Validation.valid(qna);

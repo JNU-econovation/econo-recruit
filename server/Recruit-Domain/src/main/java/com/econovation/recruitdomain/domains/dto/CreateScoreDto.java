@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 public class CreateScoreDto {
     private String applicantId;
-    private List<ScoreVo> scoreVo;
+    private List<Float> scoreVo;
 }

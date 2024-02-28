@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.handler;
 
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -25,7 +26,9 @@ public class ApplicantRegisterEventConfirmEmailHandler {
     public void handle(ApplicantRegisterEvent applicantRegistEvent) {
         log.info(applicantRegistEvent.getUserName() + "님의 지원서가 접수되었습니다.");
         commonsEmailSender.send(
-                applicantRegistEvent.getEmail(), applicantRegistEvent.getApplicantId());
+                applicantRegistEvent.getEmail(),
+                applicantRegistEvent.getApplicantId(),
+                LocalDateTime.now());
     }
 
     private String generateConfirmRegisterEmailBody(String userName) {

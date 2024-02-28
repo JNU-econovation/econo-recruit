@@ -99,3 +99,8 @@ spring:
 logging:
   level:
     ROOT: WARN
+---
+spring:
+  config:
+    activate:
+      on-profile: test

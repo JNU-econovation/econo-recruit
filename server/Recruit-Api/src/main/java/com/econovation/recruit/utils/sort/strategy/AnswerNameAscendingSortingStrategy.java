@@ -2,9 +2,8 @@ package com.econovation.recruit.utils.sort.strategy;
 
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 @Qualifier("answerNameSort")
 public class AnswerNameAscendingSortingStrategy implements SortStrategy<MongoAnswer> {
     @Override

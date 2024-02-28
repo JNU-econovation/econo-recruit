@@ -65,8 +65,8 @@ public class ApplicantSlackSendAndCardRegisterEventHandler {
     }
 
     private String generateCardTitle(ApplicantRegisterEvent event) {
-        return String.format("[%s] %s", extractHopeField(event.getHopeField()), event.getUserName())
-                .replace("\"", "");
+        return String.format(
+                "[%s] %s", extractHopeField(event.getHopeField()), event.getUserName());
     }
 
     private String extractHopeField(String title) {
