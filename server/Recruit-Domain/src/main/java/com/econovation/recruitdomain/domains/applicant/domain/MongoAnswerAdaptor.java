@@ -15,20 +15,20 @@ import org.springframework.data.mongodb.core.query.Query;
 @Adaptor
 @RequiredArgsConstructor
 public class MongoAnswerAdaptor {
-    private final AnswerMongoRepository answerMongoRepository;
+    private final MongoAnswerRepository mongoAnswerRepository;
 
     private final MongoTemplate mongoTemplate;
 
     public void save(MongoAnswer answer) {
-        answerMongoRepository.save(answer);
+        mongoAnswerRepository.save(answer);
     }
 
     public Either<RecruitCodeException, MongoAnswer> findById(String applicantId) {
-        return toEither(answerMongoRepository.findById(applicantId));
+        return toEither(mongoAnswerRepository.findById(applicantId));
     }
 
     public List<MongoAnswer> findAll() {
-        return answerMongoRepository.findAll();
+        return mongoAnswerRepository.findAll();
     }
 
     public boolean existsByAnswer(String studentId, Integer year) {

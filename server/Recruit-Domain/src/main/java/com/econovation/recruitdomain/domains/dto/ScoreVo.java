@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ScoreVo {
-    private String creteria;
+    private Integer creteria;
     private Float score;
 }

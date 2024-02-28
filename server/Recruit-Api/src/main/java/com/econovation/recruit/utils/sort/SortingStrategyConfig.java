@@ -3,7 +3,7 @@ package com.econovation.recruit.utils.sort;
 import com.econovation.recruit.utils.sort.strategy.AnswerNameAscendingSortingStrategy;
 import com.econovation.recruit.utils.sort.strategy.AnswerNewestSortingStrategy;
 import com.econovation.recruit.utils.sort.strategy.AnswerObjectiveSortingStrategy;
-import com.econovation.recruit.utils.sort.strategy.InterviewerNameAscendingSortingSortingStrategy;
+import com.econovation.recruit.utils.sort.strategy.InterviewerNameAscendingSortingStrategy;
 import com.econovation.recruit.utils.sort.strategy.InterviewerNewestSortingStrategy;
 import com.econovation.recruit.utils.sort.strategy.SortStrategy;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SortingStrategyConfig {
     @Bean
-    @Qualifier(value = "interviewerNewestSort")
-    public SortStrategy<Interviewer> interviewerNewestSortingStrategy() {
-        return new InterviewerNewestSortingStrategy();
+    @Qualifier(value = "interviewerNameSort")
+    public SortStrategy<Interviewer> interviewerNameAscendingSortingStrategy() {
+        return new InterviewerNameAscendingSortingStrategy();
     }
 
     @Bean
-    @Qualifier(value = "interviewerNameSort")
-    public SortStrategy<Interviewer> interviewerNameAscendingSortingSortingStrategy() {
-        return new InterviewerNameAscendingSortingSortingStrategy();
+    @Qualifier(value = "interviewerNewestSort")
+    public SortStrategy<Interviewer> interviewerNewestSortingStrategy() {
+        return new InterviewerNewestSortingStrategy();
     }
 
     @Bean

@@ -2,9 +2,8 @@ package com.econovation.recruit.utils.sort.strategy;
 
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 @Qualifier("interviewerNewestSort")
 public class InterviewerNewestSortingStrategy implements SortStrategy<Interviewer> {
     @Override
