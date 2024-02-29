@@ -57,17 +57,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            whoami
             cd ./econo-recruit/server
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             # Remove origin was container 
-            docker rm -f Econovation_Recruit_Server
-           
+            docker rm -f backend
             # Pull and Deploy new built docker image with new tag
             docker pull blackbean99@econo-recruit:latest
-            docker-compose up -d
-            
-            # Remove all unused docker image
+            docker-compose up -d --remove-orphans
             docker image prune -a -f
 
       - name: 배포 완료 슬랙 알림 보내기

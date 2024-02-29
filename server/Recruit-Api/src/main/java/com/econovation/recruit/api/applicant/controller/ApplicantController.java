@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,9 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final SortHelper<Map<String, Object>> sortHelper;
 
+    @Value("${econovation.year}")
+    private Integer year;
+
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
     @XssProtected
@@ -58,7 +62,7 @@ public class ApplicantController {
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
         // validateOutdated();
-        commandGateway.send(new CreateAnswerCommand(UUID.randomUUID().toString(), 21, qna));
+        commandGateway.send(new CreateAnswerCommand(UUID.randomUUID().toString(), year, qna));
         return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
     }
 

@@ -72,6 +72,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*")
                 .permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
+                .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/token")
                 .permitAll()
                 .mvcMatchers(HttpMethod.GET, "/api/v1/timetables")

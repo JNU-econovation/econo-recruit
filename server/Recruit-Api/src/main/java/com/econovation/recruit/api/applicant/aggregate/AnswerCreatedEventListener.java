@@ -21,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnswerCreatedEventListener {
     private final MongoAnswerAdaptor answerAdaptor;
 
-    //    @Value("${econovation.year}")
-    //    private Integer year;
-
     @EventHandler
     @Transactional
     public void handle(AnswerCreatedEvent event) {
@@ -58,7 +55,6 @@ public class AnswerCreatedEventListener {
     private Validation<RecruitCodeException, Object> validateIsRightPosition(
             Map<String, Object> qna) {
         String field = qna.get("field").toString();
-        ;
         if (field.equals("기획자") || field.equals("개발자") || field.equals("디자이너")) {
             return Validation.valid(qna);
         }
