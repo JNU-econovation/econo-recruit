@@ -6,6 +6,7 @@ import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.score.domain.Score;
+import com.econovation.recruitdomain.domains.score.exception.AlreadyScoredApplicantException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
@@ -30,6 +31,7 @@ public class ScoreService implements ScoreUseCase {
     public void createScore(CreateScoreDto scoreDto) {
         Long idpId = SecurityUtils.getCurrentUserId();
         AtomicInteger index = new AtomicInteger(1);
+        validateCreateScore(scoreDto, idpId);
         List<Score> scores =
                 scoreDto.getScoreVo().stream()
                         .map(
@@ -42,6 +44,16 @@ public class ScoreService implements ScoreUseCase {
                                                 .build())
                         .toList();
         scoreRecordPort.save(scores);
+    }
+
+    private void validateCreateScore(CreateScoreDto scoreDto, Long idpId) {
+        scoreLoadPort.findByApplicantId(scoreDto.getApplicantId()).stream()
+                .filter(score -> score.getIdpId().equals(idpId))
+                .findAny()
+                .ifPresent(
+                        score -> {
+                            throw AlreadyScoredApplicantException.EXCEPTION;
+                        });
     }
 
     @Override
@@ -64,7 +76,9 @@ public class ScoreService implements ScoreUseCase {
                 scores.stream()
                         .collect(
                                 Collectors.groupingBy(
-                                        score -> interviewers.get(score.getIdpId()),
+                                        score ->
+                                                interviewers.getOrDefault(
+                                                        score.getIdpId(), "삭제된 사용자"),
                                         Collectors.mapping(Score::getScore, Collectors.toList())));
         List<Float> averageScores = calculateAverageScore(result);
         result.put("average", averageScores);
