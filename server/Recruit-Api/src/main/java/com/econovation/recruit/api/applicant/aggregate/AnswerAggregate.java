@@ -28,7 +28,6 @@ public class AnswerAggregate {
     // Constructor for creating an AnswerAggregate
     @CommandHandler
     public AnswerAggregate(CreateAnswerCommand command) {
-
         apply(new AnswerCreatedEvent(command.getId(), command.getYear(), command.getQna()));
     }
 

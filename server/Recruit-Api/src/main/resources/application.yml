@@ -69,6 +69,11 @@ mail:
     url: ${MAIL_DESTINATION_URL:http://localhost:8080}
 econovation:
   year: ${ECONOVATION_YEAR:27}
+  recruit:
+    period:
+        start: ${RECRUIT_PERIOD_START:2021-01-01T00:00:00}
+        end: ${RECRUIT_PERIOD_END:2021-12-31T23:59:59}
+        enabled: ${RECRUIT_PERIOD_ENABLED:false}
 ---
 spring:
   config:
