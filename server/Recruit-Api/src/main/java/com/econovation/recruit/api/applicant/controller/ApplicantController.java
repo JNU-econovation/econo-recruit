@@ -8,7 +8,6 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
-import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
@@ -45,12 +44,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
+
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
     private final CommandGateway commandGateway;
-    private final SortHelper<Map<String, Object>> sortHelper;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -62,8 +61,9 @@ public class ApplicantController {
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
         // validateOutdated();
-        commandGateway.send(new CreateAnswerCommand(UUID.randomUUID().toString(), year, qna));
-        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        String applicantId = UUID.randomUUID().toString();
+        commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
+        return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
