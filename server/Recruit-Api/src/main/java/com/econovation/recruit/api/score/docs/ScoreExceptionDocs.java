@@ -14,4 +14,7 @@ public class ScoreExceptionDocs implements SwaggerExampleExceptions {
 
     @ExplainError("해당 점수를 찾을 수 없습니다.")
     public RecruitCodeException 카드_위치_변경_불가 = ScoreNotFoundException.EXCEPTION;
+
+    @ExplainError("이미 평가된 지원자입니다.")
+    public RecruitCodeException 이미_평가된_지원자 = ScoreNotFoundException.EXCEPTION;
 }
