@@ -16,7 +16,7 @@ import lombok.Getter;
 public enum ScoreErrorCode implements BaseErrorCode {
     SCORE_NOT_FOUND(NOT_FOUND, "LABEL_404_1", "해당 라벨을 찾을 수 없습니다."),
     SCORE_INVALID_FIELD_SUBMIT(BAD_REQUEST, "LABEL_400_1", "유효하지 않은 평가 항목에 대한 점수입니다."),
-    ;
+    ALREADY_SCORED_APPLICANT(BAD_REQUEST, "LABEL_400_2", "이미 평가된 지원자입니다.");
 
     private Integer status;
     private String code;
