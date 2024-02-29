@@ -8,19 +8,17 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
+import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
-import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfDateException;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -50,6 +48,7 @@ public class ApplicantController {
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
     private final CommandGateway commandGateway;
+    private final ApplicantValidator applicantValidator;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -60,7 +59,7 @@ public class ApplicantController {
     @PostMapping("/applicants")
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
-        // validateOutdated();
+        applicantValidator.validateRegisterApplicant(qna);
         String applicantId = UUID.randomUUID().toString();
         commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
         return new ResponseEntity<>(applicantId, HttpStatus.OK);
@@ -98,28 +97,8 @@ public class ApplicantController {
     @PostMapping("/search/{search-keyword}/applicants")
     public ResponseEntity<AnswersResponseDto> searchApplicant(
             @PathVariable(value = "search-keyword") String searchKeyword) {
-        //        validateOutdated();
         AnswersResponseDto result = applicantQueryUseCase.search(searchKeyword);
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    //    ------------------------------
-
-    private void validateOutdated() {
-        // 현재 한국 시간 가져오기
-        ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
-        ZonedDateTime currentKoreaTime = ZonedDateTime.now(koreaZoneId);
-        log.info("지원 현재 한국 시간: {}", currentKoreaTime);
-
-        // 비교할 날짜와 시간 설정 (2023년 09월 16일 00시 00분 00초, 한국 시간)
-        LocalDateTime outdatedDateTime = LocalDateTime.of(2023, 9, 16, 0, 0, 0);
-        ZonedDateTime outdatedKoreaTime = ZonedDateTime.of(outdatedDateTime, koreaZoneId);
-
-        // 현재 시간이 2023년 09월 16일 00시 00분 00초 (한국 시간) 이후인지 확인
-        boolean isOutdated = currentKoreaTime.isAfter(outdatedKoreaTime);
-        if (isOutdated) {
-            throw ApplicantOutOfDateException.EXCEPTION;
-        }
     }
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")
