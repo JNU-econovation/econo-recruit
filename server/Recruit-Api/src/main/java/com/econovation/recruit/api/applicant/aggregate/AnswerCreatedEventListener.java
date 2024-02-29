@@ -32,7 +32,7 @@ public class AnswerCreatedEventListener {
                         .qna(event.getQna())
                         .build();
         // 학번으로 중복 체크
-        validateRegisterApplicant(qna);
+        //        validateRegisterApplicant(qna);
 
         answerAdaptor.save(answer);
 
