@@ -73,7 +73,9 @@ public class ApplicantController {
         return new ResponseEntity<>(applicantQueryUseCase.execute(applicantId), HttpStatus.OK);
     }
 
-    @Operation(summary = "지원자 기수로 지원서를 조회합니다. / page는 1부터 시작합니다.")
+    @Operation(
+            summary = "지원자 기수로 지원서를 조회합니다. / page는 1부터 시작합니다.",
+            description = "order는 name, newest, objective중 하나입니다.")
     @TimeTrace
     @GetMapping("/page/{page}/year/{year}/applicants")
     public ResponseEntity<AnswersResponseDto> getApplicantsByYear(

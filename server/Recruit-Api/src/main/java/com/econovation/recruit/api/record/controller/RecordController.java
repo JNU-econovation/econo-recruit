@@ -51,7 +51,7 @@ public class RecordController {
 
     @Operation(
             summary = "지원자의 면접기록을 페이지별로 조회합니다",
-            description = "Newest, Name, Object, Score 이 4가지중 하나를 입력하시면 됩니다. (대소문자 구분 해주세요)")
+            description = "newest, name, object, score 이 4가지중 하나를 입력하시면 됩니다.")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/page/{page}/records")
     public ResponseEntity<RecordsViewResponseDto> findAll(

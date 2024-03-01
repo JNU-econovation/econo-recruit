@@ -81,7 +81,7 @@ public class RecordService implements RecordUseCase {
                                         Collectors.averagingDouble(Score::getScore)));
         List<MongoAnswer> applicants = applicantQueryUseCase.execute(applicantIds);
 
-        if (sortType.equals("Score")) {
+        if (sortType.equals("score")) {
             List<Record> records = sortRecordsByScoresDesc(result, scoreMap);
             return RecordsViewResponseDto.of(pageInfo, records, scoreMap, applicants);
         } else {
