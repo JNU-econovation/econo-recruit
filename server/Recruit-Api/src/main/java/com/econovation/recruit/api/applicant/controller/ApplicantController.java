@@ -86,7 +86,7 @@ public class ApplicantController {
 
     @Operation(summary = "모든 지원자의 지원서를 조회합니다.")
     @TimeTrace
-    @GetMapping("/applicants")
+    @GetMapping("/applicants/all")
     public ResponseEntity<List<Map<String, Object>>> getApplicants() {
         return new ResponseEntity<>(applicantQueryUseCase.execute(), HttpStatus.OK);
     }
