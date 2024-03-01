@@ -90,6 +90,7 @@ public class ApplicantController {
     }
     //    ------------------------------
 
+<<<<<<< HEAD
     private void validateOutdated() {
         // 현재 한국 시간 가져오기
         ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
@@ -105,6 +106,16 @@ public class ApplicantController {
         if (isOutdated) {
             throw ApplicantOutOfDateException.EXCEPTION;
         }
+=======
+    @Operation(summary = "지원서를 검색합니다.", description = "지원자가 지원서를 작성합니다.")
+    @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
+    @PostMapping("/page/{page}/search/{search-keyword}/applicants")
+    public ResponseEntity<AnswersResponseDto> searchApplicant(
+            @PathVariable(value = "page") Integer page,
+            @PathVariable(value = "search-keyword") String searchKeyword) {
+        AnswersResponseDto result = applicantQueryUseCase.search(page, searchKeyword);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+>>>>>>> f414665 ([feat]: Mongo Auto Text Indexing 및 페이지네이션 검색 기능 추가)
     }
 
     @Operation(summary = "지원자가 면접 가능 시간을 작성합니다.")

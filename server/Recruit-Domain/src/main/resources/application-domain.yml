@@ -15,6 +15,7 @@ spring:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017}
       database: ${MONGODB_DATABASE:applicant}
+      auto-index-creation: true
   jpa:
     hibernate:
       ddl-auto: update

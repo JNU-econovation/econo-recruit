@@ -29,12 +29,7 @@ public class AnswerCreatedEventListener {
     @Transactional
     public void handle(AnswerCreatedEvent event) {
         Map<String, Object> qna = event.getQna();
-        MongoAnswer answer =
-                MongoAnswer.builder()
-                        .id(event.getId())
-                        .year(event.getYear())
-                        .qna(event.getQna())
-                        .build();
+        MongoAnswer answer = new MongoAnswer(event.getId(), event.getYear(), qna);
         // 학번으로 중복 체크
         validateRegisterApplicant(qna);
 

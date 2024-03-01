@@ -24,4 +24,9 @@ public interface ApplicantQueryUseCase {
     List<MongoAnswer> execute(List<String> applicantIds);
 
     Map<String, Map<String, Object>> findAllApplicantVo(List<String> fields);
+<<<<<<< HEAD
+=======
+
+    AnswersResponseDto search(Integer page, String searchKeyword);
+>>>>>>> f414665 ([feat]: Mongo Auto Text Indexing 및 페이지네이션 검색 기능 추가)
 }

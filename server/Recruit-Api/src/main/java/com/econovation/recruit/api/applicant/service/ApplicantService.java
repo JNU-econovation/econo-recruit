@@ -96,6 +96,17 @@ public class ApplicantService implements ApplicantQueryUseCase {
         return result;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public AnswersResponseDto search(Integer page, String searchKeyword) {
+        List<MongoAnswer> answers = answerAdaptor.findBySearchKeyword(page, searchKeyword);
+        return AnswersResponseDto.of(
+                answers.stream().map(MongoAnswer::getQna).toList(),
+                new PageInfo(answers.size(), 1));
+    }
+
+>>>>>>> f414665 ([feat]: Mongo Auto Text Indexing 및 페이지네이션 검색 기능 추가)
     private List<Map<String, Object>> splitByAnswerFilteredByFields(
             List<String> fields, List<Map<String, Object>> answers) {
         return answers.stream()
