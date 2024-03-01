@@ -31,7 +31,7 @@ public class AnswerCreatedEventListener {
         Map<String, Object> qna = event.getQna();
         MongoAnswer answer = new MongoAnswer(event.getId(), event.getYear(), qna);
         // 학번으로 중복 체크
-        validateRegisterApplicant(qna);
+        //        validateRegisterApplicant(qna);
 
         answerAdaptor.save(answer);
 
