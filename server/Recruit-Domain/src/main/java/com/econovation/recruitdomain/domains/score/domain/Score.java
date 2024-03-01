@@ -22,7 +22,7 @@ public class Score {
     private String applicantId;
 
     @Column(name = "criteria")
-    private String criteria;
+    private Integer criteria;
 
     @Column(name = "score")
     private Float score;
@@ -30,13 +30,9 @@ public class Score {
     @Column(name = "idp_id")
     private Long idpId;
 
-    public Score updateScore(String criteria, Float score) {
-        this.criteria = criteria;
+    public Score updateScore(Float score) {
+        //        this.criteria = criteria;
         this.score = score;
         return this;
-    }
-
-    public void updateScore(Float score) {
-        this.score = score;
     }
 }

@@ -3,8 +3,8 @@ package com.econovation.recruitdomain.domains.applicant.adaptor;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitdomain.domains.applicant.domain.AnswerMongoRepository;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.query.TextQuery;
 @RequiredArgsConstructor
 public class AnswerAdaptor {
     private final MongoTemplate mongoTemplate;
-    private final AnswerMongoRepository answerRepository;
+    private final MongoAnswerRepository answerRepository;
 
     public void save(MongoAnswer answer) {
         answerRepository.save(answer);

@@ -38,7 +38,7 @@ public class ScoreController {
     @Operation(description = "Score 평가 수정")
     @ApiErrorExceptionsExample(ScoreExceptionDocs.class)
     @PutMapping("/scores")
-    public ResponseEntity<String> updateScore(CreateScoreDto updateScoreDto) {
+    public ResponseEntity<String> updateScore(@RequestBody CreateScoreDto updateScoreDto) {
         scoreUseCase.updateScore(updateScoreDto);
         return new ResponseEntity<>(SCORE_SUCCESS_UPDATE_MESSAGE, HttpStatus.OK);
     }

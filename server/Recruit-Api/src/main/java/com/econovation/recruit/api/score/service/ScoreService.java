@@ -1,22 +1,19 @@
 package com.econovation.recruit.api.score.service;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.CRETERIA_SET;
-
 import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.score.usecase.ScoreUseCase;
 import com.econovation.recruitdomain.domains.dto.CreateScoreDto;
 import com.econovation.recruitdomain.domains.dto.ScoreAverageDto;
-import com.econovation.recruitdomain.domains.dto.ScoreVo;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.score.domain.Score;
-import com.econovation.recruitdomain.domains.score.exception.ScoreInvalidFieldException;
+import com.econovation.recruitdomain.domains.score.exception.AlreadyScoredApplicantException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import com.econovation.recruitdomain.out.ScoreRecordPort;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -33,75 +30,57 @@ public class ScoreService implements ScoreUseCase {
     @Override
     public void createScore(CreateScoreDto scoreDto) {
         Long idpId = SecurityUtils.getCurrentUserId();
-        List<String> inputCreteria =
-                scoreDto.getScoreVo().stream()
-                        .map(scoreVo -> scoreVo.getCreteria())
-                        .collect(Collectors.toList());
-        if (!CRETERIA_SET.containsAll(inputCreteria)) throw ScoreInvalidFieldException.EXCEPTION;
+        AtomicInteger index = new AtomicInteger(1);
+        validateCreateScore(scoreDto, idpId);
         List<Score> scores =
                 scoreDto.getScoreVo().stream()
                         .map(
                                 scoreVo ->
                                         Score.builder()
                                                 .applicantId(scoreDto.getApplicantId())
-                                                .score(scoreVo.getScore())
-                                                .criteria(scoreVo.getCreteria())
+                                                .criteria(index.getAndIncrement())
+                                                .score(scoreVo)
                                                 .idpId(idpId)
                                                 .build())
-                        .collect(java.util.stream.Collectors.toList());
+                        .toList();
         scoreRecordPort.save(scores);
+    }
+
+    private void validateCreateScore(CreateScoreDto scoreDto, Long idpId) {
+        scoreLoadPort.findByApplicantId(scoreDto.getApplicantId()).stream()
+                .filter(score -> score.getIdpId().equals(idpId))
+                .findAny()
+                .ifPresent(
+                        score -> {
+                            throw AlreadyScoredApplicantException.EXCEPTION;
+                        });
     }
 
     @Override
     @Transactional
     public void updateScore(CreateScoreDto scoreDto) {
         Long idpId = SecurityUtils.getCurrentUserId();
-        Map<String, Float> scoreVoMap =
-                scoreDto.getScoreVo().stream()
-                        .collect(Collectors.toMap(ScoreVo::getCreteria, ScoreVo::getScore));
-
         scoreLoadPort.findByApplicantId(scoreDto.getApplicantId()).stream()
-                .filter(
-                        score ->
-                                CRETERIA_SET.contains(score.getCriteria())
-                                        && score.getIdpId().equals(idpId))
+                .filter(score -> score.getIdpId().equals(idpId))
                 .forEach(
                         score -> {
-                            Float matchingScore = scoreVoMap.get(score.getCriteria());
-                            if (matchingScore != null) {
-                                score.updateScore(matchingScore);
-                            }
+                            score.updateScore(scoreDto.getScoreVo().get(score.getCriteria() - 1));
                         });
     }
 
     @Override
-    public Map<String, List<ScoreVo>> getByApplicantId(String applicantId) {
-        List<Score> scores = scoreLoadPort.findByApplicantId(applicantId);
-        Map<Long, String> interviewers = getAssociatedMapWithIdpIdWithName(scores);
-        Map<String, List<ScoreVo>> result =
+    public Map<String, List<Float>> getByApplicantId(
+            String applicantId, List<Score> scores, Map<Long, String> interviewers) {
+        // idpId, name
+        Map<String, List<Float>> result =
                 scores.stream()
-                        .filter(score -> CRETERIA_SET.contains(score.getCriteria()))
-                        .collect(Collectors.groupingBy(score -> interviewers.get(score.getIdpId())))
-                        .entrySet()
-                        .stream()
                         .collect(
-                                Collectors.toMap(
-                                        Map.Entry::getKey,
-                                        entry ->
-                                                entry.getValue().stream()
-                                                        .map(
-                                                                score ->
-                                                                        ScoreVo.builder()
-                                                                                .score(
-                                                                                        score
-                                                                                                .getScore())
-                                                                                .creteria(
-                                                                                        score
-                                                                                                .getCriteria())
-                                                                                .build())
-                                                        .collect(Collectors.toList())));
-        // Calculate average score
-        List<ScoreVo> averageScores = calculateAverageScore(result);
+                                Collectors.groupingBy(
+                                        score ->
+                                                interviewers.getOrDefault(
+                                                        score.getIdpId(), "삭제된 사용자"),
+                                        Collectors.mapping(Score::getScore, Collectors.toList())));
+        List<Float> averageScores = calculateAverageScore(result);
         result.put("average", averageScores);
 
         return result;
@@ -109,30 +88,41 @@ public class ScoreService implements ScoreUseCase {
 
     @Override
     public ScoreAverageDto getApplicantScoreWithAverage(String applicantId) {
-        Map<String, List<ScoreVo>> byApplicantId = getByApplicantId(applicantId);
-        List<ScoreVo> average = byApplicantId.get("average");
+        Long userId = SecurityUtils.getCurrentUserId();
 
-        // totalAverage = average.stream().map(ScoreVo::getScore).reduce(0, Integer::sum) / 4;
-        Float averageScore =
-                average.stream().map(ScoreVo::getScore).reduce(0f, Float::sum)
-                        / CRETERIA_SET.size();
-        return ScoreAverageDto.of(averageScore, byApplicantId);
+        List<Score> scores = scoreLoadPort.findByApplicantId(applicantId);
+        Map<Long, String> interviewers = getAssociatedMapWithIdpIdWithName(scores);
+
+        Map<String, List<Float>> byApplicantId =
+                getByApplicantId(applicantId, scores, interviewers);
+
+        List<Float> average = byApplicantId.get("average");
+        Float totalAverage = average.stream().reduce(0f, Float::sum) / average.size();
+        List<Float> myScore = byApplicantId.get(interviewers.get(userId));
+        byApplicantId.remove(interviewers.get(userId));
+        byApplicantId.remove("average");
+        return ScoreAverageDto.of(totalAverage, average, myScore, byApplicantId);
     }
 
-    private List<ScoreVo> calculateAverageScore(Map<String, List<ScoreVo>> result) {
-        List<ScoreVo> averageScores = new LinkedList<>();
+    private List<Float> calculateAverageScore(Map<String, List<Float>> result) {
+        List<Float> averageScores = new LinkedList<>();
 
-        for (String criteria : CRETERIA_SET) {
-            Double average =
-                    result.values().stream()
-                            .flatMap(Collection::stream)
-                            .filter(scoreVo -> criteria.equals(scoreVo.getCreteria()))
-                            .mapToDouble(ScoreVo::getScore)
-                            .average()
-                            .orElse(0);
+        // 리스트의 각 위치에 대해 값을 더하고 카운트
+        result.forEach(
+                (key, value) -> {
+                    for (int i = 0; i < value.size(); i++) {
+                        if (averageScores.size() <= i) {
+                            averageScores.add(value.get(i)); // 새로운 값 추가
+                        } else {
+                            averageScores.set(i, averageScores.get(i) + value.get(i)); // 값 더하기
+                        }
+                    }
+                });
 
-            averageScores.add(
-                    ScoreVo.builder().score(average.floatValue()).creteria(criteria).build());
+        // 리스트의 각 값을 리스트의 크기로 나눠서 평균 계산
+        int size = result.size();
+        for (int i = 0; i < averageScores.size(); i++) {
+            averageScores.set(i, averageScores.get(i) / size);
         }
 
         return averageScores;
@@ -141,8 +131,7 @@ public class ScoreService implements ScoreUseCase {
     @NotNull
     private Map<Long, String> getAssociatedMapWithIdpIdWithName(List<Score> scores) {
         return interviewerLoadPort
-                .loadInterviewerByIdpIds(
-                        scores.stream().map(Score::getIdpId).collect(Collectors.toList()))
+                .loadInterviewerByIdpIds(scores.stream().map(Score::getIdpId).toList())
                 .stream()
                 .collect(Collectors.toMap(Interviewer::getId, Interviewer::getName));
     }

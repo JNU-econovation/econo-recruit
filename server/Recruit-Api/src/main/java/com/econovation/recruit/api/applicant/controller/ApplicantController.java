@@ -8,20 +8,17 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
-import com.econovation.recruit.utils.sort.SortHelper;
+import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
-import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfDateException;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,12 +42,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
+
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
     private final CommandGateway commandGateway;
-    private final SortHelper<Map<String, Object>> sortHelper;
+    private final ApplicantValidator applicantValidator;
+
+    @Value("${econovation.year}")
+    private Integer year;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -57,9 +59,10 @@ public class ApplicantController {
     @PostMapping("/applicants")
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
-        // validateOutdated();
-        commandGateway.send(new CreateAnswerCommand(UUID.randomUUID().toString(), 21, qna));
-        return new ResponseEntity<>(APPLICANT_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+        applicantValidator.validateRegisterApplicant(qna);
+        String applicantId = UUID.randomUUID().toString();
+        commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
+        return new ResponseEntity<>(applicantId, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")
@@ -86,24 +89,6 @@ public class ApplicantController {
     @GetMapping("/applicants")
     public ResponseEntity<List<Map<String, Object>>> getApplicants() {
         return new ResponseEntity<>(applicantQueryUseCase.execute(), HttpStatus.OK);
-    }
-    //    ------------------------------
-
-    private void validateOutdated() {
-        // 현재 한국 시간 가져오기
-        ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
-        ZonedDateTime currentKoreaTime = ZonedDateTime.now(koreaZoneId);
-        log.info("지원 현재 한국 시간: {}", currentKoreaTime);
-
-        // 비교할 날짜와 시간 설정 (2023년 09월 16일 00시 00분 00초, 한국 시간)
-        LocalDateTime outdatedDateTime = LocalDateTime.of(2023, 9, 16, 0, 0, 0);
-        ZonedDateTime outdatedKoreaTime = ZonedDateTime.of(outdatedDateTime, koreaZoneId);
-
-        // 현재 시간이 2023년 09월 16일 00시 00분 00초 (한국 시간) 이후인지 확인
-        boolean isOutdated = currentKoreaTime.isAfter(outdatedKoreaTime);
-        if (isOutdated) {
-            throw ApplicantOutOfDateException.EXCEPTION;
-        }
     }
 
     @Operation(summary = "지원서를 검색합니다.", description = "지원자가 지원서를 작성합니다.")
@@ -155,7 +140,8 @@ public class ApplicantController {
     @TimeTrace
     @PostMapping("/applicants/mail")
     public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
-        commonsEmailSender.send(emailSendDto.getEmail(), emailSendDto.getApplicantId());
+        commonsEmailSender.send(
+                emailSendDto.getEmail(), emailSendDto.getApplicantId(), LocalDateTime.now());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

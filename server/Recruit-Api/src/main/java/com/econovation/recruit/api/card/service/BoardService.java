@@ -162,7 +162,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
         //        \"hopeField\" -> hopeField 로 변경
-        hopeField = hopeField.replace("\"", "");
+        hopeField = hopeField;
         Integer columnsId = 0;
         if (hopeField.equals("개발자")) {
             columnsId = DEVELOPER_COLUMNS_ID;

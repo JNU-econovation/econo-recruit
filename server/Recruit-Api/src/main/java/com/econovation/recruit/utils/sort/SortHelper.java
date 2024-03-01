@@ -18,9 +18,6 @@ public class SortHelper<T> {
     private final Map<Class, Map<String, SortStrategy<?>>> sortStrategies;
 
     public <T> void sort(List<T> data, String sortType) {
-        //        if (data.isEmpty()) {
-        //            throw new IllegalArgumentException("Data list is empty");
-        //        }
 
         Class<?> dataType = data.get(0).getClass();
         Map<String, SortStrategy<?>> strategies = sortStrategies.get(dataType);
