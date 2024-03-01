@@ -51,8 +51,6 @@ public class AnswerAdaptor {
     public List<MongoAnswer> findByApplicantIds(List<String> applicantIds) {
         return answerRepository.findByIdIn(applicantIds);
     }
-<<<<<<< HEAD
-=======
 
     public List<MongoAnswer> findBySearchKeyword(Integer page, String searchKeyword) {
         TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny(searchKeyword);
@@ -65,5 +63,4 @@ public class AnswerAdaptor {
         List<MongoAnswer> mongoAnswers = mongoTemplate.find(query, MongoAnswer.class);
         return mongoAnswers;
     }
->>>>>>> f414665 ([feat]: Mongo Auto Text Indexing 및 페이지네이션 검색 기능 추가)
 }
