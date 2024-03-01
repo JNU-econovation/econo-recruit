@@ -49,6 +49,11 @@ public class ApplicantService implements ApplicantQueryUseCase {
 
         sortHelper.sort(result, sortType);
         List<Map<String, Object>> sortedResult = result.stream().map(MongoAnswer::getQna).toList();
+        // answer id를 각 map에 추가
+        sortedResult.forEach(
+                map -> {
+                    map.put("id", result.get(sortedResult.indexOf(map)).getId());
+                });
 
         if (sortedResult.isEmpty()) {
             return AnswersResponseDto.of(Collections.emptyList(), pageInfo);
