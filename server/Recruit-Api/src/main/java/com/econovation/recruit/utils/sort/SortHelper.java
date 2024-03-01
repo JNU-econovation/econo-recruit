@@ -23,12 +23,12 @@ public class SortHelper<T> {
         Map<String, SortStrategy<?>> strategies = sortStrategies.get(dataType);
         if (sortType == null || sortType.isEmpty() || strategies == null || strategies.isEmpty()) {
             // 데이터 타입에 대한 정렬 전략이 없을 경우 기본 정렬 전략을 사용
-            sortType = "Newest";
+            sortType = "newest";
         }
 
         SortStrategy<T> sortStrategy = (SortStrategy<T>) strategies.get(sortType);
         if (sortStrategy == null) {
-            sortStrategy = (SortStrategy<T>) strategies.get("Newest");
+            sortStrategy = (SortStrategy<T>) strategies.get("newest");
         }
 
         data.sort(sortStrategy::compare);
@@ -60,10 +60,13 @@ public class SortHelper<T> {
     private String resolveSortType(String qualifierValue) {
         // 대문자로 시작하는 첫 번째 단어를 추출하여 정렬 타입으로 사용
         Matcher matcher = Pattern.compile("[A-Z][a-z]*").matcher(qualifierValue);
-        return matcher.find() ? matcher.group() : "";
+        String s = matcher.find() ? matcher.group() : "";
+        return s.substring(0, 1).toLowerCase() + s.substring(1);
     }
     // 지원서 정렬 데이터
     public int compare(T obj1, T obj2) {
         return sortStrategy.compare(obj1, obj2);
     }
 }
+
+
