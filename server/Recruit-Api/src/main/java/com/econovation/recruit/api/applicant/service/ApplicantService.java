@@ -97,11 +97,11 @@ public class ApplicantService implements ApplicantQueryUseCase {
     }
 
     @Override
-    public AnswersResponseDto search(String searchKeyword) {
-        List<MongoAnswer> answers = answerAdaptor.findBySearchKeyword(searchKeyword);
+    public AnswersResponseDto search(Integer page, String searchKeyword) {
+        List<MongoAnswer> answers = answerAdaptor.findBySearchKeyword(page, searchKeyword);
         return AnswersResponseDto.of(
                 answers.stream().map(MongoAnswer::getQna).toList(),
-                new PageInfo(answers.size(), 1));
+                new PageInfo(answers.size(), page));
     }
 
     private List<Map<String, Object>> splitByAnswerFilteredByFields(

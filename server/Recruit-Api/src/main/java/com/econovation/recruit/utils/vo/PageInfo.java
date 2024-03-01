@@ -1,5 +1,7 @@
 package com.econovation.recruit.utils.vo;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +30,10 @@ public class PageInfo {
     public PageInfo(long totalCount, int page) {
         this.currentPage = page;
         this.listCount = (int) totalCount;
-        this.pageLimit = 10;
+        this.pageLimit = PAGE_SIZE;
         this.startPage = ((page - 1) / pageLimit) * pageLimit + 1;
         this.endPage = startPage + pageLimit - 1;
-        this.boardLimit = 10;
+        this.boardLimit = PAGE_SIZE;
         if (endPage > (listCount / boardLimit) + 1) {
             endPage = (listCount / boardLimit) + 1;
         }
