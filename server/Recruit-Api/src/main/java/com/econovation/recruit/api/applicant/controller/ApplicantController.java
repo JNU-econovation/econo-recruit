@@ -94,10 +94,11 @@ public class ApplicantController {
 
     @Operation(summary = "지원서를 검색합니다.", description = "지원자가 지원서를 작성합니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
-    @PostMapping("/search/{search-keyword}/applicants")
+    @PostMapping("/page/{page}/search/{search-keyword}/applicants")
     public ResponseEntity<AnswersResponseDto> searchApplicant(
+            @PathVariable(value = "page") Integer page,
             @PathVariable(value = "search-keyword") String searchKeyword) {
-        AnswersResponseDto result = applicantQueryUseCase.search(searchKeyword);
+        AnswersResponseDto result = applicantQueryUseCase.search(page, searchKeyword);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -1,5 +1,7 @@
 package com.econovation.recruitdomain.domains.record.adaptor;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
+
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import com.econovation.recruitdomain.domains.record.domain.RecordRepository;
@@ -27,7 +29,7 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
 
     @Override
     public List<Record> findAll(Integer page) {
-        return recordRepository.findAll(PageRequest.of(page - 1, 10)).getContent();
+        return recordRepository.findAll(PageRequest.of(page - 1, PAGE_SIZE)).getContent();
     }
 
     @Override
