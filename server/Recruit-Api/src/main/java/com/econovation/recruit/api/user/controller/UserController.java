@@ -61,15 +61,11 @@ public class UserController {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
         response.addHeader(
                 "Set-Cookie",
-                new StringBuilder(
-                                SecurityUtils.setCookie(
-                                                "ACCESS_TOKEN", tokenResponse.getAccessToken())
-                                        .toString())
-                        .append("; ")
-                        .append(
-                                SecurityUtils.setCookie(
-                                        "REFRESH_TOKEN", tokenResponse.getRefreshToken()))
+                SecurityUtils.setCookie("refreshToken", tokenResponse.getRefreshToken())
                         .toString());
+        response.addHeader(
+                "Set-Cookie",
+                SecurityUtils.setCookie("accessToken", tokenResponse.getAccessToken()).toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
