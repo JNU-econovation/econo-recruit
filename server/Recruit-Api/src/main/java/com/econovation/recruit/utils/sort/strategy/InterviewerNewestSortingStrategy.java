@@ -9,6 +9,6 @@ public class InterviewerNewestSortingStrategy implements SortStrategy<Interviewe
     @Override
     public int compare(Interviewer obj1, Interviewer obj2) {
         //         createdAt 값을 가져와 비교하여 정렬 순서를 결정합니다.
-        return obj1.getCreatedAt().compareTo(obj2.getCreatedAt());
+        return obj2.getCreatedAt().compareTo(obj1.getCreatedAt());
     }
 }
