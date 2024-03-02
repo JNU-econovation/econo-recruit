@@ -42,7 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private String resolveToken(HttpServletRequest request) {
         // 쿠키방식 지원
-        Cookie accessTokenCookie = WebUtils.getCookie(request, "accessToken");
+        Cookie accessTokenCookie = WebUtils.getCookie(request, "ACCESS_TOKEN");
         if (accessTokenCookie != null) {
             return accessTokenCookie.getValue();
         }
