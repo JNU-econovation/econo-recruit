@@ -1,8 +1,15 @@
 package com.econovation.recruit.utils.sort.strategy;
 
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
+import org.aspectj.util.Reflection;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 // @Component
 @Qualifier("answerObjectiveSort")
