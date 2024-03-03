@@ -8,6 +8,7 @@ import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,6 +19,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+@ConditionalOnProperty(
+        name = "notification.slack.enabled",
+        havingValue = "true",
+        matchIfMissing = false)
 public class ApplicantSlackSendAndCardRegisterEventHandler {
     private final SlackMessageProvider slackMessageProvider;
     private final SlackProperties slackProperties;

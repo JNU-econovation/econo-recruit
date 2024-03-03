@@ -22,11 +22,7 @@ throttle:
 auth:
     blacklist:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
-notification:
-  email:
-    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
-  slack:
-    enabled: ${NOTIFICATION_SLACK_ENABLED:true}
+
 login:
   page:
     url: ${LOGIN_PAGE_URL:http://localhost:8080/login}
@@ -71,9 +67,16 @@ econovation:
   year: ${ECONOVATION_YEAR:27}
   recruit:
     period:
-        start: ${RECRUIT_PERIOD_START:2021-01-01T00:00:00}
-        end: ${RECRUIT_PERIOD_END:2021-12-31T23:59:59}
-        enabled: ${RECRUIT_PERIOD_ENABLED:false}
+      start: ${RECRUIT_PERIOD_START:2024-03-04T00:00:00}
+      end: ${RECRUIT_PERIOD_END:2024-03-15T23:59:59}
+      passedDate: ${RECRUIT_PERIOD_PASSED_DATE:2024-03-18T09:00:00}
+    valid:
+      enabled: ${RECRUIT_PERIOD_ENABLED:false}
+notification:
+  email:
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
+  slack:
+    enabled: ${NOTIFICATION_SLACK_ENABLED:true}
 ---
 spring:
   config:

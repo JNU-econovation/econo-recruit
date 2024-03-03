@@ -29,7 +29,7 @@ public class ApplicantValidator {
     @Value("${econovation.year}")
     private Integer year;
 
-    @Value("${econovation.recruit.period.enabled}")
+    @Value("${econovation.recruit.valid.enabled}")
     private boolean validateEnabled;
 
     public Validation<Seq<RecruitCodeException>, Map<String, Object>> validateRegisterApplicant(
