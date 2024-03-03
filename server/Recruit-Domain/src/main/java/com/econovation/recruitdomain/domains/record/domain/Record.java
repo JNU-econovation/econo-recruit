@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.record.domain;
 
+import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Record {
+public class Record extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id")

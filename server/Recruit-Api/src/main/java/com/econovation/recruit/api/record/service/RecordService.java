@@ -18,6 +18,7 @@ import com.econovation.recruitdomain.out.RecordRecordPort;
 import com.econovation.recruitdomain.out.ScoreLoadPort;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -107,15 +108,17 @@ public class RecordService implements RecordUseCase {
             List<Record> records, List<MongoAnswer> applicants, String sortType) {
         // Newest, Name, Object 정렬
         sortHelper.sort(applicants, sortType);
-        // applicants id 순서로 records를 정렬
-        List<String> sortedApplicantIds = applicants.stream().map(MongoAnswer::getId).toList();
+        Map<String, Integer> applicantIndexMap = new HashMap<>();
+        for (int i = 0; i < applicants.size(); i++) {
+            applicantIndexMap.put(applicants.get(i).getId(), i);
+        }
+
         return records.stream()
                 .sorted(
                         Comparator.comparing(
-                                record -> {
-                                    int index = sortedApplicantIds.indexOf(record.getApplicantId());
-                                    return index == -1 ? Integer.MAX_VALUE : index;
-                                }))
+                                record ->
+                                        applicantIndexMap.getOrDefault(
+                                                record.getApplicantId(), Integer.MAX_VALUE)))
                 .toList();
     }
 

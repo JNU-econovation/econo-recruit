@@ -34,7 +34,7 @@ public class RecordsViewResponseDto {
                                                                             .equals(
                                                                                     record
                                                                                             .getApplicantId()))
-                                                    .findAny()
+                                                    .findFirst()
                                                     .get();
                                     return RecordViewResponseDto.from(record, score, applicant);
                                 })
