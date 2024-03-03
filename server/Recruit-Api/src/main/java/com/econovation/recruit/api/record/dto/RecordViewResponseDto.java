@@ -35,6 +35,6 @@ public class RecordViewResponseDto {
                 applicant.getQna().get("field2").toString(),
                 applicant.getQna().get("grade").toString(),
                 applicant.getQna().get("semester").toString(),
-                applicant.getModifiedDate());
+                recordVo.getUpdatedAt().toString());
     }
 }

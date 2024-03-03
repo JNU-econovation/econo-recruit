@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -29,7 +30,9 @@ public class RecordAdaptor implements RecordLoadPort, RecordRecordPort {
 
     @Override
     public List<Record> findAll(Integer page) {
-        return recordRepository.findAll(PageRequest.of(page - 1, PAGE_SIZE)).getContent();
+        return recordRepository
+                .findAll(PageRequest.of(page - 1, PAGE_SIZE, Sort.by("createdAt").descending()))
+                .getContent();
     }
 
     @Override
