@@ -15,8 +15,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-// @Component
+@Component
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "data.init.disabled", havingValue = "false", matchIfMissing = true)
