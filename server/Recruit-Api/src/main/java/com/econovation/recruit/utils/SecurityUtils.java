@@ -12,4 +12,14 @@ public class SecurityUtils {
                 .path("/")
                 .build();
     }
+
+    public static ResponseCookie logoutCookie(String name, String value) {
+        return ResponseCookie.from(name, value)
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .maxAge(0)
+                .path("/")
+                .build();
+    }
 }

@@ -62,6 +62,8 @@ public class RecruitStatic {
     public static final String WORK_CARD_SUCCESS_UPDATE_MESSAGE = "성공적으로 업무카드가 수정됐습니다";
     public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("field", "name");
 
+    public static final String LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 됐습니다";
+
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**",
         "/swagger-ui/**",
