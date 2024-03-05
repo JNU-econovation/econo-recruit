@@ -1,5 +1,7 @@
 package com.econovation.recruit.api.user.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
+
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
@@ -26,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -72,13 +72,9 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
         response.addHeader(
-                "Set-Cookie",
-                SecurityUtils.logoutCookie("refreshToken", null)
-                        .toString());
+                "Set-Cookie", SecurityUtils.logoutCookie("refreshToken", null).toString());
         response.addHeader(
-                "Set-Cookie",
-                SecurityUtils.logoutCookie("accessToken", null)
-                        .toString());
+                "Set-Cookie", SecurityUtils.logoutCookie("accessToken", null).toString());
 
         return new ResponseEntity<>(LOGOUT_SUCCESS_MESSAGE, HttpStatus.OK);
     }
