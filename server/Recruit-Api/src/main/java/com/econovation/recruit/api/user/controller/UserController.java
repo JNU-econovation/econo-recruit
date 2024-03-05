@@ -1,7 +1,6 @@
 package com.econovation.recruit.api.user.controller;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.INTERVIEWER_SUCCESS_SIGNUP_MESSAGE;
-import static com.econovation.recruitcommon.consts.RecruitStatic.PASSWORD_SUCCESS_CHANGE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
@@ -67,6 +66,17 @@ public class UserController {
                 "Set-Cookie",
                 SecurityUtils.setCookie("accessToken", tokenResponse.getAccessToken()).toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "로그아웃 합니다.", description = "Maxage가 0인 쿠키를 보내 로그아웃 합니다.")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        response.addHeader(
+                "Set-Cookie", SecurityUtils.logoutCookie("refreshToken", null).toString());
+        response.addHeader(
+                "Set-Cookie", SecurityUtils.logoutCookie("accessToken", null).toString());
+
+        return new ResponseEntity<>(LOGOUT_SUCCESS_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "회원가입합니다.", description = "회원가입합니다.")
