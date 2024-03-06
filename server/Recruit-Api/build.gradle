@@ -37,7 +37,8 @@ dependencies {
     implementation 'org.webjars:jquery:3.1.1-1'
     // XSS validator
     implementation 'org.jsoup:jsoup:1.13.1'
-
+    // json
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
     //    testImplementation 'org.junit.jupiter:junit-jupiter-api:4.13'
     //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

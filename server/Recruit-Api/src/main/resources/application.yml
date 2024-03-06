@@ -22,7 +22,9 @@ throttle:
 auth:
     blacklist:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
-
+logging:
+  level:
+    root: WARN
 login:
   page:
     url: ${LOGIN_PAGE_URL:http://localhost:8080/login}
@@ -72,6 +74,8 @@ econovation:
       passedDate: ${RECRUIT_PERIOD_PASSED_DATE:2024-03-18T09:00:00}
     valid:
       enabled: ${RECRUIT_PERIOD_ENABLED:false}
+    admin:
+      email: ${RECRUIT_ADMIN_EMAIL:email@gmail.com}
 notification:
   email:
     enabled: ${NOTIFICATION_EMAIL_ENABLED:true}
@@ -98,7 +102,7 @@ spring:
 # DEBUG log level
 logging:
   level:
-    root: info
+    root: WARN
 ---
 spring:
   config:
