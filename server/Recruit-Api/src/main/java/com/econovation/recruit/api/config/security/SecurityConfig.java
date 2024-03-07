@@ -70,7 +70,7 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/mail")
                 .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*")
+                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants")
                 .permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
                 .permitAll()
