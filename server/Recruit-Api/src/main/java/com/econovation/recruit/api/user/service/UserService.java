@@ -13,6 +13,7 @@ import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAl
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,23 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
 
     @Override
     @Transactional
-    public TokenResponse execute(LoginRequestDto loginRequestDto) {
+    public TokenResponse execute(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         Interviewer account =
                 interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
         checkPassword(loginRequestDto.getPassword(), account.getPassword());
-        return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+        TokenResponse tokenResponse =
+                jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+        response.addHeader(
+                "Set-Cookie",
+                com.econovation.recruit.utils.SecurityUtils.setCookie(
+                                "refreshToken", tokenResponse.getRefreshToken())
+                        .toString());
+        response.addHeader(
+                "Set-Cookie",
+                com.econovation.recruit.utils.SecurityUtils.setCookie(
+                                "accessToken", tokenResponse.getAccessToken())
+                        .toString());
+        return tokenResponse;
     }
 
     @Override
