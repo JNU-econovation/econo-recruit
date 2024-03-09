@@ -58,14 +58,6 @@ public class UserController {
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto, response);
-        response.addHeader(
-                "Set-Cookie",
-                SecurityUtils.logoutCookie("refreshToken", tokenResponse.getRefreshToken())
-                        .toString());
-        response.addHeader(
-                "Set-Cookie",
-                SecurityUtils.logoutCookie("accessToken", tokenResponse.getAccessToken())
-                        .toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
