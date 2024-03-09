@@ -57,14 +57,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(
             @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto);
+        TokenResponse tokenResponse = userLoginUseCase.execute(loginRequestDto, response);
         response.addHeader(
                 "Set-Cookie",
-                SecurityUtils.setCookie("refreshToken", tokenResponse.getRefreshToken())
+                SecurityUtils.logoutCookie("refreshToken", tokenResponse.getRefreshToken())
                         .toString());
         response.addHeader(
                 "Set-Cookie",
-                SecurityUtils.setCookie("accessToken", tokenResponse.getAccessToken()).toString());
+                SecurityUtils.logoutCookie("accessToken", tokenResponse.getAccessToken()).toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
