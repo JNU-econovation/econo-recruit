@@ -64,7 +64,8 @@ public class UserController {
                         .toString());
         response.addHeader(
                 "Set-Cookie",
-                SecurityUtils.logoutCookie("accessToken", tokenResponse.getAccessToken()).toString());
+                SecurityUtils.logoutCookie("accessToken", tokenResponse.getAccessToken())
+                        .toString());
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 
