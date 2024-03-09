@@ -14,6 +14,8 @@ public class RecruitStatic {
     public static final String TOKEN_ISSUER = "Recruit";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
+
+    public static final String SET_COOKIE = "Set-Cookie";
     public static final Integer DEVELOPER_COLUMNS_ID = 1;
     public static final Integer DESIGNER_COLUMNS_ID = 2;
     public static final Integer PLANNER_COLUMNS_ID = 3;
