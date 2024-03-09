@@ -6,11 +6,13 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns
 import com.econovation.recruitcommon.helper.SpringEnvironmentHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,36 +68,6 @@ public class SecurityConfig {
         }
 
         http.authorizeRequests()
-                .mvcMatchers(SwaggerPatterns)
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/mail")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/v1/token")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/v1/timetables")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/timetables")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants/*/timetables")
-                .permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/v1/applicants/*/timetables")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/questions")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/applicants")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/signup")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/token/refresh")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/login")
-                .permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/register")
-                .permitAll()
                 // 면접관 삭제는 회장단 이상부터 가능합니다.
                 //                .mvcMatchers("/**")
                 //                .permitAll()
@@ -127,5 +99,27 @@ public class SecurityConfig {
                 new DefaultWebSecurityExpressionHandler();
         expressionHandler.setRoleHierarchy(roleHierarchy());
         return expressionHandler;
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web ->
+                web.ignoring()
+                        .antMatchers(SwaggerPatterns)
+                        .antMatchers(HttpMethod.POST, "/api/v1/applicants/mail",
+                                "/api/v1/applicants",
+                                "/api/v1/timetables",
+                                "/api/v1/applicants/*/timetables",
+                                "/api/v1/questions",
+                                "/api/v1/applicants",
+                                "/api/v1/signup",
+                                "/api/v1/token/refresh",
+                                "/api/v1/login",
+                                "/api/v1/register")
+                        .antMatchers(HttpMethod.GET, "/api/v1/applicants",
+                                "/api/v1/token",
+                                "/api/v1/timetables",
+                                "/api/v1/applicants/*/timetables")
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }

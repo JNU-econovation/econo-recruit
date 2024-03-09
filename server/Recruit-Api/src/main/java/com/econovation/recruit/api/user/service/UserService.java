@@ -3,6 +3,7 @@ package com.econovation.recruit.api.user.service;
 import com.econovation.recruit.api.config.security.SecurityUtils;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
+import com.econovation.recruitcommon.consts.RecruitStatic;
 import com.econovation.recruitcommon.dto.TokenResponse;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
@@ -32,20 +33,31 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
     public TokenResponse execute(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         Interviewer account =
                 interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
-        checkPassword(loginRequestDto.getPassword(), account.getPassword());
-        TokenResponse tokenResponse =
-                jwtTokenProvider.createToken(account.getId(), account.getRole().name());
-        response.addHeader(
-                "Set-Cookie",
-                com.econovation.recruit.utils.SecurityUtils.setCookie(
-                                "refreshToken", tokenResponse.getRefreshToken())
-                        .toString());
-        response.addHeader(
-                "Set-Cookie",
-                com.econovation.recruit.utils.SecurityUtils.setCookie(
-                                "accessToken", tokenResponse.getAccessToken())
-                        .toString());
-        return tokenResponse;
+        if (checkPassword(loginRequestDto.getPassword(), account.getPassword())) {
+            TokenResponse tokenResponse =
+                    jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+            response.addHeader(
+                    RecruitStatic.SET_COOKIE,
+                    com.econovation.recruit.utils.SecurityUtils.setCookie(
+                                    "refreshToken", tokenResponse.getRefreshToken())
+                            .toString());
+            response.addHeader(
+                    RecruitStatic.SET_COOKIE,
+                    com.econovation.recruit.utils.SecurityUtils.setCookie(
+                                    "accessToken", tokenResponse.getAccessToken())
+                            .toString());
+            return tokenResponse;
+        } else {
+            response.addHeader(
+                    RecruitStatic.SET_COOKIE,
+                    com.econovation.recruit.utils.SecurityUtils.logoutCookie("refreshToken", null)
+                            .toString());
+            response.addHeader(
+                    RecruitStatic.SET_COOKIE,
+                    com.econovation.recruit.utils.SecurityUtils.logoutCookie("accessToken", null)
+                            .toString());
+            throw InterviewerNotMatchException.EXCEPTION;
+        }
     }
 
     @Override
@@ -55,9 +67,8 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase {
         return jwtTokenProvider.createToken(account.getId(), account.getRole().name());
     }
 
-    private void checkPassword(String password, String encodePassword) {
-        boolean isMatch = passwordEncoder.matches(password, encodePassword);
-        if (!isMatch) throw InterviewerNotMatchException.EXCEPTION;
+    private boolean checkPassword(String password, String encodePassword) {
+        return passwordEncoder.matches(password, encodePassword);
     }
 
     @Override
