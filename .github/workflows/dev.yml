@@ -2,7 +2,7 @@ name: 배포 워크플로우
 on:
   push:
     branches:
-      - backend
+      - dev
 env:
   SPRING_PROFILES_ACTIVE: local
   ENVIRONMENT: production
@@ -80,15 +80,15 @@ jobs:
     if: github.event_name == 'push'
     needs: [ prepare-environments, call-build-workflow ]
     name: 서비스 배포
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/dev-deploy.yml
     permissions:
       id-token: write
       contents: read
     secrets:
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      SSH_KEY: ${{ secrets.SSH_KEY }}
-      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.DEV_SSH_USERNAME }}
+      SSH_KEY: ${{ secrets.DEV_SSH_KEY }}
+      SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     with:
       image-tag: ${{ needs.prepare-environments.outputs.image-tag }}
