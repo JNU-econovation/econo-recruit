@@ -106,7 +106,9 @@ public class SecurityConfig {
         return web ->
                 web.ignoring()
                         .antMatchers(SwaggerPatterns)
-                        .antMatchers(HttpMethod.POST, "/api/v1/applicants/mail",
+                        .antMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/applicants/mail",
                                 "/api/v1/applicants",
                                 "/api/v1/timetables",
                                 "/api/v1/applicants/*/timetables",
@@ -116,7 +118,9 @@ public class SecurityConfig {
                                 "/api/v1/token/refresh",
                                 "/api/v1/login",
                                 "/api/v1/register")
-                        .antMatchers(HttpMethod.GET, "/api/v1/applicants",
+                        .antMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/applicants",
                                 "/api/v1/token",
                                 "/api/v1/timetables",
                                 "/api/v1/applicants/*/timetables")
