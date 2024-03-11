@@ -18,7 +18,7 @@ spring:
       auto-index-creation: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${DDL_AUTO:update}
     generate-ddl: true
     show-sql: ${SHOW_SQL:false}
     properties:
@@ -39,13 +39,13 @@ spring:
 
 logging:
   level:
-    com.zaxxer.hikari.HikariConfig: ERROR
-    com.zaxxer.hikari: ERROR
-    org.springframework.orm.jpa: ERROR
-    org.springframework.transaction: ERROR
-    org.springframework.aop: INFO
+    com.zaxxer.hikari.HikariConfig: ${LOG_LEVEL:INFO}
+    com.zaxxer.hikari: ${LOG_LEVEL:INFO}
+    org.springframework.orm.jpa: ${LOG_LEVEL:INFO}
+    org.springframework.transaction: ${LOG_LEVEL:INFO}
+    org.springframework.aop: ${LOG_LEVEL:INFO}
     org:
-      hibernate: ERROR
+      hibernate: ${LOG_LEVEL:INFO}
 
 ---
 spring:
@@ -77,8 +77,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 logging:
   level:
-    org.springframework.orm.jpa: ERROR
-    org.springframework.transaction: ERROR
+    org.springframework.orm.jpa: ${LOG_LEVEL:INFO}
+    org.springframework.transaction: ${LOG_LEVEL:INFO}
 ---
 spring:
   config:
@@ -99,29 +99,3 @@ spring:
     hibernate:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-
-
-
-
-##MySQL8 DB
-#spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
-#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
-#spring.jpa.generate-ddl=true
-#spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/econovation?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul}
-#spring.jpa.hibernate.ddl-auto=update
-#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-#spring.datasource.username=root
-#spring.datasource.password=dltjgus119@@
-#
-##hibernate ??
-#spring.jpa.properties.hibernate.format_sql=true
-#spring.jpa.properties.hibernate.show_sql=true
-#spring.jpa.show-sql=true
-#
-##Bulk Insert
-#spring.jpa.properties.hibernate.jdbc.batch_size = ${batchSize}
-#spring.jpa.properties.hibernate.jdbc.order_inserts = true
-#spring.jpa.properties.hibernate.jdbc.order_updates = true
-#spring.jpa.properties.hibernate.hbm2ddl.auto=create
-#spring.jpa.open-in-view = false
-#
