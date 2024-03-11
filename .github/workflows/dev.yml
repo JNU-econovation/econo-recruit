@@ -2,7 +2,7 @@ name: 배포 워크플로우
 on:
   push:
     branches:
-      - dev
+      - develop
 env:
   SPRING_PROFILES_ACTIVE: local
   ENVIRONMENT: production
