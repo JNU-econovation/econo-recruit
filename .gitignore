@@ -3,6 +3,8 @@ Recruit-Domain/HELP.md
 .gradle/**
 .server/.gradle/**
 .server/.gradle
+server/.gradle
+server/.gradle/**
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

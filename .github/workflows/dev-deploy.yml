@@ -1,4 +1,4 @@
-name: 서비스 배포
+name: 개발서버 배포 플로우
 
 on:
   workflow_call:
@@ -49,13 +49,13 @@ jobs:
       - name: GitHub 에서 레포 받아오기
         uses: actions/checkout@v3
 
-      - name: 배포 스크립트 실행
+      - name: 개발서버 배포 스크립트 실행
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+          host: ${{ secrets.DEV_SSH_HOST }}
+          username: ${{ secrets.DEV_SSH_USERNAME }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          port: ${{ secrets.DEV_SSH_PORT }}
           script: |
             cd ./econo-recruit/server
             # Remove origin was container 
