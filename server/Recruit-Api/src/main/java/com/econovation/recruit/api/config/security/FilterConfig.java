@@ -19,7 +19,8 @@ public class FilterConfig
 
     @Override
     public void configure(HttpSecurity builder) {
-        builder.addFilterBefore(new JwtTokenFilter(jwtTokenProvider), BasicAuthenticationFilter.class);
+        builder.addFilterBefore(
+                new JwtTokenFilter(jwtTokenProvider), BasicAuthenticationFilter.class);
         builder.addFilterBefore(jwtExceptionFilter, JwtTokenFilter.class);
         //        builder.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
     }
