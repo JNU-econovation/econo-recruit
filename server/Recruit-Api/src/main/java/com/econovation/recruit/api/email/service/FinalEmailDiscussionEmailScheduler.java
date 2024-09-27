@@ -159,6 +159,10 @@ public class FinalEmailDiscussionEmailScheduler {
             case FINAL_FAILED:
                 template = generateFinalFailedTemplate(applicant);
                 break;
+            case FIRST_FAILED:
+                template = generateFirstFailedTemplate(applicant);
+            case FIRST_PASSED:
+                template = generateFirstPassedTemplate(applicant);
             default:
                 log.error("잘못된 상태 처리: {}", applicant.getId());
         }
@@ -207,6 +211,18 @@ public class FinalEmailDiscussionEmailScheduler {
     private String generateFinalFailedTemplate(MongoAnswer applicant) {
         String template =
                 "<img alt='econo-3d-logo' width='114' height='143' style='color:transparent; margin:auto;' src='https://recruit.econovation.kr/images/econo-3d-logo.png'><br><br>안녕하세요 NAME님. 전남대학교 IT 개발 동아리 에코노베이션입니다.<br><br>먼저 에코노베이션 28기 신입 모집에 관심을 가지고 지원해주셔서 진심으로 감사드립니다.<br><br>혹시 이번 모집 과정 중 저희가 의도치 않게 불편을 드린 점은 없었는지 여러모로 마음이 쓰입니다.아쉽게도 이번에는 좋은 결과를 전해드리지 못하게 되었습니다.<br><br>열정을 가지고 지원해 주신 모든 분과 함께할 수 있기를 바라고 있습니다만, 선발 규모 대비 많은 분이 지원해 주셔서 모든 분께 기회를 드릴 수 없었던 점 양해 부탁드립니다.<br><br>앞으로도 에코노베이션에 많은 관심을 가져주시기 바라며, 더 좋은 기회에 다시 만나 뵐 수 있기를 바라겠습니다.<br><br>감사합니다.";
+        return template.replace("NAME", applicant.getQna().get("name").toString());
+    }
+
+    /** 서류 합격자 이메일 템플릿 */
+    private String generateFirstPassedTemplate(MongoAnswer applicant){
+        String template = "";
+        return template.replace("NAME", applicant.getQna().get("name").toString());
+    }
+
+    /** 서류 탈락자 이메일 템플릿 */
+    private String generateFirstFailedTemplate(MongoAnswer applicant){
+        String template = "";
         return template.replace("NAME", applicant.getQna().get("name").toString());
     }
 }
