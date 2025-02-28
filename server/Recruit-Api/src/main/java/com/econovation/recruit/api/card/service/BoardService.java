@@ -257,6 +257,15 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
+    public List<ColumnsResponseDto> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year) {
+        List<Columns> columns = columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
+        if (columns == null) {
+            return Collections.emptyList();
+        }
+        return ColumnsResponseDto.from(columns);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Board getBoardByCardId(Long cardId) {
         return boardLoadPort.getBoardByCardId(cardId);

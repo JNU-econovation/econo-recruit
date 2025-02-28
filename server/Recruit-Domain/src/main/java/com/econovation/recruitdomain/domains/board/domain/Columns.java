@@ -33,6 +33,9 @@ public class Columns extends BaseTimeEntity {
     @Column(name = "next_Columns_id")
     private Integer nextColumnsId;
 
+    @Column(name = "year")
+    private Integer year;
+
     public void updateLocation(Integer nextColumnsId) {
         this.nextColumnsId = nextColumnsId;
     }
