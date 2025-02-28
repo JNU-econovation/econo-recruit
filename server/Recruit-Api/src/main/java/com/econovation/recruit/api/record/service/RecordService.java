@@ -113,7 +113,6 @@ public class RecordService implements RecordUseCase {
         List<Record> records;
         FilteredRecordsWithScoresDto filteredData;
 
-
         if (sortType.equals("score")) {
             applicants = applicantQueryUseCase.execute(year, sortType, searchKeyword, applicantIds);
             filteredData = filterRecordsAndCalculateScores(result, applicants, year, page);
