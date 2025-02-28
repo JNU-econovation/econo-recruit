@@ -1,6 +1,5 @@
 package com.econovation.recruit.api.email.service;
 
-
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
@@ -68,7 +67,7 @@ public class FinalEmailDiscussionEmailScheduler {
             if (startIndex >= 10) break;
             startIndex++;
             iteration++;
-        } while (iteration<limit);
+        } while (iteration < limit);
         failOver(failQueue, retryCounts);
     }
 
@@ -215,13 +214,13 @@ public class FinalEmailDiscussionEmailScheduler {
     }
 
     /** 서류 합격자 이메일 템플릿 */
-    private String generateFirstPassedTemplate(MongoAnswer applicant){
+    private String generateFirstPassedTemplate(MongoAnswer applicant) {
         String template = "";
         return template.replace("NAME", applicant.getQna().get("name").toString());
     }
 
     /** 서류 탈락자 이메일 템플릿 */
-    private String generateFirstFailedTemplate(MongoAnswer applicant){
+    private String generateFirstFailedTemplate(MongoAnswer applicant) {
         String template = "";
         return template.replace("NAME", applicant.getQna().get("name").toString());
     }

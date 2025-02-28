@@ -23,5 +23,4 @@ public class ApplicantState {
     public PassStates getPassStateToEnum() {
         return this.passState;
     }
-
 }
