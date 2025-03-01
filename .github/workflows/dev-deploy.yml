@@ -3,17 +3,17 @@ name: 개발서버 배포 플로우
 on:
   workflow_call:
     secrets:
-      DEV_SSH_HOST:
+      SSH_HOST:
         required: true
-      DEV_SSH_USERNAME:
+      SSH_USERNAME:
         required: true
-      DEV_SSH_KEY:
+      SSH_KEY:
         required: true
-      DEV_SSH_PORT:
+      SSH_PORT:
         required: true
-      DEV_SLACK_WEBHOOK_URL:
+      SLACK_WEBHOOK_URL:
         required: true
-      DEV_DISCORD_WEBHOOK_URL:
+      DISCORD_WEBHOOK_URL:
         required: true
     inputs:
       environment:
@@ -54,10 +54,10 @@ jobs:
       - name: 개발서버 배포 스크립트 실행
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: ${{ secrets.DEV_SSH_HOST }}
-          username: ${{ secrets.DEV_SSH_USERNAME }}
-          key: ${{ secrets.DEV_SSH_KEY }}
-          port: ${{ secrets.DEV_SSH_PORT }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             cd ./econo-recruit/server
             # Remove origin was container 
@@ -107,7 +107,7 @@ jobs:
             curl -X
             POST -H 'Content-type:application/json'
             -d "$DATA"
-            ${{ secrets.DEV_DISCORD_WEBHOOK_URL }}
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
