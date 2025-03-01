@@ -3,15 +3,15 @@ name: 개발서버 배포 플로우
 on:
   workflow_call:
     secrets:
-      SSH_HOST:
+      DEV_SSH_HOST:
         required: true
-      SSH_USERNAME:
+      DEV_SSH_USERNAME:
         required: true
-      SSH_KEY:
+      DEV_SSH_KEY:
         required: true
-      SSH_PORT:
+      DEV_SSH_PORT:
         required: true
-      SLACK_WEBHOOK_URL:
+      DEV_SLACK_WEBHOOK_URL:
         required: true
       DEV_DISCORD_WEBHOOK_URL:
         required: true
