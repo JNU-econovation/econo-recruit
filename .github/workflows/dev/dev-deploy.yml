@@ -110,40 +110,45 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       DATA: |
-          {
-            "username": "GitHub Actions",
-            "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-            "embeds": [
+        {
+          "username" : "칠(chill)한 배포 알리미",
+          "avatar_url" : "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp",
+          "embeds" : [
+            {
+              "title" : "배포가 성공했어요~",
+              "type" : "rich",
+              "color" : "123456",
+              "author" : {
+                "name" : "칠가이",
+                "icon_url" : "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp"
+              },
+              "fields" : [
                 {
-                "title": "🚀 배포 완료!",
-                "description": "배포가 **성공적으로 완료**되었습니다! 🎉",
-                "color": 3066993,
-                "fields": [
-                  {
-                   "name": "커밋 메시지",
-                   "value": "'$(git log -1 --pretty=%B)'",
-                   "inline": false
-                  },
-                  {
-                    "name": "브랜치",
-                    "value": "'${{ github.ref }}'",
-                    "inline": true
-                  },
-                  {
-                    "name": "배포 환경",
-                    "value": "`Dev`",
-                    "inline": true
-                  },
-                  {
-                    "name": "GitHub Actions",
-                    "value": "[배포 워크플로우 실행 확인](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
-                    "inline": false
-                  }
-                ],
-                "footer": {
-                  "text": "배포 시각",
-                  "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                  "name": "커밋 메시지",
+                  "value": "'$(git log -1 --pretty=%B)'",
+                  "inline": false
                 },
-                "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
-              }]
+                {
+                  "name": "브랜치",
+                  "value": "'${{ github.ref }}'",
+                  "inline": true
+                },
+                {
+                  "name": "배포 환경",
+                  "value": "`Dev`",
+                  "inline": true
+                },
+                {
+                  "name": "GitHub Actions",
+                  "value": "[배포 워크플로우 실행 확인](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+                  "inline": false
+                }
+              ],
+              "footer": {
+                "text": "배포 시각",
+                "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
+              },
+              "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
             }
+          ]
+        }
