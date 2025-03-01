@@ -3,7 +3,7 @@ name: 개발서버 배포 플로우
 on:
   workflow_call:
     secrets:
-      DEV_SSH_HOST:
+      SSH_HOST:
         required: true
       SSH_USERNAME:
         required: true
@@ -13,7 +13,7 @@ on:
         required: true
       SLACK_WEBHOOK_URL:
         required: true
-      DEV_DISCORD_WEBHOOK_URL:
+      DISCORD_WEBHOOK_URL:
         required: true
     inputs:
       environment:
@@ -107,7 +107,7 @@ jobs:
             curl -X
             POST -H 'Content-type:application/json'
             -d "$DATA"
-            ${{ secrets.DEV_DISCORD_WEBHOOK_URL }}
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
