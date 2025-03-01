@@ -80,7 +80,7 @@ jobs:
     if: github.event_name == 'push'
     needs: [ prepare-environments, call-build-workflow ]
     name: 서비스 배포
-    uses: ./.github/workflows/dev-deploy.yml
+    uses: ./.github/workflows/dev/dev-deploy.yml
     permissions:
       id-token: write
       contents: read
@@ -90,6 +90,7 @@ jobs:
       SSH_KEY: ${{ secrets.DEV_SSH_KEY }}
       SSH_PORT: ${{ secrets.DEV_SSH_PORT }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DEV_DISCORD_WEBHOOK_URL: ${{ secrets.DEV_DISCORD_WEBHOOK_URL }}
     with:
       image-tag: ${{ needs.prepare-environments.outputs.image-tag }}
       spring-profile-active: ${{ needs.prepare-environments.outputs.spring-profile-active }}
