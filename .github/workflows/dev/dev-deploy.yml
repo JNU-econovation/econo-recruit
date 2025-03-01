@@ -65,40 +65,85 @@ jobs:
             docker-compose up -d --remove-orphans
             docker image prune -a -f
 
-      - name: 배포 완료 슬랙 알림 보내기
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          fields: author, workflowRun, pullRequest
-          custom_payload: |
-            {
-              attachments: [{
-                color: '#59f764',
-                title: '서버 배포 알림',
-                text: `Econo-Recruit 서버 배포 성공!`,
-                fields: [
+#      - name: 배포 완료 슬랙 알림 보내기
+#        uses: 8398a7/action-slack@v3
+#        with:
+#          status: custom
+#          fields: author, workflowRun, pullRequest
+#          custom_payload: |
+#            {
+#              attachments: [{
+#                color: '#59f764',
+#                title: '서버 배포 알림',
+#                text: `Econo-Recruit 서버 배포 성공!`,
+#                fields: [
+#                  {
+#                    title: '배포 환경',
+#                    value: `${process.env.ENVIRONMENT}`,
+#                    short: true,
+#                  },
+#                  {
+#                    title: '배포자',
+#                    value: `${process.env.AS_AUTHOR}`,
+#                    short: true,
+#                  },
+#                  {
+#                    title: '워크플로 링크',
+#                    value: `${process.env.AS_WORKFLOW_RUN}`,
+#                    short: true,
+#                  },
+#                  {
+#                    title: 'PR 링크',
+#                    value: `${process.env.AS_PULL_REQUEST}`,
+#                    short: true,
+#                  }
+#                ]
+#              }]
+#            }
+      - name: 배포 완료 디스코드 알림 보내기
+        run: |
+            curl -X
+            POST -H 'Content-type:application/json'
+            -d "$DATA"
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      DATA: |
+          {
+            "username": "GitHub Actions",
+            "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+            "embeds": [
+                {
+                "title": "🚀 배포 완료!",
+                "description": "배포가 **성공적으로 완료**되었습니다! 🎉",
+                "color": 3066993,
+                "fields": [
                   {
-                    title: '배포 환경',
-                    value: `${process.env.ENVIRONMENT}`,
-                    short: true,
+                   "name": "커밋 메시지",
+                   "value": "'$(git log -1 --pretty=%B)'",
+                   "inline": false
                   },
                   {
-                    title: '배포자',
-                    value: `${process.env.AS_AUTHOR}`,
-                    short: true,
+                    "name": "브랜치",
+                    "value": "'${{ github.ref }}'",
+                    "inline": true
                   },
                   {
-                    title: '워크플로 링크',
-                    value: `${process.env.AS_WORKFLOW_RUN}`,
-                    short: true,
+                    "name": "배포 환경",
+                    "value": "`Dev`",
+                    "inline": true
                   },
                   {
-                    title: 'PR 링크',
-                    value: `${process.env.AS_PULL_REQUEST}`,
-                    short: true,
+                    "name": "GitHub Actions",
+                    "value": "[배포 워크플로우 실행 확인](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+                    "inline": false
                   }
-                ]
+                ],
+                "footer": {
+                  "text": "배포 시각",
+                  "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                },
+                "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
               }]
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
