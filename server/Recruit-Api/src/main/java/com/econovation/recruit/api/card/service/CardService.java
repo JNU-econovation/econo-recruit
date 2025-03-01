@@ -88,9 +88,7 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                 boards.stream()
                         .filter(
                                 board -> {
-                                    if (board.getId() == 1
-                                            || board.getId() == 2
-                                            || board.getId() == 3) {
+                                    if (board.getCardType().equals(CardType.INVISIBLE)) {
                                         return true;
                                     }
                                     return year == null

@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
+
 @Service
 @RequiredArgsConstructor
 public class ApplicantService implements ApplicantQueryUseCase {
@@ -43,6 +45,63 @@ public class ApplicantService implements ApplicantQueryUseCase {
                         .getQna();
         qna.put("id", answerId);
         return qna;
+    }
+
+    @Transactional(readOnly = true)
+    public AnswersResponseDto execute(
+            Integer year, Integer page, String sortType, String searchKeyword) {
+        PageInfo pageInfo = getPageInfo(year, page, searchKeyword);
+        List<MongoAnswer> sortedResult =
+                answerAdaptor.findByYearAndSearchKeyword(year, page, sortType, searchKeyword);
+
+        List<Map<String, Object>> qnaMapList = getQnaMapListWithIdAndPassState(sortedResult);
+
+        if (qnaMapList.isEmpty()) {
+            return AnswersResponseDto.of(Collections.emptyList(), pageInfo);
+        }
+        return AnswersResponseDto.of(qnaMapList, pageInfo);
+    }
+
+    private List<Map<String, Object>> getQnaMapListWithIdAndPassState(
+            List<MongoAnswer> sortedResult) {
+        return sortedResult.stream()
+                .map(
+                        answer -> {
+                            Map<String, Object> qna = answer.getQna();
+                            qna.put("id", answer.getId());
+                            qna.put(PASS_STATE_KEY, answer.getApplicantStateOrDefault());
+                            return qna;
+                        })
+                .toList();
+    }
+
+    @Override
+    public PageInfo getPageInfo(Integer year, Integer page, String searchKeyword) {
+        long totalCount = answerAdaptor.getTotalCountByYearAndSearchKeyword(year, searchKeyword);
+        return new PageInfo(totalCount, page);
+    }
+
+    @Override
+    public List<MongoAnswer> getApplicantsByYear(Integer year) {
+        return answerAdaptor.findByYear(year);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MongoAnswer> execute(
+            Integer page,
+            Integer year,
+            String sortType,
+            String searchKeyword,
+            List<String> applicantIds) {
+        return answerAdaptor.findByYearAndSearchKeywordAndApplicantIds(
+                page, year, sortType, searchKeyword, applicantIds);
+    }
+
+    @Override
+    public List<MongoAnswer> execute(
+            Integer year, String sortType, String searchKeyword, List<String> applicantIds) {
+        return answerAdaptor.findByYearAndSearchKeywordAndApplicantIds(
+                year, sortType, searchKeyword, applicantIds);
     }
 
     @Transactional(readOnly = true)
@@ -183,15 +242,9 @@ public class ApplicantService implements ApplicantQueryUseCase {
     }
 
     private List<Map<String, Object>> sortAndAddIds(List<MongoAnswer> result, String sortType) {
-        sortHelper.sort(result, sortType);
-        return result.stream()
-                .map(
-                        answer -> {
-                            Map<String, Object> qna = answer.getQna();
-                            qna.put("id", answer.getId());
-                            qna.put(PASS_STATE_KEY, answer.getApplicantStateOrDefault());
-                            return qna;
-                        })
-                .toList();
+        if (!result.isEmpty()) {
+            sortHelper.sort(result, sortType);
+        }
+        return getQnaMapListWithIdAndPassState(result);
     }
 }
