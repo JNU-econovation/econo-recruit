@@ -13,8 +13,6 @@ on:
         required: true
       SLACK_WEBHOOK_URL:
         required: true
-      DISCORD_WEBHOOK_URL:
-        required: true
     inputs:
       environment:
         required: true
@@ -118,7 +116,7 @@ jobs:
       DATA: |
         DATA: |
         {
-        "username" : "🔔배포 알리미🔔",
+        "username" : "칠(chill)한 배포 알리미",
         "avatar_url" : "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp",
         "embeds" : [
           {
