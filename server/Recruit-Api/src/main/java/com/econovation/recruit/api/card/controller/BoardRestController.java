@@ -95,6 +95,7 @@ public class BoardRestController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Deprecated(since = "2025-03-02")
     @Operation(summary = "지원서 칸반보드 열(세로줄) 생성", description = "지원서 칸반보드 열(세로줄) 생성")
     @ApiErrorExceptionsExample(CreateColumnsExceptionDocs.class)
     @PostMapping("/boards/navigations/{navigation-id}/columns")
@@ -113,7 +114,7 @@ public class BoardRestController {
         return new ResponseEntity(COLUMN_SUCCESS_LOCATION_CHANGE_MESSAGE, HttpStatus.OK);
     }
 
-    @Deprecated
+    @Deprecated(since = "2025-03-02")
     @Operation(
             summary = "지원서 세로줄 조회(by NavigationId)",
             description = "navigationId에 해당하는 모든 세로줄을 조회합니다., 세로줄이 없으면 빈 배열을 반환합니다.")
