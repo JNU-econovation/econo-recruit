@@ -1,10 +1,10 @@
-name: ?? ??? ???
+name: 워크 플로우 테스트
 
 on:
   push:
     branches:
       - refactor/dev-cd
-      -
+
 env:
   SPRING_PROFILES_ACTIVE: local
   ENVIRONMENT: production
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   prepare-environments:
-    name: ?? ?? ??
+    name: 환경 변수 설정
     runs-on: ubuntu-latest
     outputs:
       image-name: ${{ steps.setup-env.outputs.image-name }}
@@ -27,10 +27,10 @@ jobs:
       service-name: ${{ steps.setup-env.outputs.service-name }}
 
     steps:
-      - name: Github?? ?? ????
+      - name: Github에서 레포 받아오기
         uses: actions/checkout@v3
 
-      - name: ?? ?? ??
+      - name: 환경 변수 설정
         id: setup-env
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
@@ -53,7 +53,7 @@ jobs:
   call-deploy-workflow:
     if: github.event_name == 'push'
     needs: [ prepare-environments ]
-    name: ??? ??
+    name: 서비스 배포
     uses: ./.github/workflows/dev-deploy.yml
     permissions:
       id-token: write
