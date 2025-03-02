@@ -31,6 +31,7 @@ import com.econovation.recruitdomain.out.LabelLoadPort;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -62,9 +63,9 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
 
         List<Columns> columns = columnsUseCase.getByNavigationIdAndYear(navigationId, year);
 
-        if (columns == null) {
-            throw ColumnsNotFoundException.EXCEPTION;
-        }
+        Optional.ofNullable(columns)
+                .filter(list -> !list.isEmpty())
+                .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
 
         List<Integer> columnsIds =
                 columns.stream().map(Columns::getId).collect(Collectors.toList());
