@@ -10,9 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     List<Columns> findByNavigationId(Integer navigationId);
 
-    @Query(
-            "SELECT c FROM Columns c WHERE c.navigationId = :navigationId AND c.year = :year"
-    )
+    @Query("SELECT c FROM Columns c WHERE c.navigationId = :navigationId AND c.year = :year")
     List<Columns> findByNavigationIdAndYear(Integer navigationId, Integer year);
 
     Optional<Columns> findByNextColumnsIdAndNavigationId(Integer nextColLoc, Integer navigationId);

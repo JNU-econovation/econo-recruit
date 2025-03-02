@@ -203,7 +203,12 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     @Transactional
     public Columns createColumn(String title, Integer navigationId) {
-        Columns column = Columns.builder().title(title).navigationId(navigationId).year(econovationYear).build();
+        Columns column =
+                Columns.builder()
+                        .title(title)
+                        .navigationId(navigationId)
+                        .year(econovationYear)
+                        .build();
 
         List<Columns> columnsByNavigationId = columnLoadPort.getColumnsByNavigationId(navigationId);
         Columns save = columnRecordPort.save(column);
@@ -236,8 +241,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         Columns column =
                 Columns.builder().title(title).navigationId(navigationId).year(year).build();
 
-         List<Columns> columnsByNavigationIdAndYear =
-         columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
+        List<Columns> columnsByNavigationIdAndYear =
+                columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
 
         Columns save = columnRecordPort.save(column);
 
