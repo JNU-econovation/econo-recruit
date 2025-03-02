@@ -68,14 +68,13 @@ jobs:
             
             ./econo-recruit-start.sh
 
-      - name: 디스코드에 필요한 환경 변수 설정
-        run: |
-          echo "BRANCH_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
-          echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
-          echo "TIMESTAMP=${{ github.event.repository.updated_at }}" >> $GITHUB_ENV
-          echo "WORKFLOW_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
-
       - name: 디스코드 알림 보내기
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          BRANCH_NAME: ${{ github.ref_name }}
+          WORKFLOW_URL: ${{ github.event.workflow_url }}
+          TIMESTAMP: ${{ github.event.repository.updated_at }}
         run: |
           # JSON Payload 생성
           DATA=$(cat <<EOF
@@ -94,38 +93,18 @@ jobs:
                 },
                 "fields": [
                   {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
-                  {
                     "name": "커밋 메시지",
                     "value": "\`$COMMIT_MESSAGE\`",
                     "inline": false
                   },
-                  {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
                   {
                     "name": "브랜치",
                     "value": "\`$BRANCH_NAME\`",
                     "inline": false
                   },
                   {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
-                  {
                     "name": "배포 환경",
                     "value": "\`Prod\`",
-                    "inline": false
-                  },
-                  {
-                    "name": "  ",
-                    "value": "  ",
                     "inline": false
                   },    
                   {
@@ -144,14 +123,14 @@ jobs:
           }
           EOF
           )
-
+          
           # JSON 데이터 출력 (디버깅 용도)
           echo "===== JSON PAYLOAD ====="
           echo "$DATA"
           echo "========================"
-
+          
           # Discord Webhook 호출
-          curl -X POST -H "Content-Type: application/json" -d "$DATA" "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          curl -X POST -H "Content-Type: application/json" -d "$DATA" "$DISCORD_WEBHOOK_URL"
 
       #      - name: 배포 완료 슬랙 알림 보내기
       #        uses: 8398a7/action-slack@v3
