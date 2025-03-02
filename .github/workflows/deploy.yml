@@ -59,9 +59,13 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            cd ./econo-recruit/server
+            
             git fetch origin                                  # branch 이력 가져오기
             git reset --hard origin/develop                    # develop branch로 이동 
-            cd ./econo-recruit/server
+            
+            chmod +x ./econo-recruit.sh
+            
             ./econo-recruit.sh
 
 #      - name: 배포 완료 슬랙 알림 보내기
