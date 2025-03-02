@@ -60,13 +60,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ./econo-recruit/server
-            # Remove origin was container 
-            docker rm -f backend
-            # Pull and Deploy new built docker image with new tag
-            docker pull blackbean99/econo-recruit:latest
-            docker-compose up -d --remove-orphans
-            docker image prune -a -f
-
+            ./econo-recruit.sh
 
 #      - name: 배포 완료 슬랙 알림 보내기
 #        uses: 8398a7/action-slack@v3
