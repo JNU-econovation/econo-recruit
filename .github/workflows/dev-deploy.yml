@@ -105,7 +105,7 @@ jobs:
 #            }
       - name: 배포 완료 디스코드 알림 보내기
         run: |
-            curl -X POST -H 'Content-type:application/json' -d "$DATA" ${{ secrets.DISCORD_WEBHOOK_URL }}
+            curl -X POST -H 'Content-type:application/json' -d "$DATA" "${{ secrets.DISCORD_WEBHOOK_URL }}"
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
