@@ -93,38 +93,18 @@ jobs:
                 },
                 "fields": [
                   {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
-                  {
                     "name": "커밋 메시지",
                     "value": "\`$COMMIT_MESSAGE\`",
                     "inline": false
                   },
-                  {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
                   {
                     "name": "브랜치",
                     "value": "\`$BRANCH_NAME\`",
                     "inline": false
                   },
                   {
-                    "name": "  ",
-                    "value": "  ",
-                    "inline": false
-                  },    
-                  {
                     "name": "배포 환경",
                     "value": "\`Prod\`",
-                    "inline": false
-                  },
-                  {
-                    "name": "  ",
-                    "value": "  ",
                     "inline": false
                   },    
                   {
