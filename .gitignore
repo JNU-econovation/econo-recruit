@@ -51,3 +51,5 @@ Recruit-Domain/src/main/generated/**/*.java
 
 # Ignore Gradle build output directory
 build
+
+**/ssl/*.pem*
