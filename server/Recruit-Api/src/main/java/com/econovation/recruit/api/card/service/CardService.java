@@ -18,6 +18,7 @@ import com.econovation.recruitdomain.domains.applicant.exception.ApplicantProhib
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.CardType;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
+import com.econovation.recruitdomain.domains.board.exception.ColumnsNotFoundException;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.card.dto.BoardCardResponseDto;
 import com.econovation.recruitdomain.domains.card.dto.CardResponseDto;
@@ -30,7 +31,6 @@ import com.econovation.recruitdomain.out.LabelLoadPort;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,12 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
     @Transactional(readOnly = true)
     public List<BoardCardResponseDto> getByNavigationId(Integer navigationId, Integer year) {
         Long userId = SecurityUtils.getCurrentUserId();
-        List<Columns> columns = columnsUseCase.getByNavigationId(navigationId);
+
+        List<Columns> columns = columnsUseCase.getByNavigationIdAndYear(navigationId, year);
+
+        if (columns == null) {
+            throw ColumnsNotFoundException.EXCEPTION;
+        }
 
         List<Integer> columnsIds =
                 columns.stream().map(Columns::getId).collect(Collectors.toList());
@@ -67,10 +72,6 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         List<Board> boards = boardLoadUseCase.getBoardByColumnsIds(columnsIds);
 
         List<MongoAnswer> mongoAnswers = answerAdaptor.findAll();
-
-        Map<String, Integer> yearByAnswerIdMap =
-                mongoAnswers.stream()
-                        .collect(Collectors.toMap(MongoAnswer::getId, MongoAnswer::getYear));
 
         Map<String, ApplicantState> stateByAnswerIdMap =
                 mongoAnswers.stream()
@@ -80,25 +81,6 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                                         MongoAnswer::getApplicantStateOrDefault));
 
         List<Card> cards = cardLoadPort.findAll();
-
-        Map<Long, String> answerIdByCardIdMap =
-                cards.stream().collect(Collectors.toMap(Card::getId, Card::getApplicantId));
-
-        boards =
-                boards.stream()
-                        .filter(
-                                board -> {
-                                    if (board.getCardType().equals(CardType.INVISIBLE)) {
-                                        return true;
-                                    }
-                                    return year == null
-                                            || Optional.ofNullable(board.getCardId())
-                                                    .map(answerIdByCardIdMap::get)
-                                                    .map(yearByAnswerIdMap::get)
-                                                    .map(y -> y.equals(year))
-                                                    .orElse(false);
-                                })
-                        .toList();
 
         cards =
                 cardLoadPort.findByIdIn(
@@ -156,7 +138,6 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
                                     label ->
                                             label.getCardId().equals(card.getId())
                                                     && label.getIdpId().equals(userId));
-
             ApplicantState state =
                     stateByAnswerIdMap.getOrDefault(card.getApplicantId(), new ApplicantState());
 
