@@ -7,7 +7,7 @@ on:
         required: true
       SSH_USERNAME:
         required: true
-      SSH_KEY:
+      SSH_PASSWORD:
         required: true
       SSH_PORT:
         required: true
@@ -56,17 +56,13 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            git fetch origin                                  # branch 이력 가져오기
+            git reset --hard origin/develop                    # develop branch로 이동 
             cd ./econo-recruit/server
-            # Remove origin was container 
-            docker rm -f backend
-            # Pull and Deploy new built docker image with new tag
-            docker pull blackbean99/econo-recruit:latest
-            docker-compose up -d --remove-orphans
-            docker image prune -a -f
-
+            ./econo-recruit.sh
 
 #      - name: 배포 완료 슬랙 알림 보내기
 #        uses: 8398a7/action-slack@v3
