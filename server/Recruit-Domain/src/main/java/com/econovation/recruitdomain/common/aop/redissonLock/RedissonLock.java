@@ -24,6 +24,7 @@ public @interface RedissonLock {
     long waitTime() default 10L;
 
     long leaseTime() default 10L;
+
     // 초단위 계산
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 }

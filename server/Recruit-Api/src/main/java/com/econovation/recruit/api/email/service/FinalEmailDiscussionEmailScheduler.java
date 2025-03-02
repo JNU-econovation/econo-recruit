@@ -199,6 +199,7 @@ public class FinalEmailDiscussionEmailScheduler {
 
         return result;
     }
+
     /** 면접 합격자 이메일 템플릿 */
     private String generateFinalPassedTemplate(MongoAnswer applicant) {
         String template =

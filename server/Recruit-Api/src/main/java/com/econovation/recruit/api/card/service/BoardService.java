@@ -257,7 +257,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     }
 
     @Override
-    public List<ColumnsResponseDto> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year) {
+    public List<ColumnsResponseDto> getColumnsByNavigationIdAndYear(
+            Integer navigationId, Integer year) {
         List<Columns> columns = columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
         return ColumnsResponseDto.from(columns);
     }
