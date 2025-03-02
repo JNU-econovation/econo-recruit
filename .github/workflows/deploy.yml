@@ -68,14 +68,15 @@ jobs:
             
             ./econo-recruit-start.sh
 
-      - name: 배포 완료 디스코드 알림 보내기
+      - name: 디스코드에 필요한 환경 변수 설정
         run: |
-          # GitHub Actions 변수 및 현재 커밋 메시지 가져오기
-          BRANCH_NAME="${{ github.ref }}"
-          WORKFLOW_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "BRANCH_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+          echo "TIMESTAMP=${{ github.event.repository.updated_at }}" >> $GITHUB_ENV
+          echo "WORKFLOW_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
 
+      - name: 디스코드 알림 보내기
+        run: |
           # JSON Payload 생성
           DATA=$(cat <<EOF
           {
@@ -83,7 +84,8 @@ jobs:
             "avatar_url": "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp",
             "embeds": [
               {
-                "title": "배포가 성공했어요~",
+                "title": "🎉🎉배포가 성공했어요~!🎉🎉",
+                "description" : "배포 알림이 도착했어요~",
                 "type": "rich",
                 "color": 123456,
                 "author": {
@@ -92,20 +94,40 @@ jobs:
                 },
                 "fields": [
                   {
+                    "name": "  ",
+                    "value": "  ",
+                    "inline": false
+                  },    
+                  {
                     "name": "커밋 메시지",
-                    "value": "$COMMIT_MESSAGE",
+                    "value": "\`$COMMIT_MESSAGE\`",
                     "inline": false
                   },
                   {
+                    "name": "  ",
+                    "value": "  ",
+                    "inline": false
+                  },    
+                  {
                     "name": "브랜치",
-                    "value": "$BRANCH_NAME",
-                    "inline": true
+                    "value": "\`$BRANCH_NAME\`",
+                    "inline": false
                   },
                   {
+                    "name": "  ",
+                    "value": "  ",
+                    "inline": false
+                  },    
+                  {
                     "name": "배포 환경",
-                    "value": "`Prod`",
-                    "inline": true
+                    "value": "\`Prod\`",
+                    "inline": false
                   },
+                  {
+                    "name": "  ",
+                    "value": "  ",
+                    "inline": false
+                  },    
                   {
                     "name": "GitHub Actions",
                     "value": "[배포 워크플로우 실행 확인]($WORKFLOW_URL)",
@@ -130,6 +152,7 @@ jobs:
 
           # Discord Webhook 호출
           curl -X POST -H "Content-Type: application/json" -d "$DATA" "${{ secrets.DISCORD_WEBHOOK_URL }}"
+
       #      - name: 배포 완료 슬랙 알림 보내기
       #        uses: 8398a7/action-slack@v3
       #        with:
