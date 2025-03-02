@@ -67,13 +67,14 @@ jobs:
             chmod +x ./econo-recruit-start.sh
             ./econo-recruit-start.sh
 
+      - name: 디스코드 환경변수 설정
+        run: |
+          echo "DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE=$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ')" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "WORKFLOW_URL=${{ github.event.workflow_url }}" >> $GITHUB_ENV
+          echo "TIMESTAMP=${{ github.event.repository.updated_at }}" >> $GITHUB_ENV
       - name: 디스코드 알림 보내기
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          BRANCH_NAME: ${{ github.ref_name }}
-          WORKFLOW_URL: ${{ github.event.workflow_url }}
-          TIMESTAMP: ${{ github.event.repository.updated_at }}
         run: |
           # JSON Payload 생성
           DATA=$(cat <<EOF
@@ -111,12 +112,7 @@ jobs:
                     "value": "[배포 워크플로우 실행 확인]($WORKFLOW_URL)",
                     "inline": false
                   }
-                ],
-                "footer": {
-                  "text": "배포 시각",
-                  "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                },
-                "timestamp": "$TIMESTAMP"
+                ]
               }
             ]
           }
