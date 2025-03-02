@@ -53,3 +53,4 @@ Recruit-Domain/src/main/generated/**/*.java
 build
 
 **/ssl/*.pem*
+**/ssl/*.key*
