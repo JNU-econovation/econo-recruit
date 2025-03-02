@@ -64,6 +64,8 @@ jobs:
             git fetch origin                                  # branch 이력 가져오기
             git reset --hard origin/develop                    # develop branch로 이동 
             
+            chmod +x ./econo-recruit.sh
+            
             ./econo-recruit.sh
 
 #      - name: 배포 완료 슬랙 알림 보내기
