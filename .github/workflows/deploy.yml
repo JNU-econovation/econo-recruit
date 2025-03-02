@@ -119,7 +119,7 @@ jobs:
                   },    
                   {
                     "name": "배포 환경",
-                    "value": "\`Dev\`",
+                    "value": "\`Prod\`",
                     "inline": false
                   },
                   {
