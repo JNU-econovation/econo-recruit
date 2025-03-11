@@ -1,5 +1,7 @@
 package com.econovation.recruitdomain.domains.applicant.domain.state;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ApplicantState {
 
     private PassStates passState;
@@ -20,6 +22,7 @@ public class ApplicantState {
         return this.passState.toString();
     }
 
+    @JsonIgnore
     public PassStates getPassStateToEnum() {
         return this.passState;
     }
