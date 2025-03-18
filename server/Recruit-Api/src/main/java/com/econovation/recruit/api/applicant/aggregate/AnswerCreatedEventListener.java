@@ -73,7 +73,6 @@ public class AnswerCreatedEventListener {
             file.close();
         } catch (IOException e) {
             log.error("applicantId : " + event.getId() + " / " + qna.toString() + " backup fail");
-            e.printStackTrace();
         }
     }
 }
