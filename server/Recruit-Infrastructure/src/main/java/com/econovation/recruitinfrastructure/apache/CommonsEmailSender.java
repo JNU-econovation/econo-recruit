@@ -136,6 +136,6 @@ public class CommonsEmailSender {
                 "passedDate",
                 passedDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 / HH:mm:ss")));
         context.setVariable("applicantId", applicantId);
-        return htmlTemplateEngine.process("email-form", context);
+        return htmlTemplateEngine.process("email-register-confirm", context);
     }
 }
