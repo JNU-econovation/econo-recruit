@@ -4,78 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Econovation Recruit</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet"/>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Noto Sans KR', sans-serif;
-      background: #f6f8fa;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .container {
-      background-color: #fff;
-      width: 90%;
-      max-width: 800px;
-      margin-top: 60px;
-      margin-bottom: 60px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 40px 30px;
-      text-align: center;
-    }
-
-    .logo {
-      width: 114px;
-      height: 143px;
-      color: transparent;
-      margin: 0 auto 20px auto;
-      display: block;
-    }
-
-    .title {
-      font-weight: 800;
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
-    .content {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .content b {
-      font-weight: 700;
-    }
-
-    .divider {
-      width: 100%;
-      max-width: 200px;
-      margin: 20px auto;
-      border: 1px solid #e0e0e0;
-    }
-
-    .content:last-child {
-      margin-bottom: 0;
-    }
-  </style>
 </head>
-<body>
-<div class="container">
-  <img alt="econo-3d-logo" width="114" height="143" style="color:transparent; margin:auto;" src="https://recruit.econovation.kr/images/econo-3d-logo.png">
-  <h1 class="title">신입 모집 서류 결과 안내</h1>
+<body style="margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; background: #f6f8fa; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;">
+<div style="background-color: #fff; width: 90%; max-width: 800px; margin-top: 60px; margin-bottom: 60px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); padding: 40px 30px; text-align: center;">
 
-  <div class="content">
-    안녕하세요. <span th:text="${name}">지원자님</span>!
-    <br />
+  <!-- 로고 -->
+  <img alt="econo-3d-logo" width="114" height="143" style="color:transparent; margin:auto; display:block;" src="https://recruit.econovation.kr/images/econo-3d-logo.png">
+
+  <!-- 제목 -->
+  <h1 style="font-weight: 800; font-size: 32px; margin-bottom: 20px;">신입 모집 서류 결과 안내</h1>
+
+  <!-- 본문 내용 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    안녕하세요. <span th:text="${name}">지원자님</span>!<br />
     전남대학교 IT 개발동아리 에코노베이션 입니다.
     <br /><br />
     에코노베이션 <span th:text="${year}">??</span>기 신입 회원 모집 서류 전형에 합격하신 것을<br />
@@ -84,29 +25,29 @@
     면접 시간 공지는 서류 합격자 오픈채팅방에서 이루어질 예정입니다.
   </div>
 
-  <div class="divider"></div>
+  <!-- 구분선 -->
+  <div style="width: 100%; max-width: 200px; margin: 20px auto; border-top: 1px solid #e0e0e0;"></div>
 
-  <div class="content">
-    <h3>필독</h3>
-    면접은 약 15분 동안 진행되며 제출하신 지원서의 내용을 바탕으로 질문이 이루어질 예정입니다.
-    <br />
-    <b>면접 시작 10분 전 정보화본부 뒷 편의 스토리움 1층 로비</b>에서 대기해주시길 바라며,
-    <br />
+  <!-- 면접 안내 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    <h3 style="font-size: 20px; font-weight: bold;">필독</h3>
+    면접은 약 15분 동안 진행되며 제출하신 지원서의 내용을 바탕으로 질문이 이루어질 예정입니다.<br />
+    <b style="font-weight: 700;">면접 시작 10분 전 정보화본부 뒷 편의 스토리움 1층 로비</b>에서 대기해주시길 바라며,<br />
     면접 시작 시간이 지난 후에 도착하실 경우 면접에 불이익이 있으므로 유의해 주시기 바랍니다.
     <br /><br />
     평가를 진행하기 위해 면접 내용은 지원자님의 동의를 받은 후 녹화될 예정이며,<br />
     녹화된 영상은 평가 이후 삭제됩니다.
   </div>
 
-  <div class="divider"></div>
+  <!-- 구분선 -->
+  <div style="width: 100%; max-width: 200px; margin: 20px auto; border-top: 1px solid #e0e0e0;"></div>
 
-  <div class="content">
-    원활한 면접 진행을 위해 아래 오픈채팅방에 입장해주시기 바랍니다.
-    <br />
+  <!-- 오픈채팅 안내 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    원활한 면접 진행을 위해 아래 오픈채팅방에 입장해주시기 바랍니다.<br />
     (<span th:datetime="${deadline}"></span> 까지 입장하지 않으실 경우 탈락처리됩니다.)
     <br /><br />
-    오픈채팅방 링크
-    <b><a class="hover-a" style="color: #2160FF; font-weight: 700;" th:href="${link}">바로가기</a></b>
+    <b><a style="color: #2160FF; font-weight: 700; text-decoration: none;" th:href="${link}">👉 오픈채팅방 바로가기</a></b>
     <br /><br />
     기타 문의 사항이 있으시면 카카오톡 채널 '에코노베이션'을 이용해 주시기 바랍니다.
   </div>
