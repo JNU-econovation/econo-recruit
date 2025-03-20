@@ -4,7 +4,11 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
+import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
+import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
+import com.econovation.recruitinfrastructure.slack.config.SlackTFProperties;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +22,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class FinalEmailDiscussionEmailScheduler {
     private final CommonsEmailSender emailSender;
+    private final TemplateEngine templateEngine;
+    private final SlackMessageProvider slackMessageProvider;
+    private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final Integer MAX_EMAIL_SEND_RETRY = 10;
 
@@ -34,6 +43,10 @@ public class FinalEmailDiscussionEmailScheduler {
 
     @Value("${econovation.file.path.portfolio}")
     private String filePath;
+
+    private String openChatUrl;
+
+    private LocalDateTime urlDeadLine;
 
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 30000))
     @SneakyThrows
@@ -197,31 +210,65 @@ public class FinalEmailDiscussionEmailScheduler {
             failQueue.add(applicant);
         }
 
+        if(result) {
+            slackMessageProvider.sendMessage(slackProperties.getUrl(), generateNotificationMessage(applicant));
+        }
+
         return result;
     }
+
+    private String generateNotificationMessage(MongoAnswer applicant) {
+        String message = """
+                [메일 발송 성공]
+                - 이름 : %s
+                - 지원 분야 : %s / %s
+                - 합격 상태 : %s 
+                """;
+
+        String name = applicant.getQna().get("name").toString();
+        String field = applicant.getQna().get("field").toString();
+        String field1 = applicant.getQna().get("field1").toString();
+        String field2 = applicant.getQna().get("field2").toString();
+        String state = applicant.getApplicantState().getPassStateToEnum().name();
+
+        return String.format(message, name, field1, field2, state);
+    }
+
     /** 면접 합격자 이메일 템플릿 */
     private String generateFinalPassedTemplate(MongoAnswer applicant) {
-        String template =
-                "<img alt='econo-3d-logo' width='114' height='143' style='color:transparent; margin:auto;' src='https://recruit.econovation.kr/images/econo-3d-logo.png'><br><br>안녕하세요, NAME님.<br><br>에코노베이션에 관심을 가지고 지원해 주셔서 감사합니다.<br><br>에코노베이션 28기 신입 모집에 최종 합격하신 것을 축하드립니다!<br><br>사전에 안내해 드린 대로 OT가 진행될 예정입니다.<br><br>OT는 대면으로 진행되며, 일정에 대해 잘 숙지하시고 반드시 참여해주시기를 바랍니다.<br><br>에코노베이션에 대한 소개를 담은 포트폴리오를 아래에 첨부하였으니 OT 시작 전 확인해주시기를 바랍니다.<br><br>에코노베이션은 다양한 프로젝트와 스터디에 GitHub을 사용하고 있으니 원활한 동아리 활동을 위해 OT 전 <b>꼭 Github에 가입해주시길 바랍니다.</b><br><br>메일 확인 후 참석 여부에 대한 회신 부탁드립니다. 예) 확인, 참석합니다.<br><br>--OT--<br><br><b>일시: 10월 2일 수요일 19:00 ~ 21:00<br><br>장소 : 전남대학교 정보전산원 1층 109호</b><br><br>";
-        return template.replace("NAME", applicant.getQna().get("name").toString());
+        Context context = new Context();
+        context.setVariable("name", applicant.getQna().get("name").toString());
+        context.setVariable("year", applicant.getYear());
+
+        return templateEngine.process("email-final-passed", context);
     }
 
     /** 면접 탈락자 이메일 템플릿 ) */
     private String generateFinalFailedTemplate(MongoAnswer applicant) {
-        String template =
-                "<img alt='econo-3d-logo' width='114' height='143' style='color:transparent; margin:auto;' src='https://recruit.econovation.kr/images/econo-3d-logo.png'><br><br>안녕하세요 NAME님. 전남대학교 IT 개발 동아리 에코노베이션입니다.<br><br>먼저 에코노베이션 28기 신입 모집에 관심을 가지고 지원해주셔서 진심으로 감사드립니다.<br><br>혹시 이번 모집 과정 중 저희가 의도치 않게 불편을 드린 점은 없었는지 여러모로 마음이 쓰입니다.아쉽게도 이번에는 좋은 결과를 전해드리지 못하게 되었습니다.<br><br>열정을 가지고 지원해 주신 모든 분과 함께할 수 있기를 바라고 있습니다만, 선발 규모 대비 많은 분이 지원해 주셔서 모든 분께 기회를 드릴 수 없었던 점 양해 부탁드립니다.<br><br>앞으로도 에코노베이션에 많은 관심을 가져주시기 바라며, 더 좋은 기회에 다시 만나 뵐 수 있기를 바라겠습니다.<br><br>감사합니다.";
-        return template.replace("NAME", applicant.getQna().get("name").toString());
+        Context context = new Context();
+        context.setVariable("name", applicant.getQna().get("name").toString());
+        context.setVariable("year", applicant.getYear());
+
+        return templateEngine.process("email-final-failed", context);
     }
 
     /** 서류 합격자 이메일 템플릿 */
     private String generateFirstPassedTemplate(MongoAnswer applicant) {
-        String template = "";
-        return template.replace("NAME", applicant.getQna().get("name").toString());
+        Context context = new Context();
+        context.setVariable("name", applicant.getQna().get("name").toString());
+        context.setVariable("year", applicant.getYear());
+        context.setVariable("deadline", urlDeadLine);
+        context.setVariable("link", openChatUrl);
+
+        return templateEngine.process("email-first-passed", context);
     }
 
     /** 서류 탈락자 이메일 템플릿 */
     private String generateFirstFailedTemplate(MongoAnswer applicant) {
-        String template = "";
-        return template.replace("NAME", applicant.getQna().get("name").toString());
+        Context context = new Context();
+        context.setVariable("name", applicant.getQna().get("name").toString());
+        context.setVariable("year", applicant.getYear());
+
+        return templateEngine.process("email-first-failed", context);
     }
 }
