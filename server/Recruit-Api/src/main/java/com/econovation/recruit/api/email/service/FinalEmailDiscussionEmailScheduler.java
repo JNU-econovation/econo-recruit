@@ -173,8 +173,10 @@ public class FinalEmailDiscussionEmailScheduler {
                 break;
             case FIRST_FAILED:
                 template = generateFirstFailedTemplate(applicant);
+                break;
             case FIRST_PASSED:
                 template = generateFirstPassedTemplate(applicant);
+                break;
             default:
                 log.error("잘못된 상태 처리: {}", applicant.getId());
         }
