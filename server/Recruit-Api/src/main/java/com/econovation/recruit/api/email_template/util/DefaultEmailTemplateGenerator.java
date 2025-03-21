@@ -62,8 +62,7 @@ public class DefaultEmailTemplateGenerator {
             }
         }
 
-        log.error("상태에 맞는 템플릿을 찾을 수 없음 : {}", passState);
-        return "";
+        return templateEngine.process(templateName, context);
     }
 
     private void commonContext(MongoAnswer applicant, Context context) {
