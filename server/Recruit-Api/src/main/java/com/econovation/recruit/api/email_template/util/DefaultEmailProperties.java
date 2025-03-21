@@ -21,4 +21,7 @@ public class DefaultEmailProperties {
     @Value("${econovation.recruit.ot_place}")
     private String otPlace;
 
+    @Value("${econovation.file.path.portfolio}")
+    private String filePath;
+
 }
