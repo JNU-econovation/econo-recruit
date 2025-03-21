@@ -9,19 +9,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultEmailProperties {
 
-    @Value("${econovation.recruit.open_chat_url}")
     private String openChatUrl;
-
-    @Value("${econovation.recruit.open_chat_url_deadline}")
     private LocalDateTime openChatUrlDeadLine;
-
-    @Value("${econovation.recruit.ot_schedule}")
     private LocalDateTime otSchedule;
-
-    @Value("${econovation.recruit.ot_place}")
     private String otPlace;
-
-    @Value("${econovation.file.path.portfolio}")
     private String filePath;
+
+    public DefaultEmailProperties(
+            @Value("${econovation.recruit.open_chat_url}") String openChatUrl,
+            @Value("${econovation.recruit.open_chat_url_deadline}") String openChatUrlDeadLine,
+            @Value("${econovation.recruit.ot_schedule}") String otSchedule,
+            @Value("${econovation.recruit.ot_place}") String otPlace,
+            @Value ("${econovation.file.path.portfolio}") String filePath
+    ){
+        this.openChatUrl = openChatUrl;
+        this.openChatUrlDeadLine = LocalDateTime.parse(openChatUrlDeadLine);
+        this.otSchedule = LocalDateTime.parse(otSchedule);
+        this.otPlace = otPlace;
+        this.filePath = filePath;
+    }
 
 }
