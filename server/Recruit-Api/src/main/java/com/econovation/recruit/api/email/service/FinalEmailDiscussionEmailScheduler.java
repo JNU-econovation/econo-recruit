@@ -11,6 +11,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import javax.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,7 @@ import org.thymeleaf.context.Context;
 @Slf4j
 @RequiredArgsConstructor
 public class FinalEmailDiscussionEmailScheduler {
-    private final CommonsEmailSender emailSender;
-    private final TemplateEngine templateEngine;
+    private final ApplicantEmailService emailService;
     private final SlackMessageProvider slackMessageProvider;
     private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
@@ -38,15 +38,6 @@ public class FinalEmailDiscussionEmailScheduler {
 
     @Value("${econovation.year}")
     private Integer year;
-
-    private File attachment;
-
-    @Value("${econovation.file.path.portfolio}")
-    private String filePath;
-
-    private String openChatUrl;
-
-    private LocalDateTime urlDeadLine;
 
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 30000))
     @SneakyThrows
@@ -84,25 +75,15 @@ public class FinalEmailDiscussionEmailScheduler {
         failOver(failQueue, retryCounts);
     }
 
-    // 포트폴리오 파일을 가져오는 메서드
-    private File getPortfolioFile() {
-        // applicant에서 포트폴리오 파일 경로나 ID 등을 이용해 파일을 가져오는 로직
-        return new File(filePath);
-    }
-
     private void processBatch(
             List<MongoAnswer> batch,
             Queue<MongoAnswer> failQueue,
             Map<MongoAnswer, Integer> retryCounts) {
         for (MongoAnswer applicant : batch) {
             try {
-                // 이메일 템플릿 생성
-                String template = generateEmailTemplate(applicant);
-                attachment = getPortfolioFile();
-
                 // 이메일 발송 및 실패 처리
                 boolean result =
-                        sendEmailWithRetry(applicant, template, attachment, retryCounts, failQueue);
+                        sendEmailWithRetry(applicant, retryCounts, failQueue);
                 if (!result) {
                     failQueue.add(applicant);
                     retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
@@ -132,13 +113,10 @@ public class FinalEmailDiscussionEmailScheduler {
                 }
 
                 try {
-                    // 이메일 템플릿 생성
-                    String template = generateEmailTemplate(applicant);
-
                     // 이메일 발송 및 실패 처리
                     boolean result =
                             sendEmailWithRetry(
-                                    applicant, template, attachment, retryCounts, failQueue);
+                                    applicant, retryCounts, failQueue);
                     if (!result) {
                         retryCounts.put(applicant, retryCount + 1);
                         failQueue.add(applicant);
@@ -160,52 +138,12 @@ public class FinalEmailDiscussionEmailScheduler {
         }
     }
 
-    // 이메일 템플릿 생성 메서드
-    private String generateEmailTemplate(MongoAnswer applicant) {
-        PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        String template = "";
-        switch (passState) {
-            case FINAL_PASSED:
-                template = generateFinalPassedTemplate(applicant);
-                break;
-            case FINAL_FAILED:
-                template = generateFinalFailedTemplate(applicant);
-                break;
-            case FIRST_FAILED:
-                template = generateFirstFailedTemplate(applicant);
-                break;
-            case FIRST_PASSED:
-                template = generateFirstPassedTemplate(applicant);
-                break;
-            default:
-                log.error("잘못된 상태 처리: {}", applicant.getId());
-        }
-        return template;
-    }
-
     // 이메일 발송 및 실패 처리 메서드
     private boolean sendEmailWithRetry(
             MongoAnswer applicant,
-            String template,
-            File attachment,
             Map<MongoAnswer, Integer> retryCounts,
             Queue<MongoAnswer> failQueue) {
-        boolean result;
-        if (attachment.exists()) {
-            result =
-                    emailSender.sendEmailWithAttachment(
-                            applicant.getQna().get("email").toString(),
-                            "에코노베이션 신입 모집 최종 결과 안내",
-                            template,
-                            attachment);
-        } else {
-            result =
-                    emailSender.sendEmail(
-                            applicant.getQna().get("email").toString(),
-                            "에코노베이션 신입 모집 최종 결과 안내",
-                            template);
-            log.error("attachment 가 첨부되지 않았습니다. file dir : " + attachment.getAbsolutePath());
-        }
+        boolean result = emailService.sendEmail(applicant);
 
         if (!result) {
             retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
@@ -234,43 +172,5 @@ public class FinalEmailDiscussionEmailScheduler {
         String state = applicant.getApplicantState().getPassStateToEnum().name();
 
         return String.format(message, name, field1, field2, state);
-    }
-
-    /** 면접 합격자 이메일 템플릿 */
-    private String generateFinalPassedTemplate(MongoAnswer applicant) {
-        Context context = new Context();
-        context.setVariable("name", applicant.getQna().get("name").toString());
-        context.setVariable("year", applicant.getYear());
-
-        return templateEngine.process("email-final-passed", context);
-    }
-
-    /** 면접 탈락자 이메일 템플릿 ) */
-    private String generateFinalFailedTemplate(MongoAnswer applicant) {
-        Context context = new Context();
-        context.setVariable("name", applicant.getQna().get("name").toString());
-        context.setVariable("year", applicant.getYear());
-
-        return templateEngine.process("email-final-failed", context);
-    }
-
-    /** 서류 합격자 이메일 템플릿 */
-    private String generateFirstPassedTemplate(MongoAnswer applicant) {
-        Context context = new Context();
-        context.setVariable("name", applicant.getQna().get("name").toString());
-        context.setVariable("year", applicant.getYear());
-        context.setVariable("deadline", urlDeadLine);
-        context.setVariable("link", openChatUrl);
-
-        return templateEngine.process("email-first-passed", context);
-    }
-
-    /** 서류 탈락자 이메일 템플릿 */
-    private String generateFirstFailedTemplate(MongoAnswer applicant) {
-        Context context = new Context();
-        context.setVariable("name", applicant.getQna().get("name").toString());
-        context.setVariable("year", applicant.getYear());
-
-        return templateEngine.process("email-first-failed", context);
     }
 }
