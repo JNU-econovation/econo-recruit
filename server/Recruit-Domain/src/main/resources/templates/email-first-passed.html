@@ -45,7 +45,7 @@
   <!-- 오픈채팅 안내 -->
   <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
     원활한 면접 진행을 위해 아래 오픈채팅방에 입장해주시기 바랍니다.<br />
-    (<span th:text="${#dates.format(deadline, 'yyyy년 MM월 dd일 HH시 mm분 ss초')}"></span> 까지 입장하지 않으실 경우 탈락처리됩니다.)
+    (<span th:text="${#temporals.format(deadline, 'yyyy년 MM월 dd일 HH시 mm분 ss초')}"></span> 까지 입장하지 않으실 경우 탈락처리됩니다.)
     <br /><br />
     <b><a style="color: #2160FF; font-weight: 700; text-decoration: none;" th:href="${link}">오픈채팅방 바로가기</a></b>
     <br /><br />
