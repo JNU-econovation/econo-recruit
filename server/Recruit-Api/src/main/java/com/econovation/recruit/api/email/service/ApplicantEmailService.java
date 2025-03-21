@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.email.service;
 
-import com.econovation.recruit.api.email_template.util.DefaultTemplate;
+import com.econovation.recruitdomain.domains.email_template.domain.DefaultEmailTemplate;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
@@ -47,12 +47,12 @@ public class ApplicantEmailService {
 
     private String generateEmailTemplate(MongoAnswer applicant) {
         PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        return DefaultTemplate.getTemplate(passState).contextApply(applicant);
+        return DefaultEmailTemplate.getTemplate(passState).contextApply(applicant);
     }
 
     private String generateEmailSubject(MongoAnswer applicant){
         PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        return DefaultTemplate.getTemplate(passState).getSubject();
+        return DefaultEmailTemplate.getTemplate(passState).getSubject();
     }
 
     private File getPortfolioFile(MongoAnswer applicant) {

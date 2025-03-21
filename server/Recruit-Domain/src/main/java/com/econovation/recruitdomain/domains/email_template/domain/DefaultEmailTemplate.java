@@ -1,4 +1,4 @@
-package com.econovation.recruit.api.email_template.util;
+package com.econovation.recruitdomain.domains.email_template.domain;
 
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
@@ -8,7 +8,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Getter
-public enum DefaultTemplate {
+public enum DefaultEmailTemplate {
 
     FIRST_PASSED(PassStates.FIRST_PASSED,
             "에코노베이션 신입 모집 서류 결과 안내",
@@ -34,14 +34,14 @@ public enum DefaultTemplate {
     private String subject;
     private String templateName;
 
-    DefaultTemplate(PassStates passStates, String subject, String templateName) {
+    DefaultEmailTemplate(PassStates passStates, String subject, String templateName) {
         this.passStates = passStates;
         this.subject = subject;
         this.templateName = templateName;
     }
 
-    public static DefaultTemplate getTemplate(PassStates passStates) {
-        return Arrays.stream(DefaultTemplate.values())
+    public static DefaultEmailTemplate getTemplate(PassStates passStates) {
+        return Arrays.stream(DefaultEmailTemplate.values())
                 .filter(template -> template.getPassStates().equals(passStates))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 상태 처리"));
