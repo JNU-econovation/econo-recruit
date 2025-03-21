@@ -25,7 +25,7 @@ public class DefaultEmailTemplateGenerator {
     }
 
     public File getPortfolioFile(MongoAnswer applicant) {
-        // applicant에서 포트폴리오 파일 경로나 ID 등을 이용해 파일을 가져오는 로직
+        // 포트폴리오 파일은 최종 합격자한테만 전송한다.
         PassStates passState = applicant.getApplicantState().getPassStateToEnum();
         if(passState==PassStates.FINAL_PASSED)
             return portfolioFile;
