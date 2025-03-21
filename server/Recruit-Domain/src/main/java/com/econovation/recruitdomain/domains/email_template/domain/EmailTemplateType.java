@@ -10,9 +10,9 @@ public enum EmailTemplateType {
     // 서류불합격
     FIRST_FAILED("서류 불합격", "first_failed", PassStates.FIRST_FAILED),
     // 면접합격
-    INTERVIEW_PASS("면접 합격", "final_passed", PassStates.FINAL_PASSED),
+    FINAL_PASSED("면접 합격", "final_passed", PassStates.FINAL_PASSED),
     // 면접불합격
-    INTERVIEW_FAIL("면접 불합격", "final_failed", PassStates.FINAL_FAILED),
+    FINAL_FAILED("면접 불합격", "final_failed", PassStates.FINAL_FAILED),
     ;
     private String name;
     private String type;
