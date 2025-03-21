@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.email.service;
 
+import com.econovation.recruit.api.email_template.util.DefaultEmailTemplateGenerator;
 import com.econovation.recruitdomain.domains.email_template.domain.DefaultEmailTemplate;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
@@ -18,18 +19,12 @@ import org.springframework.stereotype.Service;
 public class ApplicantEmailService {
 
     private final CommonsEmailSender emailSender;
-
-    private String openChatUrl;
-
-    private LocalDateTime urlDeadLine;
-
-    @Value("${econovation.file.path.portfolio}")
-    private String filePath;
+    private final DefaultEmailTemplateGenerator templateGenerator;
 
     public boolean sendEmail(MongoAnswer applicant) {
-        String template = generateEmailTemplate(applicant);
-        String subject = generateEmailSubject(applicant);
-        File attachment = getPortfolioFile(applicant);
+        String template = templateGenerator.generateEmailTemplate(applicant);
+        String subject = templateGenerator.generateSubject(applicant);
+        File attachment = templateGenerator.getPortfolioFile(applicant);
         String email = applicant.getQna().get("email").toString();
 
         if(Objects.isNull(attachment))
@@ -42,25 +37,6 @@ public class ApplicantEmailService {
                 return emailSender.sendEmail(email, subject, template);
             }
 
-    }
-
-
-    private String generateEmailTemplate(MongoAnswer applicant) {
-        PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        return DefaultEmailTemplate.getTemplate(passState).contextApply(applicant);
-    }
-
-    private String generateEmailSubject(MongoAnswer applicant){
-        PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        return DefaultEmailTemplate.getTemplate(passState).getSubject();
-    }
-
-    private File getPortfolioFile(MongoAnswer applicant) {
-        // applicant에서 포트폴리오 파일 경로나 ID 등을 이용해 파일을 가져오는 로직
-        PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        if(passState==PassStates.FINAL_PASSED)
-            return new File(filePath);
-        return null;
     }
 
 }
