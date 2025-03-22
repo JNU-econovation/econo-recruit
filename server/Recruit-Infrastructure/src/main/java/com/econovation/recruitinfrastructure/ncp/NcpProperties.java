@@ -13,6 +13,8 @@ public class NcpProperties {
     private String accessKey;
     private String secretKey;
     private String senderAddress;
-    private String mailApiUrl;
-    private String smsApiUrl;
+    private String mailBaseUrl;
+    private String mailApiUri;
+    private String smsBaseUrl;
+    private String smsApiUri;
 }
