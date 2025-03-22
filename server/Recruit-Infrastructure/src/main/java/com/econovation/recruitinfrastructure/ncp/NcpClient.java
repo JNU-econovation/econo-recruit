@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @Headers("Content-Type: application/json; charset=UTF-8")
 public interface NcpClient {
     @PostMapping(path = "${ncp.mail-api-url}", consumes = "application/json; charset=UTF-8")
-    ResponseEntity<Response> createMailRequest(
+    ResponseEntity<NcpMailResponse> createMailRequest(
             @RequestHeader("x-ncp-iam-access-key") String accessKey,
             @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
             @RequestHeader("x-ncp-apigw-signature-v2") String signature,
@@ -20,7 +20,7 @@ public interface NcpClient {
             @RequestBody SendRawEmailDto sendRawEmailDto);
 
     @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json; charset=UTF-8")
-    ResponseEntity<Response> createSmsRequest(
+    ResponseEntity<NcpSmsResponse> createSmsRequest(
             @RequestHeader("x-ncp-iam-access-key") String accessKey,
             @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
             @RequestHeader("x-ncp-apigw-signature-v2") String signature,
