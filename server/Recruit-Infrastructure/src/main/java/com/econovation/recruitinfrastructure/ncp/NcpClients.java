@@ -25,7 +25,7 @@ public class NcpClients {
     @FeignClient(name = "NcpClient", url = "${ncp.sms-base-url}" , configuration = NcpConfig.class)
     @Headers("Content-Type: application/json; charset=UTF-8")
     public interface NcpSmsClient{
-        @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json; charset=UTF-8")
+        @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json;")
         ResponseEntity<NcpSmsResponse> createSmsRequest(
                 @RequestHeader("x-ncp-iam-access-key") String accessKey,
                 @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
