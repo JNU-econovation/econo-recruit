@@ -1,12 +1,7 @@
-package com.econovation.recruit.api.sms.handler;
+package com.econovation.recruit.api.email.handler;
 
-import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.sms.service.ApplicantSmsService;
-import com.econovation.recruitdomain.domains.applicant.domain.Applicant;
-import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
-import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
