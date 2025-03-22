@@ -23,7 +23,7 @@ public class ApplicantSmsService {
     private final ApplicantQueryUseCase applicantQueryUseCase;
 
     public void sendSms(MongoAnswer applicant){
-        String phoneNumber = applicant.getQna().get("phone").toString();
+        String phoneNumber = applicant.getQna().get("contacted").toString();
         String name = applicant.getQna().get("name").toString();
         String message = """
                 안녕하세요. %s님. 에코노베이션입니다.
@@ -45,7 +45,7 @@ public class ApplicantSmsService {
     public void sendSms(String applicantId){
         Map<String,Object> qna = applicantQueryUseCase.execute(applicantId);
 
-        String phoneNumber = qna.get("phone").toString();
+        String phoneNumber = qna.get("contacted").toString();
         String name = qna.get("name").toString();
         String message = """
                 안녕하세요. %s님. 에코노베이션입니다.
