@@ -1,9 +1,9 @@
 package com.econovation.recruit.api.sms.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
-import com.econovation.recruit.api.sms.util.SmsMessageGenerator;
+import com.econovation.recruit.api.sms.helper.SmsMessageGenerator;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
-import com.econovation.recruitinfrastructure.ncp.NcpSmsSender;
+import com.econovation.recruit.api.sms.helper.NcpSmsHelper;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class ApplicantSmsService {
     @Value("${econovation.year}")
     private String year;
 
-    private final NcpSmsSender smsSender;
+    private final NcpSmsHelper smsSender;
     private final SmsMessageGenerator messageGenerator;
     private final ApplicantQueryUseCase applicantQueryUseCase;
 
