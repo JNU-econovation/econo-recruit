@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class Response {
+public class NcpMailResponse {
     private String requestId;
     private int count;
 }
