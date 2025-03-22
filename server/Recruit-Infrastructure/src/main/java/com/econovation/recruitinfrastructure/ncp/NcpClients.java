@@ -26,7 +26,7 @@ public class NcpClients {
     @Headers("Content-Type: application/json; charset=UTF-8")
     public interface NcpSmsClient{
         @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json;")
-        ResponseEntity<NcpSmsResponse> createSmsRequest(
+        NcpSmsResponse createSmsRequest(
                 @RequestHeader("x-ncp-iam-access-key") String accessKey,
                 @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
                 @RequestHeader("x-ncp-apigw-signature-v2") String signature,
