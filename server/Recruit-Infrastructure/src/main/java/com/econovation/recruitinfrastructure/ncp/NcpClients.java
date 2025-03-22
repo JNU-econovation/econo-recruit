@@ -1,0 +1,38 @@
+package com.econovation.recruitinfrastructure.ncp;
+
+import com.econovation.recruitinfrastructure.ses.SendRawEmailDto;
+import feign.Headers;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+public class NcpClients {
+
+    @FeignClient(name = "NcpClient", url = "${ncp.mail-base-url}" , configuration = NcpConfig.class)
+    @Headers("Content-Type: application/json; charset=UTF-8")
+    public interface NcpMailClient{
+        @PostMapping(path = "${ncp.mail-api-url}", consumes = "application/json; charset=UTF-8")
+        ResponseEntity<NcpMailResponse> createMailRequest(
+                @RequestHeader("x-ncp-iam-access-key") String accessKey,
+                @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
+                @RequestHeader("x-ncp-apigw-signature-v2") String signature,
+                @RequestHeader("x-ncp-lang") String lang,
+                @RequestBody SendRawEmailDto sendRawEmailDto);
+    }
+
+    @FeignClient(name = "NcpClient", url = "${ncp.sms-base-url}" , configuration = NcpConfig.class)
+    @Headers("Content-Type: application/json; charset=UTF-8")
+    public interface NcpSmsClient{
+        @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json; charset=UTF-8")
+        ResponseEntity<NcpSmsResponse> createSmsRequest(
+                @RequestHeader("x-ncp-iam-access-key") String accessKey,
+                @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
+                @RequestHeader("x-ncp-apigw-signature-v2") String signature,
+                @RequestBody NcpSmsDto sendRawSmsDto
+            );
+    }
+
+
+}
