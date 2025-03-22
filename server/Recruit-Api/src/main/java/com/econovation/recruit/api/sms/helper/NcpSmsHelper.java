@@ -18,7 +18,7 @@ import static com.econovation.recruitinfrastructure.ncp.NcpClients.*;
 
 @Component
 @RequiredArgsConstructor
-public class NcpSmsSender {
+public class NcpSmsHelper {
 
     private final NcpProperties ncpProperties;
     private final NcpSmsClient smsClient;
