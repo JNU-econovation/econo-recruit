@@ -1,8 +1,11 @@
 package com.econovation.recruit.api.email.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
+import com.econovation.recruitdomain.domains.email_template.domain.EmailTemplateType;
+import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
@@ -151,6 +154,13 @@ public class FinalEmailDiscussionEmailScheduler {
         }
 
         if(result) {
+            String applicantId = applicant.getId();
+            String passState = applicant.getApplicantState().getPassStateToEnum().name();
+
+            Events.raise(EmailSendEvent.of(
+                    applicantId,
+                    passState,
+                    ""));
             slackMessageProvider.sendMessage(slackProperties.getUrl(), generateNotificationMessage(applicant));
         }
 
