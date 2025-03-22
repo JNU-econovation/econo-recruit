@@ -1,4 +1,4 @@
-package com.econovation.recruit.api.sms.util;
+package com.econovation.recruit.api.sms.helper;
 
 import com.econovation.recruit.api.applicant.state.support.PeriodCalculator;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;

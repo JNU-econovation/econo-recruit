@@ -1,5 +1,8 @@
-package com.econovation.recruitinfrastructure.ncp;
+package com.econovation.recruit.api.sms.helper;
 
+import com.econovation.recruitinfrastructure.ncp.NcpProperties;
+import com.econovation.recruitinfrastructure.ncp.NcpSmsDto;
+import com.econovation.recruitinfrastructure.ncp.NcpSmsResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -11,20 +14,21 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import static com.econovation.recruitinfrastructure.ncp.NcpClients.*;
 
 @Component
 @RequiredArgsConstructor
 public class NcpSmsSender {
 
     private final NcpProperties ncpProperties;
-    private final NcpClient ncpClient;
+    private final NcpSmsClient smsClient;
 
     public boolean sendSms(String message, String... phoneNumber) {
         String timeStamp = String.valueOf(Instant.now().toEpochMilli());
         String signature =
                 makeSignature(
                         timeStamp, ncpProperties.getAccessKey(), ncpProperties.getSecretKey());
-        NcpSmsResponse response = ncpClient.createSmsRequest(
+        NcpSmsResponse response = smsClient.createSmsRequest(
                 ncpProperties.getAccessKey(),
                 timeStamp,
                 signature,
@@ -51,7 +55,7 @@ public class NcpSmsSender {
         String signature =
                 makeSignature(
                         timeStamp, ncpProperties.getAccessKey(), ncpProperties.getSecretKey());
-        NcpSmsResponse response = ncpClient.createSmsRequest(
+        NcpSmsResponse response = smsClient.createSmsRequest(
                 ncpProperties.getAccessKey(),
                 timeStamp,
                 signature,

@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.user.helper;
 
 import com.econovation.recruitcommon.annotation.Helper;
-import com.econovation.recruitinfrastructure.ncp.NcpClient;
+import com.econovation.recruitinfrastructure.ncp.NcpClients.*;
 import com.econovation.recruitinfrastructure.ncp.NcpProperties;
 import com.econovation.recruitinfrastructure.ses.RecipientForRequest;
 import com.econovation.recruitinfrastructure.ses.SendRawEmailDto;
@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 @RequiredArgsConstructor
 public class NcpMailHelper {
     private final NcpProperties ncpProperties;
-    private final NcpClient ncpClient;
+    private final NcpMailClient ncpClient;
 
     static String method = "POST"; // method
     static String space = " "; // space
