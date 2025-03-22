@@ -16,6 +16,7 @@ ncp:
   mail-api-url: ${NCP_MAIL_POST_URI:/api/v1/mails}
   sms-base-url: ${NCP_SMS_BASE_URL:https://sms.apigw.gov-ntruss.com}
   sms-api-url: ${NCP_SMS_POST_URI:/sms/v2/services/ncp:sms:kr:324868537230:kjm/messages}
+  from-phone-number: ${NCP_FROM_PHONE_NUMBER}
 commons:
   email:
     host: ${COMMONS_EMAIL_HOST:smtp.naver.com}

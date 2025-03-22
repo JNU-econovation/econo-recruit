@@ -33,14 +33,13 @@ public class NcpSmsHelper {
                 timeStamp,
                 signature,
                 NcpSmsDto.builder()
-                        .from("010-3066-5016")
-                        .type("SMS")
+                        .from(ncpProperties.getFromPhoneNumber())
+                        .type("LMS")
                         .subject("[Econovation-Recruit]")
                         .content(message)
-                        .messages(Arrays.stream(phoneNumber).map(NcpSmsDto.Message::new).toList())
+                        .messages(Arrays.stream(removeDash(phoneNumber)).map(NcpSmsDto.Message::new).toList())
                         .build()
-                )
-                .getBody();
+                );
 
 
         if(response == null || response.getStatusCode().equals("202")) {
@@ -60,14 +59,13 @@ public class NcpSmsHelper {
                 timeStamp,
                 signature,
                 NcpSmsDto.builder()
-                        .from("010-3066-5016")
+                        .from(ncpProperties.getFromPhoneNumber())
                         .subject(subject)
-                        .type("SMS")
+                        .type("LMS")
                         .content(message)
-                        .messages(Arrays.stream(phoneNumber).map(NcpSmsDto.Message::new).toList())
+                        .messages(Arrays.stream(removeDash(phoneNumber)).map(NcpSmsDto.Message::new).toList())
                         .build()
-                )
-                .getBody();
+                );
 
         if(response != null && response.getStatusCode().equals("202")) {
             return false;
@@ -106,6 +104,14 @@ public class NcpSmsHelper {
         } catch (UnsupportedEncodingException e){
             throw new IllegalArgumentException("지원하지 않는 인코딩 방식",e);
         }
+    }
+
+    private String[] removeDash(String... phoneNumber){
+        String[] result = new String[phoneNumber.length];
+        for (int i = 0; i < phoneNumber.length; i++) {
+            result[i] = phoneNumber[i].replace("-", "");
+        }
+        return result;
     }
 
 }
