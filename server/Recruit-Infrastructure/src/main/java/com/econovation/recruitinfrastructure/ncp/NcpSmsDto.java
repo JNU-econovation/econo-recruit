@@ -2,9 +2,7 @@ package com.econovation.recruitinfrastructure.ncp;
 
 import java.util.List;
 import lombok.Builder;
-import lombok.Getter;
 
-@Getter
 @Builder
 public record NcpSmsDto(String type, String from, String subject, String content, List<Message> messages) {
 
