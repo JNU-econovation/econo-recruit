@@ -50,6 +50,15 @@ public class ApplicantEmailService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void sendEmail(String applicantId) {
+        MongoAnswer applicant = applicantQueryUseCase.getApplicantById(applicantId);
+        if(sendEmail(applicant)){
+            String passState = applicant.getApplicantState().getPassStateToEnum().name();
+            Events.raise(EmailSendEvent.of(applicantId, passState, ""));
+        }
+    }
+
     public boolean sendEmail(MongoAnswer applicant) {
         String template = templateGenerator.generateEmailTemplate(applicant);
         String subject = templateGenerator.generateSubject(applicant);

@@ -27,8 +27,16 @@ public class EmailController {
     @Value("${econovation.year}")
     private int year;
 
+    @Operation(
+            summary = "지원자에게 맞는 상태의 메일을 보냅니다.",
+            description = """
+                    서류 결과 메일 -> first-passed / first-failed
+                    최종 결과 메일 -> final-passed / final-failed
+                    """
+    )
     @PostMapping("/emails/{applicantId}")
     public ResponseEntity<String> send(@PathVariable String applicantId) {
+        emailService.sendEmail(applicantId);
         return ResponseEntity.ok("");
     }
 
