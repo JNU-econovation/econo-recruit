@@ -44,4 +44,6 @@ public interface ApplicantQueryUseCase {
     List<GetApplicantsStatusResponse> getApplicantsStatus(Integer year, String sortType);
 
     List<MongoAnswer> getApplicantsByYear(Integer year);
+
+    MongoAnswer getApplicantById(String applicantId);
 }
