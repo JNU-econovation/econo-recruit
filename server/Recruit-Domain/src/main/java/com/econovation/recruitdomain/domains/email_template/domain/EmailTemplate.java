@@ -31,6 +31,7 @@ public class EmailTemplate extends BaseTimeEntity {
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String message;
+
     // 예약 발송 시간
 
     @Column(name = "scheduled_time")

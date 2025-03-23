@@ -19,6 +19,7 @@ public enum Role {
     public String value() {
         return role;
     }
+
     // 1번
     public static Role getByName(String name) {
         for (Role os : Role.values()) {

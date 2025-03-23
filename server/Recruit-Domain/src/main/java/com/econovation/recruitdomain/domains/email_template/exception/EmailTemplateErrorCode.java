@@ -19,6 +19,7 @@ public enum EmailTemplateErrorCode implements BaseErrorCode {
             BAD_REQUEST, "EMAIL_TEMPLATE_400_1", "메일 발송 템플릿이 특수 문자(%s%)를 포함하고 있습니다."),
     EMAIL_TEMPLATE_INVALID_SCHEDULE_TIME(
             BAD_REQUEST, "EMAIL_TEMPLATE_400_2", "예약 시간이 현재 시간보다 이전입니다."),
+    EMAIL_TEMPLATE_INVALID_STATE(BAD_REQUEST, "EMAIL_TEMPLATE_400_3", "해당 상태의 템플릿을 찾을 수 없습니다."),
     ;
     private Integer status;
     private String code;

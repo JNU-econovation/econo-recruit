@@ -60,103 +60,112 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ./econo-recruit/server
-            # Remove origin was container 
-            docker rm -f backend
-            # Pull and Deploy new built docker image with new tag
-            docker pull blackbean99/econo-recruit:latest
-            docker-compose up -d --remove-orphans
-            docker image prune -a -f
+            
+            git fetch origin                                  # branch 이력 가져오기
+            git reset --hard origin/develop                    # develop branch로 이동 
+            
+            chmod +x ./econo-recruit-start.sh
+            
+            ./econo-recruit-start.sh
 
-
-#      - name: 배포 완료 슬랙 알림 보내기
-#        uses: 8398a7/action-slack@v3
-#        with:
-#          status: custom
-#          fields: author, workflowRun, pullRequest
-#          custom_payload: |
-#            {
-#              attachments: [{
-#                color: '#59f764',
-#                title: '서버 배포 알림',
-#                text: `Econo-Recruit 서버 배포 성공!`,
-#                fields: [
-#                  {
-#                    title: '배포 환경',
-#                    value: `${process.env.ENVIRONMENT}`,
-#                    short: true,
-#                  },
-#                  {
-#                    title: '배포자',
-#                    value: `${process.env.AS_AUTHOR}`,
-#                    short: true,
-#                  },
-#                  {
-#                    title: '워크플로 링크',
-#                    value: `${process.env.AS_WORKFLOW_RUN}`,
-#                    short: true,
-#                  },
-#                  {
-#                    title: 'PR 링크',
-#                    value: `${process.env.AS_PULL_REQUEST}`,
-#                    short: true,
-#                  }
-#                ]
-#              }]
-#            }
-#        env:
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      - name: 배포 완료 디스코드 알림 보내기
+      - name: 디스코드 알림 보내기
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          BRANCH_NAME: ${{ github.ref_name }}
+          WORKFLOW_URL: ${{ github.event.workflow_url }}
+          TIMESTAMP: ${{ github.event.repository.updated_at }}
         run: |
-          curl -X
-          POST -H 'Content-type:application/json'
-          -d "$DATA"
-          ${{ secrets.DISCORD_WEBHOOK_URL }}
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      DATA: |
-        DATA: |
-        {
-        "username" : "🔔배포 알리미🔔",
-        "avatar_url" : "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp",
-        "embeds" : [
+          # JSON Payload 생성
+          DATA=$(cat <<EOF
           {
-            "title" : "배포가 성공했어요~",
-            "type" : "rich",
-            "color" : "123456",
-            "author" : {
-              "name" : "칠가이",
-              "icon_url" : "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp"
-            },
-            "fields" : [
+            "username": "🔔배포 알리미🔔",
+            "avatar_url": "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp",
+            "embeds": [
               {
-                "name": "커밋 메시지",
-                "value": "'$(git log -1 --pretty=%B)'",
-                "inline": false
-              },
-              {
-                "name": "브랜치",
-                "value": "'${{ github.ref }}'",
-                "inline": true
-              },
-              {
-                "name": "배포 환경",
-                "value": "`Prod`",
-                "inline": true
-              },
-              {
-                "name": "GitHub Actions",
-                "value": "[배포 워크플로우 실행 확인](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
-                "inline": false
+                "title": "🎉🎉배포가 성공했어요~!🎉🎉",
+                "description" : "배포 알림이 도착했어요~",
+                "type": "rich",
+                "color": 123456,
+                "author": {
+                  "name": "칠가이",
+                  "icon_url": "https://i.namu.wiki/i/X6s5AIfkjae-h54b7EkMYVg7ityFni1B-YIhtck0g6P914sJTsjykJDEbrsoZdV8rmwmrcyioAH3d2CxLmjxLx20dpHZI1izwMjfs7Dvtuchchyt2HDu7iQyy02_QaU6b8RrxWBt4G0PMQ0IZTykpQ.webp"
+                },
+                "fields": [
+                  {
+                    "name": "커밋 메시지",
+                    "value": "\`$COMMIT_MESSAGE\`",
+                    "inline": false
+                  },
+                  {
+                    "name": "브랜치",
+                    "value": "\`$BRANCH_NAME\`",
+                    "inline": false
+                  },
+                  {
+                    "name": "배포 환경",
+                    "value": "\`Prod\`",
+                    "inline": false
+                  },    
+                  {
+                    "name": "GitHub Actions",
+                    "value": "[배포 워크플로우 실행 확인]($WORKFLOW_URL)",
+                    "inline": false
+                  }
+                ],
+                "footer": {
+                  "text": "배포 시각",
+                  "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                },
+                "timestamp": "$TIMESTAMP"
               }
-            ],
-            "footer": {
-              "text": "배포 시각",
-              "icon_url": "https://cdn-icons-png.flaticon.com/512/25/25231.png"
-            },
-            "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+            ]
           }
-        ]
-        }
+          EOF
+          )
+          
+          # JSON 데이터 출력 (디버깅 용도)
+          echo "===== JSON PAYLOAD ====="
+          echo "$DATA"
+          echo "========================"
+          
+          # Discord Webhook 호출
+          curl -X POST -H "Content-Type: application/json" -d "$DATA" "$DISCORD_WEBHOOK_URL"
 
+      #      - name: 배포 완료 슬랙 알림 보내기
+      #        uses: 8398a7/action-slack@v3
+      #        with:
+      #          status: custom
+      #          fields: author, workflowRun, pullRequest
+      #          custom_payload: |
+      #            {
+      #              attachments: [{
+      #                color: '#59f764',
+      #                title: '서버 배포 알림',
+      #                text: `Econo-Recruit 서버 배포 성공!`,
+      #                fields: [
+      #                  {
+      #                    title: '배포 환경',
+      #                    value: `${process.env.ENVIRONMENT}`,
+      #                    short: true,
+      #                  },
+      #                  {
+      #                    title: '배포자',
+      #                    value: `${process.env.AS_AUTHOR}`,
+      #                    short: true,
+      #                  },
+      #                  {
+      #                    title: '워크플로 링크',
+      #                    value: `${process.env.AS_WORKFLOW_RUN}`,
+      #                    short: true,
+      #                  },
+      #                  {
+      #                    title: 'PR 링크',
+      #                    value: `${process.env.AS_PULL_REQUEST}`,
+      #                    short: true,
+      #                  }
+      #                ]
+      #              }]
+      #            }
+      #        env:
+      #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

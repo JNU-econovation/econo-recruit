@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IdpClient {
     @GetMapping("/api/users")
     List<InterviewerResponse> loadByName(String name);
+
     // TODO @RequestHeader("Authorization") String accessToken
 
     @GetMapping("/api/users/{user-id}")

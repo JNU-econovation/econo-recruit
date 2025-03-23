@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 @RequiredArgsConstructor
 public class BlockRequestDto {
     private String name;
+
     // 한글 기준으로 1000자 이하
     @Length(max = 1000)
     private String answer;

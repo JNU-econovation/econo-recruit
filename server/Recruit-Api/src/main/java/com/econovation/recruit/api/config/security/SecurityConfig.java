@@ -79,6 +79,8 @@ public class SecurityConfig {
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .mvcMatchers(HttpMethod.PATCH, "/api/v1/applicants/{applicant-id}/status")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
+                .mvcMatchers(HttpMethod.POST, "/api/v1/emails/*")
+                .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
 
