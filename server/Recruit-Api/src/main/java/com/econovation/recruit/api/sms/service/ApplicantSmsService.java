@@ -44,6 +44,7 @@ public class ApplicantSmsService {
         log.info("SMS RESULT : " + result);
     }
 
+    // TODO: sms 멘트 관리
     public void sendSms(String applicantId) {
         Map<String, Object> qna = applicantQueryUseCase.execute(applicantId);
 
