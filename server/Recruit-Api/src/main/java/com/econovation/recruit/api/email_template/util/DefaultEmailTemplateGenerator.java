@@ -55,6 +55,7 @@ public class DefaultEmailTemplateGenerator {
             }
 
             case FINAL_PASSED -> {
+                context.setVariable("link", emailProperties.getUrl());
                 context.setVariable("datetime", emailProperties.getOtSchedule());
                 context.setVariable("place", emailProperties.getOtPlace());
                 return templateEngine.process(templateName, context);

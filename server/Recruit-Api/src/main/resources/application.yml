@@ -82,6 +82,7 @@ econovation:
       email: ${RECRUIT_ADMIN_EMAIL:email@gmail.com}
     open_chat_url: ${OPEN_CHAT_URL:https://recruit.econovation.kr}
     open_chat_url_deadline: ${OPEN_CHAT_URL_DEADLINE:2025-03-15T23:59:59}
+    ot_receive_url: ${OT_RECEIVE_URL:https://recruit.econovation.kr}
     ot_schedule: ${ORIENTATION_DATE:2025-03-27T17:00:00}
     ot_place: ${ORIENTATION_PLACE:전남대학교 정보화본부 109호}
 
