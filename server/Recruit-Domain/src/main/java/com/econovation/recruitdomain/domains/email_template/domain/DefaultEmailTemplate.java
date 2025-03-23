@@ -2,6 +2,8 @@ package com.econovation.recruitdomain.domains.email_template.domain;
 
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
+import com.econovation.recruitdomain.domains.email_template.exception.EmailTemplateInvalidStateException;
+import com.econovation.recruitdomain.domains.email_template.exception.EmailTemplateNotFoundException;
 import java.util.Arrays;
 import lombok.Getter;
 import org.thymeleaf.TemplateEngine;
@@ -44,7 +46,7 @@ public enum DefaultEmailTemplate {
         return Arrays.stream(DefaultEmailTemplate.values())
                 .filter(template -> template.getPassStates().equals(passStates))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 상태 처리"));
+                .orElseThrow(() -> EmailTemplateNotFoundException.EXCEPTION);
     }
 
     public String contextApply(MongoAnswer applicant){
