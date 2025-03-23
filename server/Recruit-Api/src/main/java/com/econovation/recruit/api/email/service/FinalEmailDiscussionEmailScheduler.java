@@ -3,6 +3,7 @@ package com.econovation.recruit.api.email.service;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
@@ -46,7 +47,7 @@ public class FinalEmailDiscussionEmailScheduler {
     public void handle() {
         int startIndex = 0;
         int batchSize = 14;
-        List<MongoAnswer> applicants = applicantQueryUseCase.getApplicantsByYear(year);
+        List<MongoAnswer> applicants = getFinalApplicants(year);
         Queue<MongoAnswer> failQueue = new LinkedList<>();
         Map<MongoAnswer, Integer> retryCounts = new HashMap<>(); // Map to track retry counts
 
@@ -159,6 +160,17 @@ public class FinalEmailDiscussionEmailScheduler {
         }
 
         return result;
+    }
+
+    private List<MongoAnswer> getFinalApplicants(int year) {
+        return applicantQueryUseCase.getApplicantsByYear(year)
+                .stream()
+                .filter(applicant -> {
+                    PassStates passState = applicant.getApplicantState().getPassStateToEnum();
+                    return
+                            passState==PassStates.FINAL_PASSED || passState == (PassStates.FINAL_FAILED);
+                })
+                .toList();
     }
 
     private String generateNotificationMessage(MongoAnswer applicant) {
