@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Econovation Recruit</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; background: #f6f8fa; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;">
+<div style="background-color: #fff; width: 90%; max-width: 800px; margin-top: 60px; margin-bottom: 60px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); padding: 40px 30px; text-align: center;">
+
+  <!-- 로고 -->
+  <img alt="econo-3d-logo" width="114" height="143" style="color:transparent; margin:auto; display:block;" src="https://recruit.econovation.kr/images/econo-3d-logo.png">
+
+  <!-- 제목 -->
+  <h1 style="font-weight: 800; font-size: 32px; margin-bottom: 20px;">신입 모집 서류 결과 안내</h1>
+
+  <!-- 본문 내용 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    안녕하세요. <span th:text="${name}">지원자님</span>님!<br />
+    전남대학교 IT 개발동아리 에코노베이션 입니다.
+    <br /><br />
+    에코노베이션 <span th:text="${year}">30</span>기 신입 회원 모집 서류 전형에 합격하신 것을<br />
+    진심으로 축하드립니다!
+    <br />
+    면접 시간 공지는 서류 합격자 오픈채팅방에서 이루어질 예정입니다.
+  </div>
+
+  <!-- 구분선 -->
+  <div style="width: 100%; max-width: 200px; margin: 20px auto; border-top: 1px solid #e0e0e0;"></div>
+
+  <!-- 면접 안내 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    <h3 style="font-size: 20px; font-weight: bold;">필독</h3>
+    면접은 약 15분 동안 진행되며 제출하신 지원서의 내용을 바탕으로 질문이 이루어질 예정입니다.<br />
+    <b style="font-weight: 700;">면접 시작 10분 전 정보화본부 뒷 편의 스토리움 1층 로비</b>에서 대기해주시길 바라며,<br />
+    면접 시작 시간이 지난 후에 도착하실 경우 면접에 불이익이 있으므로 유의해 주시기 바랍니다.
+    <br /><br />
+    평가를 진행하기 위해 면접 내용은 지원자님의 동의를 받은 후 녹화될 예정이며,<br />
+    녹화된 영상은 평가 이후 삭제됩니다.
+  </div>
+
+  <!-- 구분선 -->
+  <div style="width: 100%; max-width: 200px; margin: 20px auto; border-top: 1px solid #e0e0e0;"></div>
+
+  <!-- 오픈채팅 안내 -->
+  <div style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+    원활한 면접 진행을 위해 아래 오픈채팅방에 입장해주시기 바랍니다.<br />
+    (<span th:text="${#temporals.format(deadline, 'yyyy년 MM월 dd일 HH시 mm분 ss초')}"></span> 까지 입장하지 않으실 경우 탈락처리됩니다.)
+    <br /><br />
+    <b><a style="color: #2160FF; font-weight: 700; text-decoration: none;" th:href="${link}">오픈채팅방 바로가기</a></b>
+    <br /><br />
+    기타 문의 사항이 있으시면 카카오톡 채널 '에코노베이션'을 이용해 주시기 바랍니다.
+  </div>
+</div>
+</body>
+</html>

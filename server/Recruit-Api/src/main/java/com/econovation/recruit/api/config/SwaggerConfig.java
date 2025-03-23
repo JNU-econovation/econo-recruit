@@ -83,6 +83,7 @@ public class SwaggerConfig extends ResponseEntityExceptionHandler {
     public ModelResolver modelResolver(ObjectMapper objectMapper) {
         return new ModelResolver(objectMapper);
     }
+
     /*
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
@@ -239,6 +240,7 @@ public class SwaggerConfig extends ResponseEntityExceptionHandler {
             return operation;
         };
     }
+
     /**
      * BaseErrorCode 타입의 이넘값들을 문서화 시킵니다. ExplainError 어노테이션으로 부가설명을 붙일수있습니다. 필드들을 가져와서 예시 에러 객체를
      * 동적으로 생성해서 예시값으로 붙입니다.

@@ -13,5 +13,9 @@ public class NcpProperties {
     private String accessKey;
     private String secretKey;
     private String senderAddress;
-    private String sendUrl;
+    private String fromPhoneNumber;
+    private String mailBaseUrl;
+    private String mailApiUri;
+    private String smsBaseUrl;
+    private String smsApiUri;
 }

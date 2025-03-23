@@ -76,6 +76,7 @@ public class SortHelper<T> {
         String s = matcher.find() ? matcher.group() : "";
         return s.substring(0, 1).toLowerCase() + s.substring(1);
     }
+
     // 지원서 정렬 데이터
     public int compare(T obj1, T obj2) {
         return sortStrategy.compare(obj1, obj2);

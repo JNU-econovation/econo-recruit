@@ -10,11 +10,14 @@ import lombok.ToString;
 @Builder
 @ToString
 public class EmailSendEvent extends DomainEvent {
+    private final String applicantId;
     private final EmailTemplateType emailTemplateType;
     private final String message;
 
-    public static EmailSendEvent of(String emailTemplateTypeString, String message) {
+    public static EmailSendEvent of(
+            String applicantId, String emailTemplateTypeString, String message) {
         return EmailSendEvent.builder()
+                .applicantId(applicantId)
                 .emailTemplateType(EmailTemplateType.valueOf(emailTemplateTypeString))
                 .message(message)
                 .build();

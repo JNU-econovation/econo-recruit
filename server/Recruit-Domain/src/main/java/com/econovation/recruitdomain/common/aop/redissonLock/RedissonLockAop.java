@@ -70,7 +70,7 @@ public class RedissonLockAop {
             throw e;
         } finally {
             try {
-                rLock.unlock();
+                if (rLock.isLocked() && rLock.isHeldByCurrentThread()) rLock.unlock();
             } catch (IllegalMonitorStateException e) {
                 log.error(e + baseKey + dynamicKey);
                 throw e;
