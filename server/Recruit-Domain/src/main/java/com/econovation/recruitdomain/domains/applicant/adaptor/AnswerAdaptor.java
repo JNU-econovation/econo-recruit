@@ -59,6 +59,10 @@ public class AnswerAdaptor {
         return mongoTemplate.count(Query.query(Criteria.where("year").is(year)), MongoAnswer.class);
     }
 
+    public MongoAnswer findById(String id) {
+        return mongoTemplate.findById(id, MongoAnswer.class);
+    }
+
     public List<MongoAnswer> findByApplicantIds(List<String> applicantIds) {
         return answerRepository.findByIdIn(applicantIds);
     }
