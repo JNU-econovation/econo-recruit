@@ -21,7 +21,7 @@ public class DefaultEmailProperties {
             @Value("${econovation.recruit.open_chat_url_deadline}") String openChatUrlDeadLine,
             @Value("${econovation.recruit.ot_schedule}") String otSchedule,
             @Value("${econovation.recruit.ot_place}") String otPlace,
-            @Value("{econovation.recruit.ot_receive_url}") String url,
+            @Value("${econovation.recruit.ot_receive_url}") String url,
             @Value("${econovation.file.path.portfolio}") String filePath) {
         this.openChatUrl = openChatUrl;
         this.openChatUrlDeadLine = LocalDateTime.parse(openChatUrlDeadLine);
