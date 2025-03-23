@@ -19,7 +19,7 @@ public class GetApplicantsStatusResponse {
     private String name;
     private String id;
     private Integer year;
-    private ApplicantState state;
+    private ApplicantStateResponse state;
 
     public static GetApplicantsStatusResponse of(Map<String, Object> result) {
         if (result.get(PASS_STATE_KEY) instanceof ApplicantState applicantState) {
@@ -30,7 +30,7 @@ public class GetApplicantsStatusResponse {
                     .name((String) result.get("name"))
                     .id((String) result.get("id"))
                     .year((Integer) result.get("year"))
-                    .state(applicantState)
+                    .state(ApplicantStateResponse.of(applicantState.getPassState()))
                     .build();
         }
         throw ApplicantWrongStateException.wrongStatusException;
