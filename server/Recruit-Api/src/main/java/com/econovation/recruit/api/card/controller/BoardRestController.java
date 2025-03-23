@@ -49,6 +49,7 @@ public class BoardRestController {
     private final CardLoadUseCase cardLoadUseCase;
     private final NavigationUseCase navigationUseCase;
     private final ApplicantQueryUseCase answerQueryUseCase;
+
     //    ---------- Navigation ----------
     @Operation(summary = "네비게이션 바 생성", description = "카드 생성 전에 네비게이션 바를 생성하셔야 합니다.")
     @ApiErrorExceptionsExample(value = CreateNavigationExceptionDocs.class)
@@ -121,6 +122,7 @@ public class BoardRestController {
         return new ResponseEntity<>(
                 boardLoadUseCase.getColumnsByNavigationId(navigationId), HttpStatus.OK);
     }
+
     // 칸반보드 전체 조회 by navLoc
     @Operation(summary = "업무 칸반보드 생성", description = "업무 칸반(지원자가 아닌) 생성")
     @ApiErrorExceptionsExample(CreateBoardExceptionDocs.class)

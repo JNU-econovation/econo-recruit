@@ -11,14 +11,19 @@ public class SmsMessageGenerator {
 
     private final PeriodCalculator periodCalculator;
 
-    public String documentOrInterview(){
+    public String documentOrInterview() {
         PeriodStates periodStates = periodCalculator.execute();
 
-        switch(periodStates){
-            case FINAL_DISCUSSION -> { return "서류"; }
-            case END -> { return "최종"; }
-            default -> { return ""; }
+        switch (periodStates) {
+            case FINAL_DISCUSSION -> {
+                return "서류";
+            }
+            case END -> {
+                return "최종";
+            }
+            default -> {
+                return "";
+            }
         }
-
     }
 }

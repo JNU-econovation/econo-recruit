@@ -1,16 +1,12 @@
 package com.econovation.recruit.api.email.service;
 
 import com.econovation.recruit.api.email_template.util.DefaultEmailTemplateGenerator;
-import com.econovation.recruitdomain.domains.email_template.domain.DefaultEmailTemplate;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
-import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,16 +23,12 @@ public class ApplicantEmailService {
         File attachment = templateGenerator.getPortfolioFile(applicant);
         String email = applicant.getQna().get("email").toString();
 
-        if(Objects.isNull(attachment))
+        if (Objects.isNull(attachment)) return emailSender.sendEmail(email, subject, template);
+        else if (attachment.exists())
+            return emailSender.sendEmailWithAttachment(email, subject, template, attachment);
+        else {
+            log.error("attachment 가 첨부되지 않았습니다. file dir : {}", attachment.getAbsolutePath());
             return emailSender.sendEmail(email, subject, template);
-        else
-            if(attachment.exists())
-                return emailSender.sendEmailWithAttachment(email, subject, template, attachment);
-            else {
-                log.error("attachment 가 첨부되지 않았습니다. file dir : {}", attachment.getAbsolutePath());
-                return emailSender.sendEmail(email, subject, template);
-            }
-
+        }
     }
-
 }

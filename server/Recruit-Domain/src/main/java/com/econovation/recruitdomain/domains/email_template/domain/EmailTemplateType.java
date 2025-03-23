@@ -23,6 +23,4 @@ public enum EmailTemplateType {
         this.type = type;
         this.passState = passStates;
     }
-
-
 }

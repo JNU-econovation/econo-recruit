@@ -10,8 +10,6 @@ import feign.codec.ErrorDecoder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,7 +18,7 @@ public class NcpInfoErrorDecoder implements ErrorDecoder {
     public Exception decode(String methodKey, Response response) {
         BufferedReader br;
         try {
-             br = new BufferedReader(new InputStreamReader(response.body().asInputStream()));
+            br = new BufferedReader(new InputStreamReader(response.body().asInputStream()));
         } catch (IOException e) {
             throw OtherServerBadRequestException.EXCEPTION;
         }

@@ -27,6 +27,7 @@ public class AnswerAggregate {
     @AggregateIdentifier private String id;
     private Integer year;
     private Map<String, Object> qna;
+
     // Constructor for creating an AnswerAggregate
     @CommandHandler
     public AnswerAggregate(CreateAnswerCommand command) {

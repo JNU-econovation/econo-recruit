@@ -28,5 +28,4 @@ public class EmailSendEventHandler {
 
         smsService.sendSms(applicantId);
     }
-
 }

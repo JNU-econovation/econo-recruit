@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 public class NcpClients {
 
-    @FeignClient(name = "NcpClient", url = "${ncp.mail-base-url}" , configuration = NcpConfig.class)
+    @FeignClient(name = "NcpClient", url = "${ncp.mail-base-url}", configuration = NcpConfig.class)
     @Headers("Content-Type: application/json; charset=UTF-8")
-    public interface NcpMailClient{
+    public interface NcpMailClient {
         @PostMapping(path = "${ncp.mail-api-url}", consumes = "application/json; charset=UTF-8")
         ResponseEntity<NcpMailResponse> createMailRequest(
                 @RequestHeader("x-ncp-iam-access-key") String accessKey,
@@ -22,17 +22,14 @@ public class NcpClients {
                 @RequestBody SendRawEmailDto sendRawEmailDto);
     }
 
-    @FeignClient(name = "NcpClient", url = "${ncp.sms-base-url}" , configuration = NcpConfig.class)
+    @FeignClient(name = "NcpClient", url = "${ncp.sms-base-url}", configuration = NcpConfig.class)
     @Headers("Content-Type: application/json; charset=UTF-8")
-    public interface NcpSmsClient{
+    public interface NcpSmsClient {
         @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json;")
         NcpSmsResponse createSmsRequest(
                 @RequestHeader("x-ncp-iam-access-key") String accessKey,
                 @RequestHeader("x-ncp-apigw-timestamp") String timestamp,
                 @RequestHeader("x-ncp-apigw-signature-v2") String signature,
-                @RequestBody NcpSmsDto sendRawSmsDto
-            );
+                @RequestBody NcpSmsDto sendRawSmsDto);
     }
-
-
 }

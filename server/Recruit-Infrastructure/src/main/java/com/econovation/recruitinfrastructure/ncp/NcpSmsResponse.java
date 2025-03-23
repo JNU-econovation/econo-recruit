@@ -1,6 +1,5 @@
 package com.econovation.recruitinfrastructure.ncp;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,5 +13,4 @@ public class NcpSmsResponse {
     private String requestTime;
     private String statusCode;
     private String statusName;
-
 }

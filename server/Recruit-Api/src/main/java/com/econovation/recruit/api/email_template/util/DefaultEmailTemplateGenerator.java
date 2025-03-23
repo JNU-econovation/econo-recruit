@@ -17,8 +17,8 @@ public class DefaultEmailTemplateGenerator {
     private final DefaultEmailProperties emailProperties;
     private final File portfolioFile;
 
-    public DefaultEmailTemplateGenerator(TemplateEngine templateEngine,
-                                         DefaultEmailProperties emailProperties) {
+    public DefaultEmailTemplateGenerator(
+            TemplateEngine templateEngine, DefaultEmailProperties emailProperties) {
         this.templateEngine = templateEngine;
         this.emailProperties = emailProperties;
         this.portfolioFile = new File(emailProperties.getFilePath());
@@ -27,8 +27,7 @@ public class DefaultEmailTemplateGenerator {
     public File getPortfolioFile(MongoAnswer applicant) {
         // 포트폴리오 파일은 최종 합격자한테만 전송한다.
         PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-        if(passState==PassStates.FINAL_PASSED)
-            return portfolioFile;
+        if (passState == PassStates.FINAL_PASSED) return portfolioFile;
         return null;
     }
 
@@ -41,14 +40,14 @@ public class DefaultEmailTemplateGenerator {
         return contextApply(applicant);
     }
 
-    private  String contextApply(MongoAnswer applicant){
+    private String contextApply(MongoAnswer applicant) {
         PassStates passState = applicant.getApplicantState().getPassStateToEnum();
         String templateName = DefaultEmailTemplate.getTemplate(passState).getTemplateName();
         Context context = new Context();
 
         commonContext(applicant, context);
 
-        switch(passState){
+        switch (passState) {
             case FIRST_PASSED -> {
                 context.setVariable("deadline", emailProperties.getOpenChatUrlDeadLine());
                 context.setVariable("link", emailProperties.getOpenChatUrl());
@@ -69,5 +68,4 @@ public class DefaultEmailTemplateGenerator {
         context.setVariable("name", applicant.getQna().get("name").toString());
         context.setVariable("year", applicant.getYear());
     }
-
 }

@@ -37,6 +37,7 @@ public class AwsSesUtils {
                 .body(Body.builder().html(builder -> builder.data(html)).build())
                 .build();
     }
+
     // The HTML body of the email.
 
     private static SendRawEmailRequest buildSendRawEmailRequest(MimeMessage message)

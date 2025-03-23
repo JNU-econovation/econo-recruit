@@ -58,6 +58,7 @@ public class Applicant extends BaseTimeEntity {
     // 복수전공
     @Column(name = "double_major")
     private String doubleMajor;
+
     // 부전공
     @Column(name = "minor")
     private String minor;
@@ -69,6 +70,7 @@ public class Applicant extends BaseTimeEntity {
     // 이메일
     @Column(name = "email")
     private String email;
+
     /** insert 되기전 (persist 되기전) 실행된다. */
     @PrePersist
     public void prePersist() {}

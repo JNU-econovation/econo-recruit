@@ -6,8 +6,8 @@ public class EmailTemplateInvalidStateException extends RecruitCodeException {
 
     public static final EmailTemplateInvalidStateException EXCEPTION =
             new EmailTemplateInvalidStateException();
+
     private EmailTemplateInvalidStateException() {
         super(EmailTemplateErrorCode.EMAIL_TEMPLATE_INVALID_STATE);
     }
-
 }

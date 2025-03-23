@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmailTemplateService
         implements EmailTemplateRegisterUseCase, EmailTemplateLoadUseCase {
     private final EmailTemplateAdaptor emailTemplateAdaptor;
+
     //    private final EmailSendScheduler emailSendScheduler;
 
     @Override

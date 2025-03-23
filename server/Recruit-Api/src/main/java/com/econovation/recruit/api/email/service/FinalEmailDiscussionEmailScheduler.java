@@ -82,16 +82,14 @@ public class FinalEmailDiscussionEmailScheduler {
         for (MongoAnswer applicant : batch) {
             try {
                 // 이메일 발송 및 실패 처리
-                boolean result =
-                        sendEmailWithRetry(applicant, retryCounts, failQueue);
+                boolean result = sendEmailWithRetry(applicant, retryCounts, failQueue);
                 if (!result) {
                     failQueue.add(applicant);
                     retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
                 }
             } catch (Exception e) {
                 log.error(
-                        "Email sending failed for: {}",
-                        applicant.getQna().get("email").toString());
+                        "Email sending failed for: {}", applicant.getQna().get("email").toString());
                 failQueue.add(applicant);
                 retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
             }
@@ -107,15 +105,16 @@ public class FinalEmailDiscussionEmailScheduler {
                 int retryCount = retryCounts.getOrDefault(applicant, 0);
 
                 if (retryCount >= MAX_EMAIL_SEND_RETRY) {
-                    log.error("최대 {}번 retry 실패시: {}", MAX_EMAIL_SEND_RETRY, applicant.getQna().get("email").toString());
+                    log.error(
+                            "최대 {}번 retry 실패시: {}",
+                            MAX_EMAIL_SEND_RETRY,
+                            applicant.getQna().get("email").toString());
                     continue;
                 }
 
                 try {
                     // 이메일 발송 및 실패 처리
-                    boolean result =
-                            sendEmailWithRetry(
-                                    applicant, retryCounts, failQueue);
+                    boolean result = sendEmailWithRetry(applicant, retryCounts, failQueue);
                     if (!result) {
                         retryCounts.put(applicant, retryCount + 1);
                         failQueue.add(applicant);
@@ -148,37 +147,37 @@ public class FinalEmailDiscussionEmailScheduler {
             failQueue.add(applicant);
         }
 
-        if(result) {
+        if (result) {
             String applicantId = applicant.getId();
             String passState = applicant.getApplicantState().getPassStateToEnum().name();
 
-            Events.raise(EmailSendEvent.of(
-                    applicantId,
-                    passState,
-                    ""));
-            slackMessageProvider.sendMessage(slackProperties.getUrl(), generateNotificationMessage(applicant));
+            Events.raise(EmailSendEvent.of(applicantId, passState, ""));
+            slackMessageProvider.sendMessage(
+                    slackProperties.getUrl(), generateNotificationMessage(applicant));
         }
 
         return result;
     }
 
     private List<MongoAnswer> getFinalApplicants(int year) {
-        return applicantQueryUseCase.getApplicantsByYear(year)
-                .stream()
-                .filter(applicant -> {
-                    PassStates passState = applicant.getApplicantState().getPassStateToEnum();
-                    return
-                            passState==PassStates.FINAL_PASSED || passState == (PassStates.FINAL_FAILED);
-                })
+        return applicantQueryUseCase.getApplicantsByYear(year).stream()
+                .filter(
+                        applicant -> {
+                            PassStates passState =
+                                    applicant.getApplicantState().getPassStateToEnum();
+                            return passState == PassStates.FINAL_PASSED
+                                    || passState == (PassStates.FINAL_FAILED);
+                        })
                 .toList();
     }
 
     private String generateNotificationMessage(MongoAnswer applicant) {
-        String message = """
+        String message =
+                """
                 [메일 발송 성공]
                 - 이름 : %s
                 - 지원 분야 : %s / %s
-                - 합격 상태 : %s 
+                - 합격 상태 : %s
                 """;
 
         String name = applicant.getQna().get("name").toString();

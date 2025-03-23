@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.domains.email_template.domain;
 
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
-import com.econovation.recruitdomain.domains.email_template.exception.EmailTemplateInvalidStateException;
 import com.econovation.recruitdomain.domains.email_template.exception.EmailTemplateNotFoundException;
 import java.util.Arrays;
 import lombok.Getter;
@@ -11,26 +10,10 @@ import org.thymeleaf.context.Context;
 
 @Getter
 public enum DefaultEmailTemplate {
-
-    FIRST_PASSED(PassStates.FIRST_PASSED,
-            "에코노베이션 신입 모집 서류 결과 안내",
-            "email-first-passed"
-    ),
-    FINAL_PASSED(
-            PassStates.FINAL_PASSED,
-            "에코노베이션 신입 모집 최종 결과 안내",
-            "email-final-passed"
-    ),
-    FIRST_FAILED(
-            PassStates.FIRST_FAILED,
-            "에코노베이션 신입 모집 서류 결과 안내",
-            "email-first-failed"
-    ),
-    FINAL_FAILED(
-            PassStates.FINAL_FAILED,
-            "에코노베이션 신입 모집 최종 결과 안내",
-            "email-final-failed"
-    );
+    FIRST_PASSED(PassStates.FIRST_PASSED, "에코노베이션 신입 모집 서류 결과 안내", "email-first-passed"),
+    FINAL_PASSED(PassStates.FINAL_PASSED, "에코노베이션 신입 모집 최종 결과 안내", "email-final-passed"),
+    FIRST_FAILED(PassStates.FIRST_FAILED, "에코노베이션 신입 모집 서류 결과 안내", "email-first-failed"),
+    FINAL_FAILED(PassStates.FINAL_FAILED, "에코노베이션 신입 모집 최종 결과 안내", "email-final-failed");
 
     private PassStates passStates;
     private String subject;
@@ -49,7 +32,7 @@ public enum DefaultEmailTemplate {
                 .orElseThrow(() -> EmailTemplateNotFoundException.EXCEPTION);
     }
 
-    public String contextApply(MongoAnswer applicant){
+    public String contextApply(MongoAnswer applicant) {
         TemplateEngine templateEngine = new TemplateEngine();
         Context context = new Context();
 
@@ -58,6 +41,4 @@ public enum DefaultEmailTemplate {
 
         return templateEngine.process(templateName, context);
     }
-
-
 }
