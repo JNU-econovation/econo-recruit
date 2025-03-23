@@ -148,10 +148,6 @@ public class FinalEmailDiscussionEmailScheduler {
         }
 
         if (result) {
-            String applicantId = applicant.getId();
-            String passState = applicant.getApplicantState().getPassStateToEnum().name();
-
-            Events.raise(EmailSendEvent.of(applicantId, passState, ""));
             slackMessageProvider.sendMessage(
                     slackProperties.getUrl(), generateNotificationMessage(applicant));
         }
