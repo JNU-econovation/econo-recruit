@@ -34,14 +34,18 @@ public class ApplicantEmailService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void sendEmail(int year, String state) {
         PassStates target = PassStates.findStatus(state);
-        List<MongoAnswer> applicants = applicantQueryUseCase.getApplicantsByYear(year)
-                .stream().filter(applicant -> applicant.getApplicantState().getPassStateToEnum() == target)
-                .toList();
+        List<MongoAnswer> applicants =
+                applicantQueryUseCase.getApplicantsByYear(year).stream()
+                        .filter(
+                                applicant ->
+                                        applicant.getApplicantState().getPassStateToEnum()
+                                                == target)
+                        .toList();
 
         for (MongoAnswer applicant : applicants) {
             boolean result = sendEmail(applicant);
-            if(!result) log.error("Email 발송 실패 : {}", applicant.getId());
-            else{
+            if (!result) log.error("Email 발송 실패 : {}", applicant.getId());
+            else {
                 String applicantId = applicant.getId();
                 String passState = applicant.getApplicantState().getPassStateToEnum().name();
 
@@ -53,7 +57,7 @@ public class ApplicantEmailService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void sendEmail(String applicantId) {
         MongoAnswer applicant = applicantQueryUseCase.getApplicantById(applicantId);
-        if(sendEmail(applicant)){
+        if (sendEmail(applicant)) {
             String passState = applicant.getApplicantState().getPassStateToEnum().name();
             Events.raise(EmailSendEvent.of(applicantId, passState, ""));
         }
