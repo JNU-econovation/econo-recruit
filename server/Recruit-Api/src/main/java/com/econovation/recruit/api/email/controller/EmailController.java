@@ -29,11 +29,11 @@ public class EmailController {
 
     @Operation(
             summary = "지원자에게 맞는 상태의 메일을 보냅니다.",
-            description = """
+            description =
+                    """
                     서류 결과 메일 -> first-passed / first-failed
                     최종 결과 메일 -> final-passed / final-failed
-                    """
-    )
+                    """)
     @PostMapping("/emails/{applicantId}")
     public ResponseEntity<String> send(@PathVariable String applicantId) {
         emailService.sendEmail(applicantId);
@@ -42,17 +42,16 @@ public class EmailController {
 
     @Operation(
             summary = "합격 상태에 맞는 메일을 보냅니다.",
-            description = """
+            description =
+                    """
                     서류 결과 메일 -> first-passed / first-failed
                     최종 결과 메일 -> final-passed / final-failed
-                    """
-    )
+                    """)
     @PostMapping("/emails/all")
     public ResponseEntity<String> sendAll(
             @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "state") String state
-    ) {
-        if(year == null || state == null) {
+            @RequestParam(value = "state") String state) {
+        if (year == null || state == null) {
             year = this.year;
         }
 
