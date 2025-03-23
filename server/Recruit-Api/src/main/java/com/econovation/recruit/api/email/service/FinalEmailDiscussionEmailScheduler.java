@@ -3,18 +3,16 @@ package com.econovation.recruit.api.email.service;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
-import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
-import com.econovation.recruitdomain.domains.email_template.domain.EmailTemplateType;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
-import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
 import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
-import com.econovation.recruitinfrastructure.slack.config.SlackTFProperties;
-import java.io.File;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +24,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 @Component
 @Slf4j
@@ -37,7 +33,7 @@ public class FinalEmailDiscussionEmailScheduler {
     private final SlackMessageProvider slackMessageProvider;
     private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
-    private final Integer MAX_EMAIL_SEND_RETRY = 10;
+    private final Integer MAX_EMAIL_SEND_RETRY = 3;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -93,9 +89,8 @@ public class FinalEmailDiscussionEmailScheduler {
                 }
             } catch (Exception e) {
                 log.error(
-                        "Email sending failed for {}: {}",
-                        applicant.getQna().get("email").toString(),
-                        e.getMessage());
+                        "Email sending failed for: {}",
+                        applicant.getQna().get("email").toString());
                 failQueue.add(applicant);
                 retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
             }
@@ -111,7 +106,7 @@ public class FinalEmailDiscussionEmailScheduler {
                 int retryCount = retryCounts.getOrDefault(applicant, 0);
 
                 if (retryCount >= MAX_EMAIL_SEND_RETRY) {
-                    log.error("최대 10번 retry 실패시: {}", applicant.getQna().get("email").toString());
+                    log.error("최대 {}번 retry 실패시: {}", MAX_EMAIL_SEND_RETRY, applicant.getQna().get("email").toString());
                     continue;
                 }
 
@@ -130,9 +125,8 @@ public class FinalEmailDiscussionEmailScheduler {
                     }
                 } catch (Exception e) {
                     log.error(
-                            "Retry exception for email {}: {}",
-                            applicant.getQna().get("email").toString(),
-                            e.getMessage());
+                            "Retry exception for email {}:",
+                            applicant.getQna().get("email").toString());
                     retryCounts.put(applicant, retryCount + 1);
                     failQueue.add(applicant);
                 }
