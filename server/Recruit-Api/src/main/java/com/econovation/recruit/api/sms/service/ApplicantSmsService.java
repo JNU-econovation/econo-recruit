@@ -33,7 +33,7 @@ public class ApplicantSmsService {
 
                 결과는 메일을 통해 확인해주시길 바랍니다.
 
-                확인하시고 문자 회신 부탁드립니다.
+                확인하시고 메일로 회신 부탁드립니다.
                 """;
 
         String finalMessage =
@@ -58,7 +58,7 @@ public class ApplicantSmsService {
 
                 결과는 메일을 통해 확인해주시길 바랍니다.
 
-                확인하시고 문자 회신 부탁드립니다.
+                확인하시고 메일로 회신 부탁드립니다.
                 """;
 
         String finalMessage =
