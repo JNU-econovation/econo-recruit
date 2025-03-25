@@ -22,7 +22,6 @@ public class EmailSendEventHandler {
     @TransactionalEventListener(
             classes = EmailSendEvent.class,
             phase = TransactionPhase.AFTER_COMMIT)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(EmailSendEvent emailSendEvent) {
         String applicantId = emailSendEvent.getApplicantId();
 
