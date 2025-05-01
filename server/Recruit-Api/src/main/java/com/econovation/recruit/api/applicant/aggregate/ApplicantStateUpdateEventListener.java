@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.applicant.aggregate;
 
-import com.econovation.recruit.api.applicant.state.support.PeriodCalculator;
+import com.econovation.recruit.api.period.service.PeriodCalculator;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.event.aggregateevent.ApplicantStateUpdateEvent;

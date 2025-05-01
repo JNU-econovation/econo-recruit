@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.sms.helper;
 
-import com.econovation.recruit.api.applicant.state.support.PeriodCalculator;
+import com.econovation.recruit.api.period.service.PeriodCalculator;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

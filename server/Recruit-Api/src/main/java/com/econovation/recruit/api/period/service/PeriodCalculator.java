@@ -1,4 +1,4 @@
-package com.econovation.recruit.api.applicant.state.support;
+package com.econovation.recruit.api.period.service;
 
 import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import java.time.LocalDateTime;
