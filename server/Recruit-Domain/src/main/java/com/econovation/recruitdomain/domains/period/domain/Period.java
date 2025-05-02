@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class Period extends BaseTimeEntity {
 
     @Id
@@ -35,8 +37,12 @@ public class Period extends BaseTimeEntity {
     @Column(name = "final_discussion_end")
     private LocalDateTime finalDiscussionEnd;
 
-    public Period(LocalDateTime recruitStart, LocalDateTime recruitEnd, LocalDateTime passDate,
-                  LocalDateTime firstDiscussionEnd, LocalDateTime finalDiscussionEnd) {
+    public Period(
+            LocalDateTime recruitStart,
+            LocalDateTime recruitEnd,
+            LocalDateTime passDate,
+            LocalDateTime firstDiscussionEnd,
+            LocalDateTime finalDiscussionEnd) {
         this.recruitStart = recruitStart;
         this.recruitEnd = recruitEnd;
         this.passDate = passDate;
@@ -44,8 +50,13 @@ public class Period extends BaseTimeEntity {
         this.finalDiscussionEnd = finalDiscussionEnd;
     }
 
-    public static Period of(LocalDateTime recruitStart, LocalDateTime recruitEnd, LocalDateTime passDate, LocalDateTime firstDiscussionEnd, LocalDateTime finalDiscussionEnd) {
-        return new Period(recruitStart, recruitEnd, passDate, firstDiscussionEnd, finalDiscussionEnd);
+    public static Period of(
+            LocalDateTime recruitStart,
+            LocalDateTime recruitEnd,
+            LocalDateTime passDate,
+            LocalDateTime firstDiscussionEnd,
+            LocalDateTime finalDiscussionEnd) {
+        return new Period(
+                recruitStart, recruitEnd, passDate, firstDiscussionEnd, finalDiscussionEnd);
     }
-
 }
