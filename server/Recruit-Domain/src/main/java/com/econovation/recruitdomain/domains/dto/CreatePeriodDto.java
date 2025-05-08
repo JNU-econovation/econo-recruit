@@ -12,7 +12,9 @@ public class CreatePeriodDto {
 
     private LocalDateTime recruitStart;
     private LocalDateTime recruitEnd;
-    private LocalDateTime passDate;
+    private LocalDateTime firstPassDate;
     private LocalDateTime firstDiscussionEnd;
     private LocalDateTime finalDiscussionEnd;
+    private LocalDateTime finalPassDate;
+    
 }

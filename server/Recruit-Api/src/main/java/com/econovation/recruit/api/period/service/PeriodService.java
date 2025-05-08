@@ -23,9 +23,11 @@ public class PeriodService implements PeriodQueryUseCase, PeriodCommandUseCase {
                 Period.of(
                         request.getRecruitStart(),
                         request.getRecruitEnd(),
-                        request.getPassDate(),
+                        request.getFirstPassDate(),
                         request.getFirstDiscussionEnd(),
-                        request.getFinalDiscussionEnd());
+                        request.getFinalDiscussionEnd(),
+                        request.getFinalPassDate()
+                        );
 
         periodRecordPort.save(period);
     }
@@ -38,8 +40,9 @@ public class PeriodService implements PeriodQueryUseCase, PeriodCommandUseCase {
         return PeriodResponseDto.of(
                 period.getRecruitStart(),
                 period.getRecruitEnd(),
-                period.getPassDate(),
+                period.getFirstPassDate(),
                 period.getFirstDiscussionEnd(),
-                period.getFinalDiscussionEnd());
+                period.getFinalDiscussionEnd(),
+                period.getFinalPassDate());
     }
 }

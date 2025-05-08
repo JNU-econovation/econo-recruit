@@ -29,7 +29,7 @@ public class Period extends BaseTimeEntity {
     private LocalDateTime recruitEnd;
 
     @Column(name = "pass_date")
-    private LocalDateTime passDate;
+    private LocalDateTime firstPassDate;
 
     @Column(name = "first_discussion_end")
     private LocalDateTime firstDiscussionEnd;
@@ -37,26 +37,32 @@ public class Period extends BaseTimeEntity {
     @Column(name = "final_discussion_end")
     private LocalDateTime finalDiscussionEnd;
 
+    @Column(name = "final_pass_date")
+    private LocalDateTime finalPassDate;
+
     public Period(
             LocalDateTime recruitStart,
             LocalDateTime recruitEnd,
-            LocalDateTime passDate,
+            LocalDateTime firstPassDate,
             LocalDateTime firstDiscussionEnd,
-            LocalDateTime finalDiscussionEnd) {
+            LocalDateTime finalDiscussionEnd,
+            LocalDateTime finalPassDate) {
         this.recruitStart = recruitStart;
         this.recruitEnd = recruitEnd;
-        this.passDate = passDate;
+        this.firstPassDate = firstPassDate;
         this.firstDiscussionEnd = firstDiscussionEnd;
         this.finalDiscussionEnd = finalDiscussionEnd;
+        this.finalPassDate = finalPassDate;
     }
 
     public static Period of(
             LocalDateTime recruitStart,
             LocalDateTime recruitEnd,
-            LocalDateTime passDate,
+            LocalDateTime firstPassDate,
             LocalDateTime firstDiscussionEnd,
-            LocalDateTime finalDiscussionEnd) {
+            LocalDateTime finalDiscussionEnd,
+            LocalDateTime finalPassDate) {
         return new Period(
-                recruitStart, recruitEnd, passDate, firstDiscussionEnd, finalDiscussionEnd);
+                recruitStart, recruitEnd, firstPassDate, firstDiscussionEnd, finalDiscussionEnd, finalPassDate);
     }
 }
