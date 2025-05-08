@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PeriodRepository extends JpaRepository<Period, Long> {
 
-    @Query("SELECT p FROM Period p ORDER BY p.createdAt DESC LIMIT 1")
+    @Query("SELECT p FROM Period p ORDER BY p.createdAt DESC")
     Optional<Period> findLatestOne();
-
 }
