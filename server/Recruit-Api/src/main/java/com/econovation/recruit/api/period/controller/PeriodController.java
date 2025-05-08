@@ -29,11 +29,8 @@ public class PeriodController {
     }
 
     @PostMapping("/periods")
-    public ResponseEntity<Void> create(
-            @RequestBody CreatePeriodDto request
-            ) {
+    public ResponseEntity<Void> create(@RequestBody CreatePeriodDto request) {
         periodCommandUseCase.register(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 }

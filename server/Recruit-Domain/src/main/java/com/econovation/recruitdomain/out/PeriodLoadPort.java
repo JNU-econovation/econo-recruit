@@ -6,5 +6,4 @@ import java.util.Optional;
 public interface PeriodLoadPort {
 
     Optional<Period> findLatestOne();
-
 }

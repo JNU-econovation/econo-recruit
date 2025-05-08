@@ -16,8 +16,13 @@ public class PeriodResponseDto {
     private LocalDateTime firstDiscussionEnd;
     private LocalDateTime finalDiscussionEnd;
 
-    public static PeriodResponseDto of(LocalDateTime recruitStart, LocalDateTime recruitEnd, LocalDateTime passDate, LocalDateTime firstDiscussionEnd, LocalDateTime finalDiscussionEnd) {
-        return new PeriodResponseDto(recruitStart, recruitEnd, passDate, firstDiscussionEnd, finalDiscussionEnd);
+    public static PeriodResponseDto of(
+            LocalDateTime recruitStart,
+            LocalDateTime recruitEnd,
+            LocalDateTime passDate,
+            LocalDateTime firstDiscussionEnd,
+            LocalDateTime finalDiscussionEnd) {
+        return new PeriodResponseDto(
+                recruitStart, recruitEnd, passDate, firstDiscussionEnd, finalDiscussionEnd);
     }
-
 }

@@ -5,5 +5,4 @@ import com.econovation.recruitdomain.domains.dto.PeriodResponseDto;
 public interface PeriodQueryUseCase {
 
     PeriodResponseDto get();
-
 }
