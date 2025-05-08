@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.period.service;
 
 import com.econovation.recruitdomain.domains.period.domain.Period;
+import com.econovation.recruitdomain.domains.period.exception.PeriodNotFoundException;
 import com.econovation.recruitdomain.out.PeriodLoadPort;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class PeriodProvider {
         Optional<Period> period = periodLoadPort.findLatestOne();
 
         if (period.isEmpty()) {
-            // 데이터베이스에 최신의 데이터가 없을 경우 처리
-            return null;
+            // 최신의 일정이 없을 경우 처리
+            throw PeriodNotFoundException.EXCEPTION;
         }
 
         return period.get();
