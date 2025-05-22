@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +73,7 @@ public class EmailController {
                     long : 메일 발송 예약일의 timestamp
                     """)
     @PostMapping("/emails/reservation")
-    public ResponseEntity<String> reserve(@RequestBody EmailReservationDto request) {
+    public ResponseEntity<String> reserve(@RequestBody @Valid EmailReservationDto request) {
 
         LocalDateTime reservedAt =
                 LocalDateTime.ofInstant(
