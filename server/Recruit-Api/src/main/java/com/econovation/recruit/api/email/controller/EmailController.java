@@ -28,7 +28,7 @@ public class EmailController {
     private int year;
 
     @Operation(
-            summary = "지원자에게 맞는 상태의 메일을 보냅니다.",
+            summary = "지원자 한 명에게 메일을 보냅니다.",
             description =
                     """
                     서류 결과 메일 -> first-passed / first-failed
@@ -41,7 +41,7 @@ public class EmailController {
     }
 
     @Operation(
-            summary = "합격 상태에 맞는 메일을 보냅니다.",
+            summary = "여러명의 지원자에게 메일을 보냅니다.",
             description =
                     """
                     서류 결과 메일 -> first-passed / first-failed
