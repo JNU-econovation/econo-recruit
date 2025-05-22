@@ -66,6 +66,7 @@ public class ApplicantEmailService {
         File attachment = templateGenerator.getPortfolioFile(applicant);
         String email = applicant.getQna().get("email").toString();
 
+        // attachment는 최종 합격자들 대상으로만 전달한다. 그래서 최종 합격자가 아니면 attachment는 null이다.
         if (Objects.isNull(attachment)) return emailSender.sendEmail(email, subject, template);
         else if (attachment.exists())
             return emailSender.sendEmailWithAttachment(email, subject, template, attachment);

@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
@@ -23,13 +24,9 @@ public class ApplicantEmailReserveService {
     public void reserve(Set<String> applicantIds, LocalDateTime reservedAt) {
         List<MongoAnswer> applicants =
                 applicantQueryUseCase.execute(applicantIds.stream().toList());
-        Set<String> emails =
-                applicants.stream()
-                        .map(applicant -> (String) applicant.getQna().getOrDefault("email", ""))
-                        .collect(Collectors.toSet());
 
         ZonedDateTime zoned = reservedAt.atZone(ZoneId.of("Asia/Seoul"));
 
-        taskScheduler.schedule(() -> emails.forEach(emailService::sendEmail), zoned.toInstant());
+        taskScheduler.schedule(() -> applicants.forEach(emailService::sendEmail), zoned.toInstant());
     }
 }
