@@ -15,7 +15,6 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-@EnableScheduling
 @ComponentScan(basePackages = {"com.econovation"})
 @Slf4j
 public class RecruitApplication implements ApplicationListener<ApplicationReadyEvent> {

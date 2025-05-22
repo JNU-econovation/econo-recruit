@@ -1,15 +1,20 @@
 package com.econovation.recruit.api.email.controller;
 
-import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.email.service.ApplicantEmailReserveService;
 import com.econovation.recruit.api.email.service.ApplicantEmailService;
+import com.econovation.recruitdomain.domains.dto.EmailReservationDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     private final ApplicantEmailService emailService;
-    private final ApplicantQueryUseCase applicantQueryUseCase;
+    private final ApplicantEmailReserveService emailReserveService;
 
     @Value("${econovation.year}")
     private int year;
@@ -57,5 +62,23 @@ public class EmailController {
 
         emailService.sendEmail(year, state);
         return ResponseEntity.ok("이메일 전송 시작");
+    }
+
+    @Operation(
+            summary = "지원자에게 보낼 메일을 예약합니다.",
+            description =
+                    """
+                    List<String> : 지원자의 id 리스트
+                    long : 메일 발송 예약일의 timestamp
+                    """
+    )
+    @PostMapping("/emails/all/reservation")
+    public ResponseEntity<String> reserve(@RequestBody EmailReservationDto request){
+
+        LocalDateTime reservedAt = LocalDateTime.ofInstant(Instant.ofEpochMilli(request.getReservedAtTimestamp()), ZoneId.of("Asia/Seoul"));
+
+        emailReserveService.reserve(request.getApplicantIds(), reservedAt);
+
+        return ResponseEntity.ok("예약 성공");
     }
 }
