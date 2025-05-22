@@ -27,9 +27,6 @@ public class ApplicantEmailService {
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final DefaultEmailTemplateGenerator templateGenerator;
 
-    @Value("${econovation.year}")
-    private int year;
-
     @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void sendEmail(int year, String state) {
