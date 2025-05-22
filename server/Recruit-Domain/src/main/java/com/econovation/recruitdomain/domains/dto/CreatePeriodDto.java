@@ -16,5 +16,4 @@ public class CreatePeriodDto {
     private LocalDateTime firstDiscussionEnd;
     private LocalDateTime finalDiscussionEnd;
     private LocalDateTime finalPassDate;
-    
 }

@@ -26,8 +26,7 @@ public class PeriodService implements PeriodQueryUseCase, PeriodCommandUseCase {
                         request.getFirstPassDate(),
                         request.getFirstDiscussionEnd(),
                         request.getFinalDiscussionEnd(),
-                        request.getFinalPassDate()
-                        );
+                        request.getFinalPassDate());
 
         periodRecordPort.save(period);
     }

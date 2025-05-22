@@ -25,6 +25,11 @@ public class PeriodResponseDto {
             LocalDateTime finalDiscussionEnd,
             LocalDateTime finalPassDate) {
         return new PeriodResponseDto(
-                recruitStart, recruitEnd, firstPassDate, firstDiscussionEnd, finalDiscussionEnd, finalPassDate);
+                recruitStart,
+                recruitEnd,
+                firstPassDate,
+                firstDiscussionEnd,
+                finalDiscussionEnd,
+                finalPassDate);
     }
 }

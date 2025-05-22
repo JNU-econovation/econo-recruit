@@ -63,6 +63,11 @@ public class Period extends BaseTimeEntity {
             LocalDateTime finalDiscussionEnd,
             LocalDateTime finalPassDate) {
         return new Period(
-                recruitStart, recruitEnd, firstPassDate, firstDiscussionEnd, finalDiscussionEnd, finalPassDate);
+                recruitStart,
+                recruitEnd,
+                firstPassDate,
+                firstDiscussionEnd,
+                finalDiscussionEnd,
+                finalPassDate);
     }
 }

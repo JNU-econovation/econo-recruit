@@ -14,5 +14,4 @@ public class SchedulerConfig {
         ts.setThreadNamePrefix("recruit-scheduler-");
         return ts;
     }
-
 }

@@ -12,5 +12,4 @@ public class EmailReservationDto {
 
     private Set<String> applicantIds;
     private long reservedAtTimestamp;
-
 }

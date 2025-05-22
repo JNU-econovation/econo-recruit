@@ -70,12 +70,14 @@ public class EmailController {
                     """
                     List<String> : 지원자의 id 리스트
                     long : 메일 발송 예약일의 timestamp
-                    """
-    )
+                    """)
     @PostMapping("/emails/all/reservation")
-    public ResponseEntity<String> reserve(@RequestBody EmailReservationDto request){
+    public ResponseEntity<String> reserve(@RequestBody EmailReservationDto request) {
 
-        LocalDateTime reservedAt = LocalDateTime.ofInstant(Instant.ofEpochMilli(request.getReservedAtTimestamp()), ZoneId.of("Asia/Seoul"));
+        LocalDateTime reservedAt =
+                LocalDateTime.ofInstant(
+                        Instant.ofEpochMilli(request.getReservedAtTimestamp()),
+                        ZoneId.of("Asia/Seoul"));
 
         emailReserveService.reserve(request.getApplicantIds(), reservedAt);
 
