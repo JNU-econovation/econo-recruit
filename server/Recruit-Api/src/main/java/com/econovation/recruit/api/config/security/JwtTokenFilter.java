@@ -5,6 +5,8 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
+import com.econovation.recruitdomain.domains.interviewer.exception.InvalidAccessTokenException;
+import com.econovation.recruitdomain.domains.whitelist.domain.WhitelistRepository;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,12 +27,17 @@ import org.springframework.web.util.WebUtils;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final WhitelistRepository whitelistRepository;
 
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = resolveToken(request);
+
+        if (!whitelistRepository.existsByToken(token)) {
+            throw InvalidAccessTokenException.EXCEPTION;
+        }
 
         if (token != null) {
             Authentication authentication = getAuthentication(token);
