@@ -4,6 +4,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
+import com.econovation.recruit.api.user.usecase.UserLogoutUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
 import com.econovation.recruit.utils.SecurityUtils;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
@@ -38,6 +39,7 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRegisterUseCase userRegisterUseCase;
     private final UserLoginUseCase userLoginUseCase;
+    private final UserLogoutUseCase userLogoutUseCase;
     private final Long tempId = 0L;
 
     @DevelopOnlyApi
@@ -68,7 +70,7 @@ public class UserController {
                 "Set-Cookie", SecurityUtils.logoutCookie("refreshToken", null).toString());
         response.addHeader(
                 "Set-Cookie", SecurityUtils.logoutCookie("accessToken", null).toString());
-
+        userLogoutUseCase.logout();
         return new ResponseEntity<>(LOGOUT_SUCCESS_MESSAGE, HttpStatus.OK);
     }
 
