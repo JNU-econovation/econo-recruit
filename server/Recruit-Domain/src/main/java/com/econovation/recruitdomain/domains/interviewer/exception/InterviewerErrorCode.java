@@ -23,7 +23,6 @@ public enum InterviewerErrorCode implements BaseErrorCode {
     INTERVIEWER_NOT_MATCH(NOT_FOUND, "INTERVIEWER_400_6", "등록되지 않은 이메일과 비밀번호로 로그인을 시도했습니다."),
     INTERVIEWER_ALREADY_SUBMIT(BAD_REQUEST, "INTERVIEWER_400_7", "이미 가입한 면접자입니다."),
     INTERVIEWER_CAN_NOT_DELETE_WHEN_ONE(BAD_REQUEST, "INTERVIEWER_400_8", "한명일 때 삭제할 수 없습니다."),
-    INVALID_ACCESS_TOKEN(UNAUTHORIZED, "INTERVIEWER_400_9", "유효하지 않은 액세스 토큰입니다."),
     ;
     private Integer status;
     private String code;

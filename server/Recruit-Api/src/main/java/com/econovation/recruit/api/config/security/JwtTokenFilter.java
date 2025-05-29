@@ -4,8 +4,8 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
 import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
+import com.econovation.recruitcommon.exception.InvalidTokenException;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
-import com.econovation.recruitdomain.domains.interviewer.exception.InvalidAccessTokenException;
 import com.econovation.recruitdomain.domains.whitelist.domain.WhitelistRepository;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -36,7 +36,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         if (!whitelistRepository.existsByToken(token)) {
-            throw InvalidAccessTokenException.EXCEPTION;
+            throw InvalidTokenException.EXCEPTION;
         }
 
         if (token != null) {
