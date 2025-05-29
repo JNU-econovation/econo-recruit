@@ -5,6 +5,7 @@ import static com.econovation.recruit.utils.sort.SortHelper.paginateList;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.record.dto.FilteredRecordsWithScoresDto;
 import com.econovation.recruit.api.record.dto.RecordsViewResponseDto;
+import com.econovation.recruit.api.record.dto.SimpleRecordsViewResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
@@ -132,6 +133,38 @@ public class RecordService implements RecordUseCase {
 
         PageInfo pageInfo = applicantQueryUseCase.getPageInfo(year, page, searchKeyword);
         return RecordsViewResponseDto.of(pageInfo, records, filteredData.scoreMap(), applicants);
+    }
+
+    @Override
+    public SimpleRecordsViewResponseDto executeSimple(
+            Integer page, Integer year, String sortType, String searchKeyword) {
+        List<Record> result = recordLoadPort.findAll();
+        List<String> applicantIds = result.stream().map(Record::getApplicantId).toList();
+
+        List<MongoAnswer> applicants;
+        List<Record> records;
+        FilteredRecordsWithScoresDto filteredData;
+
+        if (sortType.equals("score")) {
+            applicants = applicantQueryUseCase.execute(year, sortType, searchKeyword, applicantIds);
+            filteredData = filterRecordsAndCalculateScores(result, applicants, year, page);
+            records =
+                    sortRecordsByScoresDesc(filteredData.records(), filteredData.scoreMap(), page);
+        } else {
+            applicants =
+                    applicantQueryUseCase.execute(
+                            page, year, sortType, searchKeyword, applicantIds);
+            filteredData = filterRecordsAndCalculateScores(result, applicants, year, page);
+            records = sortRecordsByApplicantsAndSortType(filteredData.records(), applicants);
+        }
+
+        if (result.isEmpty() || applicants.isEmpty()) {
+            return SimpleRecordsViewResponseDto.empty(new PageInfo(0, page));
+        }
+
+        PageInfo pageInfo = applicantQueryUseCase.getPageInfo(year, page, searchKeyword);
+        return SimpleRecordsViewResponseDto.of(
+                pageInfo, records, applicants);
     }
 
     private FilteredRecordsWithScoresDto filterRecordsAndCalculateScores(
