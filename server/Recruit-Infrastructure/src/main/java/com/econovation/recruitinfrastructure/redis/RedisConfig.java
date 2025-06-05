@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceClientConfigurat
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 @EnableRedisRepositories(
         basePackages = "com.econovation",
@@ -36,5 +37,10 @@ public class RedisConfig {
                         .shutdownTimeout(Duration.ZERO)
                         .build();
         return new LettuceConnectionFactory(redisConfig, clientConfig);
+    }
+
+    @Bean
+    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
+        return RedisSerializer.json(); // 기본값은 JdkSerializationRedisSerializer
     }
 }
