@@ -6,6 +6,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.RECORD_SUCCESS_
 import com.econovation.recruit.api.record.docs.RecordCreateExceptionDocs;
 import com.econovation.recruit.api.record.docs.RecordFindExceptionDocs;
 import com.econovation.recruit.api.record.dto.RecordsViewResponseDto;
+import com.econovation.recruit.api.record.dto.SimpleRecordsViewResponseDto;
 import com.econovation.recruit.api.record.usecase.RecordUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitdomain.domains.dto.CreateRecordDto;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @Tag(name = "[6.0] Record API", description = "면접 기록 Record API")
 @RequiredArgsConstructor
 public class RecordController {
@@ -56,6 +57,7 @@ public class RecordController {
             description = "newest, name, object, score 이 4가지중 하나를 입력하시면 됩니다.")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/page/{page}/records")
+    @Deprecated(since = "2025-05-29", forRemoval = true)
     public ResponseEntity<RecordsViewResponseDto> findAll(
             @PathVariable(name = "page") Integer page,
             @ParameterObject String order,
@@ -64,6 +66,21 @@ public class RecordController {
         return new ResponseEntity<>(
                 recordUseCase.execute(page, year, order, searchKeyword), HttpStatus.OK);
     }
+
+    @Operation(
+            summary = "지원자의 면접기록 목록을 페이지 및 기수별로 조회합니다",
+            description = "newest, name, object, score 이 4가지중 하나를 입력하시면 됩니다.")
+    @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
+    @GetMapping("/page/{page}/year/{year}/records")
+    public ResponseEntity<SimpleRecordsViewResponseDto> findAllSimpleByYear(
+            @PathVariable(name = "page") Integer page,
+            @PathVariable(name = "year") Integer year,
+            @ParameterObject String order,
+            @RequestParam(required = false) String searchKeyword) {
+        return new ResponseEntity<>(
+                recordUseCase.executeSimple(page, year, order, searchKeyword), HttpStatus.OK);
+    }
+
 
     @Operation(summary = "지원자의 면접기록을 전부 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
