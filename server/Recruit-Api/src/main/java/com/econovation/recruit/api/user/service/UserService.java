@@ -8,10 +8,12 @@ import com.econovation.recruitcommon.consts.RecruitStatic;
 import com.econovation.recruitcommon.dto.TokenResponse;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
+import com.econovation.recruitdomain.domains.dto.ResetPasswordRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAlreadySubmitException;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerIdpServerException;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.domains.whitelist.domain.AccessToken;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
@@ -115,5 +117,16 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     public void logout() {
         Long ipdId = SecurityUtils.getCurrentUserId();
         whitelistRecordPort.deleteById(ipdId);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(ResetPasswordRequestDto resetPasswordRequestDto) {
+        if (interviewerLoadPort
+                .loadOptionalInterviewerByEmail(resetPasswordRequestDto.getEmail())
+                .isEmpty()) throw InterviewerIdpServerException.EXCEPTION;
+        Interviewer account = interviewerLoadPort.loadInterviewerByEmail(resetPasswordRequestDto.getEmail());
+        String encededPassword = passwordEncoder.encode(resetPasswordRequestDto.getPassword());
+        account.changePassword(encededPassword);
     }
 }

@@ -13,6 +13,7 @@ import com.econovation.recruitcommon.annotation.PasswordValidate;
 import com.econovation.recruitcommon.dto.TokenResponse;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
+import com.econovation.recruitdomain.domains.dto.ResetPasswordRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
@@ -94,6 +95,13 @@ public class UserController {
     public ResponseEntity<String> changePassword(
             @RequestParam @Valid @PasswordValidate String password) {
         userRegisterUseCase.changePassword(password);
+        return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "비밀번호 재설정", description = "로그인을 위한 비밀번호를 재설정합니다.")
+    @PostMapping("/password/reset")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequestDto resetPasswordRequestDto) {
+        userRegisterUseCase.resetPassword(resetPasswordRequestDto);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
     }
 }
