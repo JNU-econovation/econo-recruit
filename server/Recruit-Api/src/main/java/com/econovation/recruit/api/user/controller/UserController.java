@@ -3,6 +3,7 @@ package com.econovation.recruit.api.user.controller;
 import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.interviewer.docs.InterviewerExceptionDocs;
+import com.econovation.recruit.api.user.usecase.SendEmailUseCase;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserLogoutUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
@@ -14,6 +15,7 @@ import com.econovation.recruitcommon.dto.TokenResponse;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
 import com.econovation.recruitdomain.domains.dto.ResetPasswordRequestDto;
+import com.econovation.recruitdomain.domains.dto.SendEmailRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,6 +43,7 @@ public class UserController {
     private final UserRegisterUseCase userRegisterUseCase;
     private final UserLoginUseCase userLoginUseCase;
     private final UserLogoutUseCase userLogoutUseCase;
+    private final SendEmailUseCase sendEmailUseCase;
     private final Long tempId = 0L;
 
     @DevelopOnlyApi
@@ -104,5 +107,12 @@ public class UserController {
             @RequestBody ResetPasswordRequestDto resetPasswordRequestDto) {
         userRegisterUseCase.resetPassword(resetPasswordRequestDto);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "메일로 인증코드 발송", description = "메일로 인증코드를 발송합니다.")
+    @PostMapping("/send-email")
+    public ResponseEntity sendEmail(@RequestBody SendEmailRequestDto sendEmailRequestDto) {
+        sendEmailUseCase.sendEmail(sendEmailRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
