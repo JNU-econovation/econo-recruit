@@ -43,7 +43,11 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
             TokenResponse tokenResponse =
                     jwtTokenProvider.createToken(account.getId(), account.getRole().name());
 
-            AccessToken accessToken = new AccessToken(account.getId(), tokenResponse.getAccessToken(), jwtTokenProvider.getAccessTokenTTlSecond());
+            AccessToken accessToken =
+                    new AccessToken(
+                            account.getId(),
+                            tokenResponse.getAccessToken(),
+                            jwtTokenProvider.getAccessTokenTTlSecond());
             whitelistRecordPort.save(accessToken);
 
             response.addHeader(
@@ -77,7 +81,11 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
         TokenResponse tokenResponse =
                 jwtTokenProvider.createToken(account.getId(), account.getRole().name());
 
-        AccessToken accessToken = new AccessToken(account.getId(), tokenResponse.getAccessToken(), jwtTokenProvider.getAccessTokenTTlSecond());
+        AccessToken accessToken =
+                new AccessToken(
+                        account.getId(),
+                        tokenResponse.getAccessToken(),
+                        jwtTokenProvider.getAccessTokenTTlSecond());
         whitelistRecordPort.save(accessToken);
 
         return tokenResponse;
@@ -125,7 +133,8 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
         if (interviewerLoadPort
                 .loadOptionalInterviewerByEmail(resetPasswordRequestDto.getEmail())
                 .isEmpty()) throw InterviewerIdpServerException.EXCEPTION;
-        Interviewer account = interviewerLoadPort.loadInterviewerByEmail(resetPasswordRequestDto.getEmail());
+        Interviewer account =
+                interviewerLoadPort.loadInterviewerByEmail(resetPasswordRequestDto.getEmail());
         String encededPassword = passwordEncoder.encode(resetPasswordRequestDto.getPassword());
         account.changePassword(encededPassword);
     }

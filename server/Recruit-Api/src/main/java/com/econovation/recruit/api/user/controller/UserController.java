@@ -100,7 +100,8 @@ public class UserController {
 
     @Operation(summary = "비밀번호 재설정", description = "로그인을 위한 비밀번호를 재설정합니다.")
     @PostMapping("/password/reset")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequestDto resetPasswordRequestDto) {
+    public ResponseEntity<String> resetPassword(
+            @RequestBody ResetPasswordRequestDto resetPasswordRequestDto) {
         userRegisterUseCase.resetPassword(resetPasswordRequestDto);
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
     }

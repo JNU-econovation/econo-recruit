@@ -8,8 +8,6 @@ import lombok.Getter;
 @Data
 @Getter
 public class ResetPasswordRequestDto {
-    @Email
-    private String email;
-    @PasswordValidate
-    private String password;
+    @Email private String email;
+    @PasswordValidate private String password;
 }

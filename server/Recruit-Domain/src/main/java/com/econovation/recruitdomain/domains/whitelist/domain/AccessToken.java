@@ -16,11 +16,8 @@ import org.springframework.data.redis.core.index.Indexed;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RedisHash(value = "access_token")
 public class AccessToken {
-    @Id
-    private Long id;
-    @Indexed
-    private String token;
+    @Id private Long id;
+    @Indexed private String token;
 
-    @TimeToLive
-    private Long expiration;
+    @TimeToLive private Long expiration;
 }

@@ -4,7 +4,6 @@ import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.record.domain.Record;
 import java.util.List;
-import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +16,7 @@ public class SimpleRecordsViewResponseDto {
     private PageInfo pageInfo;
 
     public static SimpleRecordsViewResponseDto of(
-            PageInfo pageInfo,
-            List<Record> records,
-            List<MongoAnswer> applicants) {
+            PageInfo pageInfo, List<Record> records, List<MongoAnswer> applicants) {
         List<SimpleRecordViewResponseDto> simpleRecordViewResponseDtos =
                 records.stream()
                         .map(
