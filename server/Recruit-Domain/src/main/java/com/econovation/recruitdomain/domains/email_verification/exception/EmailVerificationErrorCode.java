@@ -16,6 +16,7 @@ import lombok.Getter;
 public enum EmailVerificationErrorCode implements BaseErrorCode {
     CODE_NOT_CORRECT(BAD_REQUEST, "EMAIL_VERIFICATION_400_1", "인증코드가 일치하지 않습니다."),
     CODE_NOT_FOUND(NOT_FOUND, "EMAIL_VERIFICATION_404_1", "인증 요청 정보를 찾을 수 없습니다."),
+    EMAIL_NOT_VERIFIED(BAD_REQUEST, "EMAIL_VERIFICATION_400_2", "이메일 인증이 완료되지 않았습니다."),
     ;
     private Integer status;
     private String code;
