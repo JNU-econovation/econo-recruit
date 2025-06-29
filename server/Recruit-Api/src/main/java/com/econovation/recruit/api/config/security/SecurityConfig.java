@@ -123,7 +123,8 @@ public class SecurityConfig {
                                 "/api/v1/login",
                                 "/api/v1/register",
                                 "/api/v1/password/reset",
-                                "/api/v1/send-email")
+                                "/api/v1/send-email",
+                                "/api/v1/verify-code")
                         .antMatchers(
                                 HttpMethod.GET,
                                 "/api/v1/applicants",

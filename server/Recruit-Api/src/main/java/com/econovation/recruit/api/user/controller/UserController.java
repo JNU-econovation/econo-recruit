@@ -7,6 +7,7 @@ import com.econovation.recruit.api.user.usecase.SendEmailUseCase;
 import com.econovation.recruit.api.user.usecase.UserLoginUseCase;
 import com.econovation.recruit.api.user.usecase.UserLogoutUseCase;
 import com.econovation.recruit.api.user.usecase.UserRegisterUseCase;
+import com.econovation.recruit.api.user.usecase.VerifyCodeUseCase;
 import com.econovation.recruit.utils.SecurityUtils;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.DevelopOnlyApi;
@@ -17,6 +18,7 @@ import com.econovation.recruitdomain.domains.dto.LoginRequestDto;
 import com.econovation.recruitdomain.domains.dto.ResetPasswordRequestDto;
 import com.econovation.recruitdomain.domains.dto.SendEmailRequestDto;
 import com.econovation.recruitdomain.domains.dto.SignUpRequestDto;
+import com.econovation.recruitdomain.domains.dto.VerifyCodeRequestDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,6 +46,7 @@ public class UserController {
     private final UserLoginUseCase userLoginUseCase;
     private final UserLogoutUseCase userLogoutUseCase;
     private final SendEmailUseCase sendEmailUseCase;
+    private final VerifyCodeUseCase verifyCodeUseCase;
     private final Long tempId = 0L;
 
     @DevelopOnlyApi
@@ -113,6 +116,13 @@ public class UserController {
     @PostMapping("/send-email")
     public ResponseEntity sendEmail(@RequestBody SendEmailRequestDto sendEmailRequestDto) {
         sendEmailUseCase.sendEmail(sendEmailRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "인증코드 검증", description = "메일로 전송한 인증코드와 사용자가 입력한 인증코드가 일치하는지 확인합니다.")
+    @PostMapping("/verify-code")
+    public ResponseEntity verifyCode(@Valid @RequestBody VerifyCodeRequestDto verifyCodeRequestDto) {
+        verifyCodeUseCase.verifyCode(verifyCodeRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
