@@ -121,7 +121,8 @@ public class UserController {
 
     @Operation(summary = "인증코드 검증", description = "메일로 전송한 인증코드와 사용자가 입력한 인증코드가 일치하는지 확인합니다.")
     @PostMapping("/verify-code")
-    public ResponseEntity verifyCode(@Valid @RequestBody VerifyCodeRequestDto verifyCodeRequestDto) {
+    public ResponseEntity verifyCode(
+            @Valid @RequestBody VerifyCodeRequestDto verifyCodeRequestDto) {
         verifyCodeUseCase.verifyCode(verifyCodeRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -51,7 +51,10 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     @Override
     public void verifyCode(VerifyCodeRequestDto verifyCodeRequestDto) {
         String email = verifyCodeRequestDto.getEmail();
-        EmailVerification emailVerification = emailVerificationLoadPort.loadOptionEmailVerificationByEmail(email).orElseThrow(() -> CodeNotFoundException.EXCEPTION);
+        EmailVerification emailVerification =
+                emailVerificationLoadPort
+                        .loadOptionEmailVerificationByEmail(email)
+                        .orElseThrow(() -> CodeNotFoundException.EXCEPTION);
         if (!emailVerification.getCode().equals(verifyCodeRequestDto.getCode())) {
             throw CodeNotCorrectException.EXCEPTION;
         }

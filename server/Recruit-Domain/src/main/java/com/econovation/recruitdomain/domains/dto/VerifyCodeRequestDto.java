@@ -8,8 +8,7 @@ import lombok.Getter;
 @Data
 @Getter
 public class VerifyCodeRequestDto {
-    @Email
-    private String email;
+    @Email private String email;
     private String code;
 
     @AssertTrue(message = "인증 코드는 100000에서 999999 사이의 6자리 숫자여야 합니다")
