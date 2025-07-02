@@ -9,12 +9,14 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicationManagementUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
+import com.econovation.recruitdomain.domains.applicant.dto.ApplicationStartDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
@@ -49,6 +51,7 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
+    private final ApplicationManagementUseCase applicationManagementUseCase;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -162,15 +165,25 @@ public class ApplicantController {
 
     @Operation(
             summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
-            description = """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+            description =
                     """
-    )
-    @GetMapping("year/{year}/applicants/pass-state")
+                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    """)
+    @GetMapping("/year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
             @PathVariable("year") Integer year, @RequestParam("order") String sortType) {
         List<GetApplicantsStatusResponse> result =
                 applicantQueryUseCase.getApplicantsStatus(year, sortType);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "지원서 접수를 시작합니다.",
+            description = "지원서 접수를 즉시 시작할 수 있도록 상태를 변경합니다."
+    )
+    @PostMapping("/application/mode")
+    public ResponseEntity<Boolean> applyStart(@RequestBody ApplicationStartDto startDto){
+        boolean result = applicationManagementUseCase.applicationStart(startDto.getStartAt());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
