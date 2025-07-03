@@ -180,7 +180,7 @@ public class ApplicantController {
 
     @Operation(
             summary = "지원서 접수를 시작합니다.",
-            description = "지원서 접수를 즉시 시작할 수 있도록 상태를 변경합니다."
+            description = "지원서 접수를 즉시 시작하거나 정해진 시간에 시작할 수 있도록 상태를 변경합니다."
     )
     @PostMapping("/applicants/recruitment/state")
     public ResponseEntity<Boolean> endRecruitment(@RequestBody RecruitmentStateDto request){
