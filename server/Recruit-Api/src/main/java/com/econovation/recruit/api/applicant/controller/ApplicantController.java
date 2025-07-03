@@ -3,20 +3,21 @@ package com.econovation.recruit.api.applicant.controller;
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
+import com.econovation.recruit.api.applicant.command.ChangeRecruitmentCommand;
 import com.econovation.recruit.api.applicant.command.CreateAnswerCommand;
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
-import com.econovation.recruit.api.applicant.usecase.ApplicationManagementUseCase;
+import com.econovation.recruit.api.applicant.usecase.RecruitmentManagementUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
-import com.econovation.recruitdomain.domains.applicant.dto.ApplicationStartDto;
+import com.econovation.recruitdomain.domains.applicant.dto.RecruitmentStateDto;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
@@ -51,7 +52,7 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
-    private final ApplicationManagementUseCase applicationManagementUseCase;
+    private final RecruitmentManagementUseCase applicationManagementUseCase;
 
     @Value("${econovation.year}")
     private Integer year;
@@ -181,9 +182,9 @@ public class ApplicantController {
             summary = "지원서 접수를 시작합니다.",
             description = "지원서 접수를 즉시 시작할 수 있도록 상태를 변경합니다."
     )
-    @PostMapping("/application/mode")
-    public ResponseEntity<Boolean> applyStart(@RequestBody ApplicationStartDto startDto){
-        boolean result = applicationManagementUseCase.applicationStart(startDto.getStartAt());
+    @PostMapping("/applicants/recruitment/state")
+    public ResponseEntity<Boolean> endRecruitment(@RequestBody RecruitmentStateDto request){
+        boolean result = applicationManagementUseCase.changeState(new ChangeRecruitmentCommand(request.getStates(), request.getStartAt()));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
