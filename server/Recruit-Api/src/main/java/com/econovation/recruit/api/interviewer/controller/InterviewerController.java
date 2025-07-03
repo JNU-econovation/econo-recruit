@@ -35,12 +35,15 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
-    @Operation(description = "Interviewer 전체 조회", summary = "면접관 전체 조회")
+    @Operation(
+            description =
+                    "roles(QueryParam)이 없으면 Interviewer 전체 조회, roles(QueryParam)이 있으면 roles에 해당하는 Interviewer 조회",
+            summary = "면접관 전체(필터링) 조회")
     @ApiErrorExceptionsExample(InterviewerExceptionDocs.class)
     @GetMapping("/interviewers")
     public ResponseEntity<List<InterviewerResponseDto>> findAll(
             @ParameterObject String order, @RequestParam(required = false) List<String> roles) {
-        List<InterviewerResponseDto> interviewers = interviewerUseCase.findAll(order);
+        List<InterviewerResponseDto> interviewers = interviewerUseCase.findAll(order, roles);
         return new ResponseEntity(interviewers, HttpStatus.OK);
     }
 
@@ -74,7 +77,7 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
-    @Operation(description = "Interviewer Role 변경")
+    @Operation(description = "Interviewer Role 변경", summary = "면접관 권한 변경")
     @PutMapping("/interviewers/{idp-id}/roles")
     public ResponseEntity<String> updateRole(
             @PathVariable(name = "idp-id") Long idpId, String role) {

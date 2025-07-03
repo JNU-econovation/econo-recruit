@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.config.security;
 
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
+import com.econovation.recruitdomain.out.WhitelistLoadPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,11 +17,12 @@ public class FilterConfig
     //    private final AccessDeniedFilter accessDeniedFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
     private final JwtTokenProvider jwtTokenProvider;
+    private final WhitelistLoadPort whitelistLoadPort;
 
     @Override
     public void configure(HttpSecurity builder) {
         builder.addFilterBefore(
-                new JwtTokenFilter(jwtTokenProvider), BasicAuthenticationFilter.class);
+                new JwtTokenFilter(jwtTokenProvider, whitelistLoadPort), BasicAuthenticationFilter.class);
         builder.addFilterBefore(jwtExceptionFilter, JwtTokenFilter.class);
         //        builder.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
     }

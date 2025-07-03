@@ -13,10 +13,11 @@ import com.econovation.recruitdomain.domains.interviewer.domainevent.Interviewer
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerCanNotDeleteWhenOneException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
+import com.econovation.recruitdomain.out.WhitelistRecordPort;
 import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class InterviewersService implements InterviewerUseCase {
     private final InterviewerRecordPort interviewerRecordPort;
     private final IdpHelper idpHelper;
     private final SortHelper<Interviewer> interviewerSortHelper;
+    private final WhitelistRecordPort whitelistRecordPort;
 
     @Override
     public List<Interviewer> createInterviewers(List<Long> idpIds) {
@@ -46,6 +48,7 @@ public class InterviewersService implements InterviewerUseCase {
     public void updateRole(Long idpId, String role) {
         Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
         interviewer.updateRole(Role.getByName(role));
+        whitelistRecordPort.deleteById(idpId);
         // 해당 유저를 logOut 시킨다
 
     }
@@ -66,13 +69,23 @@ public class InterviewersService implements InterviewerUseCase {
     }
 
     @Override
-    public List<InterviewerResponseDto> findAll(String sortType) {
+    public List<InterviewerResponseDto> findAll(String sortType, List<String> roles) {
         List<Interviewer> interviewers = interviewerLoadPort.findAll();
-        if (interviewers != null && !interviewers.isEmpty()) {
-            interviewerSortHelper.sort(interviewers, sortType);
-            return interviewers.stream().map(InterviewerResponseDto::from).toList();
+        if (roles != null && !roles.isEmpty()) {
+            interviewers =
+                    interviewers.stream()
+                            .filter(
+                                    interviewer ->
+                                            roles.contains(
+                                                    removeRolePrefix(interviewer.getRole().name())))
+                            .collect(Collectors.toList());
         }
-        return Collections.emptyList();
+        interviewerSortHelper.sort(interviewers, sortType);
+        return interviewers.stream().map(InterviewerResponseDto::from).toList();
+    }
+
+    private String removeRolePrefix(String role) {
+        return role.replace("ROLE_", "");
     }
 
     @Override

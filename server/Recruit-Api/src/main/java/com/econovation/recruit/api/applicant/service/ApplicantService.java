@@ -84,6 +84,11 @@ public class ApplicantService implements ApplicantQueryUseCase {
         return answerAdaptor.findByYear(year);
     }
 
+    @Override
+    public MongoAnswer getApplicantById(String applicantId) {
+        return answerAdaptor.findById(applicantId);
+    }
+
     @Transactional(readOnly = true)
     public List<MongoAnswer> execute(
             Integer page,

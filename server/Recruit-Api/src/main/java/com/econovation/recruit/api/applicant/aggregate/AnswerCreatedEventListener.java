@@ -8,6 +8,7 @@ import com.econovation.recruitdomain.domains.applicant.event.domainevent.Applica
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,11 @@ public class AnswerCreatedEventListener {
         try {
             String path = new File(".").getCanonicalPath(); // 현재 작업 디렉토리를 가져옴
             String backupDir = path + "/backup/";
+
+            if (!Files.exists(new File(backupDir).toPath())) {
+                Files.createDirectories(new File(backupDir).toPath());
+            }
+
             JSONObject jsonObject = new JSONObject(qna);
             FileWriter file = new FileWriter(backupDir + event.getId() + ".json");
             file.write(jsonObject.toJSONString());
