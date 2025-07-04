@@ -19,9 +19,7 @@ public class WhitelistAdaptor implements WhitelistRecordPort, WhitelistLoadPort 
 
     @Override
     public void deleteById(Long idpId) {
-        whitelistRepository.findById(idpId)
-                .ifPresent(whitelistRepository::delete);
-
+        whitelistRepository.findById(idpId).ifPresent(whitelistRepository::delete);
     }
 
     @Override

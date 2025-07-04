@@ -81,7 +81,6 @@ public class RecordController {
                 recordUseCase.executeSimple(page, year, order, searchKeyword), HttpStatus.OK);
     }
 
-
     @Operation(summary = "지원자의 면접기록을 전부 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/records/all")

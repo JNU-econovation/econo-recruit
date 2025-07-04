@@ -162,10 +162,10 @@ public class ApplicantController {
 
     @Operation(
             summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
-            description = """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+            description =
                     """
-    )
+                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    """)
     @GetMapping("year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
             @PathVariable("year") Integer year, @RequestParam("order") String sortType) {
