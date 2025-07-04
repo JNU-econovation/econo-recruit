@@ -8,6 +8,9 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  graphql:
+    schema:
+      locations: classpath:graphql/**/
 data:
   init:
     disabled: ${DATA_INIT_DISABLED:false}
@@ -100,9 +103,10 @@ econovation:
   file:
     path:
       portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
-#logging:
-#  level:
-#    root: info
+logging:
+  level:
+    root: info
+    graphql: debug
 #logging:
 #  level:
 #    org.springframework.data.*.*: debug
