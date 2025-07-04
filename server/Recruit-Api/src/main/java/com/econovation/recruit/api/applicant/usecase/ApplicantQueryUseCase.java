@@ -46,4 +46,14 @@ public interface ApplicantQueryUseCase {
     List<MongoAnswer> getApplicantsByYear(Integer year);
 
     MongoAnswer getApplicantById(String applicantId);
+
+    AnswersResponseDto executeFiltered(
+            Integer year,
+            Integer page,
+            String sortType,
+            String searchKeyword,
+            List<String> requestedQnaFields);
+
+    Map<String, Object> executeFiltered(
+            String applicantId, List<String> requestedQnaFields);
 }

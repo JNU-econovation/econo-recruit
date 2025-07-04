@@ -11,10 +11,12 @@ import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -249,5 +251,38 @@ public class ApplicantService implements ApplicantQueryUseCase {
             sortHelper.sort(result, sortType);
         }
         return getQnaMapListWithIdAndPassState(result);
+    }
+
+    @Transactional(readOnly = true)
+    public AnswersResponseDto executeFiltered(
+            Integer year,
+            Integer page,
+            String sortType,
+            String searchKeyword,
+            List<String> requestedQnaFields) {
+
+        PageInfo pageInfo = getPageInfo(year, page, searchKeyword);
+        List<MongoAnswer> sortedResult =
+                answerAdaptor.findByYearAndSearchKeywordAndRequestedFields(year, page, sortType, searchKeyword, requestedQnaFields);
+
+        List<Map<String, Object>> qnaMapList = getQnaMapListWithIdAndPassState(sortedResult);
+
+        if (qnaMapList.isEmpty()) {
+            return AnswersResponseDto.of(Collections.emptyList(), pageInfo);
+        }
+        return AnswersResponseDto.of(qnaMapList, pageInfo);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> executeFiltered(
+            String applicantId, List<String> requestedQnaFields) {
+        MongoAnswer mongoAnswer =
+                answerAdaptor.findByIdAndRequestedFields(applicantId, requestedQnaFields)
+                        .orElseThrow(() -> ApplicantNotFoundException.EXCEPTION);
+
+        Map<String, Object> qna = mongoAnswer.getQna();
+        qna.put("id", mongoAnswer.getId());
+        qna.put(PASS_STATE_KEY, mongoAnswer.getApplicantStateOrDefault());
+        return qna;
     }
 }

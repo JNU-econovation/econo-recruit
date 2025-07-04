@@ -6,6 +6,7 @@ import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerRepository;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
+import java.util.Optional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import org.springframework.data.mongodb.core.query.TextQuery;
 @Adaptor
 @RequiredArgsConstructor
 public class AnswerAdaptor {
+
     private final MongoTemplate mongoTemplate;
     private final MongoAnswerRepository answerRepository;
 
@@ -155,5 +157,39 @@ public class AnswerAdaptor {
         addCriteriaIfSearchKeywordExists(searchKeyword, query);
 
         return mongoTemplate.find(query, MongoAnswer.class);
+    }
+
+
+    public List<MongoAnswer> findByYearAndSearchKeywordAndRequestedFields(
+            Integer year, Integer page, String sortType, String searchKeyword, List<String> requestedQnaFields) {
+
+        Query query =
+                new Query()
+                        .addCriteria(Criteria.where("year").is(year))
+                        .skip((page - 1) * 10L)
+                        .limit(PAGE_SIZE);
+
+        setSortType(query, sortType);
+
+        addCriteriaIfSearchKeywordExists(searchKeyword, query);
+
+        if (requestedQnaFields != null && !requestedQnaFields.isEmpty()) {
+            requestedQnaFields.forEach(field -> query.fields().include("qna." + field));
+        }
+
+        return mongoTemplate.find(query, MongoAnswer.class);
+    }
+
+    public Optional<MongoAnswer> findByIdAndRequestedFields(String applicantId, List<String> requestedQnaFields) {
+        Query query =
+                new Query()
+                        .addCriteria(Criteria.where("id").is(applicantId));
+
+        if (requestedQnaFields != null && !requestedQnaFields.isEmpty()) {
+            requestedQnaFields.forEach(field -> query.fields().include("qna." + field));
+        }
+
+        MongoAnswer result = mongoTemplate.findOne(query, MongoAnswer.class);
+        return Optional.ofNullable(result);
     }
 }
