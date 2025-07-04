@@ -24,15 +24,14 @@ public class ApplicantResolver {
             @Argument String order,
             @Argument String searchKeyword,
             @Argument List<String> requestedQnaFields) {
-        return applicantQueryUseCase.executeFiltered(year, page, order, searchKeyword, requestedQnaFields);
+        return applicantQueryUseCase.executeFiltered(
+                year, page, order, searchKeyword, requestedQnaFields);
     }
 
     @QueryMapping
     @PreAuthorize("hasAnyRole('ROLE_ROLE_PRESIDENT', 'ROLE_ROLE_OPERATION', 'ROLE_ROLE_TF')")
     public Map<String, Object> getApplicant(
-            @Argument String applicantId,
-            @Argument List<String> requestedQnaFields
-    ) {
+            @Argument String applicantId, @Argument List<String> requestedQnaFields) {
         return applicantQueryUseCase.executeFiltered(applicantId, requestedQnaFields);
     }
 }

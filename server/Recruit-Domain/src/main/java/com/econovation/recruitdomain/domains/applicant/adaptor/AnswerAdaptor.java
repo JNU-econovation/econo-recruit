@@ -6,8 +6,8 @@ import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerRepository;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -159,9 +159,12 @@ public class AnswerAdaptor {
         return mongoTemplate.find(query, MongoAnswer.class);
     }
 
-
     public List<MongoAnswer> findByYearAndSearchKeywordAndRequestedFields(
-            Integer year, Integer page, String sortType, String searchKeyword, List<String> requestedQnaFields) {
+            Integer year,
+            Integer page,
+            String sortType,
+            String searchKeyword,
+            List<String> requestedQnaFields) {
 
         Query query =
                 new Query()
@@ -180,10 +183,9 @@ public class AnswerAdaptor {
         return mongoTemplate.find(query, MongoAnswer.class);
     }
 
-    public Optional<MongoAnswer> findByIdAndRequestedFields(String applicantId, List<String> requestedQnaFields) {
-        Query query =
-                new Query()
-                        .addCriteria(Criteria.where("id").is(applicantId));
+    public Optional<MongoAnswer> findByIdAndRequestedFields(
+            String applicantId, List<String> requestedQnaFields) {
+        Query query = new Query().addCriteria(Criteria.where("id").is(applicantId));
 
         if (requestedQnaFields != null && !requestedQnaFields.isEmpty()) {
             requestedQnaFields.forEach(field -> query.fields().include("qna." + field));

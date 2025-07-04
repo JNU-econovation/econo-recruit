@@ -54,6 +54,5 @@ public interface ApplicantQueryUseCase {
             String searchKeyword,
             List<String> requestedQnaFields);
 
-    Map<String, Object> executeFiltered(
-            String applicantId, List<String> requestedQnaFields);
+    Map<String, Object> executeFiltered(String applicantId, List<String> requestedQnaFields);
 }

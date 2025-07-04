@@ -7,14 +7,13 @@ import com.econovation.recruitcommon.exception.RecruitCodeException;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
+import graphql.schema.DataFetchingEnvironment;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.stereotype.Component;
-import graphql.schema.DataFetchingEnvironment;
-
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -32,7 +31,8 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
         return handleInternalServerError(ex, env);
     }
 
-    private GraphQLError handleRecruitCodeException(RecruitCodeException ex, DataFetchingEnvironment env) {
+    private GraphQLError handleRecruitCodeException(
+            RecruitCodeException ex, DataFetchingEnvironment env) {
         BaseErrorCode errorCode = ex.getErrorCode();
         ErrorReason errorReason = errorCode.getErrorReason();
 
@@ -41,11 +41,15 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
                 .errorType(ErrorType.DataFetchingException)
                 .location(env.getField().getSourceLocation())
                 .path(env.getExecutionStepInfo().getPath())
-                .extensions(Map.of(
-                        "code", errorReason.getCode(),
-                        "status", errorReason.getStatus(),
-                        "timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
-                ))
+                .extensions(
+                        Map.of(
+                                "code", errorReason.getCode(),
+                                "status", errorReason.getStatus(),
+                                "timestamp",
+                                        LocalDateTime.now()
+                                                .format(
+                                                        DateTimeFormatter.ofPattern(
+                                                                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))))
                 .build();
     }
 
@@ -58,11 +62,15 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
                 .errorType(ErrorType.DataFetchingException)
                 .location(env.getField().getSourceLocation())
                 .path(env.getExecutionStepInfo().getPath())
-                .extensions(Map.of(
-                        "code", internalServerError.getCode(),
-                        "status", internalServerError.getStatus(),
-                        "timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
-                ))
+                .extensions(
+                        Map.of(
+                                "code", internalServerError.getCode(),
+                                "status", internalServerError.getStatus(),
+                                "timestamp",
+                                        LocalDateTime.now()
+                                                .format(
+                                                        DateTimeFormatter.ofPattern(
+                                                                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))))
                 .build();
     }
 }

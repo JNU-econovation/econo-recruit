@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -263,7 +262,8 @@ public class ApplicantService implements ApplicantQueryUseCase {
 
         PageInfo pageInfo = getPageInfo(year, page, searchKeyword);
         List<MongoAnswer> sortedResult =
-                answerAdaptor.findByYearAndSearchKeywordAndRequestedFields(year, page, sortType, searchKeyword, requestedQnaFields);
+                answerAdaptor.findByYearAndSearchKeywordAndRequestedFields(
+                        year, page, sortType, searchKeyword, requestedQnaFields);
 
         List<Map<String, Object>> qnaMapList = getQnaMapListWithIdAndPassState(sortedResult);
 
@@ -277,7 +277,8 @@ public class ApplicantService implements ApplicantQueryUseCase {
     public Map<String, Object> executeFiltered(
             String applicantId, List<String> requestedQnaFields) {
         MongoAnswer mongoAnswer =
-                answerAdaptor.findByIdAndRequestedFields(applicantId, requestedQnaFields)
+                answerAdaptor
+                        .findByIdAndRequestedFields(applicantId, requestedQnaFields)
                         .orElseThrow(() -> ApplicantNotFoundException.EXCEPTION);
 
         Map<String, Object> qna = mongoAnswer.getQna();
