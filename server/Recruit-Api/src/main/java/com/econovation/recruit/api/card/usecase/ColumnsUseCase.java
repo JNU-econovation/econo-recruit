@@ -6,5 +6,5 @@ import java.util.List;
 
 @UseCase
 public interface ColumnsUseCase {
-    List<Columns> getByNavigationIdAndYear(Integer navigationId, Integer year);
+    List<Columns> getByNavigationId(Integer navigationId);
 }

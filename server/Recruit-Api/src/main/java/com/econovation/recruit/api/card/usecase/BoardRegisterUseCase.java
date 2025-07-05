@@ -3,7 +3,6 @@ package com.econovation.recruit.api.card.usecase;
 import com.econovation.recruitcommon.annotation.UseCase;
 import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.board.domain.Columns;
-import com.econovation.recruitdomain.domains.dto.CreateColumnsDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 
@@ -16,8 +15,6 @@ public interface BoardRegisterUseCase {
     void createApplicantBoard(String applicantId, String hopeField, Long cardId);
 
     Columns createColumn(String title, Integer navigationId);
-
-    Columns createColumnWithYear(Integer navigationId, CreateColumnsDto createColumnsDto);
 
     Board updateLocation(Board board, Integer colLoc, Integer lowLoc);
 
