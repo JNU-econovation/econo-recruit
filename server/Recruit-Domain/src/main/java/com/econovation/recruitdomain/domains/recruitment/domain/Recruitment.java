@@ -23,6 +23,9 @@ public class Recruitment extends BaseTimeEntity {
     private RecruitmentStates states;
 
     @Column
+    private Long year;
+
+    @Column
     private LocalDateTime startAt;
 
     @Column
