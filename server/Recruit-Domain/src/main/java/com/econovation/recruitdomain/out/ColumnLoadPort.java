@@ -15,7 +15,5 @@ public interface ColumnLoadPort {
 
     List<Columns> getColumnsByNavigationId(Integer navigationId);
 
-    List<Columns> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year);
-
     Optional<Columns> getByNextColumnsId(Integer id);
 }

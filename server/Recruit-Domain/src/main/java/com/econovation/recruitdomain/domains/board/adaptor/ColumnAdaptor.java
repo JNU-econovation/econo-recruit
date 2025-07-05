@@ -51,11 +51,6 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     }
 
     @Override
-    public List<Columns> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year) {
-        return columnRepository.findByNavigationIdAndYear(navigationId, year);
-    }
-
-    @Override
     public Optional<Columns> getByNextColumnsId(Integer nextColumnId) {
         return columnRepository.findByNextColumnsId(nextColumnId);
     }
