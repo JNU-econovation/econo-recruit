@@ -1,8 +1,8 @@
 package com.econovation.recruit.api.recruitment.controller;
 
-import com.econovation.recruit.api.applicant.command.ChangeRecruitmentCommand;
+import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
-import com.econovation.recruitdomain.domains.applicant.dto.RecruitmentStateDto;
+import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class RecruitmentController {
             description = "지원서 접수를 즉시 시작하거나 정해진 시간에 시작할 수 있도록 상태를 변경합니다."
     )
     @PostMapping("/recruitment/state")
-    public ResponseEntity<Boolean> changeRecruitment(@RequestBody RecruitmentStateDto request){
-        boolean result = recruitmentUseCase.changeState(new ChangeRecruitmentCommand(request.getStates(), request.getYear(), request.getReservedAt()));
+    public ResponseEntity<Boolean> setUpRecruitment(@RequestBody RecruitmentSetUpDto request){
+        boolean result = recruitmentUseCase.setUp(new SetUpRecruitmentCommand(request.getYear(), request.getStartAt(), request.getEndAt())) ;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

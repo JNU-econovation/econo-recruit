@@ -1,11 +1,11 @@
 package com.econovation.recruit.api.recruitment.usecase;
 
-import com.econovation.recruit.api.applicant.command.ChangeRecruitmentCommand;
+import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 
 public interface RecruitmentUseCase {
 
-    boolean changeState(ChangeRecruitmentCommand command);
+    boolean setUp(SetUpRecruitmentCommand command);
 
     Recruitment getLatestOne();
 
