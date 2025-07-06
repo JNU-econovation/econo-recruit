@@ -5,6 +5,8 @@ import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAlreadyExistsException;
+import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class RecruitmentService implements RecruitmentUseCase {
 
     @Override
     public Long setUp(SetUpRecruitmentCommand command){
-        if(recruitmentPort.existsNonStart()) throw new IllegalArgumentException("이미 예약된 모집이 존재합니다.");
+        if(recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
 
         Recruitment recruitment = Recruitment.builder()
                 .endAt(command.getEndAt())
@@ -39,6 +41,6 @@ public class RecruitmentService implements RecruitmentUseCase {
     @Override
     public Recruitment getLatestOne() {
         return recruitmentPort.findLatestOne()
-                .orElseThrow(() -> new IllegalArgumentException("최신의 모집이 존재하지 않습니다."));
+                .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
     }
 }
