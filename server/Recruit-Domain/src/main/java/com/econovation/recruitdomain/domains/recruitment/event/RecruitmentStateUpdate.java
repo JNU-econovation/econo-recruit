@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class RecruitmentEnd extends DomainEvent {
+public class RecruitmentStateUpdate extends DomainEvent {
 
     private final Long recruitmentId;
+
+    // 어떤 상태로 변경할지는 핸들러에서 결정
+//    private final RecruitmentStates states;
 
 }
