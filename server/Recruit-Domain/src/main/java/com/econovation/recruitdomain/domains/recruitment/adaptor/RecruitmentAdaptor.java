@@ -16,6 +16,11 @@ public class RecruitmentAdaptor implements RecruitmentPort {
     private final RecruitmentRepository repository;
 
     @Override
+    public Optional<Recruitment> findById(Long id) {
+        return repository.findById(id);
+    }
+
+    @Override
     public Optional<Recruitment> findLatestOne() {
         return repository.findLatestOne();
     }
