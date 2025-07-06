@@ -1,9 +1,6 @@
 package com.econovation.recruit.api.recruitment.util;
 
-import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
-import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentEnd;
-import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentStart;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -37,7 +34,7 @@ public class RecruitmentScheduler {
         ZonedDateTime zonedStartAt = ZonedDateTime.of(target.getStartAt(), KST);
 
         taskScheduler.schedule(() -> {
-            Events.raise(new RecruitmentStart(target.getId()));
+            // TODO: Task 구현
         }, zonedStartAt.toInstant());
     }
 
@@ -45,7 +42,7 @@ public class RecruitmentScheduler {
         ZonedDateTime zonedEndAt = ZonedDateTime.of(target.getEndAt(), KST);
 
         taskScheduler.schedule(() -> {
-            Events.raise(new RecruitmentEnd(target.getId()));
+            // TODO: Task 구현
         }, zonedEndAt.toInstant());
     }
 
