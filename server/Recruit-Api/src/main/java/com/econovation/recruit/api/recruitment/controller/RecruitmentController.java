@@ -25,12 +25,12 @@ public class RecruitmentController {
 
     @Operation(
             summary = "지원서 접수를 시작합니다.",
-            description = "지원서 접수를 즉시 시작하거나 정해진 시간에 시작할 수 있도록 상태를 변경합니다."
+            description = "지원서 접수를 정해진 시간에 시작할 수 있도록 합니다."
     )
     @PostMapping("/recruitment/state")
-    public ResponseEntity<Boolean> setUpRecruitment(@RequestBody RecruitmentSetUpDto request){
-        boolean result = recruitmentUseCase.setUp(new SetUpRecruitmentCommand(request.getYear(), request.getStartAt(), request.getEndAt())) ;
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request){
+        Long recruitmentId = recruitmentUseCase.setUp(new SetUpRecruitmentCommand(request.getYear(), request.getStartAt(), request.getEndAt())) ;
+        return new ResponseEntity<>(recruitmentId, HttpStatus.OK);
     }
 
 }

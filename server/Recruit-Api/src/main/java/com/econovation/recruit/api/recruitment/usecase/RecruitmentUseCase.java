@@ -5,7 +5,7 @@ import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 
 public interface RecruitmentUseCase {
 
-    boolean setUp(SetUpRecruitmentCommand command);
+    Long setUp(SetUpRecruitmentCommand command);
 
     Recruitment getLatestOne();
 
