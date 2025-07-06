@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentStart;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
@@ -23,9 +24,13 @@ public class RecruitmentScheduler {
     // TODO: DB에서 예약된 작업 불러오기
     public void loadNonStartedJob(){}
 
-    public void reserveEvent(Recruitment recruitment){
-        reserveStart(recruitment);
-        reserveEnd(recruitment);
+    public void reserveEvent(Long id){
+        Optional<Recruitment> saved = recruitmentPort.findById(id);
+
+        saved.ifPresent((recruitment)->{
+            reserveStart(recruitment);
+            reserveEnd(recruitment);
+        });
     }
 
     private void reserveStart(Recruitment target){

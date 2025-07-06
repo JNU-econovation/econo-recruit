@@ -3,8 +3,10 @@ package com.econovation.recruit.api.recruitment.service;
 import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
+import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegister;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAlreadyExistsException;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
@@ -31,9 +33,8 @@ public class RecruitmentService implements RecruitmentUseCase {
 
         Recruitment saved = recruitmentPort.save(recruitment);
 
-        // NON_START 상태를, startAt 시간이 되면 RECRUITING 상태로 변경하는 작업 예약
-        // RECRUITING 상태를, endAt 시간이 되면, END 상태로 변경하는 작업 예약
-        recruitmentScheduler.reserveEvent(saved);
+        // 이벤트 발행
+        Events.raise(new RecruitmentRegister(saved.getId()));
 
         return saved.getId();
     }
