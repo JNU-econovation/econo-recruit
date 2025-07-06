@@ -9,4 +9,6 @@ public interface RecruitmentPort {
 
     Recruitment save(Recruitment entity);
 
+    boolean existsNonStart();
+
 }
