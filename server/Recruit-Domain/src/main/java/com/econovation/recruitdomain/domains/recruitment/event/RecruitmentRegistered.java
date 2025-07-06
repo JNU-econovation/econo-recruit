@@ -13,10 +13,4 @@ public class RecruitmentRegistered extends DomainEvent {
 
     private final Long id;
 
-    public static RecruitmentRegistered from(Recruitment entity){
-        return RecruitmentRegistered.builder()
-                .id(entity.getId())
-                .build();
-    }
-
 }
