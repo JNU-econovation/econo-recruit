@@ -6,7 +6,7 @@ import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
-import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegister;
+import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegistered;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAlreadyExistsException;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
@@ -34,7 +34,7 @@ public class RecruitmentService implements RecruitmentUseCase {
         Recruitment saved = recruitmentPort.save(recruitment);
 
         // 이벤트 발행
-        Events.raise(new RecruitmentRegister(saved.getId()));
+        Events.raise(new RecruitmentRegistered(saved.getId()));
 
         return saved.getId();
     }

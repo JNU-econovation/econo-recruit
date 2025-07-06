@@ -9,12 +9,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @Builder
-public class RecruitmentRegister extends DomainEvent {
+public class RecruitmentRegistered extends DomainEvent {
 
     private final Long id;
 
-    public static RecruitmentRegister from(Recruitment entity){
-        return RecruitmentRegister.builder()
+    public static RecruitmentRegistered from(Recruitment entity){
+        return RecruitmentRegistered.builder()
                 .id(entity.getId())
                 .build();
     }
