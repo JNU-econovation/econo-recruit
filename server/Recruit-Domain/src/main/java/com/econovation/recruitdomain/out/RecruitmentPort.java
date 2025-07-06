@@ -1,9 +1,13 @@
 package com.econovation.recruitdomain.out;
 
+import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import java.util.List;
 import java.util.Optional;
 
 public interface RecruitmentPort {
+
+    List<Recruitment> findByStates(RecruitmentStates states);
 
     Optional<Recruitment> findById(Long id);
 

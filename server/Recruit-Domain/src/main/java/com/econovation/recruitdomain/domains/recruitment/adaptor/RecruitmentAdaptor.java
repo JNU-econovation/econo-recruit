@@ -36,4 +36,9 @@ public class RecruitmentAdaptor implements RecruitmentPort {
 
         return !recruitments.isEmpty();
     }
+
+    @Override
+    public List<Recruitment> findByStates(RecruitmentStates states) {
+        return repository.findByStates(states);
+    }
 }
