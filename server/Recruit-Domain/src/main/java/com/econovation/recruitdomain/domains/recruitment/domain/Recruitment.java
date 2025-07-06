@@ -39,4 +39,9 @@ public class Recruitment extends BaseTimeEntity {
     @Column
     private LocalDateTime endAt;
 
+    public Recruitment updateStates(RecruitmentStates states){
+        this.states = states;
+        return this;
+    }
+
 }
