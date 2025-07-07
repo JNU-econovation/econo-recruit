@@ -1,11 +1,14 @@
 package com.econovation.recruit.api.recruitment.util;
 
+import com.econovation.recruit.api.recruitment.task.RecruitmentJob;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
@@ -19,8 +22,19 @@ public class RecruitmentScheduler {
     private final RecruitmentPort recruitmentPort;
     private final TaskScheduler taskScheduler;
 
-    // TODO: DB에서 예약된 작업 불러오기
-    public void loadNonStartedJob(){}
+    // DB에서 예약된 작업 불러오기
+    @PostConstruct
+    public void loadNonStartedJob(){
+        List<Recruitment> startJobs = recruitmentPort.findByStates(RecruitmentStates.NON_START);
+        List<Recruitment> endJobs = recruitmentPort.findByStates(RecruitmentStates.RECRUITING);
+
+        startJobs.forEach(startJob -> {
+            this.reserveStart(startJob);
+            this.reserveEnd(startJob);
+        });
+
+        endJobs.forEach(this::reserveEnd);
+    }
 
     public void reserveEvent(Long id){
         Optional<Recruitment> saved = recruitmentPort.findById(id);
