@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> {
 
-    @Query("SELECT r FROM Recruitment r ORDER BY r.updatedAt DESC LIMIT 1")
-    Optional<Recruitment> findLatestOne();
+    @Query("SELECT r FROM Recruitment r ORDER BY r.updatedAt DESC")
+    List<Recruitment> findLatestOne();
 
     @Query("SELECT r FROM Recruitment r WHERE r.states=:states ORDER BY r.updatedAt DESC")
     List<Recruitment> findByStates(@Param("states") RecruitmentStates states);

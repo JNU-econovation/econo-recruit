@@ -22,7 +22,7 @@ public class RecruitmentAdaptor implements RecruitmentPort {
 
     @Override
     public Optional<Recruitment> findLatestOne() {
-        return repository.findLatestOne();
+        return Optional.ofNullable(repository.findLatestOne().get(0));
     }
 
     @Override
