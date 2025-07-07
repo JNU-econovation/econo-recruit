@@ -5,6 +5,7 @@ import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class RecruitmentController {
 
     @Operation(summary = "지원서 접수를 시작합니다.", description = "지원서 접수를 정해진 시간에 시작할 수 있도록 합니다.")
     @PostMapping("/recruitment/state")
-    public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request) {
+    public ResponseEntity<Long> setUpRecruitment(@RequestBody @Valid RecruitmentSetUpDto request) {
         Long recruitmentId =
                 recruitmentUseCase.setUp(
                         new SetUpRecruitmentCommand(
