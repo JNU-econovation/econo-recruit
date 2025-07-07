@@ -8,4 +8,6 @@ public interface RecruitmentUseCase {
     Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt);
 
     Recruitment getLatestOne();
+
+    void terminate(Long recruitmentId);
 }

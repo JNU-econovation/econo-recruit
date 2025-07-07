@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.recruitment.controller;
 
+import com.econovation.recruit.adapter.in.controller.stomp.Message;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,4 +34,18 @@ public class RecruitmentController {
                 recruitmentUseCase.setUp(request.getYear(), request.getStartAt(), request.getEndAt());
         return new ResponseEntity<>(recruitmentId, HttpStatus.OK);
     }
+
+    @Operation(summary = "지원서 접수를 종료합니다.", description = "지원서 접수를 즉각 종료합니다.")
+    @DeleteMapping("/recruitment/{recruitmentId}")
+    public ResponseEntity<String> terminateRecruitment(@PathVariable("recruitmentId") Long recruitmentId){
+        recruitmentUseCase.terminate(recruitmentId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원서 모집 리스트를 조회합니다.", description = "지원서 모집 리스트를 조회합니다.")
+    @GetMapping("/recruitment")
+    public ResponseEntity<Void> getRecruitments(){
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
