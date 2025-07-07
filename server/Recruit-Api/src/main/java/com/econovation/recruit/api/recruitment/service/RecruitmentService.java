@@ -1,6 +1,5 @@
 package com.econovation.recruit.api.recruitment.service;
 
-import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
@@ -10,6 +9,7 @@ import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegist
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAlreadyExistsException;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +21,14 @@ public class RecruitmentService implements RecruitmentUseCase {
     private final RecruitmentScheduler recruitmentScheduler;
 
     @Override
-    public Long setUp(SetUpRecruitmentCommand command) {
+    public Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt) {
         if (recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
 
         Recruitment recruitment =
                 Recruitment.builder()
-                        .endAt(command.getEndAt())
-                        .startAt(command.getStartAt())
-                        .year(command.getYear())
+                        .endAt(endAt)
+                        .startAt(startAt)
+                        .year(year)
                         .states(RecruitmentStates.NON_START)
                         .build();
 

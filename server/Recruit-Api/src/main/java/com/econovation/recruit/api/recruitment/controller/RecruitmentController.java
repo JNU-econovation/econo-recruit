@@ -1,6 +1,5 @@
 package com.econovation.recruit.api.recruitment.controller;
 
-import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,12 +24,10 @@ public class RecruitmentController {
     private final RecruitmentUseCase recruitmentUseCase;
 
     @Operation(summary = "지원서 접수를 시작합니다.", description = "지원서 접수를 정해진 시간에 시작할 수 있도록 합니다.")
-    @PostMapping("/recruitment/state")
+    @PostMapping("/recruitment")
     public ResponseEntity<Long> setUpRecruitment(@RequestBody @Valid RecruitmentSetUpDto request) {
         Long recruitmentId =
-                recruitmentUseCase.setUp(
-                        new SetUpRecruitmentCommand(
-                                request.getYear(), request.getStartAt(), request.getEndAt()));
+                recruitmentUseCase.setUp(request.getYear(), request.getStartAt(), request.getEndAt());
         return new ResponseEntity<>(recruitmentId, HttpStatus.OK);
     }
 }

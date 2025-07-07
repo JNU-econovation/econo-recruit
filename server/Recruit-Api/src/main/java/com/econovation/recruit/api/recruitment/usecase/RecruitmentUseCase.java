@@ -1,11 +1,11 @@
 package com.econovation.recruit.api.recruitment.usecase;
 
-import com.econovation.recruit.api.recruitment.command.SetUpRecruitmentCommand;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import java.time.LocalDateTime;
 
 public interface RecruitmentUseCase {
 
-    Long setUp(SetUpRecruitmentCommand command);
+    Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt);
 
     Recruitment getLatestOne();
 }
