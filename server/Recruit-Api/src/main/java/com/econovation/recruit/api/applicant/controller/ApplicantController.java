@@ -9,10 +9,10 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
-import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
+import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
@@ -175,6 +175,4 @@ public class ApplicantController {
                 applicantQueryUseCase.getApplicantsStatus(year, sortType);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
 }

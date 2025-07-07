@@ -21,15 +21,16 @@ public class RecruitmentService implements RecruitmentUseCase {
     private final RecruitmentScheduler recruitmentScheduler;
 
     @Override
-    public Long setUp(SetUpRecruitmentCommand command){
-        if(recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
+    public Long setUp(SetUpRecruitmentCommand command) {
+        if (recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
 
-        Recruitment recruitment = Recruitment.builder()
-                .endAt(command.getEndAt())
-                .startAt(command.getStartAt())
-                .year(command.getYear())
-                .states(RecruitmentStates.NON_START)
-                .build();
+        Recruitment recruitment =
+                Recruitment.builder()
+                        .endAt(command.getEndAt())
+                        .startAt(command.getStartAt())
+                        .year(command.getYear())
+                        .states(RecruitmentStates.NON_START)
+                        .build();
 
         Recruitment saved = recruitmentPort.save(recruitment);
 
@@ -41,7 +42,8 @@ public class RecruitmentService implements RecruitmentUseCase {
 
     @Override
     public Recruitment getLatestOne() {
-        return recruitmentPort.findLatestOne()
+        return recruitmentPort
+                .findLatestOne()
                 .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
     }
 }

@@ -110,29 +110,30 @@ public class RecordService implements RecordUseCase {
             Integer page, Integer year, String sortType, String searchKeyword) {
         FilteredRecordsApplicantsDto filteredRecordsApplicant =
                 filterRecordsAndGetApplicants(page, year, sortType, searchKeyword);
-        if (filteredRecordsApplicant.records().isEmpty() || filteredRecordsApplicant.applicants().isEmpty()) {
+        if (filteredRecordsApplicant.records().isEmpty()
+                || filteredRecordsApplicant.applicants().isEmpty()) {
             return RecordsViewResponseDto.empty(filteredRecordsApplicant.pageInfo());
         }
         return RecordsViewResponseDto.of(
                 filteredRecordsApplicant.pageInfo(),
                 filteredRecordsApplicant.records(),
                 filteredRecordsApplicant.scoreMap(),
-                filteredRecordsApplicant.applicants()
-        );
+                filteredRecordsApplicant.applicants());
     }
 
     @Override
     public SimpleRecordsViewResponseDto executeSimple(
             Integer page, Integer year, String sortType, String searchKeyword) {
-        FilteredRecordsApplicantsDto filteredRecordsApplicant = filterRecordsAndGetApplicants(page, year, sortType, searchKeyword);
-        if (filteredRecordsApplicant.records().isEmpty() || filteredRecordsApplicant.applicants().isEmpty()) {
+        FilteredRecordsApplicantsDto filteredRecordsApplicant =
+                filterRecordsAndGetApplicants(page, year, sortType, searchKeyword);
+        if (filteredRecordsApplicant.records().isEmpty()
+                || filteredRecordsApplicant.applicants().isEmpty()) {
             return SimpleRecordsViewResponseDto.empty(filteredRecordsApplicant.pageInfo());
         }
         return SimpleRecordsViewResponseDto.of(
                 filteredRecordsApplicant.pageInfo(),
                 filteredRecordsApplicant.records(),
-                filteredRecordsApplicant.applicants()
-        );
+                filteredRecordsApplicant.applicants());
     }
 
     private FilteredRecordsApplicantsDto filterRecordsAndGetApplicants(
@@ -146,12 +147,17 @@ public class RecordService implements RecordUseCase {
 
         if (sortType.equals("score")) {
             applicants = applicantQueryUseCase.execute(year, sortType, searchKeyword, applicantIds);
-            FilteredRecordsWithScoresDto filteredData = filterRecordsAndCalculateScores(result, applicants, year, page);
-            records = sortRecordsByScoresDesc(filteredData.records(), filteredData.scoreMap(), page);
+            FilteredRecordsWithScoresDto filteredData =
+                    filterRecordsAndCalculateScores(result, applicants, year, page);
+            records =
+                    sortRecordsByScoresDesc(filteredData.records(), filteredData.scoreMap(), page);
             scoreMap = filteredData.scoreMap();
         } else {
-            applicants = applicantQueryUseCase.execute(page, year, sortType, searchKeyword, applicantIds);
-            FilteredRecordsWithScoresDto filteredData = filterRecordsAndCalculateScores(result, applicants, year, page);
+            applicants =
+                    applicantQueryUseCase.execute(
+                            page, year, sortType, searchKeyword, applicantIds);
+            FilteredRecordsWithScoresDto filteredData =
+                    filterRecordsAndCalculateScores(result, applicants, year, page);
             records = sortRecordsByApplicantsAndSortType(filteredData.records(), applicants);
             scoreMap = filteredData.scoreMap();
         }

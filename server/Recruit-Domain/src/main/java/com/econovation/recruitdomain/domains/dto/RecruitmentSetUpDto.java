@@ -13,5 +13,4 @@ public class RecruitmentSetUpDto {
     private Long year;
     private LocalDateTime startAt;
     private LocalDateTime endAt;
-
 }

@@ -8,5 +8,4 @@ public interface RecruitmentUseCase {
     Long setUp(SetUpRecruitmentCommand command);
 
     Recruitment getLatestOne();
-
 }

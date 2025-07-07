@@ -13,6 +13,5 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
     Optional<Recruitment> findLatestOne();
 
     @Query("SELECT r FROM Recruitment r WHERE r.states=:states ORDER BY r.updatedAt DESC")
-    List<Recruitment> findByStates(@Param("states")RecruitmentStates states);
-
+    List<Recruitment> findByStates(@Param("states") RecruitmentStates states);
 }

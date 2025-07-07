@@ -6,8 +6,7 @@ public class RecruitmentNotFoundException extends RecruitCodeException {
 
     public static final RecruitmentNotFoundException EXCEPTION = new RecruitmentNotFoundException();
 
-    public RecruitmentNotFoundException(){
+    public RecruitmentNotFoundException() {
         super(RecruitmentErrorCode.RECRUITMENT_NOT_FOUND);
     }
-
 }

@@ -14,14 +14,12 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum RecruitmentErrorCode implements BaseErrorCode {
-
     RECRUITMENT_NOT_FOUND(NOT_FOUND, "RECRUITMENT_404_1", "해당 모집을 찾을 수 없습니다."),
     RECRUITMENT_ALREADY_EXISTS(BAD_REQUEST, "RECRUITMENT_400_1", "이미 예약된 모집이 존재합니다.");
 
     private Integer status;
     private String code;
     private String reason;
-
 
     @Override
     public ErrorReason getErrorReason() {

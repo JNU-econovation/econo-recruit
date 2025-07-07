@@ -23,14 +23,13 @@ public class RecruitmentController {
 
     private final RecruitmentUseCase recruitmentUseCase;
 
-    @Operation(
-            summary = "지원서 접수를 시작합니다.",
-            description = "지원서 접수를 정해진 시간에 시작할 수 있도록 합니다."
-    )
+    @Operation(summary = "지원서 접수를 시작합니다.", description = "지원서 접수를 정해진 시간에 시작할 수 있도록 합니다.")
     @PostMapping("/recruitment/state")
-    public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request){
-        Long recruitmentId = recruitmentUseCase.setUp(new SetUpRecruitmentCommand(request.getYear(), request.getStartAt(), request.getEndAt())) ;
+    public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request) {
+        Long recruitmentId =
+                recruitmentUseCase.setUp(
+                        new SetUpRecruitmentCommand(
+                                request.getYear(), request.getStartAt(), request.getEndAt()));
         return new ResponseEntity<>(recruitmentId, HttpStatus.OK);
     }
-
 }

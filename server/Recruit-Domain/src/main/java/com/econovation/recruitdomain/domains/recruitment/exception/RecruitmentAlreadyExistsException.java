@@ -7,7 +7,7 @@ public class RecruitmentAlreadyExistsException extends RecruitCodeException {
     public static final RecruitmentAlreadyExistsException EXCEPTION =
             new RecruitmentAlreadyExistsException();
 
-    public RecruitmentAlreadyExistsException(){
+    public RecruitmentAlreadyExistsException() {
         super(RecruitmentErrorCode.RECRUITMENT_ALREADY_EXISTS);
     }
 }

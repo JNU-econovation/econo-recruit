@@ -10,7 +10,4 @@ public record FilteredRecordsApplicantsDto(
         List<Record> records,
         List<MongoAnswer> applicants,
         Map<String, Double> scoreMap,
-        PageInfo pageInfo
-) {
-
-}
+        PageInfo pageInfo) {}

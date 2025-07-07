@@ -30,18 +30,14 @@ public class Recruitment extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RecruitmentStates states;
 
-    @Column
-    private Long year;
+    @Column private Long year;
 
-    @Column
-    private LocalDateTime startAt;
+    @Column private LocalDateTime startAt;
 
-    @Column
-    private LocalDateTime endAt;
+    @Column private LocalDateTime endAt;
 
-    public Recruitment updateStates(RecruitmentStates states){
+    public Recruitment updateStates(RecruitmentStates states) {
         this.states = states;
         return this;
     }
-
 }
