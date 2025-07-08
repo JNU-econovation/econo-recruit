@@ -1,11 +1,10 @@
 package com.econovation.recruit.api.recruitment.controller;
 
+import com.econovation.recruit.api.recruitment.dto.RecruitmentResponsesDto;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
-import com.econovation.recruitdomain.domains.dto.RecruitmentResponseDto;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +58,7 @@ public class RecruitmentController {
                     만약, 현재 예약 중인 모집이 있다면 응답 결과에 포함됩니다.
                     """)
     @GetMapping("/recruitment")
-    public ResponseEntity<RecruitmentResponseDto> getRecruitments(){
+    public ResponseEntity<RecruitmentResponsesDto> getRecruitments(){
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
