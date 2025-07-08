@@ -2,13 +2,13 @@ package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class RecruitmentResponseDto {
 
     private Long recruitmentId;
