@@ -8,6 +8,6 @@ public class GraphQLPathExclusionStrategy implements PathExclusionStrategy {
 
     @Override
     public boolean shouldExclude(String requestPath) {
-        return requestPath.startsWith("/graphql");
+        return requestPath.startsWith("/api/graphql");
     }
 }
