@@ -103,15 +103,17 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Override
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
+        String email = signUpRequestDto.getEmail();
+        checkEmailVerified(email);
         if (interviewerLoadPort
-                .loadOptionalInterviewerByEmail(signUpRequestDto.getEmail())
+                .loadOptionalInterviewerByEmail(email)
                 .isPresent()) throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
         Interviewer interviewer =
                 Interviewer.builder()
                         .year(signUpRequestDto.getYear())
                         .name(signUpRequestDto.getName())
-                        .email(signUpRequestDto.getEmail())
+                        .email(email)
                         .password(encededPassword)
                         .role(Role.ROLE_GUEST)
                         .build();
@@ -136,16 +138,19 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Transactional
     public void resetPassword(ResetPasswordRequestDto resetPasswordRequestDto) {
         String email = resetPasswordRequestDto.getEmail();
-        if (emailVerificationLoadPort
-                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
-                .isEmpty()) {
-            throw EmailNotVerifiedException.EXCEPTION;
-        }
-
+        checkEmailVerified(email);
         if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isEmpty())
             throw InterviewerIdpServerException.EXCEPTION;
         Interviewer account = interviewerLoadPort.loadInterviewerByEmail(email);
         String encededPassword = passwordEncoder.encode(resetPasswordRequestDto.getPassword());
         account.changePassword(encededPassword);
+    }
+
+    private void checkEmailVerified(String email) {
+        if (emailVerificationLoadPort
+                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
+                .isEmpty()) {
+            throw EmailNotVerifiedException.EXCEPTION;
+        }
     }
 }
