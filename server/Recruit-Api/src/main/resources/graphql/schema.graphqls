@@ -1,0 +1,31 @@
+scalar JSON
+
+type Query {
+
+  getApplicants(
+    year: Int!,
+    page: Int!,
+    order: String,
+    searchKeyword: String,
+    requestedQnaFields: [String!]
+  ): AnswerResponse!
+
+  getApplicant(
+    applicantId: String,
+    requestedQnaFields: [String!]
+  ): JSON!
+}
+
+type PageInfo {
+  currentPage: Int!,
+  listCount: Int!,
+  pageLimit: Int!,
+  startPage: Int!,
+  endPage: Int!,
+  boardLimit: Int!
+}
+
+type AnswerResponse {
+    pageInfo: PageInfo!
+    answers: [JSON!]
+}
