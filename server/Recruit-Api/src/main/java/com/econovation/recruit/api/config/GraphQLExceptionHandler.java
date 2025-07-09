@@ -36,20 +36,12 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
         BaseErrorCode errorCode = ex.getErrorCode();
         ErrorReason errorReason = errorCode.getErrorReason();
 
-        return GraphqlErrorBuilder.newError()
-                .message(errorReason.getReason())
-                .errorType(ErrorType.DataFetchingException)
-                .location(env.getField().getSourceLocation())
-                .path(env.getExecutionStepInfo().getPath())
-                .extensions(
-                        Map.of(
-                                "code", errorReason.getCode(),
-                                "status", errorReason.getStatus(),
-                                "timestamp",
-                                        LocalDateTime.now()
-                                                .format(
-                                                        DateTimeFormatter.ofPattern(
-                                                                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))))
+        return createErrorBuilder(
+                errorReason.getReason(),
+                ErrorType.DataFetchingException,
+                env,
+                errorReason.getCode(),
+                errorReason.getStatus())
                 .build();
     }
 
@@ -57,20 +49,33 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
 
         GlobalErrorCode internalServerError = GlobalErrorCode.INTERNAL_SERVER_ERROR;
 
+        return createErrorBuilder(
+                internalServerError.getReason(),
+                ErrorType.DataFetchingException,
+                env,
+                internalServerError.getCode(),
+                internalServerError.getStatus()).build();
+    }
+
+    private GraphqlErrorBuilder createErrorBuilder(
+            String message,
+            ErrorType errorType,
+            DataFetchingEnvironment env,
+            String code,
+            Integer status
+    ) {
         return GraphqlErrorBuilder.newError()
-                .message(internalServerError.getReason())
-                .errorType(ErrorType.DataFetchingException)
+                .message(message)
+                .errorType(errorType)
                 .location(env.getField().getSourceLocation())
                 .path(env.getExecutionStepInfo().getPath())
                 .extensions(
                         Map.of(
-                                "code", internalServerError.getCode(),
-                                "status", internalServerError.getStatus(),
-                                "timestamp",
-                                        LocalDateTime.now()
-                                                .format(
-                                                        DateTimeFormatter.ofPattern(
-                                                                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))))
-                .build();
+                                "code", code,
+                                "status", status,
+                                "timestamp", LocalDateTime.now()
+                                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
+                        )
+                );
     }
 }
