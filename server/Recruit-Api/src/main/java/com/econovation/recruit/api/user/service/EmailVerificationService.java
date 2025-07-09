@@ -7,8 +7,10 @@ import com.econovation.recruitdomain.domains.dto.VerifyCodeRequestDto;
 import com.econovation.recruitdomain.domains.email_verification.domain.EmailVerification;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotCorrectException;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotFoundException;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerIdpServerException;
 import com.econovation.recruitdomain.out.EmailVerificationLoadPort;
 import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
+import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitinfrastructure.apache.EmailVerificationSender;
 import java.security.SecureRandom;
 import java.time.Duration;
@@ -21,6 +23,7 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     private final EmailVerificationRecordPort emailVerificationRecordPort;
     private final EmailVerificationLoadPort emailVerificationLoadPort;
     private final EmailVerificationSender emailVerificationSender;
+    private final InterviewerLoadPort interviewerLoadPort;
 
     private static final String VERIFIED_PREFIX = ":verified";
     private static final long EMAIL_VERIFICATION_CODE_EXPIRE = Duration.ofMinutes(5).getSeconds();
@@ -28,8 +31,10 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     private static final String TRUE = Boolean.TRUE.toString();
 
     @Override
-    public void sendEmail(SendEmailRequestDto sendEmailRequestDto) {
+    public void sendEmailForPassword(SendEmailRequestDto sendEmailRequestDto) {
         String email = sendEmailRequestDto.getEmail();
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isEmpty())
+            throw InterviewerIdpServerException.EXCEPTION;
 
         if (emailVerificationLoadPort
                 .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
