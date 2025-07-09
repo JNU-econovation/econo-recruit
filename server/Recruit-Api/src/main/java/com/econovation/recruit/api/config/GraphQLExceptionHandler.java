@@ -37,11 +37,11 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
         ErrorReason errorReason = errorCode.getErrorReason();
 
         return createErrorBuilder(
-                errorReason.getReason(),
-                ErrorType.DataFetchingException,
-                env,
-                errorReason.getCode(),
-                errorReason.getStatus())
+                        errorReason.getReason(),
+                        ErrorType.DataFetchingException,
+                        env,
+                        errorReason.getCode(),
+                        errorReason.getStatus())
                 .build();
     }
 
@@ -50,11 +50,12 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
         GlobalErrorCode internalServerError = GlobalErrorCode.INTERNAL_SERVER_ERROR;
 
         return createErrorBuilder(
-                internalServerError.getReason(),
-                ErrorType.DataFetchingException,
-                env,
-                internalServerError.getCode(),
-                internalServerError.getStatus()).build();
+                        internalServerError.getReason(),
+                        ErrorType.DataFetchingException,
+                        env,
+                        internalServerError.getCode(),
+                        internalServerError.getStatus())
+                .build();
     }
 
     private GraphqlErrorBuilder createErrorBuilder(
@@ -62,8 +63,7 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
             ErrorType errorType,
             DataFetchingEnvironment env,
             String code,
-            Integer status
-    ) {
+            Integer status) {
         return GraphqlErrorBuilder.newError()
                 .message(message)
                 .errorType(errorType)
@@ -73,9 +73,10 @@ public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter
                         Map.of(
                                 "code", code,
                                 "status", status,
-                                "timestamp", LocalDateTime.now()
-                                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
-                        )
-                );
+                                "timestamp",
+                                        LocalDateTime.now()
+                                                .format(
+                                                        DateTimeFormatter.ofPattern(
+                                                                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))));
     }
 }
