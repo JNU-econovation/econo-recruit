@@ -7,6 +7,7 @@ import com.econovation.recruitdomain.domains.dto.VerifyCodeRequestDto;
 import com.econovation.recruitdomain.domains.email_verification.domain.EmailVerification;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotCorrectException;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotFoundException;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAlreadySubmitException;
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerIdpServerException;
 import com.econovation.recruitdomain.out.EmailVerificationLoadPort;
 import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
@@ -35,22 +36,7 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
         String email = sendEmailRequestDto.getEmail();
         if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isEmpty())
             throw InterviewerIdpServerException.EXCEPTION;
-
-        if (emailVerificationLoadPort
-                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
-                .isPresent()) {
-            emailVerificationRecordPort.delete(email);
-        }
-
-        String code = createCode();
-        EmailVerification emailVerification =
-                EmailVerification.builder()
-                        .email(email)
-                        .code(code)
-                        .expiration(EMAIL_VERIFICATION_CODE_EXPIRE)
-                        .build();
-        emailVerificationRecordPort.save(emailVerification);
-        emailVerificationSender.sendVerificationCode(sendEmailRequestDto.getEmail(), code);
+        sendEmailVerification(email);
     }
 
     @Override
@@ -73,9 +59,35 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
         emailVerificationRecordPort.delete(email);
     }
 
+    @Override
+    public void sendEmailForSignup(SendEmailRequestDto sendEmailRequestDto) {
+        String email = sendEmailRequestDto.getEmail();
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
+            throw InterviewerAlreadySubmitException.EXCEPTION;
+        sendEmailVerification(email);
+    }
+
     private String createCode() {
         SecureRandom secureRandom = new SecureRandom();
         int code = 100000 + secureRandom.nextInt(900000);
         return String.valueOf(code);
+    }
+
+    private void sendEmailVerification(String email) {
+        if (emailVerificationLoadPort
+                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
+                .isPresent()) {
+            emailVerificationRecordPort.delete(email);
+        }
+
+        String code = createCode();
+        EmailVerification emailVerification =
+                EmailVerification.builder()
+                        .email(email)
+                        .code(code)
+                        .expiration(EMAIL_VERIFICATION_CODE_EXPIRE)
+                        .build();
+        emailVerificationRecordPort.save(emailVerification);
+        emailVerificationSender.sendVerificationCode(email, code);
     }
 }

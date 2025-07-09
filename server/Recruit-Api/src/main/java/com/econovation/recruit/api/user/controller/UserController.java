@@ -112,10 +112,13 @@ public class UserController {
         return new ResponseEntity<>(PASSWORD_SUCCESS_CHANGE_MESSAGE, HttpStatus.OK);
     }
 
-    @Operation(summary = "메일로 인증코드 발송", description = "메일로 인증코드를 발송합니다.")
-    @PostMapping("/send-email")
-    public ResponseEntity sendEmail(@RequestBody SendEmailRequestDto sendEmailRequestDto) {
-        sendEmailUseCase.sendEmail(sendEmailRequestDto);
+    @Operation(
+            summary = "비밀번호 재설정 시 이메일 인증",
+            description = "비밀번호 재설정 시 유효한 메일인지 확인하기 위해 이메일 인증합니다.")
+    @PostMapping("/password/verify")
+    public ResponseEntity sendEmailForPassword(
+            @RequestBody SendEmailRequestDto sendEmailRequestDto) {
+        sendEmailUseCase.sendEmailForPassword(sendEmailRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -124,6 +127,13 @@ public class UserController {
     public ResponseEntity verifyCode(
             @Valid @RequestBody VerifyCodeRequestDto verifyCodeRequestDto) {
         verifyCodeUseCase.verifyCode(verifyCodeRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "회원가입 시 이메일 인증", description = "회원가입 시 유효한 메일인지 확인하기 위해 이메일 인증합니다.")
+    @PostMapping("/signup/verify")
+    public ResponseEntity sendEmailForSignup(@RequestBody SendEmailRequestDto sendEmailRequestDto) {
+        sendEmailUseCase.sendEmailForSignup(sendEmailRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
