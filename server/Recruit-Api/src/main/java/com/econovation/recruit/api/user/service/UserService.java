@@ -105,9 +105,8 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     public void signUp(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
         checkEmailVerified(email);
-        if (interviewerLoadPort
-                .loadOptionalInterviewerByEmail(email)
-                .isPresent()) throw InterviewerAlreadySubmitException.EXCEPTION;
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
+            throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
         Interviewer interviewer =
                 Interviewer.builder()
