@@ -18,6 +18,7 @@ import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerId
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.domains.whitelist.domain.AccessToken;
 import com.econovation.recruitdomain.out.EmailVerificationLoadPort;
+import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitdomain.out.WhitelistRecordPort;
@@ -36,6 +37,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     private final PasswordEncoder passwordEncoder;
     private final WhitelistRecordPort whitelistRecordPort;
     private final EmailVerificationLoadPort emailVerificationLoadPort;
+    private final EmailVerificationRecordPort emailVerificationRecordPort;
 
     private static final String VERIFIED_PREFIX = ":verified";
 
@@ -117,6 +119,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                         .role(Role.ROLE_GUEST)
                         .build();
         interviewerRecordPort.save(interviewer);
+        deleteVerifiedCode(email);
     }
 
     @Override
@@ -143,6 +146,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
         Interviewer account = interviewerLoadPort.loadInterviewerByEmail(email);
         String encededPassword = passwordEncoder.encode(resetPasswordRequestDto.getPassword());
         account.changePassword(encededPassword);
+        deleteVerifiedCode(email);
     }
 
     private void checkEmailVerified(String email) {
@@ -151,5 +155,9 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                 .isEmpty()) {
             throw EmailNotVerifiedException.EXCEPTION;
         }
+    }
+
+    private void deleteVerifiedCode(String email) {
+        emailVerificationRecordPort.delete(email + VERIFIED_PREFIX);
     }
 }
