@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.recruitment.util;
 
+import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -24,6 +25,11 @@ public class LatestRecruitmentVo {
 
     public LocalDateTime getEndAt() {
         if (Objects.nonNull(latest)) return latest.getEndAt();
+        throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
+    }
+
+    public RecruitmentStates getState(){
+        if (Objects.nonNull(latest)) return latest.getStates();
         throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
     }
 
