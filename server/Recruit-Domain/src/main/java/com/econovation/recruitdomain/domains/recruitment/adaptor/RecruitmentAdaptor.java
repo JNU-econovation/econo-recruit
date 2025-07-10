@@ -41,4 +41,9 @@ public class RecruitmentAdaptor implements RecruitmentPort {
     public List<Recruitment> findByStates(RecruitmentStates states) {
         return repository.findByStates(states);
     }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -16,4 +16,6 @@ public interface RecruitmentPort {
     Recruitment save(Recruitment entity);
 
     boolean existsNonStart();
+
+    void delete(Long id);
 }
