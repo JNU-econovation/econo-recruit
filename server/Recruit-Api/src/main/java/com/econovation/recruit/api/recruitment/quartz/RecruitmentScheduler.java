@@ -1,7 +1,5 @@
-package com.econovation.recruit.api.recruitment.util;
+package com.econovation.recruit.api.recruitment.quartz;
 
-import com.econovation.recruit.api.recruitment.quartz.RecruitmentJob;
-import com.econovation.recruit.api.recruitment.quartz.RecruitmentTrigger;
 import com.econovation.recruit.api.recruitment.quartz.exception.QuartzException;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import java.time.ZoneId;

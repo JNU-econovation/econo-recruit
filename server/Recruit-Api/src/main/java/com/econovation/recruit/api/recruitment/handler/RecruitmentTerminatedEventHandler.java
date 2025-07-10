@@ -1,7 +1,6 @@
 package com.econovation.recruit.api.recruitment.handler;
 
-import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
+import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
 import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentTerminated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

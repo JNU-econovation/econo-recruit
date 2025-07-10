@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.recruitment.service;
 
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
-import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
+import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
@@ -11,7 +11,6 @@ import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAl
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

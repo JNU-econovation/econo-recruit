@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.recruitment.handler;
 
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
-import com.econovation.recruit.api.recruitment.util.RecruitmentScheduler;
+import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
 import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegistered;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import lombok.RequiredArgsConstructor;
