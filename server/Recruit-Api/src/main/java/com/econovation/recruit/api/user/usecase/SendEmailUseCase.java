@@ -6,5 +6,7 @@ import com.econovation.recruitdomain.domains.dto.SendEmailRequestDto;
 @UseCase
 public interface SendEmailUseCase {
 
-    void sendEmail(SendEmailRequestDto sendEmailRequestDto);
+    void sendEmailForPassword(SendEmailRequestDto sendEmailRequestDto);
+
+    void sendEmailForSignup(SendEmailRequestDto sendEmailRequestDto);
 }

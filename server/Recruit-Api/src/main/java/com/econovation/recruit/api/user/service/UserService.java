@@ -18,6 +18,7 @@ import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerId
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerNotMatchException;
 import com.econovation.recruitdomain.domains.whitelist.domain.AccessToken;
 import com.econovation.recruitdomain.out.EmailVerificationLoadPort;
+import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitdomain.out.WhitelistRecordPort;
@@ -36,6 +37,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     private final PasswordEncoder passwordEncoder;
     private final WhitelistRecordPort whitelistRecordPort;
     private final EmailVerificationLoadPort emailVerificationLoadPort;
+    private final EmailVerificationRecordPort emailVerificationRecordPort;
 
     private static final String VERIFIED_PREFIX = ":verified";
 
@@ -103,19 +105,28 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Override
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
-        if (interviewerLoadPort
-                .loadOptionalInterviewerByEmail(signUpRequestDto.getEmail())
-                .isPresent()) throw InterviewerAlreadySubmitException.EXCEPTION;
-        String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
-        Interviewer interviewer =
-                Interviewer.builder()
-                        .year(signUpRequestDto.getYear())
-                        .name(signUpRequestDto.getName())
-                        .email(signUpRequestDto.getEmail())
-                        .password(encededPassword)
-                        .role(Role.ROLE_GUEST)
-                        .build();
-        interviewerRecordPort.save(interviewer);
+        String email = signUpRequestDto.getEmail();
+        checkEmailVerified(email);
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> {
+                            throw InterviewerAlreadySubmitException.EXCEPTION;
+                        },
+                        () -> {
+                            String encededPassword =
+                                    passwordEncoder.encode(signUpRequestDto.getPassword());
+                            Interviewer interviewer =
+                                    Interviewer.builder()
+                                            .year(signUpRequestDto.getYear())
+                                            .name(signUpRequestDto.getName())
+                                            .email(email)
+                                            .password(encededPassword)
+                                            .role(Role.ROLE_GUEST)
+                                            .build();
+                            interviewerRecordPort.save(interviewer);
+                            deleteVerifiedCode(email);
+                        });
     }
 
     @Override
@@ -136,16 +147,31 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Transactional
     public void resetPassword(ResetPasswordRequestDto resetPasswordRequestDto) {
         String email = resetPasswordRequestDto.getEmail();
+        checkEmailVerified(email);
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> {
+                            Interviewer account = interviewerLoadPort.loadInterviewerByEmail(email);
+                            String encededPassword =
+                                    passwordEncoder.encode(resetPasswordRequestDto.getPassword());
+                            account.changePassword(encededPassword);
+                            deleteVerifiedCode(email);
+                        },
+                        () -> {
+                            throw InterviewerIdpServerException.EXCEPTION;
+                        });
+    }
+
+    private void checkEmailVerified(String email) {
         if (emailVerificationLoadPort
                 .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
                 .isEmpty()) {
             throw EmailNotVerifiedException.EXCEPTION;
         }
+    }
 
-        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isEmpty())
-            throw InterviewerIdpServerException.EXCEPTION;
-        Interviewer account = interviewerLoadPort.loadInterviewerByEmail(email);
-        String encededPassword = passwordEncoder.encode(resetPasswordRequestDto.getPassword());
-        account.changePassword(encededPassword);
+    private void deleteVerifiedCode(String email) {
+        emailVerificationRecordPort.delete(email + VERIFIED_PREFIX);
     }
 }

@@ -7,8 +7,11 @@ import com.econovation.recruitdomain.domains.dto.VerifyCodeRequestDto;
 import com.econovation.recruitdomain.domains.email_verification.domain.EmailVerification;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotCorrectException;
 import com.econovation.recruitdomain.domains.email_verification.exception.CodeNotFoundException;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerAlreadySubmitException;
+import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerIdpServerException;
 import com.econovation.recruitdomain.out.EmailVerificationLoadPort;
 import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
+import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitinfrastructure.apache.EmailVerificationSender;
 import java.security.SecureRandom;
 import java.time.Duration;
@@ -21,6 +24,7 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     private final EmailVerificationRecordPort emailVerificationRecordPort;
     private final EmailVerificationLoadPort emailVerificationLoadPort;
     private final EmailVerificationSender emailVerificationSender;
+    private final InterviewerLoadPort interviewerLoadPort;
 
     private static final String VERIFIED_PREFIX = ":verified";
     private static final long EMAIL_VERIFICATION_CODE_EXPIRE = Duration.ofMinutes(5).getSeconds();
@@ -28,24 +32,15 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     private static final String TRUE = Boolean.TRUE.toString();
 
     @Override
-    public void sendEmail(SendEmailRequestDto sendEmailRequestDto) {
+    public void sendEmailForPassword(SendEmailRequestDto sendEmailRequestDto) {
         String email = sendEmailRequestDto.getEmail();
-
-        if (emailVerificationLoadPort
-                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
-                .isPresent()) {
-            emailVerificationRecordPort.delete(email);
-        }
-
-        String code = createCode();
-        EmailVerification emailVerification =
-                EmailVerification.builder()
-                        .email(email)
-                        .code(code)
-                        .expiration(EMAIL_VERIFICATION_CODE_EXPIRE)
-                        .build();
-        emailVerificationRecordPort.save(emailVerification);
-        emailVerificationSender.sendVerificationCode(sendEmailRequestDto.getEmail(), code);
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> sendEmailVerification(email),
+                        () -> {
+                            throw InterviewerIdpServerException.EXCEPTION;
+                        });
     }
 
     @Override
@@ -68,9 +63,39 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
         emailVerificationRecordPort.delete(email);
     }
 
+    @Override
+    public void sendEmailForSignup(SendEmailRequestDto sendEmailRequestDto) {
+        String email = sendEmailRequestDto.getEmail();
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> {
+                            throw InterviewerAlreadySubmitException.EXCEPTION;
+                        },
+                        () -> sendEmailVerification(email));
+    }
+
     private String createCode() {
         SecureRandom secureRandom = new SecureRandom();
         int code = 100000 + secureRandom.nextInt(900000);
         return String.valueOf(code);
+    }
+
+    private void sendEmailVerification(String email) {
+        if (emailVerificationLoadPort
+                .loadOptionEmailVerificationByEmail(email + VERIFIED_PREFIX)
+                .isPresent()) {
+            emailVerificationRecordPort.delete(email);
+        }
+
+        String code = createCode();
+        EmailVerification emailVerification =
+                EmailVerification.builder()
+                        .email(email)
+                        .code(code)
+                        .expiration(EMAIL_VERIFICATION_CODE_EXPIRE)
+                        .build();
+        emailVerificationRecordPort.save(emailVerification);
+        emailVerificationSender.sendVerificationCode(email, code);
     }
 }
