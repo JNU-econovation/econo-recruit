@@ -24,13 +24,12 @@ public class RecruitmentRegisteredEventHandler {
     public void handle(RecruitmentRegistered event) {
         // NON_START 상태를, startAt 시간이 되면 RECRUITING 상태로 변경하는 작업 예약
         // RECRUITING 상태를, endAt 시간이 되면, END 상태로 변경하는 작업 예약
-        recruitmentScheduler.reserveEvent(event.getId());
 
-        // 전역 VO 변수 갱신
-        recruitmentPort
-                .findLatestOne()
-                .ifPresentOrElse(
-                        latestRecruitment::refreshRecruitment,
-                        () -> log.error("recruitmentVo 갱신 실패"));
+        recruitmentPort.findById(event.getId())
+                .ifPresent(recruitment -> {
+                    recruitmentScheduler.reserveStart(recruitment);
+                    recruitmentScheduler.reserveEnd(recruitment);
+                });
+
     }
 }

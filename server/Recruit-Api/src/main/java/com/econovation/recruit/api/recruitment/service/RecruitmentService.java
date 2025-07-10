@@ -53,8 +53,12 @@ public class RecruitmentService implements RecruitmentUseCase {
     public void terminate(Long recruitmentId) {
         recruitmentPort.findById(recruitmentId)
                 .ifPresent(recruitment -> {
-                    recruitment.updateStates(RecruitmentStates.END);
-                    recruitmentPort.save(recruitment);
+                    if(recruitment.getStates().equals(RecruitmentStates.NON_START)) recruitmentPort.delete(recruitmentId);
+
+                    else{
+                        recruitment.updateStates(RecruitmentStates.END);
+                        recruitmentPort.save(recruitment);
+                    }
                 });
 
         Events.raise(new RecruitmentTerminated(recruitmentId));
