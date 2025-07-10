@@ -5,6 +5,9 @@ import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +39,12 @@ public class RecruitmentController {
                     """)
     @PostMapping("/recruitment")
     public ResponseEntity<Long> setUpRecruitment(@RequestBody @Valid RecruitmentSetUpDto request) {
+        ZoneId kst = ZoneId.of("Asia/Seoul");
+        LocalDateTime startAt = Instant.ofEpochMilli(request.getStartAt()).atZone(kst).toLocalDateTime();
+        LocalDateTime endAt = Instant.ofEpochMilli(request.getEndAt()).atZone(kst).toLocalDateTime();
+
         Long recruitmentId =
-                recruitmentUseCase.setUp(request.getYear(), request.getStartAt(), request.getEndAt());
+                recruitmentUseCase.setUp(request.getYear(), startAt, endAt);
         return new ResponseEntity<>(recruitmentId, HttpStatus.OK);
     }
 
