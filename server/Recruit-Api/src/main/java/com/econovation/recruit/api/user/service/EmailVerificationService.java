@@ -34,9 +34,13 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     @Override
     public void sendEmailForPassword(SendEmailRequestDto sendEmailRequestDto) {
         String email = sendEmailRequestDto.getEmail();
-        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isEmpty())
-            throw InterviewerIdpServerException.EXCEPTION;
-        sendEmailVerification(email);
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> sendEmailVerification(email),
+                        () -> {
+                            throw InterviewerIdpServerException.EXCEPTION;
+                        });
     }
 
     @Override
@@ -62,9 +66,13 @@ public class EmailVerificationService implements SendEmailUseCase, VerifyCodeUse
     @Override
     public void sendEmailForSignup(SendEmailRequestDto sendEmailRequestDto) {
         String email = sendEmailRequestDto.getEmail();
-        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
-            throw InterviewerAlreadySubmitException.EXCEPTION;
-        sendEmailVerification(email);
+        interviewerLoadPort
+                .loadOptionalInterviewerByEmail(email)
+                .ifPresentOrElse(
+                        value -> {
+                            throw InterviewerAlreadySubmitException.EXCEPTION;
+                        },
+                        () -> sendEmailVerification(email));
     }
 
     private String createCode() {
