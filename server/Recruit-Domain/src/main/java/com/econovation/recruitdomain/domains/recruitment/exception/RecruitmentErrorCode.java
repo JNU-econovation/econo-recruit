@@ -15,7 +15,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RecruitmentErrorCode implements BaseErrorCode {
     RECRUITMENT_NOT_FOUND(NOT_FOUND, "RECRUITMENT_404_1", "해당 모집을 찾을 수 없습니다."),
-    RECRUITMENT_ALREADY_EXISTS(BAD_REQUEST, "RECRUITMENT_400_1", "이미 예약된 모집이 존재합니다.");
+    RECRUITMENT_ALREADY_EXISTS(BAD_REQUEST, "RECRUITMENT_400_1", "이미 예약된 모집이 존재합니다."),
+    RECRUITMENT_INVALID_DATE_1(BAD_REQUEST, "RECRUITMENT_400_2", "모집 시작일은 모집 종료일보다 이후일 수 없습니다."),
+    RECRUITMENT_INVALID_DATE_2(BAD_REQUEST, "RECRUITMENT_400_3", "모집 시작일은 현재일보다 이전일 수 없습니다.");
 
     private Integer status;
     private String code;

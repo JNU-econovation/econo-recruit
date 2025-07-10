@@ -3,6 +3,7 @@ package com.econovation.recruit.api.recruitment.controller;
 import com.econovation.recruit.api.recruitment.dto.RecruitmentResponsesDto;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
+import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentInValidDateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
@@ -38,10 +39,13 @@ public class RecruitmentController {
                     (서버는 최대로 예약 가능한 모집이 1개입니다.)
                     """)
     @PostMapping("/recruitment")
-    public ResponseEntity<Long> setUpRecruitment(@RequestBody @Valid RecruitmentSetUpDto request) {
+    public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request) {
         ZoneId kst = ZoneId.of("Asia/Seoul");
         LocalDateTime startAt = Instant.ofEpochMilli(request.getStartAt()).atZone(kst).toLocalDateTime();
         LocalDateTime endAt = Instant.ofEpochMilli(request.getEndAt()).atZone(kst).toLocalDateTime();
+
+        if(startAt.isAfter(endAt)) throw RecruitmentInValidDateException.EXCEPTION_1;
+        if(startAt.isBefore(LocalDateTime.now())) throw RecruitmentInValidDateException.EXCEPTION_2;
 
         Long recruitmentId =
                 recruitmentUseCase.setUp(request.getYear(), startAt, endAt);
