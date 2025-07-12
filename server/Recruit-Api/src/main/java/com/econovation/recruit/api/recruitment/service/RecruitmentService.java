@@ -1,7 +1,10 @@
 package com.econovation.recruit.api.recruitment.service;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
+
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
+import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
@@ -11,6 +14,7 @@ import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentAl
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +52,21 @@ public class RecruitmentService implements RecruitmentUseCase {
         return recruitmentPort
                 .findLatestOne()
                 .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
+    }
+
+    @Override
+    public List<Recruitment> getPage(int page) {
+        List<Recruitment> recruitments = recruitmentPort.findAllOrderByNewest();
+
+        int start = (page-1) * PAGE_SIZE;
+        int end = page * PAGE_SIZE;
+
+        return recruitments.subList(start, end);
+    }
+
+    @Override
+    public List<Recruitment> findAllOrderByNewest() {
+        return recruitmentPort.findAllOrderByNewest();
     }
 
     @Override

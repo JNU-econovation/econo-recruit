@@ -8,6 +8,8 @@ import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -23,6 +25,12 @@ public class RecruitmentAdaptor implements RecruitmentPort {
     @Override
     public Optional<Recruitment> findLatestOne() {
         return Optional.ofNullable(repository.findLatestOne().get(0));
+    }
+
+    @Override
+    public List<Recruitment> findAllOrderByNewest() {
+        Sort sort = Sort.by(Order.desc("createdAt"));
+        return repository.findAll(sort);
     }
 
     @Override

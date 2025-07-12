@@ -9,6 +9,8 @@ public interface RecruitmentPort {
 
     List<Recruitment> findByStates(RecruitmentStates states);
 
+    List<Recruitment> findAllOrderByNewest();
+
     Optional<Recruitment> findById(Long id);
 
     Optional<Recruitment> findLatestOne();

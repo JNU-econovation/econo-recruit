@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecruitmentResponsesDto {
 
-    private PageInfo pageInfo;
-    private List<RecruitmentResponseDto> responses;
+    private final PageInfo pageInfo;
+    private final List<RecruitmentResponseDto> responses;
 
 }
