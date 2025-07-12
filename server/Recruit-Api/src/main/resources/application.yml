@@ -8,6 +8,13 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  quartz:
+    jdbc:
+      initialize-schema: always
+      schema: classpath:quartz-init.sql
+    job-store-type: jdbc
+    overwrite-existing-jobs: true
+
 data:
   init:
     disabled: ${DATA_INIT_DISABLED:false}
@@ -100,9 +107,9 @@ econovation:
   file:
     path:
       portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
-#logging:
-#  level:
-#    root: info
+logging:
+  level:
+    root: info
 #logging:
 #  level:
 #    org.springframework.data.*.*: debug
