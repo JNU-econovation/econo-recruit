@@ -13,21 +13,24 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 // 수행할 작업을 의미하는 클래스
 @Component
 @RequiredArgsConstructor
-public class RecruitmentJob implements Job{
+public class RecruitmentJob extends QuartzJobBean {
 
     private final RecruitmentPort repository;
     private final LatestRecruitmentVo recruitmentVo;
 
     private static final String RECRUITMENT_ID = "recruitmentId";
     private static final String OP = "operation";
+    private static final String START_POST_FIX = "_START";
+    private static final String END_POST_FIX = "_END";
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         JobDataMap data = context.getMergedJobDataMap();
         RecruitmentStates targetState;
         Recruitment target = repository.findById(data.getLong(RECRUITMENT_ID))
@@ -44,7 +47,7 @@ public class RecruitmentJob implements Job{
 
     public static JobDetail getStartJob(Long recruitmentId, Long year){
         return JobBuilder.newJob(RecruitmentJob.class)
-                .withIdentity(new JobKey(recruitmentId.toString()))
+                .withIdentity(startJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
                 .usingJobData(OP, "start")
                 .build();
@@ -52,9 +55,17 @@ public class RecruitmentJob implements Job{
 
     public static JobDetail getEndJob(Long recruitmentId, Long year){
         return JobBuilder.newJob(RecruitmentJob.class)
-                .withIdentity(new JobKey(recruitmentId.toString()))
+                .withIdentity(endJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
                 .usingJobData(OP, "end")
                 .build();
+    }
+
+    public static JobKey startJobKey(Long recruitmentId){
+        return new JobKey(recruitmentId + START_POST_FIX);
+    }
+
+    public static JobKey endJobKey(Long recruitmentId){
+        return new JobKey(recruitmentId + END_POST_FIX);
     }
 }
