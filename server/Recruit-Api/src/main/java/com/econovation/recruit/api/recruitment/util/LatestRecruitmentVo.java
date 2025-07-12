@@ -60,7 +60,7 @@ public class LatestRecruitmentVo {
     }
 
     private void validate(){
-        if (Objects.nonNull(year) || Objects.nonNull(startAt) || Objects.nonNull(endAt) || Objects.nonNull(state))
+        if (Objects.isNull(year) || Objects.isNull(startAt) || Objects.isNull(endAt) || Objects.isNull(state))
             throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
     }
 }
