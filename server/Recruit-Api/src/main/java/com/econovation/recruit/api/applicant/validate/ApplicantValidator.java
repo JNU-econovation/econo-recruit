@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 public class ApplicantValidator {
     private final MongoAnswerAdaptor answerAdaptor;
     private final LatestRecruitmentVo latestRecruitInfo;
-    private final Integer year;
     private final boolean validateEnabled;
 
     public ApplicantValidator(MongoAnswerAdaptor answerAdaptor,
@@ -32,7 +31,6 @@ public class ApplicantValidator {
         this.validateEnabled = validateEnabled;
         this.latestRecruitInfo = latestRecruitInfo;
         this.answerAdaptor = answerAdaptor;
-        this.year = latestRecruitInfo.getYear().intValue();
     }
 
     public Validation<Seq<RecruitCodeException>, Map<String, Object>> validateRegisterApplicant(
@@ -56,6 +54,7 @@ public class ApplicantValidator {
     private Validation<RecruitCodeException, Map<String, Object>> validateDuplicateStudentId(
             Map<String, Object> qna) {
         String studentId = qna.get("classOf").toString();
+        Integer year = latestRecruitInfo.getYear().intValue();
         if (answerAdaptor.existsByAnswer(studentId, year)) {
             throw ApplicantDuplicateSubmitException.EXCEPTION;
         }
