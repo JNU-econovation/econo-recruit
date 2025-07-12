@@ -25,7 +25,7 @@ public class RecruitmentService implements RecruitmentUseCase {
     @Override
     @Transactional
     public Long setUp(Integer year, LocalDateTime startAt, LocalDateTime endAt) {
-        if (recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
+        validateCreateRecruit();
 
         Recruitment recruitment =
                 Recruitment.builder()
@@ -64,5 +64,14 @@ public class RecruitmentService implements RecruitmentUseCase {
                 });
 
         Events.raise(new RecruitmentTerminated(recruitmentId));
+    }
+
+    public void validateCreateRecruit(){
+        recruitmentPort.findLatestOne()
+                .map(Recruitment::getStates)
+                .ifPresent(states -> {
+                    if(states.equals(RecruitmentStates.NON_START) ||
+                            states.equals(RecruitmentStates.RECRUITING)) throw new RecruitmentAlreadyExistsException();
+                });
     }
 }
