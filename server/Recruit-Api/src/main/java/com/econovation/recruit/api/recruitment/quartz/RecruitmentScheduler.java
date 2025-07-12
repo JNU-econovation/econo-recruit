@@ -60,7 +60,8 @@ public class RecruitmentScheduler {
 
     public void cancelJob(Long recruitmentId){
         try {
-            scheduler.deleteJob(new JobKey(recruitmentId.toString()));
+            scheduler.deleteJob(RecruitmentJob.startJobKey(recruitmentId));
+            scheduler.deleteJob(RecruitmentJob.endJobKey(recruitmentId));
         } catch (SchedulerException e){
             throw new QuartzException(e);
         }
