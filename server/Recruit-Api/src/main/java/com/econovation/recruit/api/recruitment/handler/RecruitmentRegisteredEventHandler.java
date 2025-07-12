@@ -22,11 +22,13 @@ public class RecruitmentRegisteredEventHandler {
     @Transactional
     @EventListener(RecruitmentRegistered.class)
     public void handle(RecruitmentRegistered event) {
-        // NON_START 상태를, startAt 시간이 되면 RECRUITING 상태로 변경하는 작업 예약
-        // RECRUITING 상태를, endAt 시간이 되면, END 상태로 변경하는 작업 예약
 
+        // 1. 전역 상태 최신화
+        // 2. NON_START 상태를, startAt 시간이 되면 RECRUITING 상태로 변경하는 작업 예약
+        // 3. RECRUITING 상태를, endAt 시간이 되면, END 상태로 변경하는 작업 예약
         recruitmentPort.findById(event.getId())
                 .ifPresent(recruitment -> {
+                    latestRecruitment.refreshRecruitment(recruitment);
                     recruitmentScheduler.reserveStart(recruitment);
                     recruitmentScheduler.reserveEnd(recruitment);
                 });
