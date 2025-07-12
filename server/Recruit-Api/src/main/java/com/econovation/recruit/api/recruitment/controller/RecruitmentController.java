@@ -8,6 +8,8 @@ import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentInValidDateException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -36,7 +38,7 @@ public class RecruitmentController {
 
     private final RecruitmentUseCase recruitmentUseCase;
 
-    @Operation(summary = "지원서 접수를 시작합니다.",
+    @Operation(summary = "지원서 접수를 시작합니다. (시간의 단위는 timestamp ms)",
             description = """
                     몇 기를, 언제부터 언제까지 모집할 것인지에 대한 정보를 RequestBody 로 받습니다.
                     서버는 해당 날짜가 되면 자동으로 지원서 접수를 open 하고, close 합니다.
