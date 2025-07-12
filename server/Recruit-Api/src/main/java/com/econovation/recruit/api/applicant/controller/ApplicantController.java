@@ -146,8 +146,9 @@ public class ApplicantController {
     @TimeTrace
     @PostMapping("/applicants/mail")
     public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
+        int year = latestRecruitInfo.getYear();
         commonsEmailSender.send(
-                emailSendDto.getEmail(), emailSendDto.getApplicantId(), LocalDateTime.now());
+                emailSendDto.getEmail(), emailSendDto.getApplicantId(), year, LocalDateTime.now());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

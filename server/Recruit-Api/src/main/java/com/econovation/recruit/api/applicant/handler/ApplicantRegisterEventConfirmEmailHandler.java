@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.applicant.handler;
 
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Slf4j
 public class ApplicantRegisterEventConfirmEmailHandler {
     private final CommonsEmailSender commonsEmailSender;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Value("${econovation.recruit.period.passedDate}")
     private String confirmRegisterEmail;
@@ -33,8 +35,9 @@ public class ApplicantRegisterEventConfirmEmailHandler {
             phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(ApplicantRegisterEvent applicantRegistEvent) {
+        int year = latestRecruitInfo.getYear();
         LocalDateTime passedDate = LocalDateTime.parse(confirmRegisterEmail);
         commonsEmailSender.send(
-                applicantRegistEvent.getEmail(), applicantRegistEvent.getApplicantId(), passedDate);
+                applicantRegistEvent.getEmail(), applicantRegistEvent.getApplicantId(), year, passedDate);
     }
 }
