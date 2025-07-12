@@ -4,11 +4,11 @@ import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentS
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class LatestRecruitmentVo {
 
     private Recruitment latest;
