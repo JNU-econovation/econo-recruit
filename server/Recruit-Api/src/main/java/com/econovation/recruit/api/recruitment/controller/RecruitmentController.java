@@ -38,12 +38,13 @@ public class RecruitmentController {
 
     private final RecruitmentUseCase recruitmentUseCase;
 
-    @Operation(summary = "지원서 접수를 시작합니다. (시간의 단위는 timestamp ms)",
+    @Operation(summary = "지원서 접수를 시작합니다. (관리자,회장단)",
             description = """
                     - 몇 기를, 언제부터 언제까지 모집할 것인지에 대한 정보를 RequestBody 로 받습니다.\n\n
                     - 서버는 해당 날짜가 되면 자동으로 지원서 접수를 open 하고, close 합니다.\n\n
                     - 만약, 현재 예약 중인 모집이 1개 이상 존재한다면 서버는 상태코드 500으로 응답하고, 해당 요청에 대해서는 예약을 하지 않습니다.\n\n
                     - 서버는 최대로 예약 가능한 모집이 1개입니다.\n\n
+                    - startAt, endAt 시간의 단위는 timestamp ms 입니다.
                     """)
     @PostMapping("/recruitment")
     public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request) {
