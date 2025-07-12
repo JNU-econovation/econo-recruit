@@ -26,9 +26,6 @@ public class AnswerMongoDBMigration implements ApplicationRunner {
     private final ApplicantCommandUseCase applicantCommandUseCase;
     private final ApplicantQueryUseCase applicantQueryUseCase;
 
-    @Value("${econovation.year}")
-    private Integer year;
-
     @PostConstruct
     public void init() throws IOException, SQLException {
         // init.sql 파일을 읽어와서 실행합니다.

@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.sms.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.api.sms.helper.NcpSmsHelper;
 import com.econovation.recruit.api.sms.helper.SmsMessageGenerator;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
@@ -15,14 +16,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ApplicantSmsService {
 
-    @Value("${econovation.year}")
-    private String year;
-
     private final NcpSmsHelper smsSender;
     private final SmsMessageGenerator messageGenerator;
     private final ApplicantQueryUseCase applicantQueryUseCase;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     public void sendSms(MongoAnswer applicant) {
+        int year = latestRecruitInfo.getYear();
         String phoneNumber = applicant.getQna().get("contacted").toString();
         String name = applicant.getQna().get("name").toString();
         String message =
@@ -46,6 +46,7 @@ public class ApplicantSmsService {
 
     // TODO: sms 멘트 관리
     public void sendSms(String applicantId) {
+        int year = latestRecruitInfo.getYear();
         Map<String, Object> qna = applicantQueryUseCase.execute(applicantId);
 
         String phoneNumber = qna.get("contacted").toString();
