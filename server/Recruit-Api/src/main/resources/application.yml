@@ -14,7 +14,10 @@ spring:
       schema: classpath:quartz-init.sql
     job-store-type: jdbc
     overwrite-existing-jobs: true
-
+  graphql:
+    path: /api/graphql
+    schema:
+      locations: classpath:graphql/**/
 data:
   init:
     disabled: ${DATA_INIT_DISABLED:false}
@@ -110,6 +113,7 @@ econovation:
 logging:
   level:
     root: info
+    graphql: debug
 #logging:
 #  level:
 #    org.springframework.data.*.*: debug
