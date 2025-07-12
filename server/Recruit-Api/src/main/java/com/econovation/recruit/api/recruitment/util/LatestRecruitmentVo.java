@@ -26,7 +26,8 @@ public class LatestRecruitmentVo {
         }
     }
 
-    @RedissonLock(LockName = "모집 정보 최신화", identifier = "recruitment", paramClassType = Recruitment.class)
+    // 파라미터로 넘긴 recruitment 객체의 id로 lock 을 할당 받는다.
+    @RedissonLock(LockName = "모집 정보 최신화", identifier = "id", paramClassType = Recruitment.class)
     public void refreshRecruitment(Recruitment recruitment) {
         if(Objects.nonNull(recruitment)){
             this.startAt = recruitment.getStartAt();
