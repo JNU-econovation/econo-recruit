@@ -30,7 +30,7 @@ public class Recruitment extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RecruitmentStates states;
 
-    @Column private Long year;
+    @Column private Integer year;
 
     @Column private LocalDateTime startAt;
 

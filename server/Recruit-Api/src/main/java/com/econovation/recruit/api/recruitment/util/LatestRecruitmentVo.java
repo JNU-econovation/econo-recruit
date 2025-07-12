@@ -13,7 +13,7 @@ public class LatestRecruitmentVo {
 
     private Recruitment latest;
 
-    public Long getYear() {
+    public Integer getYear() {
         if (Objects.nonNull(latest)) return latest.getYear();
         throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
     }

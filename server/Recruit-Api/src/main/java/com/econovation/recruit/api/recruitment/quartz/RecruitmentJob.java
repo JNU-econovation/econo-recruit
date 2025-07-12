@@ -45,7 +45,7 @@ public class RecruitmentJob extends QuartzJobBean {
 
     }
 
-    public static JobDetail getStartJob(Long recruitmentId, Long year){
+    public static JobDetail getStartJob(Long recruitmentId, Integer year){
         return JobBuilder.newJob(RecruitmentJob.class)
                 .withIdentity(startJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
@@ -53,7 +53,7 @@ public class RecruitmentJob extends QuartzJobBean {
                 .build();
     }
 
-    public static JobDetail getEndJob(Long recruitmentId, Long year){
+    public static JobDetail getEndJob(Long recruitmentId, Integer year){
         return JobBuilder.newJob(RecruitmentJob.class)
                 .withIdentity(endJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
