@@ -24,7 +24,7 @@ public class RecruitmentService implements RecruitmentUseCase {
 
     @Override
     @Transactional
-    public Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt) {
+    public Long setUp(Integer year, LocalDateTime startAt, LocalDateTime endAt) {
         if (recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
 
         Recruitment recruitment =

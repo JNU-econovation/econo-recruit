@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public interface RecruitmentUseCase {
 
-    Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt);
+    Long setUp(Integer year, LocalDateTime startAt, LocalDateTime endAt);
 
     Recruitment getLatestOne();
 

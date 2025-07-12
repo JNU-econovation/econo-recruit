@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RecruitmentSetUpDto {
 
-    private Long year;
+    private Integer year;
     private Long startAt;
     private Long endAt;
 
