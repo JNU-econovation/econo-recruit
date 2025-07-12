@@ -13,6 +13,7 @@ import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class RecruitmentService implements RecruitmentUseCase {
     private final RecruitmentScheduler recruitmentScheduler;
 
     @Override
+    @Transactional
     public Long setUp(Long year, LocalDateTime startAt, LocalDateTime endAt) {
         if (recruitmentPort.existsNonStart()) throw RecruitmentAlreadyExistsException.EXCEPTION;
 
@@ -49,6 +51,7 @@ public class RecruitmentService implements RecruitmentUseCase {
     }
 
     @Override
+    @Transactional
     public void terminate(Long recruitmentId) {
         recruitmentPort.findById(recruitmentId)
                 .ifPresent(recruitment -> {
