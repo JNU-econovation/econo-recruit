@@ -5,10 +5,6 @@ import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentS
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 
 public class LatestRecruitmentVo {
 
@@ -17,8 +13,8 @@ public class LatestRecruitmentVo {
     private LocalDateTime endAt;
     private RecruitmentStates state;
 
-    public LatestRecruitmentVo(Recruitment recruitment){
-        if(Objects.nonNull(recruitment)){
+    public LatestRecruitmentVo(Recruitment recruitment) {
+        if (Objects.nonNull(recruitment)) {
             this.startAt = recruitment.getStartAt();
             this.endAt = recruitment.getEndAt();
             this.state = recruitment.getStates();
@@ -29,7 +25,7 @@ public class LatestRecruitmentVo {
     // 파라미터로 넘긴 recruitment 객체의 id로 lock 을 할당 받는다.
     @RedissonLock(LockName = "모집 정보 최신화", identifier = "id", paramClassType = Recruitment.class)
     public void refreshRecruitment(Recruitment recruitment) {
-        if(Objects.nonNull(recruitment)){
+        if (Objects.nonNull(recruitment)) {
             this.startAt = recruitment.getStartAt();
             this.endAt = recruitment.getEndAt();
             this.state = recruitment.getStates();
@@ -54,13 +50,15 @@ public class LatestRecruitmentVo {
         return this.endAt;
     }
 
-    public RecruitmentStates getState(){
+    public RecruitmentStates getState() {
         validate();
         return this.state;
     }
 
-    private void validate(){
-        if (Objects.isNull(year) || Objects.isNull(startAt) || Objects.isNull(endAt) || Objects.isNull(state))
-            throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
+    private void validate() {
+        if (Objects.isNull(year)
+                || Objects.isNull(startAt)
+                || Objects.isNull(endAt)
+                || Objects.isNull(state)) throw new IllegalArgumentException("최신 모집이 등록되지 않았습니다.");
     }
 }

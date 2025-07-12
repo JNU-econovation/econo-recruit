@@ -12,5 +12,4 @@ public class RecruitmentSetUpDto {
     private Integer year;
     private Long startAt;
     private Long endAt;
-
 }

@@ -9,5 +9,4 @@ import lombok.RequiredArgsConstructor;
 public class RecruitmentTerminated extends DomainEvent {
 
     private final Long id;
-
 }

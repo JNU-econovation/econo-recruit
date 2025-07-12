@@ -6,7 +6,6 @@ import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import lombok.RequiredArgsConstructor;
-import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -33,19 +32,20 @@ public class RecruitmentJob extends QuartzJobBean {
     public void executeInternal(JobExecutionContext context) throws JobExecutionException {
         JobDataMap data = context.getMergedJobDataMap();
         RecruitmentStates targetState;
-        Recruitment target = repository.findById(data.getLong(RECRUITMENT_ID))
-                .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
+        Recruitment target =
+                repository
+                        .findById(data.getLong(RECRUITMENT_ID))
+                        .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
 
-        if(data.getString(OP).equals("start")) targetState = RecruitmentStates.RECRUITING;
-        else if(data.getString(OP).equals("end")) targetState = RecruitmentStates.END;
+        if (data.getString(OP).equals("start")) targetState = RecruitmentStates.RECRUITING;
+        else if (data.getString(OP).equals("end")) targetState = RecruitmentStates.END;
         else throw new IllegalStateException("job op가 잘못 설정되었습니다.");
 
         repository.save(target.updateStates(targetState));
         recruitmentVo.refreshRecruitment(target);
-
     }
 
-    public static JobDetail getStartJob(Long recruitmentId, Integer year){
+    public static JobDetail getStartJob(Long recruitmentId, Integer year) {
         return JobBuilder.newJob(RecruitmentJob.class)
                 .withIdentity(startJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
@@ -53,7 +53,7 @@ public class RecruitmentJob extends QuartzJobBean {
                 .build();
     }
 
-    public static JobDetail getEndJob(Long recruitmentId, Integer year){
+    public static JobDetail getEndJob(Long recruitmentId, Integer year) {
         return JobBuilder.newJob(RecruitmentJob.class)
                 .withIdentity(endJobKey(recruitmentId))
                 .usingJobData(RECRUITMENT_ID, recruitmentId)
@@ -61,11 +61,11 @@ public class RecruitmentJob extends QuartzJobBean {
                 .build();
     }
 
-    public static JobKey startJobKey(Long recruitmentId){
+    public static JobKey startJobKey(Long recruitmentId) {
         return new JobKey(recruitmentId + START_POST_FIX);
     }
 
-    public static JobKey endJobKey(Long recruitmentId){
+    public static JobKey endJobKey(Long recruitmentId) {
         return new JobKey(recruitmentId + END_POST_FIX);
     }
 }

@@ -2,9 +2,8 @@ package com.econovation.recruit.api.recruitment.service;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
 
-import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
-import com.econovation.recruit.utils.vo.PageInfo;
+import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
@@ -58,7 +57,7 @@ public class RecruitmentService implements RecruitmentUseCase {
     public List<Recruitment> getPage(int page) {
         List<Recruitment> recruitments = recruitmentPort.findAllOrderByNewest();
 
-        int start = (page-1) * PAGE_SIZE;
+        int start = (page - 1) * PAGE_SIZE;
         int end = page * PAGE_SIZE;
 
         return recruitments.subList(start, end);
@@ -72,25 +71,30 @@ public class RecruitmentService implements RecruitmentUseCase {
     @Override
     @Transactional
     public void terminate(Long recruitmentId) {
-        recruitmentPort.findById(recruitmentId)
-                .ifPresent(recruitment -> {
-                    if(recruitment.getStates().equals(RecruitmentStates.NON_START)) recruitmentPort.delete(recruitmentId);
-
-                    else{
-                        recruitment.updateStates(RecruitmentStates.END);
-                        recruitmentPort.save(recruitment);
-                    }
-                });
+        recruitmentPort
+                .findById(recruitmentId)
+                .ifPresent(
+                        recruitment -> {
+                            if (recruitment.getStates().equals(RecruitmentStates.NON_START))
+                                recruitmentPort.delete(recruitmentId);
+                            else {
+                                recruitment.updateStates(RecruitmentStates.END);
+                                recruitmentPort.save(recruitment);
+                            }
+                        });
 
         Events.raise(new RecruitmentTerminated(recruitmentId));
     }
 
-    public void validateCreateRecruit(){
-        recruitmentPort.findLatestOne()
+    public void validateCreateRecruit() {
+        recruitmentPort
+                .findLatestOne()
                 .map(Recruitment::getStates)
-                .ifPresent(states -> {
-                    if(states.equals(RecruitmentStates.NON_START) ||
-                            states.equals(RecruitmentStates.RECRUITING)) throw new RecruitmentAlreadyExistsException();
-                });
+                .ifPresent(
+                        states -> {
+                            if (states.equals(RecruitmentStates.NON_START)
+                                    || states.equals(RecruitmentStates.RECRUITING))
+                                throw new RecruitmentAlreadyExistsException();
+                        });
     }
 }

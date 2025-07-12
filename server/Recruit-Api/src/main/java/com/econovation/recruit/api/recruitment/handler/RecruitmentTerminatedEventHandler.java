@@ -19,13 +19,11 @@ public class RecruitmentTerminatedEventHandler {
 
     @EventListener(RecruitmentTerminated.class)
     @Transactional
-    public void handle(RecruitmentTerminated event){
+    public void handle(RecruitmentTerminated event) {
         // 작업 예약 취소
         // 삭제 대상이 이미 진행 중인 모집이라면 service가 이미 삭제했다.
         recruitmentScheduler.cancelJob(event.getId());
         // 전역 변수 최신화
-        recruitmentPort.findById(event.getId())
-                .ifPresent(latestRecruitmentVo::refreshRecruitment);
+        recruitmentPort.findById(event.getId()).ifPresent(latestRecruitmentVo::refreshRecruitment);
     }
-
 }

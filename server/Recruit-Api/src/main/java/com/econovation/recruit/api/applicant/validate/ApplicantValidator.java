@@ -9,11 +9,7 @@ import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfD
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongPositionException;
 import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +19,10 @@ public class ApplicantValidator {
     private final LatestRecruitmentVo latestRecruitInfo;
     private final boolean validateEnabled;
 
-    public ApplicantValidator(MongoAnswerAdaptor answerAdaptor,
-                              LatestRecruitmentVo latestRecruitInfo,
-                              @Value("${econovation.recruit.valid.enabled}")
-                              boolean validateEnabled){
+    public ApplicantValidator(
+            MongoAnswerAdaptor answerAdaptor,
+            LatestRecruitmentVo latestRecruitInfo,
+            @Value("${econovation.recruit.valid.enabled}") boolean validateEnabled) {
 
         this.validateEnabled = validateEnabled;
         this.latestRecruitInfo = latestRecruitInfo;

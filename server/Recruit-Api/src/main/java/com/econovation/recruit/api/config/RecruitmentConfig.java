@@ -19,16 +19,17 @@ public class RecruitmentConfig {
     private final RecruitmentScheduler recruitmentScheduler;
 
     @Bean
-    public LatestRecruitmentVo latestRecruitmentVo(){
+    public LatestRecruitmentVo latestRecruitmentVo() {
         try {
-            Recruitment latest = recruitmentPort.findLatestOne()
-                    .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
+            Recruitment latest =
+                    recruitmentPort
+                            .findLatestOne()
+                            .orElseThrow(() -> RecruitmentNotFoundException.EXCEPTION);
 
             return new LatestRecruitmentVo(latest);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warn("최신 모집 정보가 존재하지 않음");
             return new LatestRecruitmentVo(null);
         }
     }
-
 }

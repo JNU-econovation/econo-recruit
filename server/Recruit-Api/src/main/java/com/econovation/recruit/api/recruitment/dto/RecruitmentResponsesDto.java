@@ -12,5 +12,4 @@ public class RecruitmentResponsesDto {
 
     private final PageInfo pageInfo;
     private final List<RecruitmentResponseDto> responses;
-
 }

@@ -8,11 +8,10 @@ import org.quartz.TriggerBuilder;
 
 public class RecruitmentTrigger {
 
-    public static Trigger get(JobKey jobKey, ZonedDateTime startAt){
+    public static Trigger get(JobKey jobKey, ZonedDateTime startAt) {
         return TriggerBuilder.newTrigger()
                 .forJob(jobKey)
                 .startAt(Date.from(startAt.toInstant()))
                 .build();
     }
-
 }

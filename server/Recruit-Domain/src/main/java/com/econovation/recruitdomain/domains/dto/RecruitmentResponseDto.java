@@ -17,8 +17,8 @@ public class RecruitmentResponseDto {
     private LocalDateTime endAt;
     private RecruitmentStates states;
 
-    public static RecruitmentResponseDto create(Recruitment entity){
-        return new RecruitmentResponseDto(entity.getId(), entity.getStartAt(), entity.getEndAt(), entity.getStates());
+    public static RecruitmentResponseDto create(Recruitment entity) {
+        return new RecruitmentResponseDto(
+                entity.getId(), entity.getStartAt(), entity.getEndAt(), entity.getStates());
     }
-
 }
