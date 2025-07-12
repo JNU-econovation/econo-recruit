@@ -7,6 +7,7 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.query.AnswerQuery;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
@@ -29,9 +30,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
     private final AnswerAdaptor answerAdaptor;
     private final QueryGateway queryGateway;
     private final SortHelper<MongoAnswer> sortHelper;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Transactional(readOnly = true)
     public Map<String, Object> execute(String answerId) {
@@ -234,6 +233,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
 
     @Override
     public List<Map<String, Object>> execute(List<String> fields, Integer page) {
+        int year = latestRecruitInfo.getYear();
         List<MongoAnswer> byYear = answerAdaptor.findByYear(year, page);
         return splitByAnswers(fields, byYear);
     }

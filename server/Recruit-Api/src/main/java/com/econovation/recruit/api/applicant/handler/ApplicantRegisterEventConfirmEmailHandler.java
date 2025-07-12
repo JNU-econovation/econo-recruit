@@ -24,9 +24,6 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class ApplicantRegisterEventConfirmEmailHandler {
     private final CommonsEmailSender commonsEmailSender;
 
-    @Value("${econovation.year}")
-    private Integer year;
-
     @Value("${econovation.recruit.period.passedDate}")
     private String confirmRegisterEmail;
 

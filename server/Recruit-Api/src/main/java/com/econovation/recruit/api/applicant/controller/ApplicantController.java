@@ -13,6 +13,7 @@ import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -51,9 +53,7 @@ public class ApplicantController {
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
     private final RecruitmentUseCase applicationManagementUseCase;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -61,6 +61,7 @@ public class ApplicantController {
     @PostMapping("/applicants")
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
+        int year = latestRecruitInfo.getYear();
         applicantValidator.validateRegisterApplicant(qna);
         String applicantId = UUID.randomUUID().toString();
         commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
