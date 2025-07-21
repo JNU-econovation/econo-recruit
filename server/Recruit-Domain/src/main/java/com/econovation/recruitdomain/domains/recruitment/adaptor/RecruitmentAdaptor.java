@@ -24,7 +24,13 @@ public class RecruitmentAdaptor implements RecruitmentPort {
 
     @Override
     public Optional<Recruitment> findLatestOne() {
-        return Optional.ofNullable(repository.findLatestOne().get(0));
+        List<Recruitment> recruitments = repository.findAllOrderByUpdatedAt();
+
+        if(!recruitments.isEmpty()) {
+            return Optional.ofNullable(recruitments.get(0));
+        }
+
+        return Optional.empty();
     }
 
     @Override
