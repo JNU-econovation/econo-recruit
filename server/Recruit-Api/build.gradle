@@ -55,6 +55,9 @@ dependencies {
     implementation project(':Recruit-Domain')
     implementation project(':Recruit-Infrastructure')
 
+    // quartz-scheduler
+    implementation("org.springframework.boot:spring-boot-starter-quartz:3.5.3")
+
     testRuntimeOnly 'com.h2database:h2'
 }
 

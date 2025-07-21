@@ -21,13 +21,10 @@ public class CommonsEmailSender {
     private final CommonsEmailProperties commonsEmailProperties;
     private final TemplateEngine htmlTemplateEngine;
 
-    @Value("${econovation.year}")
-    private Integer year;
-
     @Value("${econovation.domain}")
     private String domain;
 
-    public void send(String toEmail, String applicantId, LocalDateTime passedDate) {
+    public void send(String toEmail, String applicantId, int year, LocalDateTime passedDate) {
         HtmlEmail email = new HtmlEmail();
         email.setCharset("euc-kr");
         email.setHostName(commonsEmailProperties.getHost());
@@ -42,7 +39,7 @@ public class CommonsEmailSender {
                     commonsEmailProperties.getSenderAddress(),
                     commonsEmailProperties.getSenderName());
             email.setSubject("에코노베이션 지원서 접수 확인");
-            email.setHtmlMsg(generateHtml(applicantId, passedDate));
+            email.setHtmlMsg(generateHtml(applicantId, year, passedDate));
             email.send();
         } catch (EmailException e) {
             log.error("Email send error", e);
@@ -128,7 +125,7 @@ public class CommonsEmailSender {
         }
     }
 
-    public String generateHtml(String applicantId, LocalDateTime passedDate) {
+    public String generateHtml(String applicantId, Integer year, LocalDateTime passedDate) {
         Context context = new Context();
         context.setVariable("year", year.toString());
         context.setVariable("domain", domain);

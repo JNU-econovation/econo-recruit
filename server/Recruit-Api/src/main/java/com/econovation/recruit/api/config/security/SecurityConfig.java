@@ -85,6 +85,8 @@ public class SecurityConfig {
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .mvcMatchers(HttpMethod.POST, "/api/v1/emails/*")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
+                .mvcMatchers(HttpMethod.POST, "/api/v1/recruitment")
+                .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
 
@@ -109,6 +111,7 @@ public class SecurityConfig {
         return expressionHandler;
     }
 
+    // TODO: 아래 메소드에 등록된 URI 는, 시큐리티 필터체인 자체를 통과하지 않는 URI 이므로, 주의가 필요합니다.
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web ->
