@@ -58,7 +58,7 @@ public class RecruitmentService implements RecruitmentUseCase {
         List<Recruitment> recruitments = recruitmentPort.findAllOrderByNewest();
 
         int start = (page - 1) * PAGE_SIZE;
-        int end = page * PAGE_SIZE;
+        int end = Math.min(page * PAGE_SIZE, recruitments.size());
 
         return recruitments.subList(start, end);
     }
