@@ -14,6 +14,7 @@ import com.econovation.recruitdomain.domains.board.dto.ColumnsResponseDto;
 import com.econovation.recruitdomain.domains.board.exception.BoardInvisibleMovingException;
 import com.econovation.recruitdomain.domains.board.exception.BoardSameLocationException;
 import com.econovation.recruitdomain.domains.board.exception.InvalidHopeFieldException;
+import com.econovation.recruitdomain.domains.dto.CreateColumnsDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationBoardDto;
 import com.econovation.recruitdomain.domains.dto.UpdateLocationColumnDto;
 import com.econovation.recruitdomain.out.BoardLoadPort;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,9 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private final BoardLoadPort boardLoadPort;
     private final ColumnLoadPort columnLoadPort;
     private final ColumnRecordPort columnRecordPort;
+
+    @Value("${econovation.year}")
+    private Integer econovationYear;
 
     /*    @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
@@ -198,13 +203,51 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     @Transactional
     public Columns createColumn(String title, Integer navigationId) {
-        Columns column = Columns.builder().title(title).navigationId(navigationId).build();
+        Columns column =
+                Columns.builder()
+                        .title(title)
+                        .navigationId(navigationId)
+                        .year(econovationYear)
+                        .build();
 
         List<Columns> columnsByNavigationId = columnLoadPort.getColumnsByNavigationId(navigationId);
         Columns save = columnRecordPort.save(column);
 
         if (!(columnsByNavigationId == null)) {
             columnsByNavigationId.stream()
+                    .filter(c -> c.getNextColumnsId() == null)
+                    .findFirst()
+                    .ifPresent(c -> c.updateNextColumnsId(save.getId()));
+        }
+        // Invisible Board 추가
+        Board invisibleBoard =
+                Board.builder()
+                        .cardType(CardType.INVISIBLE)
+                        .nextBoardId(null)
+                        .columnId(save.getId())
+                        .navigationId(navigationId)
+                        .cardId(null)
+                        .build();
+        boardRecordPort.save(invisibleBoard);
+        return save;
+    }
+
+    @Override
+    @Transactional
+    public Columns createColumnWithYear(Integer navigationId, CreateColumnsDto createColumnsDto) {
+        String title = createColumnsDto.getTitle();
+        Integer year = createColumnsDto.getYear();
+
+        Columns column =
+                Columns.builder().title(title).navigationId(navigationId).year(year).build();
+
+        List<Columns> columnsByNavigationIdAndYear =
+                columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
+
+        Columns save = columnRecordPort.save(column);
+
+        if (!(columnsByNavigationIdAndYear == null)) {
+            columnsByNavigationIdAndYear.stream()
                     .filter(c -> c.getNextColumnsId() == null)
                     .findFirst()
                     .ifPresent(c -> c.updateNextColumnsId(save.getId()));
@@ -253,6 +296,13 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         if (columns == null) {
             return Collections.emptyList();
         }
+        return ColumnsResponseDto.from(columns);
+    }
+
+    @Override
+    public List<ColumnsResponseDto> getColumnsByNavigationIdAndYear(
+            Integer navigationId, Integer year) {
+        List<Columns> columns = columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
         return ColumnsResponseDto.from(columns);
     }
 

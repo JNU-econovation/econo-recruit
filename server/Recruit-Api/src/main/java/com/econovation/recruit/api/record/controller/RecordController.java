@@ -67,6 +67,7 @@ public class RecordController {
                 recordUseCase.execute(page, year, order, searchKeyword), HttpStatus.OK);
     }
 
+    @Deprecated(since = "2024-02-20", forRemoval = true)
     @Operation(
             summary = "지원자의 면접기록 목록을 페이지 및 기수별로 조회합니다",
             description = "newest, name, object, score 이 4가지중 하나를 입력하시면 됩니다.")
@@ -84,7 +85,6 @@ public class RecordController {
     @Operation(summary = "지원자의 면접기록을 전부 조회합니다")
     @ApiErrorExceptionsExample(RecordFindExceptionDocs.class)
     @GetMapping("/records/all")
-    @Deprecated(since = "2024-02-20", forRemoval = true)
     public ResponseEntity<List<RecordResponseDto>> findAll() {
         List<Record> records = recordUseCase.findAll();
         return new ResponseEntity<>(RecordResponseDto.from(records), HttpStatus.OK);

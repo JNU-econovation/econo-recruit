@@ -22,6 +22,8 @@ public interface BoardLoadUseCase {
 
     List<ColumnsResponseDto> getColumnsByNavigationId(Integer navigationId);
 
+    List<ColumnsResponseDto> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year);
+
     Board getBoardByCardId(Long cardId);
 
     Result<Board> getBoardByNextBoardId(Integer boardId);

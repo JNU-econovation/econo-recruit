@@ -146,7 +146,6 @@ public class FinalEmailDiscussionEmailScheduler {
             retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
             failQueue.add(applicant);
         }
-
         if (result) {
             String applicantId = applicant.getId();
             String passState = applicant.getApplicantState().getPassStateToEnum().name();

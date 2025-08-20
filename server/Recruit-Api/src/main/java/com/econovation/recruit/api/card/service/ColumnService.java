@@ -14,7 +14,8 @@ public class ColumnService implements ColumnsUseCase {
     private final ColumnRecordPort columnRecordPort;
     private final ColumnLoadPort columnLoadPort;
 
-    public List<Columns> getByNavigationId(Integer navigationId) {
-        return columnLoadPort.getColumnByNavigationId(navigationId);
+    @Override
+    public List<Columns> getByNavigationIdAndYear(Integer navigationId, Integer year) {
+        return columnLoadPort.getColumnsByNavigationIdAndYear(navigationId, year);
     }
 }
