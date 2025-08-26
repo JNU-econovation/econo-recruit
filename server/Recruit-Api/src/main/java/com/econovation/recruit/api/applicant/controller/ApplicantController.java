@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.applicant.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
@@ -21,6 +22,7 @@ import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
+import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
@@ -29,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -176,5 +179,13 @@ public class ApplicantController {
         List<GetApplicantsStatusResponse> result =
                 applicantQueryUseCase.getApplicantsStatus(year, sortType);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/applicants/all")
+    public ResponseEntity<String> deleteApplicants(
+            @PathVariable("year") Integer year
+    ) {
+        applicantCommandUseCase.deleteByyear(year);
+        return new ResponseEntity<>(APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }
