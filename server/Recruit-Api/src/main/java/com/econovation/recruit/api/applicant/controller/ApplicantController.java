@@ -55,7 +55,6 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
-    private final RecruitmentUseCase applicationManagementUseCase;
     private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
