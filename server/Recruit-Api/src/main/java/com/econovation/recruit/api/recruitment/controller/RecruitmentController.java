@@ -5,6 +5,7 @@ import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.dto.RecruitmentResponseDto;
 import com.econovation.recruitdomain.domains.dto.RecruitmentSetUpDto;
+import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentInValidDateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,8 +64,8 @@ public class RecruitmentController {
             summary = "지원서 접수를 종료합니다.",
             description =
                     """
-                    사용하여 예약 중인 작업을 취소합니다.
-                    만약, 이미 open 된 경우라면 즉각 종료합니다.
+                    - 사용하여 예약 중인 작업을 취소합니다.
+                    - 만약, 이미 open 된 경우라면 즉각 종료합니다.
                     """)
     @DeleteMapping("/recruitments/{recruitmentId}")
     public ResponseEntity<String> terminateRecruitment(
@@ -77,17 +78,31 @@ public class RecruitmentController {
             summary = "지원서 모집 리스트를 조회합니다. (최신순 정렬)",
             description =
                     """
-                    기존에 모집했던 이력들을 조회합니다.
-                    만약, 현재 예약 중인 모집이 있다면 응답 결과에 포함됩니다.
+                    - 기존에 모집했던 이력들을 조회합니다.
+                    - 만약, 현재 예약 중인 모집이 있다면 응답 결과에 포함됩니다.
                     """)
     @GetMapping("/page/{page}/recruitments")
     public ResponseEntity<RecruitmentResponsesDto> getRecruitments(@PathVariable("page") int page) {
+        int pageSize = 5; // pageSize 설정
         List<RecruitmentResponseDto> recruitments =
-                recruitmentUseCase.getPage(page).stream()
+                recruitmentUseCase.getPage(page, pageSize).stream()
                         .map(RecruitmentResponseDto::create)
                         .toList();
-        PageInfo pageInfo = new PageInfo(recruitments.size(), page);
+        PageInfo pageInfo = new PageInfo(recruitments.size(), page, pageSize);
         RecruitmentResponsesDto response = new RecruitmentResponsesDto(pageInfo, recruitments);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "가장 최근의 모집을 조회합니다.",
+            description =
+                    """
+                    - 가장 최근의 모집을 조회합니다.
+                    """)
+    @GetMapping("/recruitment")
+    public ResponseEntity<RecruitmentResponseDto> getLatestRecruitments() {
+        Recruitment recruitment = recruitmentUseCase.getLatestOne();
+        RecruitmentResponseDto response = RecruitmentResponseDto.create(recruitment);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
