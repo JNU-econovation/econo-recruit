@@ -12,7 +12,6 @@ import com.econovation.recruitdomain.domains.applicant.event.domainevent.Applica
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +61,10 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
                 ApplicantRegisterEvent.of(answer.getId(), name, hopeField, email);
         Events.raise(applicantRegisterEvent);
         return null;
+    }
+
+    @Override
+    public void deleteByYear(Integer year) {
+        answerAdaptor.delete(year);
     }
 }

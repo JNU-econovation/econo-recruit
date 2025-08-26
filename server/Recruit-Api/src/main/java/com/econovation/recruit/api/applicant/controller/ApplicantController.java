@@ -180,11 +180,11 @@ public class ApplicantController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/applicants/all")
+    @DeleteMapping("/applicants/all/{year}")
     public ResponseEntity<String> deleteApplicants(
             @PathVariable("year") Integer year
     ) {
-        applicantCommandUseCase.deleteByyear(year);
+        applicantCommandUseCase.deleteByYear(year);
         return new ResponseEntity<>(APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }
