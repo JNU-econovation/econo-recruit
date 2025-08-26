@@ -38,4 +38,16 @@ public class PageInfo {
             endPage = (listCount / boardLimit) + 1;
         }
     }
+
+    public PageInfo(long totalCount, int page, int pageSize) {
+        this.currentPage = page;
+        this.listCount = (int) totalCount;
+        this.pageLimit = pageSize;
+        this.startPage = ((page - 1) / pageLimit) * pageLimit + 1;
+        this.endPage = startPage + pageLimit - 1;
+        this.boardLimit = pageSize;
+        if (endPage > (listCount / boardLimit) + 1) {
+            endPage = (listCount / boardLimit) + 1;
+        }
+    }
 }
