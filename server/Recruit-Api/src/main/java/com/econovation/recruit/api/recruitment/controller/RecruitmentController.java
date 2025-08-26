@@ -80,6 +80,7 @@ public class RecruitmentController {
                     """
                     - 기존에 모집했던 이력들을 조회합니다.
                     - 만약, 현재 예약 중인 모집이 있다면 응답 결과에 포함됩니다.
+                    - 한 페이지의 크기는 5 입니다.
                     """)
     @GetMapping("/page/{page}/recruitments")
     public ResponseEntity<RecruitmentResponsesDto> getRecruitments(@PathVariable("page") int page) {
