@@ -95,8 +95,7 @@ public class RecruitmentController {
 
     @Operation(
             summary = "가장 최근의 모집을 조회합니다.",
-            description =
-                    """
+            description = """
                     - 가장 최근의 모집을 조회합니다.
                     """)
     @GetMapping("/recruitment")
