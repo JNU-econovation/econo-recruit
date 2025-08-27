@@ -1,7 +1,5 @@
 package com.econovation.recruit.api.recruitment.service;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
-
 import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
@@ -54,11 +52,11 @@ public class RecruitmentService implements RecruitmentUseCase {
     }
 
     @Override
-    public List<Recruitment> getPage(int page) {
+    public List<Recruitment> getPage(int page, int pageSize) {
         List<Recruitment> recruitments = recruitmentPort.findAllOrderByNewest();
 
-        int start = (page - 1) * PAGE_SIZE;
-        int end = Math.min(page * PAGE_SIZE, recruitments.size());
+        int start = (page - 1) * pageSize;
+        int end = Math.min(page * pageSize, recruitments.size());
 
         return recruitments.subList(start, end);
     }

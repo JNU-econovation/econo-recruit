@@ -14,5 +14,5 @@ public interface RecruitmentUseCase {
 
     List<Recruitment> findAllOrderByNewest();
 
-    List<Recruitment> getPage(int page);
+    List<Recruitment> getPage(int page, int pageSize);
 }
