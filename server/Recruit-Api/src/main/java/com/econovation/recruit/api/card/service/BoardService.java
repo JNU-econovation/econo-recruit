@@ -4,6 +4,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.*;
 
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.board.domain.Board;
@@ -40,9 +41,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     private final BoardLoadPort boardLoadPort;
     private final ColumnLoadPort columnLoadPort;
     private final ColumnRecordPort columnRecordPort;
-
-    @Value("${econovation.year}")
-    private Integer econovationYear;
+    private final LatestRecruitmentVo latestRecruitmentVo;
 
     /*    @Override
     public Board save(Map<String, Integer> newestLocation, String hopeField, Integer navLoc) {
@@ -203,6 +202,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     @Override
     @Transactional
     public Columns createColumn(String title, Integer navigationId) {
+        int econovationYear = latestRecruitmentVo.getYear();
         Columns column =
                 Columns.builder()
                         .title(title)
