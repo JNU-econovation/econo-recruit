@@ -56,18 +56,26 @@ public class RecruitmentRegisteredEventHandler {
 
     /** 새로운 모집이 등록되었으므로, 새로운 기수에 맞는 개발자,디자이너,기획자 컬럼을 새로 추가합니다. */
     private void createCommonColumn() {
+        List<String> columnNames = List.of("개발자", "디자이너", "기획자");
         int year = latestRecruitment.getYear();
 
-        List<String> columnNames = List.of("개발자", "디자이너", "기획자");
+        if(isExists(columnNames, year)) return;
 
         List<Columns> commonColumns =
                 columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
+
         List<Columns> saved = columnRecordPort.saveAll(commonColumns);
 
         List<Columns> existColumns = columnLoadPort.getColumnsByNavigationIdAndYear(1, year);
 
         connect(existColumns);
         createInvisibleBoards(existColumns);
+    }
+
+    private boolean isExists(List<String> columnNames, int year){
+        return columnNames.stream()
+                .map(name -> columnLoadPort.existsColumnsByTitle(name, year))
+                .reduce(true, (b1,b2)->b1&&b2);
     }
 
     /**
