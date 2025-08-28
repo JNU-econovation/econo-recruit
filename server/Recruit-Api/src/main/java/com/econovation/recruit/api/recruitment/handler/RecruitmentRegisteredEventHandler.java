@@ -59,7 +59,7 @@ public class RecruitmentRegisteredEventHandler {
         List<String> columnNames = List.of("개발자", "디자이너", "기획자");
         int year = latestRecruitment.getYear();
 
-        if(isExists(columnNames, year)) return;
+        if (isExists(columnNames, year)) return;
 
         List<Columns> commonColumns =
                 columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
@@ -72,10 +72,10 @@ public class RecruitmentRegisteredEventHandler {
         createInvisibleBoards(existColumns);
     }
 
-    private boolean isExists(List<String> columnNames, int year){
+    private boolean isExists(List<String> columnNames, int year) {
         return columnNames.stream()
                 .map(name -> columnLoadPort.existsColumnsByTitle(name, year))
-                .reduce(true, (b1,b2)->b1&&b2);
+                .reduce(true, (b1, b2) -> b1 && b2);
     }
 
     /**

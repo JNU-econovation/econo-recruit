@@ -26,11 +26,13 @@ public class ColumnsUtil {
         return columns.size() - 1;
     }
 
-    public static boolean isSatisfiedCommonColumns(List<Columns> columns){
-        int developer = 1; int designer = 1; int productManager = 1;
+    public static boolean isSatisfiedCommonColumns(List<Columns> columns) {
+        int developer = 1;
+        int designer = 1;
+        int productManager = 1;
 
-        for(Columns c : columns){
-            switch (c.getTitle()){
+        for (Columns c : columns) {
+            switch (c.getTitle()) {
                 case "개발자":
                     developer--;
                     break;
@@ -43,7 +45,7 @@ public class ColumnsUtil {
             }
         }
 
-        return developer+designer+productManager==0;
+        return developer + designer + productManager == 0;
     }
 
     public static List<Columns> connectAll(List<Columns> columns) {
