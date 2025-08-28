@@ -26,6 +26,26 @@ public class ColumnsUtil {
         return columns.size() - 1;
     }
 
+    public static boolean isSatisfiedCommonColumns(List<Columns> columns){
+        int developer = 1; int designer = 1; int productManager = 1;
+
+        for(Columns c : columns){
+            switch (c.getTitle()){
+                case "개발자":
+                    developer--;
+                    break;
+                case "디자이너":
+                    designer--;
+                    break;
+                case "기획자":
+                    productManager--;
+                    break;
+            }
+        }
+
+        return developer+designer+productManager==0;
+    }
+
     public static List<Columns> connectAll(List<Columns> columns) {
         // 0 -> 1 -> 2 이렇게 연결한다.
         for (int i = 0; i < columns.size() - 1; i++) {
