@@ -16,4 +16,7 @@ public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     Optional<Columns> findByNextColumnsIdAndNavigationId(Integer nextColLoc, Integer navigationId);
 
     Optional<Columns> findByNextColumnsId(Integer nextColumnsId);
+
+    @Query("SELECT EXISTS (SELECT c FROM Columns c WHERE c.title=:title AND c.year=:year)")
+    boolean existsByTitleAndYear(String name, Integer year);
 }
