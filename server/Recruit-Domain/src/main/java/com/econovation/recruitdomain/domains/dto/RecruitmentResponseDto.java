@@ -20,6 +20,10 @@ public class RecruitmentResponseDto {
 
     public static RecruitmentResponseDto create(Recruitment entity) {
         return new RecruitmentResponseDto(
-                entity.getId(), entity.getYear(), entity.getStartAt(), entity.getEndAt(), entity.getStates());
+                entity.getId(),
+                entity.getYear(),
+                entity.getStartAt(),
+                entity.getEndAt(),
+                entity.getStates());
     }
 }
