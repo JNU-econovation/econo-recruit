@@ -43,14 +43,14 @@ public class Board extends BaseTimeEntity {
         this.columnId = columnId;
     }
 
-
     /**
      * columnId와 navigationId를 받아서 Invisible Board 반환
+     *
      * @param columnId
      * @param navigationId
      * @return
      */
-    public static Board creatInvisibleBoard(int columnId, int navigationId){
+    public static Board creatInvisibleBoard(int columnId, int navigationId) {
         return Board.builder()
                 .cardId(null)
                 .nextBoardId(null)

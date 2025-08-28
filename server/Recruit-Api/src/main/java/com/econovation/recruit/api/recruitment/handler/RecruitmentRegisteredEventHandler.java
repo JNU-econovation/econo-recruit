@@ -39,7 +39,8 @@ public class RecruitmentRegisteredEventHandler {
         doReserve(event);
         createCommonColumn();
     }
-    private void doReserve(RecruitmentRegistered event){
+
+    private void doReserve(RecruitmentRegistered event) {
         // 1. 전역 상태 최신화
         // 2. NON_START 상태를, startAt 시간이 되면 RECRUITING 상태로 변경하는 작업 예약
         // 3. RECRUITING 상태를, endAt 시간이 되면, END 상태로 변경하는 작업 예약
@@ -53,15 +54,14 @@ public class RecruitmentRegisteredEventHandler {
                         });
     }
 
-    /**
-     * 새로운 모집이 등록되었으므로, 새로운 기수에 맞는 개발자,디자이너,기획자 컬럼을 새로 추가합니다.
-     */
-    private void createCommonColumn(){
+    /** 새로운 모집이 등록되었으므로, 새로운 기수에 맞는 개발자,디자이너,기획자 컬럼을 새로 추가합니다. */
+    private void createCommonColumn() {
         int year = latestRecruitment.getYear();
 
         List<String> columnNames = List.of("개발자", "디자이너", "기획자");
 
-        List<Columns> commonColumns = columnNames.stream().map(name->Columns.createCommonColumn(name, year)).toList();
+        List<Columns> commonColumns =
+                columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
         List<Columns> saved = columnRecordPort.saveAll(commonColumns);
 
         List<Columns> existColumns = columnLoadPort.getColumnsByNavigationIdAndYear(1, year);
@@ -72,9 +72,10 @@ public class RecruitmentRegisteredEventHandler {
 
     /**
      * 끊긴 컬럼들을 찾아서 연결합니다.
+     *
      * @param columns
      */
-    private void connect(List<Columns> columns){
+    private void connect(List<Columns> columns) {
         int start = ColumnsUtil.findNextColumnIdIsNull(columns);
         int end = columns.size();
 
@@ -82,8 +83,9 @@ public class RecruitmentRegisteredEventHandler {
         ColumnsUtil.connectAll(columns.subList(start, end));
     }
 
-    private void createInvisibleBoards(List<Columns> columns){
-        List<Board> invisibleBoards = columns.stream().map(c-> Board.creatInvisibleBoard(c.getId(), 1)).toList();
+    private void createInvisibleBoards(List<Columns> columns) {
+        List<Board> invisibleBoards =
+                columns.stream().map(c -> Board.creatInvisibleBoard(c.getId(), 1)).toList();
         boardRecordPort.saveAll(invisibleBoards);
     }
 }
