@@ -43,4 +43,14 @@ public class Columns extends BaseTimeEntity {
     public void updateNextColumnsId(Integer id) {
         this.nextColumnsId = id;
     }
+
+    /**
+     * 공통 Navigation에 있는 컬럼을 생성하므로, navigationId 는 1로 설정됩니다.
+     * @param title
+     * @param year
+     * @return
+     */
+    public static Columns createCommonColumn(String title, int year){
+        return Columns.builder().navigationId(1).title(title).year(year).build();
+    }
 }
