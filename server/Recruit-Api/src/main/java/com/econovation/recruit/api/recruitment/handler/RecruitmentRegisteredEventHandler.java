@@ -59,23 +59,27 @@ public class RecruitmentRegisteredEventHandler {
         List<String> columnNames = List.of("개발자", "디자이너", "기획자");
         int year = latestRecruitment.getYear();
 
-        if (isExists(columnNames, year)) return;
+        columnNames = filterNotExists(columnNames, year);
 
-        List<Columns> commonColumns =
-                columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
+        // 모든 컬럼이 존재하지 않으면
+        if(!columnNames.isEmpty()) {
+            List<Columns> commonColumns =
+                    columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
 
-        List<Columns> saved = columnRecordPort.saveAll(commonColumns);
+            List<Columns> saved = columnRecordPort.saveAll(commonColumns);
 
-        List<Columns> existColumns = columnLoadPort.getColumnsByNavigationIdAndYear(1, year);
+            List<Columns> existColumns = columnLoadPort.getColumnsByNavigationIdAndYear(1, year);
 
-        connect(existColumns);
-        createInvisibleBoards(existColumns);
+            connect(existColumns);
+            createInvisibleBoards(existColumns);
+        }
     }
 
-    private boolean isExists(List<String> columnNames, int year) {
+    private List<String> filterNotExists(List<String> columnNames, int year) {
         return columnNames.stream()
-                .map(name -> columnLoadPort.existsColumnsByTitle(name, year))
-                .reduce(true, (b1, b2) -> b1 && b2);
+                .filter(name -> !columnLoadPort.existsColumnsByTitle(name, year))
+                .peek(name -> System.out.println(String.format("%s 컬럼 존재", name)))
+                .toList();
     }
 
     /**
