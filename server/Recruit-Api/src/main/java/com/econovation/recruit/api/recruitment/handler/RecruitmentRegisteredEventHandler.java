@@ -15,8 +15,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Slf4j
 @Component
@@ -33,6 +36,7 @@ public class RecruitmentRegisteredEventHandler {
     private final BoardLoadPort boardLoadPort;
     private final BoardRecordPort boardRecordPort;
 
+    @Async
     @Transactional
     @EventListener(RecruitmentRegistered.class)
     public void handle(RecruitmentRegistered event) {
