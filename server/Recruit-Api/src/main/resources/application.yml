@@ -127,7 +127,7 @@ spring:
 # DEBUG log level
 logging:
   level:
-    root: ${LOG_LEVEL}
+    root: WARN
 ---
 spring:
   config:
@@ -135,7 +135,7 @@ spring:
       on-profile: prod
 logging:
   level:
-    root: ${LOG_LEVEL}
+    ROOT: WARN
 
 econovation:
   file:
