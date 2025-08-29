@@ -80,7 +80,7 @@ public class RecruitmentRegisteredEventHandler {
     private List<String> filterNotExists(List<String> columnNames, int year) {
         return columnNames.stream()
                 .filter(name -> !columnLoadPort.existsColumnsByTitle(name, year))
-                .peek(name -> System.out.println(String.format("%s 컬럼 존재", name)))
+                .peek(name -> log.info("{} 기수에 {} 컬럼이 존재하지 않아 생성합니다.", year, name))
                 .toList();
     }
 
