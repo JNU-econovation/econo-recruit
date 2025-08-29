@@ -46,6 +46,7 @@ public class RecruitmentScheduler {
                     jobDetail, RecruitmentTrigger.get(jobDetail.getKey(), startAt(target)));
 
         } catch (SchedulerException e) {
+            log.warn(e.getMessage());
             throw new QuartzException(e);
         }
     }
@@ -59,6 +60,7 @@ public class RecruitmentScheduler {
                     jobDetail, RecruitmentTrigger.get(jobDetail.getKey(), endAt(target)));
 
         } catch (SchedulerException e) {
+            log.warn(e.getMessage());
             throw new QuartzException(e);
         }
     }
@@ -69,6 +71,7 @@ public class RecruitmentScheduler {
             scheduler.deleteJob(RecruitmentJob.startJobKey(recruitmentId));
             scheduler.deleteJob(RecruitmentJob.endJobKey(recruitmentId));
         } catch (SchedulerException e) {
+            log.warn(e.getMessage());
             throw new QuartzException(e);
         }
     }
