@@ -34,7 +34,6 @@ public class RecruitmentRegisteredEventHandler {
     private final BoardLoadPort boardLoadPort;
     private final BoardRecordPort boardRecordPort;
 
-    @Async("taskExecutor")
     @Transactional
     @EventListener(RecruitmentRegistered.class)
     public void handle(RecruitmentRegistered event) {
