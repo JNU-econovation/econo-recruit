@@ -62,9 +62,11 @@ public class RecruitmentRegisteredEventHandler {
         columnNames = filterNotExists(columnNames, year);
 
         // 모든 컬럼이 존재하지 않으면
-        if(!columnNames.isEmpty()) {
+        if (!columnNames.isEmpty()) {
             List<Columns> commonColumns =
-                    columnNames.stream().map(name -> Columns.createCommonColumn(name, year)).toList();
+                    columnNames.stream()
+                            .map(name -> Columns.createCommonColumn(name, year))
+                            .toList();
 
             List<Columns> saved = columnRecordPort.saveAll(commonColumns);
 
