@@ -39,6 +39,7 @@ public class RecruitmentScheduler {
 
     public void reserveStart(Recruitment target) {
         try {
+            log.info("Recruitment Start Reservation : {}", target.getId());
             JobDetail jobDetail = RecruitmentJob.getStartJob(target.getId(), target.getYear());
 
             scheduler.scheduleJob(
@@ -51,6 +52,7 @@ public class RecruitmentScheduler {
 
     public void reserveEnd(Recruitment target) {
         try {
+            log.info("Recruitment End Reservation : {}", target.getId());
             JobDetail jobDetail = RecruitmentJob.getEndJob(target.getId(), target.getYear());
 
             scheduler.scheduleJob(
@@ -63,6 +65,7 @@ public class RecruitmentScheduler {
 
     public void cancelJob(Long recruitmentId) {
         try {
+            log.info("Recruitment Cancel : {}", recruitmentId);
             scheduler.deleteJob(RecruitmentJob.startJobKey(recruitmentId));
             scheduler.deleteJob(RecruitmentJob.endJobKey(recruitmentId));
         } catch (SchedulerException e) {
