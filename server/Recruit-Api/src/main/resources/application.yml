@@ -34,7 +34,7 @@ auth:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
 logging:
   level:
-    root: WARN
+    root: ${LOG_LEVEL}
 login:
   page:
     url: ${LOGIN_PAGE_URL:http://localhost:8080/login}
@@ -124,7 +124,7 @@ spring:
 # DEBUG log level
 logging:
   level:
-    root: WARN
+    root: ${LOG_LEVEL}
 ---
 spring:
   config:
@@ -132,7 +132,7 @@ spring:
       on-profile: prod
 logging:
   level:
-    ROOT: WARN
+    root: ${LOG_LEVEL}
 
 econovation:
   file:
