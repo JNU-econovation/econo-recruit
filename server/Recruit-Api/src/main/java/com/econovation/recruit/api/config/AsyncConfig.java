@@ -25,7 +25,7 @@ public class AsyncConfig implements AsyncConfigurer {
     }
 
     @Override
-    public Executor getAsyncExecutor() {  // @Async 기본 실행자 지정
+    public Executor getAsyncExecutor() { // @Async 기본 실행자 지정
         return taskExecutor();
     }
 }
