@@ -17,7 +17,6 @@ public interface ColumnRepository extends JpaRepository<Columns, Integer> {
 
     Optional<Columns> findByNextColumnsId(Integer nextColumnsId);
 
-    // TODO: 쿼리 잘 동작하는지 수정
-    @Query("SELECT EXISTS (SELECT c FROM Columns c WHERE c.title=:title AND c.year=:year)")
-    boolean existsByTitleAndYear(String name, Integer year);
+    @Query("select case when count(c) > 0 then true else false end from Columns c where c.title = :title and c.year = :year ")
+    boolean existsByTitleAndYear(String title, Integer year);
 }
