@@ -22,6 +22,7 @@ public class ApplicantSmsService {
 
     public void sendSms(MongoAnswer applicant) {
         int year = latestRecruitInfo.getYear();
+
         String phoneNumber = applicant.getQna().get("contacted").toString();
         String name = applicant.getQna().get("name").toString();
         String message =

@@ -111,6 +111,7 @@ econovation:
   file:
     path:
       portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
+
 logging:
   level:
     graphql: debug
