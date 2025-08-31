@@ -11,6 +11,8 @@ public interface ColumnLoadPort {
 
     Columns getColumnByNextColumnsId(Integer nextColId);
 
+    Columns getColumnByYearAndTitle(String title, Integer year);
+
     Optional<Columns> getColumnOptionalByNextColumnsId(Integer nextColId);
 
     boolean existsColumnsByTitle(String title, int year);

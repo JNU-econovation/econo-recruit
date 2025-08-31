@@ -167,18 +167,15 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         //        \"hopeField\" -> hopeField 로 변경
         hopeField = hopeField;
         Integer columnsId = 0;
-        if (hopeField.equals("개발자")) {
-            columnsId = DEVELOPER_COLUMNS_ID;
-        } else if (hopeField.equals("디자이너")) {
-            columnsId = DESIGNER_COLUMNS_ID;
-        } else if (hopeField.equals("기획자")) {
-            columnsId = PLANNER_COLUMNS_ID;
+        Integer year = latestRecruitmentVo.getYear();
+        if (hopeField.equals("개발자") || hopeField.equals("디자이너") || hopeField.equals("기획자")) {
+            log.info("ApplicantBoard 생성 : {}, applicantId : {}", hopeField, applicantId);
         } else {
             log.info("hopeField = {} 는 적절한 지원 분야가 아닙니다.", hopeField);
             throw InvalidHopeFieldException.EXCEPTION;
         }
 
-        Columns column = columnLoadPort.getColumnByNextColumnsId(columnsId);
+        Columns column = columnLoadPort.getColumnByYearAndTitle(hopeField, year);
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
