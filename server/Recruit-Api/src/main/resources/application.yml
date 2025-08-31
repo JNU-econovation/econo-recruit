@@ -8,6 +8,16 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  quartz:
+    jdbc:
+      initialize-schema: always
+      schema: classpath:quartz-init.sql
+    job-store-type: jdbc
+    overwrite-existing-jobs: true
+  graphql:
+    path: /api/graphql
+    schema:
+      locations: classpath:graphql/**/
 data:
   init:
     disabled: ${DATA_INIT_DISABLED:false}
@@ -24,7 +34,10 @@ auth:
       prefix: ${JWT_BLACKLIST_PREFIX:BlackList_AccessToken_}
 logging:
   level:
-    root: WARN
+    root: ${LOG_LEVEL:INFO}
+    org.quartz: ${QUARTZ_LOG_LEVEL:INFO}
+    org.springframework.scheduling.quartz: ${QUARTZ_LOG_LEVEL:INFO}
+
 login:
   page:
     url: ${LOGIN_PAGE_URL:http://localhost:8080/login}
@@ -70,8 +83,6 @@ econovation:
   domain: ${ECONOVATION_DOMAIN:recruit.econovation.kr}
   recruit:
     period:
-      start: ${RECRUIT_PERIOD_START:2025-03-04T00:00:00}
-      end: ${RECRUIT_PERIOD_END:2025-03-12T23:59:59}
       passedDate: ${RECRUIT_PERIOD_PASSED_DATE:2025-03-14T09:00:00}
       firstDiscussion: ${RECRUIT_PERIOD_FIRST_DISCUSSION:2025-03-14T08:00:00}
       finalDiscussion: ${RECRUIT_PERIOD_FINAL_DISCUSSION:2025-03-24T08:00:00}
@@ -100,9 +111,10 @@ econovation:
   file:
     path:
       portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
-#logging:
-#  level:
-#    root: info
+
+logging:
+  level:
+    graphql: debug
 #logging:
 #  level:
 #    org.springframework.data.*.*: debug

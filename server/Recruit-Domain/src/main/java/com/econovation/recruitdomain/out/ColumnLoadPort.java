@@ -13,7 +13,11 @@ public interface ColumnLoadPort {
 
     Optional<Columns> getColumnOptionalByNextColumnsId(Integer nextColId);
 
+    boolean existsColumnsByTitle(String title, int year);
+
     List<Columns> getColumnsByNavigationId(Integer navigationId);
+
+    List<Columns> getColumnsByNavigationIdAndYear(Integer navigationId, Integer year);
 
     Optional<Columns> getByNextColumnsId(Integer id);
 }

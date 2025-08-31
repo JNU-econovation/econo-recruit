@@ -77,7 +77,7 @@ public class InterviewerController {
         return new ResponseEntity(interviewer, HttpStatus.OK);
     }
 
-    @Operation(description = "Interviewer Role 변경")
+    @Operation(description = "Interviewer Role 변경", summary = "면접관 권한 변경")
     @PutMapping("/interviewers/{idp-id}/roles")
     public ResponseEntity<String> updateRole(
             @PathVariable(name = "idp-id") Long idpId, String role) {

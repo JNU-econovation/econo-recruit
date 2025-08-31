@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.email.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
@@ -17,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
@@ -35,9 +35,7 @@ public class FinalEmailDiscussionEmailScheduler {
     private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final Integer MAX_EMAIL_SEND_RETRY = 3;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 30000))
     @SneakyThrows
@@ -45,6 +43,7 @@ public class FinalEmailDiscussionEmailScheduler {
     @Scheduled(cron = "${econovation.recruit.period.finalDiscussionCron}", zone = "Asia/Seoul")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle() {
+        int year = latestRecruitInfo.getYear();
         int startIndex = 0;
         int batchSize = 14;
         List<MongoAnswer> applicants = getFinalApplicants(year);
@@ -146,7 +145,6 @@ public class FinalEmailDiscussionEmailScheduler {
             retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
             failQueue.add(applicant);
         }
-
         if (result) {
             String applicantId = applicant.getId();
             String passState = applicant.getApplicantState().getPassStateToEnum().name();

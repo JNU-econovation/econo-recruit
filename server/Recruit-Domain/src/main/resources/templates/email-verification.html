@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Econovation Recruit</title>
+    <meta name="description" content="Recruit site for econovation">
+    <style>
+        .hover-a{text-decoration: none;}
+        .hover-a:hover{text-decoration: underline;}
+    </style>
+</head>
+<body style="width:fit-content; height: 100vh; max-width: 1920px; margin: auto; display: block; text-align: center;">
+<section style="padding-top: 100px;">
+    <img alt="econo-3d-logo" width="114" height="143" style="color:transparent; margin:auto;" src="https://recruit.econovation.kr/images/econo-3d-logo.png">
+    <h1 style="font-weight: 800; font-size:40px;">이메일 인증 코드</h1>
+    <div style="font-size: 18px;">
+        <div style="margin: 8px;">인증코드는 <span th:text="${code}"></span>입니다.</div>
+        <div style="margin: 8px;">사이트에 인증코드를 입력해주세요.</div>
+        <div style="margin: 8px;">감사합니다.</div>
+    </div>
+</section>
+</body>
+</html>

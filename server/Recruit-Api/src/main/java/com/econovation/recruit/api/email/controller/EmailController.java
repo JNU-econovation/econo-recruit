@@ -2,11 +2,11 @@ package com.econovation.recruit.api.email.controller;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.email.service.ApplicantEmailService;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +23,7 @@ public class EmailController {
 
     private final ApplicantEmailService emailService;
     private final ApplicantQueryUseCase applicantQueryUseCase;
-
-    @Value("${econovation.year}")
-    private int year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(
             summary = "지원자에게 맞는 상태의 메일을 보냅니다.",
@@ -52,7 +50,7 @@ public class EmailController {
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "state") String state) {
         if (year == null || state == null) {
-            year = this.year;
+            year = latestRecruitInfo.getYear();
         }
 
         emailService.sendEmail(year, state);

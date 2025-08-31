@@ -2,6 +2,7 @@ package com.econovation.recruit.api.email.service;
 
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.email_template.util.DefaultEmailTemplateGenerator;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,9 +26,7 @@ public class ApplicantEmailService {
     private final CommonsEmailSender emailSender;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final DefaultEmailTemplateGenerator templateGenerator;
-
-    @Value("${econovation.year}")
-    private int year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)

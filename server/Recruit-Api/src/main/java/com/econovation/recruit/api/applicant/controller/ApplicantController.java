@@ -12,6 +12,8 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
+import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
@@ -30,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,8 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final RecruitmentUseCase applicationManagementUseCase;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
     @ApiErrorExceptionsExample(CreateApplicantExceptionDocs.class)
@@ -59,6 +59,7 @@ public class ApplicantController {
     @PostMapping("/applicants")
     @TimeTrace
     public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
+        int year = latestRecruitInfo.getYear();
         applicantValidator.validateRegisterApplicant(qna);
         String applicantId = UUID.randomUUID().toString();
         commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
@@ -143,8 +144,9 @@ public class ApplicantController {
     @TimeTrace
     @PostMapping("/applicants/mail")
     public ResponseEntity sendEmail(@RequestBody EmailSendDto emailSendDto) {
+        int year = latestRecruitInfo.getYear();
         commonsEmailSender.send(
-                emailSendDto.getEmail(), emailSendDto.getApplicantId(), LocalDateTime.now());
+                emailSendDto.getEmail(), emailSendDto.getApplicantId(), year, LocalDateTime.now());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -162,11 +164,11 @@ public class ApplicantController {
 
     @Operation(
             summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
-            description = """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+            description =
                     """
-    )
-    @GetMapping("year/{year}/applicants/pass-state")
+                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    """)
+    @GetMapping("/year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
             @PathVariable("year") Integer year, @RequestParam("order") String sortType) {
         List<GetApplicantsStatusResponse> result =

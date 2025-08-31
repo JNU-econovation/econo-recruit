@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.service;
 
 import com.econovation.recruit.api.applicant.handler.ApplicantStateUpdateEventHandler;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
@@ -11,7 +12,6 @@ import com.econovation.recruitdomain.domains.applicant.event.domainevent.Applica
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnswerCommandService implements ApplicantCommandUseCase {
     private final MongoAnswerAdaptor answerAdaptor;
     private final ApplicantStateUpdateEventHandler applicantStateUpdateEventHandler;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Override
     @Transactional
@@ -42,6 +40,7 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
 
     @Override
     public UUID execute(Map<String, Object> qna, UUID id) {
+        int year = latestRecruitInfo.getYear();
         ApplicantState nonProcessed = new ApplicantState();
         MongoAnswer answer =
                 MongoAnswer.builder()

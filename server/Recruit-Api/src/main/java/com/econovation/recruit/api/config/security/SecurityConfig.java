@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -24,6 +25,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     private final FilterConfig filterConfig;
 
@@ -75,11 +77,15 @@ public class SecurityConfig {
                 // 따라서 스웨거용 인메모리 유저가 basic auth 필터를 통과해서 들어오더라도
                 // ( jwt 필터나 , basic auth 필터의 순서는 상관이없다.) --> 왜냐면 jwt는 토큰 여부 파악만하고 있으면 검증이고 없으면 넘김.
                 // 내부 소스까지 실행을 못함. 권한 문제 때문에.
+                .mvcMatchers(HttpMethod.POST, "/api/graphql")
+                .permitAll()
                 .mvcMatchers(HttpMethod.DELETE, "/api/v1//interviewers/*")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .mvcMatchers(HttpMethod.PATCH, "/api/v1/applicants/{applicant-id}/status")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .mvcMatchers(HttpMethod.POST, "/api/v1/emails/*")
+                .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
+                .mvcMatchers(HttpMethod.POST, "/api/v1/recruitment")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
@@ -105,6 +111,7 @@ public class SecurityConfig {
         return expressionHandler;
     }
 
+    // TODO: 아래 메소드에 등록된 URI 는, 시큐리티 필터체인 자체를 통과하지 않는 URI 이므로, 주의가 필요합니다.
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web ->
@@ -121,7 +128,11 @@ public class SecurityConfig {
                                 "/api/v1/signup",
                                 "/api/v1/token/refresh",
                                 "/api/v1/login",
-                                "/api/v1/register")
+                                "/api/v1/register",
+                                "/api/v1/password/reset",
+                                "/api/v1/password/verify",
+                                "/api/v1/signup/verify",
+                                "/api/v1/verify-code")
                         .antMatchers(
                                 HttpMethod.GET,
                                 "/api/v1/applicants",

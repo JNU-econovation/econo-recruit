@@ -7,10 +7,12 @@ import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.query.AnswerQuery;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,6 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +29,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
     private final AnswerAdaptor answerAdaptor;
     private final QueryGateway queryGateway;
     private final SortHelper<MongoAnswer> sortHelper;
-
-    @Value("${econovation.year}")
-    private Integer year;
+    private final LatestRecruitmentVo latestRecruitInfo;
 
     @Transactional(readOnly = true)
     public Map<String, Object> execute(String answerId) {
@@ -233,6 +232,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
 
     @Override
     public List<Map<String, Object>> execute(List<String> fields, Integer page) {
+        int year = latestRecruitInfo.getYear();
         List<MongoAnswer> byYear = answerAdaptor.findByYear(year, page);
         return splitByAnswers(fields, byYear);
     }
@@ -249,5 +249,40 @@ public class ApplicantService implements ApplicantQueryUseCase {
             sortHelper.sort(result, sortType);
         }
         return getQnaMapListWithIdAndPassState(result);
+    }
+
+    @Transactional(readOnly = true)
+    public AnswersResponseDto executeFiltered(
+            Integer year,
+            Integer page,
+            String sortType,
+            String searchKeyword,
+            List<String> requestedQnaFields) {
+
+        PageInfo pageInfo = getPageInfo(year, page, searchKeyword);
+        List<MongoAnswer> sortedResult =
+                answerAdaptor.findByYearAndSearchKeywordAndRequestedFields(
+                        year, page, sortType, searchKeyword, requestedQnaFields);
+
+        List<Map<String, Object>> qnaMapList = getQnaMapListWithIdAndPassState(sortedResult);
+
+        if (qnaMapList.isEmpty()) {
+            return AnswersResponseDto.of(Collections.emptyList(), pageInfo);
+        }
+        return AnswersResponseDto.of(qnaMapList, pageInfo);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> executeFiltered(
+            String applicantId, List<String> requestedQnaFields) {
+        MongoAnswer mongoAnswer =
+                answerAdaptor
+                        .findByIdAndRequestedFields(applicantId, requestedQnaFields)
+                        .orElseThrow(() -> ApplicantNotFoundException.EXCEPTION);
+
+        Map<String, Object> qna = mongoAnswer.getQna();
+        qna.put("id", mongoAnswer.getId());
+        qna.put(PASS_STATE_KEY, mongoAnswer.getApplicantStateOrDefault());
+        return qna;
     }
 }

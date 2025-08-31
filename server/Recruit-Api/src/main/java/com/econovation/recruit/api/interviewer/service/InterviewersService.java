@@ -13,6 +13,7 @@ import com.econovation.recruitdomain.domains.interviewer.domainevent.Interviewer
 import com.econovation.recruitdomain.domains.interviewer.exception.InterviewerCanNotDeleteWhenOneException;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
+import com.econovation.recruitdomain.out.WhitelistRecordPort;
 import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class InterviewersService implements InterviewerUseCase {
     private final InterviewerRecordPort interviewerRecordPort;
     private final IdpHelper idpHelper;
     private final SortHelper<Interviewer> interviewerSortHelper;
+    private final WhitelistRecordPort whitelistRecordPort;
 
     @Override
     public List<Interviewer> createInterviewers(List<Long> idpIds) {
@@ -46,6 +48,7 @@ public class InterviewersService implements InterviewerUseCase {
     public void updateRole(Long idpId, String role) {
         Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
         interviewer.updateRole(Role.getByName(role));
+        whitelistRecordPort.deleteById(idpId);
         // 해당 유저를 logOut 시킨다
 
     }

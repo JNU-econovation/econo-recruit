@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,9 +24,6 @@ import org.springframework.stereotype.Component;
 public class AnswerMongoDBMigration implements ApplicationRunner {
     private final ApplicantCommandUseCase applicantCommandUseCase;
     private final ApplicantQueryUseCase applicantQueryUseCase;
-
-    @Value("${econovation.year}")
-    private Integer year;
 
     @PostConstruct
     public void init() throws IOException, SQLException {
