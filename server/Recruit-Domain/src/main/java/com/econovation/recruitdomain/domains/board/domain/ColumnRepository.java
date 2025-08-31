@@ -20,4 +20,7 @@ public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     @Query(
             "select case when count(c) > 0 then true else false end from Columns c where c.title = :title and c.year = :year ")
     boolean existsByTitleAndYear(String title, Integer year);
+
+    @Query("SELECT c FROM Columns c WHERE c.title=:title AND c.year=:year")
+    Optional<Columns> findByTitleAndYear(String title, Integer Year);
 }

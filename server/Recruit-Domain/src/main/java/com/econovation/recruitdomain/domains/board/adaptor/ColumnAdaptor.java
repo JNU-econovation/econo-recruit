@@ -30,6 +30,12 @@ public class ColumnAdaptor implements ColumnRecordPort, ColumnLoadPort {
     }
 
     @Override
+    public Columns getColumnByYearAndTitle(String title, Integer year) {
+        return columnRepository.findByTitleAndYear(title, year)
+                .orElseThrow(() -> ColumnsNotFoundException.EXCEPTION);
+    }
+
+    @Override
     public Columns getColumnByNextColumnsId(Integer nextColId) {
         return columnRepository
                 .findById(nextColId)
