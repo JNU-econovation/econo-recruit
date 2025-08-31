@@ -12,7 +12,8 @@ public interface ColumnRepository extends JpaRepository<Columns, Integer> {
     List<Columns> findByNavigationId(Integer navigationId);
 
     @Query("SELECT c FROM Columns c WHERE c.navigationId = :navigationId AND c.year = :year")
-    List<Columns> findByNavigationIdAndYear(@Param("navigationId") Integer navigationId, @Param("year") Integer year);
+    List<Columns> findByNavigationIdAndYear(
+            @Param("navigationId") Integer navigationId, @Param("year") Integer year);
 
     Optional<Columns> findByNextColumnsIdAndNavigationId(Integer nextColLoc, Integer navigationId);
 

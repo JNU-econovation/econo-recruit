@@ -168,7 +168,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         hopeField = hopeField;
         Integer columnsId = 0;
         Integer year = latestRecruitmentVo.getYear();
-        if (hopeField.equals("개발자") || hopeField.equals("디자이너") || hopeField.equals("기획자") ) {
+        if (hopeField.equals("개발자") || hopeField.equals("디자이너") || hopeField.equals("기획자")) {
             log.info("ApplicantBoard 생성 : {}, applicantId : {}", hopeField, applicantId);
         } else {
             log.info("hopeField = {} 는 적절한 지원 분야가 아닙니다.", hopeField);
