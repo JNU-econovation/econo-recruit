@@ -166,7 +166,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
     public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
         //        \"hopeField\" -> hopeField 로 변경
         hopeField = hopeField;
-        Integer columnsId = 0;
         Integer year = latestRecruitmentVo.getYear();
         if (hopeField.equals("개발자") || hopeField.equals("디자이너") || hopeField.equals("기획자")) {
             log.info("ApplicantBoard 생성 : {}, applicantId : {}", hopeField, applicantId);
@@ -176,6 +175,8 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         }
 
         Columns column = columnLoadPort.getColumnByYearAndTitle(hopeField, year);
+        Integer columnsId = column.getId();
+
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
