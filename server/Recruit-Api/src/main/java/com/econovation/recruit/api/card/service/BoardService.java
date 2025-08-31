@@ -175,7 +175,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
         }
 
         Columns column = columnLoadPort.getColumnByYearAndTitle(hopeField, year);
-        Integer columnsId = column.getId();
 
         Board board =
                 Board.builder()
@@ -187,7 +186,7 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .build();
         Board save = boardRecordPort.save(board);
         //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
-        boardLoadPort.getBoardByNavigationIdAndColumnsId(1, columnsId).stream()
+        boardLoadPort.getBoardByNavigationIdAndColumnsId(1, column.getId()).stream()
                 .filter(b -> b.getNextBoardId() == null)
                 .findFirst()
                 .ifPresent(
