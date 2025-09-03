@@ -132,7 +132,7 @@ public class UserController {
 
     @Operation(summary = "회원가입 시 이메일 인증", description = "회원가입 시 유효한 메일인지 확인하기 위해 이메일 인증합니다.")
     @PostMapping("/signup/verify")
-    public ResponseEntity sendEmailForSignup(@RequestBody SendEmailRequestDto sendEmailRequestDto) {
+    public ResponseEntity sendEmailForSignup(@Valid @RequestBody SendEmailRequestDto sendEmailRequestDto) {
         sendEmailUseCase.sendEmailForSignup(sendEmailRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
