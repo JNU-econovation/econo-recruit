@@ -38,6 +38,9 @@ public class ApplicantRegisterEventConfirmEmailHandler {
         int year = latestRecruitInfo.getYear();
         LocalDateTime passedDate = LocalDateTime.parse(confirmRegisterEmail);
         commonsEmailSender.send(
-                applicantRegistEvent.getEmail(), applicantRegistEvent.getApplicantId(), year, passedDate);
+                applicantRegistEvent.getEmail(),
+                applicantRegistEvent.getApplicantId(),
+                year,
+                passedDate);
     }
 }
