@@ -180,6 +180,7 @@ public class ApplicantController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @Operation(summary = "year에 해당하는 모든 지원서를 삭제합니다.")
     @DeleteMapping("/applicants/all/{year}")
     public ResponseEntity<String> deleteApplicants(
             @PathVariable("year") Integer year
