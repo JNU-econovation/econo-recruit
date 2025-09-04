@@ -117,7 +117,7 @@ public class UserController {
             description = "비밀번호 재설정 시 유효한 메일인지 확인하기 위해 이메일 인증합니다.")
     @PostMapping("/password/verify")
     public ResponseEntity sendEmailForPassword(
-            @RequestBody SendEmailRequestDto sendEmailRequestDto) {
+            @Valid @RequestBody SendEmailRequestDto sendEmailRequestDto) {
         sendEmailUseCase.sendEmailForPassword(sendEmailRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
