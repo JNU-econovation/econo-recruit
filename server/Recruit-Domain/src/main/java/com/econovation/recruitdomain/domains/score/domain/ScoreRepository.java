@@ -16,4 +16,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     @Modifying
     @Query("delete from Score s where s.idpId = :idpId")
     void deleteByIdpId(@Param("idpId") Long idpId);
+
+    void deleteByApplicantIdIn(List<String> applicantIds);
 }

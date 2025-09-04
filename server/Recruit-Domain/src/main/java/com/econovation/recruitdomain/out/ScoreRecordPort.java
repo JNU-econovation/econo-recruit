@@ -9,4 +9,6 @@ public interface ScoreRecordPort {
     List<Score> save(List<Score> scores);
 
     void deleteByInterviewerId(Long idpId);
+
+    void deleteAllByApplicantIds(List<String> applicantIds);
 }
