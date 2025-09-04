@@ -168,19 +168,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleNullPointerException(
             NullPointerException e, HttpServletRequest request) {
 
-        String url = UriComponentsBuilder.fromHttpRequest(
-                        new ServletServerHttpRequest(request))
-                .build()
-                .toUriString();
+        String url =
+                UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(request))
+                        .build()
+                        .toUriString();
 
         log.error("NullPointerException occurred: ", e);
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "NULL_POINTER_ERROR",
-                "An unexpected null pointer error occurred",
-                url
-        );
+        ErrorResponse errorResponse =
+                new ErrorResponse(
+                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                        "NULL_POINTER_ERROR",
+                        "An unexpected null pointer error occurred",
+                        url);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }

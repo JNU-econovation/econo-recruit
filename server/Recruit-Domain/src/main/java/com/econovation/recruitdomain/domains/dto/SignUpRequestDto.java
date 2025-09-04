@@ -2,7 +2,6 @@ package com.econovation.recruitdomain.domains.dto;
 
 import com.econovation.recruitcommon.annotation.PasswordValidate;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.Getter;
 
