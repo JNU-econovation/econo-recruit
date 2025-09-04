@@ -39,6 +39,21 @@ public class MongoAnswerAdaptor {
     }
 
     public void delete(Integer year) {
+        // TODO: year에 해당하는 지원자 id 리스트로 뽑기
+
         mongoAnswerRepository.deleteByYear(year);
+        // TODO: 지원자 id 리스트를 가지고 time_table 데이터 삭제하기 delete(List<String> applicantIds, Integer year)
+
+        // TODO: 지원자 id 리스트를 가지고 score 데이터 삭제하기
+
+        // TODO: 지원자 id 리스트를 가지고 label 데이터 삭제하기
+
+
+        // TODO: card 테이블에서 지원자 id 리스트에 대응하는 board_id 조회하기
+
+        // TODO: 이전에서 조회한 board_id 리스트에 대응하는 board 데이터 삭제하기
+
+        // TODO: card 테이블에서 지원자 id 리스트에 대응하는 데이터 삭제하기
+
     }
 }
