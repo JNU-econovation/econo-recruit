@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantStateModifyEvent;
+import com.econovation.recruitdomain.domains.label.adaptor.LabelAdaptor;
 import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import com.econovation.recruitdomain.domains.timetable.adaptor.TimeTableAdapter;
 import java.util.List;
@@ -28,6 +29,7 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
     private final AnswerAdaptor answerAdaptor;
     private final TimeTableAdapter timeTableAdapter;
     private final ScoreAdaptor scoreAdaptor;
+    private final LabelAdaptor labelAdaptor;
 
     @Override
     @Transactional
@@ -84,7 +86,7 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
         scoreAdaptor.deleteAllByApplicantIds(applicantIds);
 
         // TODO: 지원자 id 리스트를 가지고 label 데이터 삭제하기
-
+        labelAdaptor.deleteAllByApplicantIds(applicantIds);
 
         // TODO: card 테이블에서 지원자 id 리스트에 대응하는 board_id 조회하기
 

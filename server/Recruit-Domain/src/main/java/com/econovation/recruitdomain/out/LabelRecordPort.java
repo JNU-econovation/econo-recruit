@@ -14,4 +14,6 @@ public interface LabelRecordPort {
 
     @Query("delete from Label l where l.idpId = :idpId")
     void deleteByInterviewerId(@Param("idpId") Long idpId);
+
+    void deleteAllByApplicantIds(List<String> applicantIds);
 }
