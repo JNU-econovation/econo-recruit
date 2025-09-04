@@ -13,7 +13,6 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
-import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
@@ -22,7 +21,6 @@ import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
-import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
@@ -30,13 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.annotation.PostConstruct;
-import javax.persistence.criteria.CriteriaBuilder.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -182,9 +177,7 @@ public class ApplicantController {
 
     @Operation(summary = "year에 해당하는 모든 지원서를 삭제합니다.")
     @DeleteMapping("/applicants/all/{year}")
-    public ResponseEntity<String> deleteApplicants(
-            @PathVariable("year") Integer year
-    ) {
+    public ResponseEntity<String> deleteApplicants(@PathVariable("year") Integer year) {
         applicantCommandUseCase.deleteByYear(year);
         return new ResponseEntity<>(APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }

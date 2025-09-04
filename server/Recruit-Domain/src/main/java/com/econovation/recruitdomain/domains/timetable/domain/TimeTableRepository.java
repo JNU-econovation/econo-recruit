@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimeTableRepository extends JpaRepository<TimeTable, Integer> {
     List<TimeTable> findByApplicantId(String applicantId);
+
     void deleteByApplicantIdIn(List<String> applicantIds);
 }

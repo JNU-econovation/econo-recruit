@@ -10,6 +10,8 @@ import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantStateModifyEvent;
+import com.econovation.recruitdomain.domains.board.adaptor.BoardAdaptor;
+import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.label.adaptor.LabelAdaptor;
 import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import com.econovation.recruitdomain.domains.timetable.adaptor.TimeTableAdapter;
@@ -30,6 +32,8 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
     private final TimeTableAdapter timeTableAdapter;
     private final ScoreAdaptor scoreAdaptor;
     private final LabelAdaptor labelAdaptor;
+    private final CardAdaptor cardAdaptor;
+    private final BoardAdaptor boardAdaptor;
 
     @Override
     @Transactional
@@ -75,24 +79,15 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
     @Override
     @Transactional
     public void deleteByYear(Integer year) {
-        // TODO: year에 해당하는 지원자 id 리스트로 뽑기
         List<String> applicantIds = answerAdaptor.findApplicantIdsByYear(year);
-        System.out.println(applicantIds);
         mongoAnswerAdaptor.delete(year);
-        // TODO: 지원자 id 리스트를 가지고 time_table 데이터 삭제하기 delete(List<String> applicantIds, Integer year)
+
         timeTableAdapter.deleteAllByApplicantIds(applicantIds);
-
-        // TODO: 지원자 id 리스트를 가지고 score 데이터 삭제하기
         scoreAdaptor.deleteAllByApplicantIds(applicantIds);
-
-        // TODO: 지원자 id 리스트를 가지고 label 데이터 삭제하기
         labelAdaptor.deleteAllByApplicantIds(applicantIds);
 
-        // TODO: card 테이블에서 지원자 id 리스트에 대응하는 board_id 조회하기
-
-        // TODO: 이전에서 조회한 board_id 리스트에 대응하는 board 데이터 삭제하기
-
-        // TODO: card 테이블에서 지원자 id 리스트에 대응하는 데이터 삭제하기
-
+        List<Long> cardIds = cardAdaptor.findAllByApplicantIds(applicantIds);
+        boardAdaptor.deleteAllByCardIds(cardIds);
+        cardAdaptor.deleteAllByApplicantIds(applicantIds);
     }
 }

@@ -9,4 +9,6 @@ public interface BoardRecordPort {
     void delete(Board board);
 
     void saveAll(List<Board> board);
+
+    void deleteAllByCardIds(List<Long> cardIds);
 }

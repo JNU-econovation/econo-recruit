@@ -51,4 +51,14 @@ public class CardAdaptor implements CardLoadPort, CardRecordPort {
     public List<Card> findByIdIn(List<Long> cardIds) {
         return cardRepository.findAllById(cardIds);
     }
+
+    @Override
+    public List<Long> findAllByApplicantIds(List<String> applicantIds) {
+        return cardRepository.findAllCardIdByApplicantIdIn(applicantIds);
+    }
+
+    @Override
+    public void deleteAllByApplicantIds(List<String> applicantIds) {
+        cardRepository.deleteAllByApplicantIdIn(applicantIds);
+    }
 }

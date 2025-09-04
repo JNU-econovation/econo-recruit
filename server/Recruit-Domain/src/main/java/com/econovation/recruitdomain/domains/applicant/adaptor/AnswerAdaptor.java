@@ -200,8 +200,6 @@ public class AnswerAdaptor {
         query.fields().include("id");
 
         List<MongoAnswer> answers = mongoTemplate.find(query, MongoAnswer.class);
-        return answers.stream()
-                .map(MongoAnswer::getId)
-                .toList();
+        return answers.stream().map(MongoAnswer::getId).toList();
     }
 }

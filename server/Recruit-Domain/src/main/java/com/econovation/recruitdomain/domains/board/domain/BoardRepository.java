@@ -17,4 +17,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     List<Board> findByColumnIdIn(List<Integer> columnsIds);
 
     Optional<Board> findByCardId(Long cardId);
+
+    void deleteAllByCardIdIn(List<Long> cardIds);
 }

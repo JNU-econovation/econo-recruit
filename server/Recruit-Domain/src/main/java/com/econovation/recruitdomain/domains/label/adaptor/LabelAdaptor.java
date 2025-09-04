@@ -86,6 +86,6 @@ public class LabelAdaptor implements LabelRecordPort, LabelLoadPort {
 
     @Override
     public void deleteAllByApplicantIds(List<String> applicantIds) {
-            labelRepository.deleteAllByApplicantIdIn(applicantIds);
+        labelRepository.deleteAllByApplicantIdIn(applicantIds);
     }
 }
