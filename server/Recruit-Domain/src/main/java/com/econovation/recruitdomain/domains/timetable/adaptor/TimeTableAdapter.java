@@ -41,10 +41,10 @@ public class TimeTableAdapter implements TimeTableRecordPort, TimeTableLoadPort 
 
     @Override
     public void deleteAllByApplicantIds(List<String> applicantIds) {
-        List<TimeTable> timeTablesToDelete = applicantIds.stream()
+        List<TimeTable> timeTables = applicantIds.stream()
                 .flatMap(applicantId -> timeTableRepository.findByApplicantId(applicantId).stream())
                 .toList();
 
-        timeTableRepository.deleteAll(timeTablesToDelete);
+        timeTableRepository.deleteAll(timeTables);
     }
 }
