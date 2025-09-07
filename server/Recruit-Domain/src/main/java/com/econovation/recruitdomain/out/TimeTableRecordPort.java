@@ -7,4 +7,6 @@ public interface TimeTableRecordPort {
     //    List<TimeTableInsertDto> saveAll(List<TimeTableInsertDto> timeTableInsertDtos,Integer
     // applicantId);
     List<TimeTable> saveAll(List<TimeTable> timeTables);
+
+    void deleteAllByApplicantIds(List<String> applicantIds);
 }

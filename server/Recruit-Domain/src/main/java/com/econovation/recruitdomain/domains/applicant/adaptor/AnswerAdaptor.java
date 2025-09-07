@@ -194,4 +194,12 @@ public class AnswerAdaptor {
         MongoAnswer result = mongoTemplate.findOne(query, MongoAnswer.class);
         return Optional.ofNullable(result);
     }
+
+    public List<String> findApplicantIdsByYear(Integer year) {
+        Query query = new Query().addCriteria(Criteria.where("year").is(year));
+        query.fields().include("id");
+
+        List<MongoAnswer> answers = mongoTemplate.find(query, MongoAnswer.class);
+        return answers.stream().map(MongoAnswer::getId).toList();
+    }
 }

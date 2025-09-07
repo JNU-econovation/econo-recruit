@@ -38,4 +38,9 @@ public class TimeTableAdapter implements TimeTableRecordPort, TimeTableLoadPort 
         }
         return timeTables;
     }
+
+    @Override
+    public void deleteAllByApplicantIds(List<String> applicantIds) {
+        timeTableRepository.deleteByApplicantIdIn(applicantIds);
+    }
 }

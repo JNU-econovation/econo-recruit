@@ -87,6 +87,8 @@ public class SecurityConfig {
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .mvcMatchers(HttpMethod.POST, "/api/v1/recruitment")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
+                .mvcMatchers(HttpMethod.DELETE, "/api/v1/applicants/all/*")
+                .hasAnyRole("ROLE_OPERATION")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
 

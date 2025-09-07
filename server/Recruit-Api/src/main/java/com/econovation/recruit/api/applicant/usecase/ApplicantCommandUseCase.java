@@ -11,4 +11,6 @@ public interface ApplicantCommandUseCase {
     String execute(String applicantId, String state);
 
     UUID execute(Map<String, Object> blocks, UUID id);
+
+    void deleteByYear(Integer year);
 }
