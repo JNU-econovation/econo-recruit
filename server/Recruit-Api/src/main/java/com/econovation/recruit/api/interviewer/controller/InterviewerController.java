@@ -52,6 +52,7 @@ public class InterviewerController {
     public ResponseEntity<String> createInterviewers(@RequestBody List<Long> idpIds) {
         interviewerUseCase.createInterviewers(idpIds);
         return new ResponseEntity<>(INTERVIEWER_SUCCESS_REGISTER_MESSAGE, HttpStatus.OK);
+
     }
 
     @DevelopOnlyApi

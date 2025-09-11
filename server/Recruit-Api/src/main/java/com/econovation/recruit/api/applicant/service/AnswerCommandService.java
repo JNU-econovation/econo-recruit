@@ -90,4 +90,10 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
         boardAdaptor.deleteAllByCardIds(cardIds);
         cardAdaptor.deleteAllByApplicantIds(applicantIds);
     }
+
+    @Override
+    @Transactional
+    public void deleteByApplicantIds(List<String> applicantIds) {
+        mongoAnswerAdaptor.deleteByApplicantIds(applicantIds);
+    }
 }
