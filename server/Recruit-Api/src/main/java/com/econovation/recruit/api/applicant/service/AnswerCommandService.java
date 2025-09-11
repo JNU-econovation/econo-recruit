@@ -11,7 +11,9 @@ import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantSta
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantRegisterEvent;
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantStateModifyEvent;
 import com.econovation.recruitdomain.domains.board.adaptor.BoardAdaptor;
+import com.econovation.recruitdomain.domains.board.domain.Board;
 import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
+import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.label.adaptor.LabelAdaptor;
 import com.econovation.recruitdomain.domains.score.adaptor.ScoreAdaptor;
 import com.econovation.recruitdomain.domains.timetable.adaptor.TimeTableAdapter;
@@ -95,5 +97,25 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
     @Transactional
     public void deleteByApplicantIds(List<String> applicantIds) {
         mongoAnswerAdaptor.deleteByApplicantIds(applicantIds);
+
+        timeTableAdapter.deleteAllByApplicantIds(applicantIds);
+        scoreAdaptor.deleteAllByApplicantIds(applicantIds);
+        labelAdaptor.deleteAllByApplicantIds(applicantIds);
+
+        for (String applicantId : applicantIds) {
+            deleteBoardByApplicantId(applicantId);
+        }
+
+        cardAdaptor.deleteAllByApplicantIds(applicantIds);
+    }
+
+    private void deleteBoardByApplicantId(String applicantId) {
+        Card card = cardAdaptor.findByApplicantId(applicantId);
+        Board deleteBoard = boardAdaptor.getBoardByCardId(card.getId());
+
+        Board previousBoard = boardAdaptor.getByNextBoardId(deleteBoard.getId()).get();
+        previousBoard.updateNextBoardID(deleteBoard.getNextBoardId());
+
+        boardAdaptor.deleteByCardId(card.getId());
     }
 }
