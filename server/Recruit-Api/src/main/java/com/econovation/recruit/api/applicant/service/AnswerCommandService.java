@@ -12,6 +12,7 @@ import com.econovation.recruitdomain.domains.applicant.event.domainevent.Applica
 import com.econovation.recruitdomain.domains.applicant.event.domainevent.ApplicantStateModifyEvent;
 import com.econovation.recruitdomain.domains.board.adaptor.BoardAdaptor;
 import com.econovation.recruitdomain.domains.board.domain.Board;
+import com.econovation.recruitdomain.domains.board.exception.BoardNotFoundException;
 import com.econovation.recruitdomain.domains.card.adaptor.CardAdaptor;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.label.adaptor.LabelAdaptor;
@@ -113,7 +114,7 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
         Card card = cardAdaptor.findByApplicantId(applicantId);
         Board deleteBoard = boardAdaptor.getBoardByCardId(card.getId());
 
-        Board previousBoard = boardAdaptor.getByNextBoardId(deleteBoard.getId()).get();
+        Board previousBoard = boardAdaptor.getByNextBoardId(deleteBoard.getId()).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
         previousBoard.updateNextBoardID(deleteBoard.getNextBoardId());
 
         boardAdaptor.deleteByCardId(card.getId());
