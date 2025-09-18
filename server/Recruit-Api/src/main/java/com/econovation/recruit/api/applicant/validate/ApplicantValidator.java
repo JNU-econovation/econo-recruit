@@ -3,7 +3,7 @@ package com.econovation.recruit.api.applicant.validate;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantDuplicateSubmitException;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantOutOfDateException;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongPositionException;
