@@ -162,10 +162,12 @@ public class ApplicantController {
     }
 
     @Operation(
-            summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
+            summary = "지원서의 합/불 상태를 조회합니다.",
             description =
                     """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    - passState : non-processed | non-passed | first-passed | final-passed
+                    - isPassable : 현재 상태에서 pass 할 수 있는지 여부
+                    - isNonPassable : 현재 상태에서 non-pass 할 수 있는지 여부
                     """)
     @GetMapping("/year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
