@@ -1,6 +1,7 @@
 package com.econovation.recruitdomain.domains.applicant.domain.state;
 
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongStateException;
+import com.econovation.recruitdomain.domains.applicant.exception.NotOperatedException;
 import java.util.Arrays;
 import lombok.Getter;
 
@@ -9,68 +10,121 @@ public enum PassStates {
     NON_PROCESSED("non-processed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return PassStates.FIRST_PASSED;
+            if (isPassable(period)) return PassStates.FIRST_PASSED;
             else return this;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return PassStates.FIRST_FAILED;
+            if (isNonPassable(period)) return PassStates.FIRST_FAILED;
             else return this;
+        }
+
+        @Override
+        public boolean isPassable(PeriodStates period) {
+            if(period.equals(PeriodStates.FIRST_DISCUSSION)) return true;
+            else return false;
+        }
+
+        @Override
+        public boolean isNonPassable(PeriodStates period) {
+            if(period.equals(PeriodStates.FIRST_DISCUSSION)) return true;
+            else return false;
         }
     },
     FIRST_PASSED("first-passed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return this;
-            else if (period.equals(PeriodStates.FINAL_DISCUSSION)) return PassStates.FINAL_PASSED;
-            else return PassStates.FINAL_FAILED;
+            if (isPassable(period)) return PassStates.FINAL_PASSED;
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return PassStates.FIRST_FAILED;
-            else if (period.equals(PeriodStates.FINAL_DISCUSSION)) return PassStates.FINAL_FAILED;
-            else return this;
+            if (isNonPassable(period)) {
+                if (period.equals(PeriodStates.FIRST_DISCUSSION))
+                    return PassStates.FIRST_FAILED;
+                else
+                    return PassStates.FINAL_FAILED;
+            }
+
+            else throw NotOperatedException.EXCEPTION;
+        }
+
+        @Override
+        public boolean isPassable(PeriodStates period) {
+            return period.equals(PeriodStates.FINAL_DISCUSSION);
+        }
+
+        @Override
+        public boolean isNonPassable(PeriodStates period) {
+            return period.equals(PeriodStates.FIRST_DISCUSSION) || period.equals(PeriodStates.FINAL_DISCUSSION);
         }
     },
     FIRST_FAILED("first-failed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return PassStates.FIRST_PASSED;
+            if (isPassable(period)) return PassStates.FIRST_PASSED;
             else return this;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
-            return this;
+            throw NotOperatedException.EXCEPTION;
+        }
+
+        @Override
+        public boolean isPassable(PeriodStates period) {
+            return period.equals(PeriodStates.FIRST_DISCUSSION);
+        }
+
+        @Override
+        public boolean isNonPassable(PeriodStates period) {
+            return false;
         }
     },
     FINAL_PASSED("final-passed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            return this;
+            throw NotOperatedException.EXCEPTION;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION))
-                return this; // 1차 합격자 논의 기간에 최종합격 상태에 대한 요청이 있으면 에러를..?
-            else if (period.equals(PeriodStates.FINAL_DISCUSSION)) return PassStates.FIRST_PASSED;
-            else return this;
+            if (isNonPassable(period)) return PassStates.FINAL_FAILED;
+            else throw NotOperatedException.EXCEPTION;
+        }
+
+        @Override
+        public boolean isPassable(PeriodStates period) {
+            return false;
+        }
+
+        @Override
+        public boolean isNonPassable(PeriodStates period) {
+            return period.equals(PeriodStates.FINAL_DISCUSSION);
         }
     },
     FINAL_FAILED("final-failed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            if (period.equals(PeriodStates.FIRST_DISCUSSION)) return this;
-            else if (period.equals(PeriodStates.FINAL_DISCUSSION)) return PassStates.FIRST_PASSED;
-            else return this;
+            if(isPassable(period)) return PassStates.FINAL_PASSED;
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
-            return this;
+            throw NotOperatedException.EXCEPTION;
+        }
+
+        @Override
+        public boolean isPassable(PeriodStates period) {
+            return period.equals(PeriodStates.FINAL_DISCUSSION);
+        }
+
+        @Override
+        public boolean isNonPassable(PeriodStates period) {
+            return false;
         }
     };
 
@@ -83,6 +137,10 @@ public enum PassStates {
     public abstract PassStates pass(PeriodStates period);
 
     public abstract PassStates nonPass(PeriodStates period);
+
+    public abstract boolean isPassable(PeriodStates period);
+
+    public abstract boolean isNonPassable(PeriodStates period);
 
     public static PassStates findStatus(String state) {
         return Arrays.stream(PassStates.values())
