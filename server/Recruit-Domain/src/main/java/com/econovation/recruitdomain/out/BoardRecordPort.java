@@ -11,4 +11,6 @@ public interface BoardRecordPort {
     void saveAll(List<Board> board);
 
     void deleteAllByCardIds(List<Long> cardIds);
+
+    void deleteByCardId(Long cardId);
 }

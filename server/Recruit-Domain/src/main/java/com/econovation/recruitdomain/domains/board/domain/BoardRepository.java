@@ -19,4 +19,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     Optional<Board> findByCardId(Long cardId);
 
     void deleteAllByCardIdIn(List<Long> cardIds);
+
+    void deleteByCardId(Long cardId);
 }

@@ -41,4 +41,8 @@ public class MongoAnswerAdaptor {
     public void delete(Integer year) {
         mongoAnswerRepository.deleteByYear(year);
     }
+
+    public void deleteByApplicantIds(List<String> applicantIds) {
+        mongoAnswerRepository.deleteByIdIn(applicantIds);
+    }
 }

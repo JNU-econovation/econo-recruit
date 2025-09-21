@@ -67,6 +67,7 @@ public class RecruitStatic {
     public static final List<String> TIMETABLE_APPLICANT_FIELD = List.of("field", "name");
     public static String APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE =
             "성공적으로 year에 해당하는 전체 지원서가 삭제되었습니다";
+    public static String APPLICANTS_SUCCESS_DELETE_MESSAGE = "성공적으로 단일 지원서들을 일괄 삭제했습니다.";
 
     public static final String LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 됐습니다";
 

@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.controller;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_SUCCESS_DELETE_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
@@ -17,6 +18,7 @@ import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
+import com.econovation.recruitdomain.domains.applicant.domain.Applicant;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
@@ -180,5 +182,14 @@ public class ApplicantController {
     public ResponseEntity<String> deleteApplicants(@PathVariable("year") Integer year) {
         applicantCommandUseCase.deleteByYear(year);
         return new ResponseEntity<>(APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원서들을 선택해서 일괄 삭제합니다.")
+    @DeleteMapping("/applicants")
+    public ResponseEntity<String> deleteApplicant(
+            @RequestBody List<String> applicantIds
+            ) {
+        applicantCommandUseCase.deleteByApplicantIds(applicantIds);
+        return new ResponseEntity<>(APPLICANTS_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 }
