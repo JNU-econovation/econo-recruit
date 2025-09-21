@@ -9,11 +9,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "applicant")
+@CompoundIndexes({
+        @CompoundIndex(name = "unique_class_of_per_year",
+                def = "{'year': 1, 'qna.classOf': 1}",
+                unique = true)
+})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
