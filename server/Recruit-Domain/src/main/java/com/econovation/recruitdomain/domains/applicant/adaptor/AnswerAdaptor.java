@@ -6,8 +6,11 @@ import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerRepository;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +28,8 @@ public class AnswerAdaptor {
 
     private final MongoTemplate mongoTemplate;
     private final MongoAnswerRepository answerRepository;
+
+    private static final int AUTOCOMPLETE_LIMIT = 10;
 
     public void save(MongoAnswer answer) {
         answerRepository.save(answer);
@@ -201,5 +206,41 @@ public class AnswerAdaptor {
 
         List<MongoAnswer> answers = mongoTemplate.find(query, MongoAnswer.class);
         return answers.stream().map(MongoAnswer::getId).toList();
+    }
+
+    public List<String> findApplicantNamesForAutocomplete(Integer year, String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return List.of();
+        }
+
+        String escapedKeyword = Pattern.quote(keyword);
+
+        Query query = new Query()
+                .addCriteria(Criteria.where("year").is(year)
+                        .and("qna.name").regex(escapedKeyword, "i"))
+                .limit(AUTOCOMPLETE_LIMIT * 3);
+
+        query.fields().include("qna.name");
+
+        return mongoTemplate.find(query, MongoAnswer.class)
+                .stream()
+                .map(this::extractName)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted(sort(keyword))
+                .limit(AUTOCOMPLETE_LIMIT)
+                .toList();
+    }
+
+    private Comparator<String> sort(String keyword) {
+        String lower = keyword.toLowerCase();
+        return Comparator
+                .comparing((String name) -> !name.toLowerCase().startsWith(lower))
+                .thenComparing(String::length)
+                .thenComparing(String.CASE_INSENSITIVE_ORDER);
+    }
+
+    private String extractName(MongoAnswer answer) {
+        return (String) answer.getQna().get("name");
     }
 }
