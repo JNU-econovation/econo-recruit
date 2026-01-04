@@ -18,7 +18,6 @@ import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
 import com.econovation.recruitcommon.annotation.XssProtected;
-import com.econovation.recruitdomain.domains.applicant.domain.Applicant;
 import com.econovation.recruitdomain.domains.applicant.dto.TimeTableVo;
 import com.econovation.recruitdomain.domains.dto.EmailSendDto;
 import com.econovation.recruitdomain.domains.timetable.domain.TimeTable;
@@ -36,7 +35,15 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -191,5 +198,11 @@ public class ApplicantController {
             ) {
         applicantCommandUseCase.deleteByApplicantIds(applicantIds);
         return new ResponseEntity<>(APPLICANTS_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자 검색 시 성함 자동완성")
+    @GetMapping("/applicants/names/{year}")
+    public ResponseEntity<List<String>> getApplicantNames(@PathVariable Integer year, @RequestParam String keyword) {
+        return new ResponseEntity<>(applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
     }
 }

@@ -285,4 +285,9 @@ public class ApplicantService implements ApplicantQueryUseCase {
         qna.put(PASS_STATE_KEY, mongoAnswer.getApplicantStateOrDefault());
         return qna;
     }
+
+    @Transactional(readOnly = true)
+    public List<String> autocomplete(Integer year, String keyword) {
+        return answerAdaptor.findApplicantNamesForAutocomplete(year, keyword);
+    }
 }

@@ -55,4 +55,6 @@ public interface ApplicantQueryUseCase {
             List<String> requestedQnaFields);
 
     Map<String, Object> executeFiltered(String applicantId, List<String> requestedQnaFields);
+
+    List<String> autocomplete(Integer year, String keyword);
 }
