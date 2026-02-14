@@ -13,6 +13,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByApplicantId(String applicantId);
 
+    List<Comment> findByApplicantIdAndIdpId(String applicantId, Long idpId);
+
     @Modifying
     @Query("delete from Comment c where c.idpId = :idpId")
     void deleteByIdpId(@Param("idpId") Long idpId);

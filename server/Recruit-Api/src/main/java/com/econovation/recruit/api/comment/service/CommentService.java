@@ -12,6 +12,7 @@ import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostExc
 import com.econovation.recruitdomain.domains.dto.CommentPairVo;
 import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
+import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.CardLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
@@ -227,12 +228,19 @@ public class CommentService implements CommentUseCase {
         comment.updateContent(content);
     }
 
-    //
     @Override
     @Transactional(readOnly = true)
     public List<CommentPairVo> findByApplicantId(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
-        List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
+        Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
+        List<Comment> comments;
+        if (interviewer.getRole() == Role.ROLE_OPERATION
+                || interviewer.getRole() == Role.ROLE_PRESIDENT) {
+            comments = commentLoadPort.findByApplicantId(applicantId);
+        } else {
+            comments = commentLoadPort.findByApplicantIdAndIdpId(applicantId, idpId);
+        }
+
         return getCommentPairVo(idpId, comments);
     }
 
