@@ -166,14 +166,16 @@ public class CommentService implements CommentUseCase {
     @Override
     public List<CommentPairVo> findByCardId(Long cardId) {
         Long idpId = SecurityUtils.getCurrentUserId();
+        Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
+
         Card card = cardLoadPort.findById(cardId);
         List<Comment> comments = commentLoadPort.findByCardId(card.getId());
 
-        return getCommentPairVo(idpId, comments);
+        return getCommentPairVo(idpId, comments, isAdminRole(interviewer));
     }
 
     @NotNull
-    private List<CommentPairVo> getCommentPairVo(Long idpId, List<Comment> comments) {
+    private List<CommentPairVo> getCommentPairVo(Long idpId, List<Comment> comments, boolean isAdmin) {
         List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
@@ -195,6 +197,7 @@ public class CommentService implements CommentUseCase {
                                                                             .equals(idpId));
 
                             Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
+                            Boolean isBlurred = !isAdmin && !canEdit;
                             String interviewersName =
                                     interviewers.stream()
                                             .filter(
@@ -205,7 +208,7 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit);
+                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit, isBlurred);
                         })
                 .collect(Collectors.toList());
     }
@@ -233,15 +236,9 @@ public class CommentService implements CommentUseCase {
     public List<CommentPairVo> findByApplicantId(String applicantId) {
         Long idpId = SecurityUtils.getCurrentUserId();
         Interviewer interviewer = interviewerLoadPort.loadInterviewById(idpId);
-        List<Comment> comments;
-        if (interviewer.getRole() == Role.ROLE_OPERATION
-                || interviewer.getRole() == Role.ROLE_PRESIDENT) {
-            comments = commentLoadPort.findByApplicantId(applicantId);
-        } else {
-            comments = commentLoadPort.findByApplicantIdAndIdpId(applicantId, idpId);
-        }
+        List<Comment> comments = commentLoadPort.findByApplicantId(applicantId);
 
-        return getCommentPairVo(idpId, comments);
+        return getCommentPairVo(idpId, comments, isAdminRole(interviewer));
     }
 
     @Override
@@ -255,5 +252,10 @@ public class CommentService implements CommentUseCase {
         commentLikeRecordPort.deleteAll(
                 commentLikeLoadPort.findByCommentIds(
                         comments.stream().map(Comment::getId).collect(Collectors.toList())));
+    }
+
+    private boolean isAdminRole(Interviewer interviewer) {
+        return interviewer.getRole() == Role.ROLE_OPERATION
+                || interviewer.getRole() == Role.ROLE_PRESIDENT;
     }
 }
