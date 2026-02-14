@@ -22,7 +22,7 @@ public class CommentPairVo {
         return CommentPairVo.builder()
                 .id(comment.getId())
                 .createdAt(String.valueOf(Timestamp.valueOf(comment.getCreatedAt()).getTime()))
-                .content(isBlurred ? "블러 처리된 댓글입니다" : comment.getContent())
+                .content(isBlurred ? "자신의 댓글만 조회할 수 있습니다." : comment.getContent())
                 .isLike(isLike)
                 .likeCount(comment.getLikeCount())
                 .interviewerName(interviewerName)
