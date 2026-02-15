@@ -178,7 +178,8 @@ public class CommentService implements CommentUseCase {
     }
 
     @NotNull
-    private List<CommentPairVo> getCommentPairVo(Long idpId, List<Comment> comments, boolean isAdmin) {
+    private List<CommentPairVo> getCommentPairVo(
+            Long idpId, List<Comment> comments, boolean isAdmin) {
 
         boolean isPublic = commentDisclosureLoadPort.find().isPublic();
 
@@ -214,7 +215,8 @@ public class CommentService implements CommentUseCase {
                                             .findFirst()
                                             .map(Interviewer::getName)
                                             .orElse("");
-                            return CommentPairVo.of(comment, isLiked, interviewersName, canEdit, isBlurred);
+                            return CommentPairVo.of(
+                                    comment, isLiked, interviewersName, canEdit, isBlurred);
                         })
                 .collect(Collectors.toList());
     }

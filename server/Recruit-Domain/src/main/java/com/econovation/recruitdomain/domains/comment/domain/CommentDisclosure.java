@@ -19,8 +19,7 @@ public class CommentDisclosure extends BaseTimeEntity {
 
     public static final Long SINGLETON_ID = 1L;
 
-    @Id
-    private Long id;
+    @Id private Long id;
 
     @Column(nullable = false)
     private boolean isPublic;

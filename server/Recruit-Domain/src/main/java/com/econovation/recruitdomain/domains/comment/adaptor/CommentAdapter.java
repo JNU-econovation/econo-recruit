@@ -5,18 +5,18 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMEN
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosure;
+import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosureRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
-import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosure;
-import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosureRepository;
 import com.econovation.recruitdomain.domains.comment.exception.CommentLikeNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
+import com.econovation.recruitdomain.out.CommentDisclosureLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
 import com.econovation.recruitdomain.out.CommentRecordPort;
-import com.econovation.recruitdomain.out.CommentDisclosureLoadPort;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +25,11 @@ import lombok.RequiredArgsConstructor;
 @Adaptor
 @RequiredArgsConstructor
 public class CommentAdapter
-        implements CommentRecordPort, CommentLoadPort, CommentLikeRecordPort, CommentLikeLoadPort,
-        CommentDisclosureLoadPort {
+        implements CommentRecordPort,
+                CommentLoadPort,
+                CommentLikeRecordPort,
+                CommentLikeLoadPort,
+                CommentDisclosureLoadPort {
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
     private final CommentDisclosureRepository commentDisclosureRepository;
@@ -136,6 +139,8 @@ public class CommentAdapter
 
     @Override
     public CommentDisclosure find() {
-        return commentDisclosureRepository.findById(CommentDisclosure.SINGLETON_ID).orElseThrow(() -> CommentNotFoundException.EXCEPTION);
+        return commentDisclosureRepository
+                .findById(CommentDisclosure.SINGLETON_ID)
+                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
     }
 }

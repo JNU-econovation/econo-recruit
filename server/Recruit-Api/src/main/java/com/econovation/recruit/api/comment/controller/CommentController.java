@@ -50,7 +50,9 @@ public class CommentController {
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
-    @Operation(summary = "applicationId로 댓글 조회", description = "권한별로 회장단만 모든 코멘트 조회 가능, TF들은 자신의 코멘트만 조회 가능")
+    @Operation(
+            summary = "applicationId로 댓글 조회",
+            description = "권한별로 회장단만 모든 코멘트 조회 가능, TF들은 자신의 코멘트만 조회 가능")
     @GetMapping("/applicants/{applicant-id}/comments")
     public ResponseEntity<List<CommentPairVo>> findByApplicantId(
             @PathVariable(name = "applicant-id") String applicantId) {

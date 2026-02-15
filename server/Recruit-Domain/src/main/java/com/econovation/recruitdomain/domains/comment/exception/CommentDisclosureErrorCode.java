@@ -13,7 +13,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CommentDisclosureErrorCode implements BaseErrorCode {
-    COMMENT_DISCLOSURE_NOT_FOUND(NOT_FOUND, "COMMENT_DISCLOSURE_404_1", "댓글 전체 공개 여부 기록을 찾을 수 없습니다."),
+    COMMENT_DISCLOSURE_NOT_FOUND(
+            NOT_FOUND, "COMMENT_DISCLOSURE_404_1", "댓글 전체 공개 여부 기록을 찾을 수 없습니다."),
     ;
 
     private Integer status;
