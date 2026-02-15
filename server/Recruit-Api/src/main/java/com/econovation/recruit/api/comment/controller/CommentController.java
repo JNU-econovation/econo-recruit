@@ -96,4 +96,11 @@ public class CommentController {
         commentUseCase.deleteCommentLike(commentId);
         return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
+
+    @Operation(summary = "코멘트 전체 공개", description = "회장단만 사용 가능합니다.")
+    @PostMapping("/comments/disclosure")
+    public ResponseEntity changeDisclosure() {
+        commentUseCase.changeViewMode();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

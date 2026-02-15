@@ -6,6 +6,7 @@ import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
 import com.econovation.recruitdomain.domains.card.domain.Card;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosure;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.exception.CommentInvalidCreatedException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotHostException;
@@ -14,6 +15,7 @@ import com.econovation.recruitdomain.domains.dto.CommentRegisterDto;
 import com.econovation.recruitdomain.domains.interviewer.domain.Interviewer;
 import com.econovation.recruitdomain.domains.interviewer.domain.Role;
 import com.econovation.recruitdomain.out.CardLoadPort;
+import com.econovation.recruitdomain.out.CommentDisclosureLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
@@ -37,6 +39,7 @@ public class CommentService implements CommentUseCase {
     private final CommentLikeLoadPort commentLikeLoadPort;
     private final CardLoadPort cardLoadPort;
     private final InterviewerLoadPort interviewerLoadPort;
+    private final CommentDisclosureLoadPort commentDisclosureLoadPort;
 
     @Override
     @Transactional
@@ -252,6 +255,13 @@ public class CommentService implements CommentUseCase {
         commentLikeRecordPort.deleteAll(
                 commentLikeLoadPort.findByCommentIds(
                         comments.stream().map(Comment::getId).collect(Collectors.toList())));
+    }
+
+    @Override
+    @Transactional
+    public void changeViewMode() {
+        CommentDisclosure commentDisclosure = commentDisclosureLoadPort.find();
+        commentDisclosure.changeViewMode();
     }
 
     private boolean isAdminRole(Interviewer interviewer) {
