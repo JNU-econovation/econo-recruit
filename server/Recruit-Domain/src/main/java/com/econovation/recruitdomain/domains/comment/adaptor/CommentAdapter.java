@@ -71,6 +71,15 @@ public class CommentAdapter
     }
 
     @Override
+    public List<Comment> findByApplicantIdAndIdpId(String applicantId, Long idpId) {
+        List<Comment> comments = commentRepository.findByApplicantIdAndIdpId(applicantId, idpId);
+        if (comments.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return comments;
+    }
+
+    @Override
     public CommentLike saveCommentLike(CommentLike commentLike) {
         return commentLikeRepository.save(commentLike);
     }
