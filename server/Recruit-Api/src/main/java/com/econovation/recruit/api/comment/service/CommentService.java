@@ -179,6 +179,9 @@ public class CommentService implements CommentUseCase {
 
     @NotNull
     private List<CommentPairVo> getCommentPairVo(Long idpId, List<Comment> comments, boolean isAdmin) {
+
+        boolean isPublic = commentDisclosureLoadPort.find().isPublic();
+
         List<Long> idpIds = comments.stream().map(Comment::getIdpId).collect(Collectors.toList());
 
         List<Interviewer> interviewers = interviewerLoadPort.loadInterviewerByIdpIds(idpIds);
@@ -200,7 +203,7 @@ public class CommentService implements CommentUseCase {
                                                                             .equals(idpId));
 
                             Boolean canEdit = Objects.equals(comment.getIdpId(), idpId);
-                            Boolean isBlurred = !isAdmin && !canEdit;
+                            Boolean isBlurred = !isAdmin && !canEdit && !isPublic;
                             String interviewersName =
                                     interviewers.stream()
                                             .filter(
