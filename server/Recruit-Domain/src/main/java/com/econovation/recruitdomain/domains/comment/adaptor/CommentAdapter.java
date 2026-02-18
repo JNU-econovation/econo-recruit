@@ -10,6 +10,7 @@ import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosureRep
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.exception.CommentDisclosureNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentLikeNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
 import com.econovation.recruitdomain.out.CommentDisclosureLoadPort;
@@ -141,6 +142,6 @@ public class CommentAdapter
     public CommentDisclosure find() {
         return commentDisclosureRepository
                 .findById(CommentDisclosure.SINGLETON_ID)
-                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
+                .orElseThrow(() -> CommentDisclosureNotFoundException.EXCEPTION);
     }
 }
