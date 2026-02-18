@@ -11,3 +11,4 @@ INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (4,
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (5,NOW(),NOW(),"지원자 대응팀");
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (6,NOW(),NOW(),"OT 담당팀");
 INSERT INTO navigation (navigation_id, created_at, updated_at, title) VALUES (7,NOW(),NOW(),"기타 참고");
+INSERT INTO comment_disclosure (id, is_public, created_at, updated_at) VALUES (1, false, NOW(), NOW());
