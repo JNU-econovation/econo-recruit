@@ -39,28 +39,30 @@ WHERE NOT EXISTS (
 );
 
 -- year별 공통 컬럼의 연결 순서를 개발자 -> 디자이너 -> 기획자 로 맞춥니다.
-UPDATE columns c
-SET c.next_columns_id = CASE
-    WHEN c.title = "개발자" THEN (
-        SELECT c2.columns_id
-        FROM columns c2
-        WHERE c2.navigation_id = 1
-          AND c2.year = c.year
-          AND c2.title = "디자이너"
-        LIMIT 1
-    )
-    WHEN c.title = "디자이너" THEN (
-        SELECT c3.columns_id
-        FROM columns c3
-        WHERE c3.navigation_id = 1
-          AND c3.year = c.year
-          AND c3.title = "기획자"
-        LIMIT 1
-    )
-    ELSE NULL
-END
-WHERE c.navigation_id = 1
-  AND c.year BETWEEN 31 AND 40
-  AND c.title IN ("개발자", "디자이너", "기획자");
+UPDATE columns developer
+LEFT JOIN columns designer
+       ON designer.navigation_id = developer.navigation_id
+      AND designer.year = developer.year
+      AND designer.title = "디자이너"
+SET developer.next_columns_id = designer.columns_id
+WHERE developer.navigation_id = 1
+  AND developer.year BETWEEN 31 AND 40
+  AND developer.title = "개발자";
+
+UPDATE columns designer
+LEFT JOIN columns pm
+       ON pm.navigation_id = designer.navigation_id
+      AND pm.year = designer.year
+      AND pm.title = "기획자"
+SET designer.next_columns_id = pm.columns_id
+WHERE designer.navigation_id = 1
+  AND designer.year BETWEEN 31 AND 40
+  AND designer.title = "디자이너";
+
+UPDATE columns pm
+SET pm.next_columns_id = NULL
+WHERE pm.navigation_id = 1
+  AND pm.year BETWEEN 31 AND 40
+  AND pm.title = "기획자";
 
 INSERT INTO comment_disclosure (id, is_public, created_at, updated_at) VALUES (1, false, NOW(), NOW());
