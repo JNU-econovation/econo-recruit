@@ -269,6 +269,12 @@ public class CommentService implements CommentUseCase {
         commentDisclosure.changeViewMode();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean isPublic() {
+        return commentDisclosureLoadPort.find().isPublic();
+    }
+
     private boolean isAdminRole(Interviewer interviewer) {
         return interviewer.getRole() == Role.ROLE_OPERATION
                 || interviewer.getRole() == Role.ROLE_PRESIDENT;

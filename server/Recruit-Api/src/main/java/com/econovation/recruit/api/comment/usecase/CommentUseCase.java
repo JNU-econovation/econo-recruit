@@ -30,4 +30,6 @@ public interface CommentUseCase {
     void deleteCommentByCardId(Long cardId);
 
     void changeViewMode();
+
+    Boolean isPublic();
 }

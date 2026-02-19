@@ -105,4 +105,11 @@ public class CommentController {
         commentUseCase.changeViewMode();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "댓글 전체 공개 상태 조회")
+    @GetMapping("/comments/disclosure")
+    public ResponseEntity<Boolean> getDisclosure() {
+        boolean isPublic = commentUseCase.isPublic();
+        return new ResponseEntity(isPublic, HttpStatus.OK);
+    }
 }
