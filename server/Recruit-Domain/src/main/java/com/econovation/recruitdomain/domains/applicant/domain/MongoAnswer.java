@@ -1,5 +1,6 @@
 package com.econovation.recruitdomain.domains.applicant.domain;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import java.util.Map;
@@ -79,7 +80,7 @@ public class MongoAnswer extends MongoBaseTimeEntity {
         this.id = id;
         this.year = year;
         this.qna = qna;
-        this.name = String.valueOf(qna.get("name"));
+        this.name = String.valueOf(qna.get(ApplicantQnaKeys.NAME));
         this.applicantState = new ApplicantState();
         this.qnaSearchIndex =
                 qna.values().stream().map(Object::toString).collect(Collectors.joining(" "));

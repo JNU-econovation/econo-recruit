@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.applicant.command;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +24,10 @@ public class CreateAnswerCommand {
     }
 
     private void setQna(Map<String, Object> qna) {
-        if (qna != null && qna.containsKey("name")) {
-            Object value = qna.get("name");
+        if (qna != null && qna.containsKey(ApplicantQnaKeys.NAME)) {
+            Object value = qna.get(ApplicantQnaKeys.NAME);
             if (value instanceof String str) {
-                qna.put("name", str.trim());
+                qna.put(ApplicantQnaKeys.NAME, str.trim());
             }
         }
         this.qna = qna;

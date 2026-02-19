@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.card.service;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
@@ -126,8 +127,8 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
             Map<String, Object> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
                 major = applicantAnswers.getOrDefault("major", "").toString();
-                firstPriority = applicantAnswers.getOrDefault("field1", "").toString();
-                secondPriority = applicantAnswers.getOrDefault("field2", "").toString();
+                firstPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD1, "").toString();
+                secondPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD2, "").toString();
             } else {
                 firstPriority = "";
                 secondPriority = "";

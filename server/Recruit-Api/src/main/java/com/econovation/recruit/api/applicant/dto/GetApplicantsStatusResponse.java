@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.dto;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongStateException;
 import java.util.Map;
@@ -24,10 +25,10 @@ public class GetApplicantsStatusResponse {
     public static GetApplicantsStatusResponse of(Map<String, Object> result) {
         if (result.get(PASS_STATE_KEY) instanceof ApplicantState applicantState) {
             return GetApplicantsStatusResponse.builder()
-                    .field((String) result.get("field"))
-                    .field1((String) result.get("field1"))
-                    .field2((String) result.get("field2"))
-                    .name((String) result.get("name"))
+                    .field((String) result.get(ApplicantQnaKeys.FIELD))
+                    .field1((String) result.get(ApplicantQnaKeys.FIELD1))
+                    .field2((String) result.get(ApplicantQnaKeys.FIELD2))
+                    .name((String) result.get(ApplicantQnaKeys.NAME))
                     .id((String) result.get("id"))
                     .year((Integer) result.get("year"))
                     .state(ApplicantStateResponse.of(applicantState.getPassState()))

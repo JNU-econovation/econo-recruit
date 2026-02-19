@@ -5,6 +5,7 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AnswerCommandService implements ApplicantCommandUseCase {
+
     private final MongoAnswerAdaptor mongoAnswerAdaptor;
     private final ApplicantStateUpdateEventHandler applicantStateUpdateEventHandler;
     private final LatestRecruitmentVo latestRecruitInfo;
@@ -58,20 +60,20 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
     public UUID execute(Map<String, Object> qna, UUID id) {
         int year = latestRecruitInfo.getYear();
         ApplicantState nonProcessed = new ApplicantState();
-        MongoAnswer answer =
-                MongoAnswer.builder()
-                        .id(id.toString())
-                        .qna(qna)
-                        .year(year)
-                        .applicantState(nonProcessed)
-                        .build();
+        MongoAnswer answer = MongoAnswer.builder()
+                .id(id.toString())
+                .qna(qna)
+                .year(year)
+                .applicantState(nonProcessed)
+                .build();
+
         //        학번으로 중복 체크
         //        validateRegisterApplicant(qna);
         mongoAnswerAdaptor.save(answer);
 
-        String name = qna.get("name").toString();
-        String hopeField = qna.get("field").toString();
-        String email = qna.get("email").toString();
+        String name = qna.get(ApplicantQnaKeys.NAME).toString();
+        String hopeField = qna.get(ApplicantQnaKeys.FIELD).toString();
+        String email = qna.get(ApplicantQnaKeys.EMAIL).toString();
 
         ApplicantRegisterEvent applicantRegisterEvent =
                 ApplicantRegisterEvent.of(answer.getId(), name, hopeField, email);
@@ -114,7 +116,10 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
         Card card = cardAdaptor.findByApplicantId(applicantId);
         Board deleteBoard = boardAdaptor.getBoardByCardId(card.getId());
 
-        Board previousBoard = boardAdaptor.getByNextBoardId(deleteBoard.getId()).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        Board previousBoard = boardAdaptor
+                .getByNextBoardId(deleteBoard.getId())
+                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+
         previousBoard.updateNextBoardID(deleteBoard.getNextBoardId());
 
         boardAdaptor.deleteByCardId(card.getId());

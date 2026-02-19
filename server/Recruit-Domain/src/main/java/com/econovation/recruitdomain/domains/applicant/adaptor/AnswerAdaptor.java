@@ -2,6 +2,7 @@ package com.econovation.recruitdomain.domains.applicant.adaptor;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.PAGE_SIZE;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerRepository;
@@ -241,6 +242,6 @@ public class AnswerAdaptor {
     }
 
     private String extractName(MongoAnswer answer) {
-        return (String) answer.getQna().get("name");
+        return (String) answer.getQna().get(ApplicantQnaKeys.NAME);
     }
 }

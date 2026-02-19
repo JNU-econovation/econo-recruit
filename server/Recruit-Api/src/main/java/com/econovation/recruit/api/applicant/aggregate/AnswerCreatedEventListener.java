@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.applicant.aggregate;
 
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.event.aggregateevent.AnswerCreatedEvent;
@@ -32,17 +33,19 @@ public class AnswerCreatedEventListener {
     @Transactional
     public void handle(AnswerCreatedEvent event) {
         Map<String, Object> qna = event.getQna();
+
         // 학번으로 중복 체크
-        String name = qna.getOrDefault("name", "이름_공백").toString();
-        String hopeField = qna.getOrDefault("field", "지원분야_공백").toString();
-        String email = qna.getOrDefault("email", adminEmail).toString();
+        String name = qna.getOrDefault(ApplicantQnaKeys.NAME, "이름_공백").toString();
+        String hopeField = qna.getOrDefault(ApplicantQnaKeys.FIELD, "지원분야_공백").toString();
+        String email = qna.getOrDefault(ApplicantQnaKeys.EMAIL, adminEmail).toString();
+
         // backup to json file
         backupApplicant(event);
 
         // Map 객체에 key가 없는 경우 추가
-        qna.putIfAbsent("name", name);
-        qna.putIfAbsent("field", hopeField);
-        qna.putIfAbsent("email", email);
+        qna.putIfAbsent(ApplicantQnaKeys.NAME, name);
+        qna.putIfAbsent(ApplicantQnaKeys.FIELD, hopeField);
+        qna.putIfAbsent(ApplicantQnaKeys.EMAIL, email);
 
         MongoAnswer answer = new MongoAnswer(event.getId(), event.getYear(), qna);
         answerAdaptor.save(answer);
