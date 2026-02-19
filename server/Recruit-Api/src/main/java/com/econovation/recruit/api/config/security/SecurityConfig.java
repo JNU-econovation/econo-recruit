@@ -93,6 +93,8 @@ public class SecurityConfig {
                 .hasAnyRole(RolePattern)
                 .mvcMatchers(HttpMethod.POST, "/api/v1/comments/disclosure")
                 .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
+                .mvcMatchers(HttpMethod.GET, "/api/v1/comments/disclosure")
+                .hasAnyRole("ROLE_OPERATION", "ROLE_PRESIDENT")
                 .anyRequest()
                 .hasAnyRole(RolePattern);
 
