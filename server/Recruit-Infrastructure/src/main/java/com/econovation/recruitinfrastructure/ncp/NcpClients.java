@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 public class NcpClients {
 
-    @FeignClient(name = "NcpClient", url = "${ncp.mail-base-url}", configuration = NcpConfig.class)
+    @FeignClient(
+            name = "NcpMailClient",
+            contextId = "ncpMailClient",
+            url = "${ncp.mail-base-url}",
+            configuration = NcpConfig.class)
     @Headers("Content-Type: application/json; charset=UTF-8")
     public interface NcpMailClient {
         @PostMapping(path = "${ncp.mail-api-url}", consumes = "application/json; charset=UTF-8")
@@ -22,7 +26,11 @@ public class NcpClients {
                 @RequestBody SendRawEmailDto sendRawEmailDto);
     }
 
-    @FeignClient(name = "NcpClient", url = "${ncp.sms-base-url}", configuration = NcpConfig.class)
+    @FeignClient(
+            name = "NcpSmsClient",
+            contextId = "ncpSmsClient",
+            url = "${ncp.sms-base-url}",
+            configuration = NcpConfig.class)
     @Headers("Content-Type: application/json; charset=UTF-8")
     public interface NcpSmsClient {
         @PostMapping(path = "${ncp.sms-api-url}", consumes = "application/json;")
