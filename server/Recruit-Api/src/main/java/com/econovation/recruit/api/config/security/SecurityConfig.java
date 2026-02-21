@@ -64,9 +64,11 @@ public class SecurityConfig {
         // 베이직 시큐리티는 ExceptionTranslationFilter 에서 authenticationEntryPoint 에서
         // commence 로 401 넘겨줌. -> 응답 헤더에 www-authenticate 로 인증하라는 응답줌.
         // 브라우저가 basic auth 실행 시켜줌.
-        // 개발 환경에서만 스웨거 비밀번호 미설정.
+        // 스웨거 설정: 운영 환경은 차단, 그 외(로컬/개발)는 permitAll
         if (springEnvironmentHelper.isProdProfile()) {
-            http.authorizeRequests().mvcMatchers(SwaggerPatterns).authenticated().and().httpBasic();
+            http.authorizeRequests().mvcMatchers(SwaggerPatterns).denyAll();
+        } else {
+            http.authorizeRequests().mvcMatchers(SwaggerPatterns).permitAll();
         }
 
         http.authorizeRequests()
@@ -120,7 +122,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web ->
                 web.ignoring()
-                        .antMatchers(SwaggerPatterns)
                         .antMatchers(
                                 HttpMethod.POST,
                                 "/api/v1/applicants/mail",
