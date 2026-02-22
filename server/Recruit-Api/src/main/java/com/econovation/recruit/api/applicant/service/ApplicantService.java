@@ -11,6 +11,7 @@ import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.Collections;
@@ -40,7 +41,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
                                 ResponseTypes.instanceOf(AnswerAggregate.class))
                         .join()
                         .getQna();
-        qna.put("id", answerId);
+        qna.put(ApplicantQnaKeys.ID, answerId);
         return qna;
     }
 
@@ -65,7 +66,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
                 .map(
                         answer -> {
                             Map<String, Object> qna = answer.getQna();
-                            qna.put("id", answer.getId());
+                            qna.put(ApplicantQnaKeys.ID, answer.getId());
                             qna.put(PASS_STATE_KEY, answer.getApplicantStateOrDefault());
                             return qna;
                         })
@@ -192,7 +193,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
                 .map(
                         answer -> {
                             Map<String, Object> map = new HashMap<>();
-                            map.put("id", answer.getId());
+                            map.put(ApplicantQnaKeys.ID, answer.getId());
                             fields.forEach(
                                     field -> {
                                         if (answer.getQna().containsKey(field)) {
@@ -211,7 +212,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
                 .map(
                         answer -> {
                             Map<String, Object> map = new HashMap<>();
-                            map.put("id", answer.getId());
+                            map.put(ApplicantQnaKeys.ID, answer.getId());
                             map.putAll(answer.getQna());
                             return map;
                         })
@@ -281,7 +282,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
                         .orElseThrow(() -> ApplicantNotFoundException.EXCEPTION);
 
         Map<String, Object> qna = mongoAnswer.getQna();
-        qna.put("id", mongoAnswer.getId());
+        qna.put(ApplicantQnaKeys.ID, mongoAnswer.getId());
         qna.put(PASS_STATE_KEY, mongoAnswer.getApplicantStateOrDefault());
         return qna;
     }

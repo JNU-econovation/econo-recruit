@@ -29,8 +29,8 @@ public class GetApplicantsStatusResponse {
                     .field1((String) result.get(ApplicantQnaKeys.FIELD1))
                     .field2((String) result.get(ApplicantQnaKeys.FIELD2))
                     .name((String) result.get(ApplicantQnaKeys.NAME))
-                    .id((String) result.get("id"))
-                    .year((Integer) result.get("year"))
+                    .id((String) result.get(ApplicantQnaKeys.ID))
+                    .year((Integer) result.get(ApplicantQnaKeys.YEAR))
                     .state(ApplicantStateResponse.of(applicantState.getPassState()))
                     .build();
         }

@@ -58,9 +58,9 @@ public class AnswerCreatedEventListener {
 
     private void backupApplicant(AnswerCreatedEvent event) {
         Map<String, Object> qna = event.getQna();
-        qna.put("id", event.getId());
-        qna.put("year", event.getYear());
-        qna.put("created_at", LocalDateTime.now().toString());
+        qna.put(ApplicantQnaKeys.ID, event.getId());
+        qna.put(ApplicantQnaKeys.YEAR, event.getYear());
+        qna.put(ApplicantQnaKeys.CREATED_AT, LocalDateTime.now().toString());
         try {
             String path = new File(".").getCanonicalPath(); // 현재 작업 디렉토리를 가져옴
             String backupDir = path + "/backup/";

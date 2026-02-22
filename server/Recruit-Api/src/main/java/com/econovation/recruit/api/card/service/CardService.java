@@ -1,6 +1,5 @@
 package com.econovation.recruit.api.card.service;
 
-import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.card.usecase.BoardLoadUseCase;
 import com.econovation.recruit.api.card.usecase.BoardRegisterUseCase;
@@ -12,6 +11,7 @@ import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.common.events.WorkCardDeletedEvent;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CardService implements CardRegisterUseCase, CardLoadUseCase {
+
     private final CardRecordPort cardRecordPort;
     private final CardLoadPort cardLoadPort;
     private final BoardRegisterUseCase boardRegisterUseCase;
@@ -94,8 +95,13 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
         List<BoardCardResponseDto> result = new LinkedList<>();
 
         // key : applicantId
-        Map<String, Map<String, Object>> answers =
-                applicantQueryUseCase.findAllApplicantVo(List.of("field1", "field2", "major"));
+        Map<String, Map<String, Object>> answers = applicantQueryUseCase.findAllApplicantVo(
+                List.of(
+                        ApplicantQnaKeys.FIELD1,
+                        ApplicantQnaKeys.FIELD2,
+                        ApplicantQnaKeys.MAJOR
+                )
+        );
 
         List<Label> labels =
                 labelLoadPort.loadLabelByCardIdIn(
@@ -126,9 +132,11 @@ public class CardService implements CardRegisterUseCase, CardLoadUseCase {
             }
             Map<String, Object> applicantAnswers = answers.get(card.getApplicantId());
             if (applicantAnswers != null) {
-                major = applicantAnswers.getOrDefault("major", "").toString();
-                firstPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD1, "").toString();
-                secondPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD2, "").toString();
+                major = applicantAnswers.getOrDefault(ApplicantQnaKeys.MAJOR, "").toString();
+                firstPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD1, "")
+                        .toString();
+                secondPriority = applicantAnswers.getOrDefault(ApplicantQnaKeys.FIELD2, "")
+                        .toString();
             } else {
                 firstPriority = "";
                 secondPriority = "";
