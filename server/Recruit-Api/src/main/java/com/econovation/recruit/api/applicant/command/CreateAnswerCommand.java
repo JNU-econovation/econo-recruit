@@ -1,7 +1,6 @@
 package com.econovation.recruit.api.applicant.command;
 
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

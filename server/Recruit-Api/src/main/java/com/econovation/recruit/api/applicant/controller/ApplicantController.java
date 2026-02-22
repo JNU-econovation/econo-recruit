@@ -193,16 +193,16 @@ public class ApplicantController {
 
     @Operation(summary = "지원서들을 선택해서 일괄 삭제합니다.")
     @DeleteMapping("/applicants")
-    public ResponseEntity<String> deleteApplicant(
-            @RequestBody List<String> applicantIds
-            ) {
+    public ResponseEntity<String> deleteApplicant(@RequestBody List<String> applicantIds) {
         applicantCommandUseCase.deleteByApplicantIds(applicantIds);
         return new ResponseEntity<>(APPLICANTS_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자 검색 시 성함 자동완성")
     @GetMapping("/applicants/names/{year}")
-    public ResponseEntity<List<String>> getApplicantNames(@PathVariable Integer year, @RequestParam String keyword) {
-        return new ResponseEntity<>(applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
+    public ResponseEntity<List<String>> getApplicantNames(
+            @PathVariable Integer year, @RequestParam String keyword) {
+        return new ResponseEntity<>(
+                applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
     }
 }
