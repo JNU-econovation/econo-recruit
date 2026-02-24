@@ -106,7 +106,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
-//        checkEmailVerified(email);
+        //        checkEmailVerified(email);
         if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
             throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
@@ -119,7 +119,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                         .role(Role.ROLE_GUEST)
                         .build();
         interviewerRecordPort.save(interviewer);
-//        deleteVerifiedCode(email);
+        //        deleteVerifiedCode(email);
     }
 
     @Override
