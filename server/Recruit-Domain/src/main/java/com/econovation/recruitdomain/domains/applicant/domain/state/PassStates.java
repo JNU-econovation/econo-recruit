@@ -22,14 +22,12 @@ public enum PassStates {
 
         @Override
         public boolean isPassable(PeriodStates period) {
-            if(period.equals(PeriodStates.FIRST_DISCUSSION)) return true;
-            else return false;
+            return period.equals(PeriodStates.FIRST_DISCUSSION);
         }
 
         @Override
         public boolean isNonPassable(PeriodStates period) {
-            if(period.equals(PeriodStates.FIRST_DISCUSSION)) return true;
-            else return false;
+            return period.equals(PeriodStates.FIRST_DISCUSSION);
         }
     },
     FIRST_PASSED("first-passed") {
