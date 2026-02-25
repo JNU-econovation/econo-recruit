@@ -1,7 +1,6 @@
 package com.econovation.recruitdomain.domains.recruitment.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -9,11 +9,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "applicant")
+@CompoundIndexes({
+    @CompoundIndex(
+            name = "unique_class_of_per_year",
+            def = "{'year': 1, 'qna.classOf': 1}",
+            unique = true),
+    @CompoundIndex(name = "idx_year_name", def = "{'year': 1, 'name': 1}")
+})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -27,6 +36,9 @@ public class MongoAnswer extends MongoBaseTimeEntity {
 
     @Field("year")
     private Integer year;
+
+    @Field("name")
+    private String name;
 
     // shemaless
     @Field("qna")
@@ -63,6 +75,7 @@ public class MongoAnswer extends MongoBaseTimeEntity {
         this.id = id;
         this.year = year;
         this.qna = qna;
+        this.name = String.valueOf(qna.get("name"));
         this.applicantState = new ApplicantState();
         this.qnaSearchIndex =
                 qna.values().stream().map(Object::toString).collect(Collectors.joining(" "));

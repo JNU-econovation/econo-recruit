@@ -106,27 +106,20 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
-        checkEmailVerified(email);
-        interviewerLoadPort
-                .loadOptionalInterviewerByEmail(email)
-                .ifPresentOrElse(
-                        value -> {
-                            throw InterviewerAlreadySubmitException.EXCEPTION;
-                        },
-                        () -> {
-                            String encededPassword =
-                                    passwordEncoder.encode(signUpRequestDto.getPassword());
-                            Interviewer interviewer =
-                                    Interviewer.builder()
-                                            .year(signUpRequestDto.getYear())
-                                            .name(signUpRequestDto.getName())
-                                            .email(email)
-                                            .password(encededPassword)
-                                            .role(Role.ROLE_GUEST)
-                                            .build();
-                            interviewerRecordPort.save(interviewer);
-                            deleteVerifiedCode(email);
-                        });
+        //        checkEmailVerified(email);
+        if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
+            throw InterviewerAlreadySubmitException.EXCEPTION;
+        String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
+        Interviewer interviewer =
+                Interviewer.builder()
+                        .year(signUpRequestDto.getYear())
+                        .name(signUpRequestDto.getName())
+                        .email(email)
+                        .password(encededPassword)
+                        .role(Role.ROLE_GUEST)
+                        .build();
+        interviewerRecordPort.save(interviewer);
+        //        deleteVerifiedCode(email);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.econovation.recruit.api.applicant.controller;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE;
+import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_SUCCESS_DELETE_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
@@ -12,7 +14,6 @@ import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
 import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
-import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
@@ -34,7 +35,15 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -50,7 +59,6 @@ public class ApplicantController {
     private final CommandGateway commandGateway;
     private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
-    private final RecruitmentUseCase applicationManagementUseCase;
     private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(summary = "지원자가 지원서를 작성합니다.", description = "반환 값은 생성된 지원자의 ID입니다.")
@@ -163,10 +171,12 @@ public class ApplicantController {
     }
 
     @Operation(
-            summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
+            summary = "지원서의 합/불 상태를 조회합니다.",
             description =
                     """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    - passState : non-processed | non-passed | first-passed | final-passed
+                    - isPassable : 현재 상태에서 pass 할 수 있는지 여부
+                    - isNonPassable : 현재 상태에서 non-pass 할 수 있는지 여부
                     """)
     @GetMapping("/year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
@@ -174,5 +184,27 @@ public class ApplicantController {
         List<GetApplicantsStatusResponse> result =
                 applicantQueryUseCase.getApplicantsStatus(year, sortType);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Operation(summary = "year에 해당하는 모든 지원서를 삭제합니다.")
+    @DeleteMapping("/applicants/all/{year}")
+    public ResponseEntity<String> deleteApplicants(@PathVariable("year") Integer year) {
+        applicantCommandUseCase.deleteByYear(year);
+        return new ResponseEntity<>(APPLICANTS_BY_YEAR_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원서들을 선택해서 일괄 삭제합니다.")
+    @DeleteMapping("/applicants")
+    public ResponseEntity<String> deleteApplicant(@RequestBody List<String> applicantIds) {
+        applicantCommandUseCase.deleteByApplicantIds(applicantIds);
+        return new ResponseEntity<>(APPLICANTS_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "지원자 검색 시 성함 자동완성")
+    @GetMapping("/applicants/names/{year}")
+    public ResponseEntity<List<String>> getApplicantNames(
+            @PathVariable Integer year, @RequestParam String keyword) {
+        return new ResponseEntity<>(
+                applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
     }
 }

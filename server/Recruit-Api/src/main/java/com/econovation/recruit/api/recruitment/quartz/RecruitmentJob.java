@@ -1,7 +1,7 @@
 package com.econovation.recruit.api.recruitment.quartz;
 
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentNotFoundException;
 import com.econovation.recruitdomain.out.RecruitmentPort;

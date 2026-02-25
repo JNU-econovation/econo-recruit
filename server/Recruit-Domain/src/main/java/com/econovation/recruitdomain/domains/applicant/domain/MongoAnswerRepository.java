@@ -9,4 +9,7 @@ public interface MongoAnswerRepository extends MongoRepository<MongoAnswer, Stri
 
     //    @Query("{'qna': {$regex: ?0, $options: 'i', $limit: 10}}")
     //    List<MongoAnswer> search(String searchKeyword);
+    void deleteByYear(Integer year);
+
+    void deleteByIdIn(List<String> applicantIds);
 }

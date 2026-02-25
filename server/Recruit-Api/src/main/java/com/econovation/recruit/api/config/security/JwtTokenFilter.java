@@ -3,11 +3,14 @@ package com.econovation.recruit.api.config.security;
 import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
 import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
+
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
 import com.econovation.recruitcommon.exception.InvalidTokenException;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.out.WhitelistLoadPort;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -19,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -45,6 +49,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        return Arrays.stream(SwaggerPatterns)
+                .anyMatch(pattern -> antPathMatcher.match(pattern, path));
     }
 
     private String resolveToken(HttpServletRequest request) {

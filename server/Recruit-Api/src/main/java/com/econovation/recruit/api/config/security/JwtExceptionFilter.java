@@ -1,10 +1,13 @@
 package com.econovation.recruit.api.config.security;
 
+import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
+
 import com.econovation.recruitcommon.exception.BaseErrorCode;
 import com.econovation.recruitcommon.exception.ErrorResponse;
 import com.econovation.recruitcommon.exception.RecruitCodeException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
@@ -31,6 +35,14 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
                     response,
                     getErrorResponse(e.getErrorCode(), request.getRequestURL().toString()));
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        return Arrays.stream(SwaggerPatterns)
+                .anyMatch(pattern -> antPathMatcher.match(pattern, path));
     }
 
     private ErrorResponse getErrorResponse(BaseErrorCode errorCode, String path) {

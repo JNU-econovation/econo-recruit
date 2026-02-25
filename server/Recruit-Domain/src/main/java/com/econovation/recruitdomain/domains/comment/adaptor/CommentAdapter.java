@@ -5,11 +5,15 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.NO_MATCH_COMMEN
 import com.econovation.recruitcommon.annotation.Adaptor;
 import com.econovation.recruitcommon.utils.Result;
 import com.econovation.recruitdomain.domains.comment.domain.Comment;
+import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosure;
+import com.econovation.recruitdomain.domains.comment.domain.CommentDisclosureRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLike;
 import com.econovation.recruitdomain.domains.comment.domain.CommentLikeRepository;
 import com.econovation.recruitdomain.domains.comment.domain.CommentRepository;
+import com.econovation.recruitdomain.domains.comment.exception.CommentDisclosureNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentLikeNotFoundException;
 import com.econovation.recruitdomain.domains.comment.exception.CommentNotFoundException;
+import com.econovation.recruitdomain.out.CommentDisclosureLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeLoadPort;
 import com.econovation.recruitdomain.out.CommentLikeRecordPort;
 import com.econovation.recruitdomain.out.CommentLoadPort;
@@ -22,9 +26,14 @@ import lombok.RequiredArgsConstructor;
 @Adaptor
 @RequiredArgsConstructor
 public class CommentAdapter
-        implements CommentRecordPort, CommentLoadPort, CommentLikeRecordPort, CommentLikeLoadPort {
+        implements CommentRecordPort,
+                CommentLoadPort,
+                CommentLikeRecordPort,
+                CommentLikeLoadPort,
+                CommentDisclosureLoadPort {
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
+    private final CommentDisclosureRepository commentDisclosureRepository;
 
     @Override
     public Comment saveComment(Comment comment) {
@@ -64,6 +73,15 @@ public class CommentAdapter
     @Override
     public List<Comment> findByApplicantId(String applicantId) {
         List<Comment> comments = commentRepository.findByApplicantId(applicantId);
+        if (comments.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return comments;
+    }
+
+    @Override
+    public List<Comment> findByApplicantIdAndIdpId(String applicantId, Long idpId) {
+        List<Comment> comments = commentRepository.findByApplicantIdAndIdpId(applicantId, idpId);
         if (comments.isEmpty()) {
             return Collections.emptyList();
         }
@@ -118,5 +136,12 @@ public class CommentAdapter
     @Override
     public List<CommentLike> findByCommentIds(List<Long> commentIds) {
         return commentLikeRepository.findByCommentIdIn(commentIds);
+    }
+
+    @Override
+    public CommentDisclosure find() {
+        return commentDisclosureRepository
+                .findById(CommentDisclosure.SINGLETON_ID)
+                .orElseThrow(() -> CommentDisclosureNotFoundException.EXCEPTION);
     }
 }

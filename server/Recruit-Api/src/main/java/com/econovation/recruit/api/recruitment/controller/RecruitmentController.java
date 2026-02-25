@@ -9,9 +9,7 @@ import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.exception.RecruitmentInValidDateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,11 +44,8 @@ public class RecruitmentController {
                     """)
     @PostMapping("/recruitment")
     public ResponseEntity<Long> setUpRecruitment(@RequestBody RecruitmentSetUpDto request) {
-        ZoneId kst = ZoneId.of("Asia/Seoul");
-        LocalDateTime startAt =
-                Instant.ofEpochMilli(request.getStartAt()).atZone(kst).toLocalDateTime();
-        LocalDateTime endAt =
-                Instant.ofEpochMilli(request.getEndAt()).atZone(kst).toLocalDateTime();
+        LocalDateTime startAt = request.getStartAt();
+        LocalDateTime endAt = request.getEndAt();
 
         if (startAt.isAfter(endAt)) throw RecruitmentInValidDateException.EXCEPTION_1;
         if (startAt.isBefore(LocalDateTime.now()))

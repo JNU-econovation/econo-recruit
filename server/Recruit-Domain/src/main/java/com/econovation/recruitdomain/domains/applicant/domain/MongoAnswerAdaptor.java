@@ -37,4 +37,12 @@ public class MongoAnswerAdaptor {
         query.addCriteria(Criteria.where("qna.classOf").is(studentId).and("year").is(year));
         return mongoTemplate.exists(query, MongoAnswer.class);
     }
+
+    public void delete(Integer year) {
+        mongoAnswerRepository.deleteByYear(year);
+    }
+
+    public void deleteByApplicantIds(List<String> applicantIds) {
+        mongoAnswerRepository.deleteByIdIn(applicantIds);
+    }
 }

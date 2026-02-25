@@ -15,17 +15,23 @@ public class CommentPairVo {
     private Boolean isLike;
     private Integer likeCount;
     private Boolean canEdit;
+    private Boolean isBlurred;
 
     public static CommentPairVo of(
-            Comment comment, Boolean isLike, String interviewerName, Boolean canEdit) {
+            Comment comment,
+            Boolean isLike,
+            String interviewerName,
+            Boolean canEdit,
+            Boolean isBlurred) {
         return CommentPairVo.builder()
                 .id(comment.getId())
                 .createdAt(String.valueOf(Timestamp.valueOf(comment.getCreatedAt()).getTime()))
-                .content(comment.getContent())
+                .content(isBlurred ? "자신의 댓글만 조회할 수 있습니다." : comment.getContent())
                 .isLike(isLike)
                 .likeCount(comment.getLikeCount())
                 .interviewerName(interviewerName)
                 .canEdit(canEdit)
+                .isBlurred(isBlurred)
                 .build();
     }
 }

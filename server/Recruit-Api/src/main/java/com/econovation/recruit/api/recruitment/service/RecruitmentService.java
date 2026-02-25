@@ -3,7 +3,7 @@ package com.econovation.recruit.api.recruitment.service;
 import com.econovation.recruit.api.recruitment.quartz.RecruitmentScheduler;
 import com.econovation.recruit.api.recruitment.usecase.RecruitmentUseCase;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentRegistered;
 import com.econovation.recruitdomain.domains.recruitment.event.RecruitmentTerminated;

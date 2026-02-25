@@ -6,12 +6,14 @@ import com.econovation.recruit.api.applicant.aggregate.AnswerAggregate;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.query.AnswerQuery;
+import com.econovation.recruit.api.applicant.state.support.PeriodCalculator;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.utils.sort.SortHelper;
 import com.econovation.recruit.utils.vo.PageInfo;
 import com.econovation.recruitdomain.domains.applicant.adaptor.AnswerAdaptor;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
+import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantNotFoundException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class ApplicantService implements ApplicantQueryUseCase {
     private final QueryGateway queryGateway;
     private final SortHelper<MongoAnswer> sortHelper;
     private final LatestRecruitmentVo latestRecruitInfo;
+    private final PeriodCalculator periodCalculator;
 
     @Transactional(readOnly = true)
     public Map<String, Object> execute(String answerId) {
@@ -241,7 +244,12 @@ public class ApplicantService implements ApplicantQueryUseCase {
     public List<GetApplicantsStatusResponse> getApplicantsStatus(Integer year, String sortType) {
         List<MongoAnswer> result = answerAdaptor.findByYear(year);
         List<Map<String, Object>> sortedResult = sortAndAddIds(result, sortType);
-        return sortedResult.stream().map(GetApplicantsStatusResponse::of).toList();
+
+        PeriodStates period = periodCalculator.execute();
+
+        return sortedResult.stream()
+                .map(map -> GetApplicantsStatusResponse.of(map, period))
+                .toList();
     }
 
     private List<Map<String, Object>> sortAndAddIds(List<MongoAnswer> result, String sortType) {
@@ -284,5 +292,10 @@ public class ApplicantService implements ApplicantQueryUseCase {
         qna.put("id", mongoAnswer.getId());
         qna.put(PASS_STATE_KEY, mongoAnswer.getApplicantStateOrDefault());
         return qna;
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> autocomplete(Integer year, String keyword) {
+        return answerAdaptor.findApplicantNamesForAutocomplete(year, keyword);
     }
 }

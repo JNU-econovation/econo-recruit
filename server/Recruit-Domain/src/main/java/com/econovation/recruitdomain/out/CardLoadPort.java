@@ -12,4 +12,6 @@ public interface CardLoadPort {
     Card findByApplicantId(String applicantId);
 
     List<Card> findByIdIn(List<Long> cardIds);
+
+    List<Long> findAllByApplicantIds(List<String> applicantIds);
 }

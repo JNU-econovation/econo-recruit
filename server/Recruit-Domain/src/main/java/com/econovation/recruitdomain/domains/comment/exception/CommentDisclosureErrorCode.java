@@ -1,6 +1,5 @@
-package com.econovation.recruitdomain.domains.applicant.exception;
+package com.econovation.recruitdomain.domains.comment.exception;
 
-import static com.econovation.recruitcommon.consts.RecruitStatic.BAD_REQUEST;
 import static com.econovation.recruitcommon.consts.RecruitStatic.NOT_FOUND;
 
 import com.econovation.recruitcommon.annotation.ExplainError;
@@ -13,13 +12,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ApplicantErrorCode implements BaseErrorCode {
-    APPLICANT_NOT_FOUND(NOT_FOUND, "APPLICANT_NOT_FOUND", "지원자를 찾을 수 없습니다."),
-    APPLICANT_DUPLICATE_SUBMIT(BAD_REQUEST, "APPLICANT_400_1", "이미 지원한 지원자입니다."),
-    APPLICANT_PROHIBIT_DELETE(BAD_REQUEST, "APPLICANT_400_2", "지원자를 삭제할 수 없습니다."),
-    APPLICANT_WRONG_POSITION(BAD_REQUEST, "APPLICANT_400_3", "디자이너, 개발자, 기획자 중 하나의 포지션을 선택해주세요."),
-    INVALID_STATE_TRANSITION(BAD_REQUEST, "APPLICANT_400_4", "올바른 합/불 상태를 선택해주세요."),
-    CANNOT_CHANGE_STATE(BAD_REQUEST, "APPLICANT_400_5", "상태를 변경할 수 없습니다.");
+public enum CommentDisclosureErrorCode implements BaseErrorCode {
+    COMMENT_DISCLOSURE_NOT_FOUND(
+            NOT_FOUND, "COMMENT_DISCLOSURE_404_1", "댓글 전체 공개 여부 기록을 찾을 수 없습니다."),
+    ;
 
     private Integer status;
     private String code;

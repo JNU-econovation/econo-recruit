@@ -23,4 +23,6 @@ public interface LabelRepository extends JpaRepository<Label, Long> {
     @Modifying
     @Query("delete from Label l where l.idpId = :idpId")
     void deleteByIdpId(@Param("idpId") Long idpId);
+
+    void deleteAllByApplicantIdIn(List<String> applicantIds);
 }

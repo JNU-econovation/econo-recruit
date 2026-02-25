@@ -3,6 +3,7 @@ package com.econovation.recruit.api.applicant.dto;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
+import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongStateException;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -21,8 +22,12 @@ public class GetApplicantsStatusResponse {
     private Integer year;
     private ApplicantStateResponse state;
 
-    public static GetApplicantsStatusResponse of(Map<String, Object> result) {
+    public static GetApplicantsStatusResponse of(Map<String, Object> result, PeriodStates period) {
         if (result.get(PASS_STATE_KEY) instanceof ApplicantState applicantState) {
+            String passState = applicantState.getPassState();
+            boolean isPassable = applicantState.isPassable(period);
+            boolean isNonPassable = applicantState.isNonPassable(period);
+
             return GetApplicantsStatusResponse.builder()
                     .field((String) result.get("field"))
                     .field1((String) result.get("field1"))
@@ -30,7 +35,7 @@ public class GetApplicantsStatusResponse {
                     .name((String) result.get("name"))
                     .id((String) result.get("id"))
                     .year((Integer) result.get("year"))
-                    .state(ApplicantStateResponse.of(applicantState.getPassState()))
+                    .state(ApplicantStateResponse.of(passState, isPassable, isNonPassable))
                     .build();
         }
         throw ApplicantWrongStateException.wrongStatusException;
