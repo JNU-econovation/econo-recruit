@@ -7,7 +7,7 @@ public class NotOperatedException extends RecruitCodeException {
     public static NotOperatedException EXCEPTION = new NotOperatedException();
 
     public NotOperatedException(){
-        super(ApplicantErrorCode.NOT_OPERATED);
+        super(ApplicantErrorCode.CANNOT_CHANGE_STATE);
     }
 
 }
