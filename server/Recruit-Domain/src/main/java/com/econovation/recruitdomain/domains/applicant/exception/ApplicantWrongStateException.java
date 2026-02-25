@@ -8,6 +8,6 @@ public class ApplicantWrongStateException extends RecruitCodeException {
             new ApplicantWrongStateException();
 
     public ApplicantWrongStateException() {
-        super(ApplicantErrorCode.APPLICANT_WRONG_STATE);
+        super(ApplicantErrorCode.INVALID_STATE_TRANSITION);
     }
 }
