@@ -18,7 +18,9 @@ public class AxonConfig {
     }
 
     @Autowired
-    public void configure(EventProcessingConfigurer configurer) {
+    public void configure(EventProcessingConfigurer configurer,
+                          DuplicateKeyErrorHandler errorHandler) {
         configurer.registerTrackingEventProcessor("mongoEventProcessor");
+        configurer.registerListenerInvocationErrorHandler("mongoEventProcessor", conf -> errorHandler);
     }
 }
