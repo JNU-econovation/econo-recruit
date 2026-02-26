@@ -2,7 +2,6 @@ package com.econovation.recruit.api.config.security;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
 import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
-
 import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;

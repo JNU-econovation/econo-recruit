@@ -1,8 +1,8 @@
 package com.econovation.recruit.api.recruitment.util;
 
 import com.econovation.recruitdomain.common.aop.redissonLock.RedissonLock;
-import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
