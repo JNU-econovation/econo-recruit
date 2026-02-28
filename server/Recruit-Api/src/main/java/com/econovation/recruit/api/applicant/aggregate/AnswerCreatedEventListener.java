@@ -17,6 +17,7 @@ import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,12 @@ public class AnswerCreatedEventListener {
         qna.putIfAbsent("email", email);
 
         MongoAnswer answer = new MongoAnswer(event.getId(), event.getYear(), qna);
-        answerAdaptor.save(answer);
+        try {
+            answerAdaptor.save(answer);
+        } catch (DuplicateKeyException e) {
+            log.warn("중복 데이터 무시 - eventId: {}", event.getId());
+            return;
+        }
 
         // email 전송 event처리
         ApplicantRegisterEvent applicantRegisterEvent =
