@@ -146,9 +146,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleException(Exception e, HttpServletRequest request)
             throws IOException {
         final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) request;
-        final Long userId = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
-                .map(auth -> SecurityUtils.getCurrentUserId())
-                .orElse(null);
+        final Long userId =
+                Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                        .map(auth -> SecurityUtils.getCurrentUserId())
+                        .orElse(null);
         String url =
                 UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(request))
                         .build()

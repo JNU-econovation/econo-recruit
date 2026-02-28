@@ -11,8 +11,7 @@ import lombok.Getter;
 @Getter
 public class SignUpRequestDto {
     @NotBlank private String name;
-    @NotNull
-    private Integer year;
+    @NotNull private Integer year;
     @Email private String email;
     @PasswordValidate private String password;
 }

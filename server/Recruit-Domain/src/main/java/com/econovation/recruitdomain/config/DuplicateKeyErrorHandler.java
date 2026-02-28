@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 public class DuplicateKeyErrorHandler implements ListenerInvocationErrorHandler {
 
     @Override
-    public void onError(Exception exception, EventMessage<?> event, EventMessageHandler eventHandler) throws Exception {
+    public void onError(
+            Exception exception, EventMessage<?> event, EventMessageHandler eventHandler)
+            throws Exception {
         if (isDuplicateKeyException(exception)) {
             log.warn("중복 데이터 무시 - eventId: {}", event.getIdentifier());
             return;
