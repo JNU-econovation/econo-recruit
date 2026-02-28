@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -144,7 +146,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleException(Exception e, HttpServletRequest request)
             throws IOException {
         final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) request;
-        final Long userId = SecurityUtils.getCurrentUserId();
+        final Long userId = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(auth -> SecurityUtils.getCurrentUserId())
+                .orElse(null);
         String url =
                 UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(request))
                         .build()
