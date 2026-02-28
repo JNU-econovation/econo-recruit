@@ -164,8 +164,6 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
     @Override
     public void createApplicantBoard(String applicantId, String hopeField, Long cardId) {
-        //        \"hopeField\" -> hopeField 로 변경
-        hopeField = hopeField;
         Integer year = latestRecruitmentVo.getYear();
         if (hopeField.equals("개발자") || hopeField.equals("디자이너") || hopeField.equals("기획자")) {
             log.info("ApplicantBoard 생성 : {}, applicantId : {}", hopeField, applicantId);
@@ -176,6 +174,9 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
 
         Columns column = columnLoadPort.getColumnByYearAndTitle(hopeField, year);
 
+        //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
+        List<Board> existingBoards =
+                boardLoadPort.getBoardByNavigationIdAndColumnsId(1, column.getId());
         Board board =
                 Board.builder()
                         .cardType(CardType.APPLICANT)
@@ -185,14 +186,15 @@ public class BoardService implements BoardLoadUseCase, BoardRegisterUseCase {
                         .cardId(cardId)
                         .build();
         Board save = boardRecordPort.save(board);
-        //        기존에 null 인 nextBoardId를 현재 boardId로 업데이트
-        boardLoadPort.getBoardByNavigationIdAndColumnsId(1, column.getId()).stream()
-                .filter(b -> b.getNextBoardId() == null)
-                .findFirst()
-                .ifPresent(
-                        b -> {
-                            b.updateNextBoardID(save.getId());
-                        });
+        if (!existingBoards.isEmpty()) {
+            existingBoards.stream()
+                    .filter(b -> b.getNextBoardId() == null)
+                    .findFirst()
+                    .ifPresent(
+                            b -> {
+                                b.updateNextBoardID(save.getId());
+                            });
+        }
     }
 
     @Override
