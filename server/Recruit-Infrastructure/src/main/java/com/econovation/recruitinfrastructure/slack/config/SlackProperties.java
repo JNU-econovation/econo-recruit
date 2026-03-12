@@ -10,9 +10,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConstructorBinding
 @ConfigurationProperties(prefix = "slack.webhook")
 public class SlackProperties {
-    private String token;
     private String url;
-    private String id;
     private String channel;
     private String username;
     private String iconUrl;
