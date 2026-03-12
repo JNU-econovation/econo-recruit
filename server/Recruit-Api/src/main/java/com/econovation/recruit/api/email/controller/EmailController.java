@@ -1,6 +1,7 @@
 package com.econovation.recruit.api.email.controller;
 
-import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.email.dto.EmailAllSendRequest;
+import com.econovation.recruit.api.email.dto.EmailSendRequest;
 import com.econovation.recruit.api.email.service.ApplicantEmailService;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SecurityRequirement(name = "access-token")
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     private final ApplicantEmailService emailService;
-    private final ApplicantQueryUseCase applicantQueryUseCase;
     private final LatestRecruitmentVo latestRecruitInfo;
 
     @Operation(
@@ -31,10 +31,16 @@ public class EmailController {
                     """
                     서류 결과 메일 -> first-passed / first-failed
                     최종 결과 메일 -> final-passed / final-failed
+                    slackNotify: true 로 설정하면 메일 발송 후 Slack 알림을 전송합니다.
+                    slackUrl: 미입력 시 서버 기본 Slack URL로 발송합니다.
                     """)
     @PostMapping("/emails/{applicantId}")
-    public ResponseEntity<String> send(@PathVariable String applicantId) {
-        emailService.sendEmail(applicantId);
+    public ResponseEntity<String> send(
+            @PathVariable String applicantId,
+            @RequestBody(required = false) EmailSendRequest request) {
+        boolean slackNotify = request != null && request.isSlackNotify();
+        String slackUrl = request != null ? request.getSlackUrl() : null;
+        emailService.sendEmail(applicantId, slackNotify, slackUrl);
         return ResponseEntity.ok("");
     }
 
@@ -44,16 +50,14 @@ public class EmailController {
                     """
                     서류 결과 메일 -> first-passed / first-failed
                     최종 결과 메일 -> final-passed / final-failed
+                    slackNotify: true 로 설정하면 메일 발송 후 Slack 알림을 전송합니다.
+                    slackUrl: 미입력 시 서버 기본 Slack URL로 발송합니다.
                     """)
     @PostMapping("/emails/all")
-    public ResponseEntity<String> sendAll(
-            @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "state") String state) {
-        if (year == null || state == null) {
-            year = latestRecruitInfo.getYear();
-        }
-
-        emailService.sendEmail(year, state);
+    public ResponseEntity<String> sendAll(@RequestBody EmailAllSendRequest request) {
+        int year = request.getYear() != null ? request.getYear() : latestRecruitInfo.getYear();
+        emailService.sendEmail(
+                year, request.getState(), request.isSlackNotify(), request.getSlackUrl());
         return ResponseEntity.ok("이메일 전송 시작");
     }
 }
