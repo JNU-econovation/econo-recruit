@@ -7,6 +7,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
 import com.econovation.recruit.api.applicant.command.CreateAnswerCommand;
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
+import com.econovation.recruit.api.applicant.docs.UpdateApplicantStateExceptionDocs;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
@@ -159,6 +160,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "지원자의 합/불 상태를 변경합니다.")
+    @ApiErrorExceptionsExample(UpdateApplicantStateExceptionDocs.class)
     @PatchMapping("/applicants/{applicant-id}/state")
     public ResponseEntity<Map<String, String>> updateStatus(
             @PathVariable("applicant-id") String applicantId,
