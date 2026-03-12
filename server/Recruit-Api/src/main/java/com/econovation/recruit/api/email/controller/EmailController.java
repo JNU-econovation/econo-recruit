@@ -34,7 +34,7 @@ public class EmailController {
                     """)
     @PostMapping("/emails/{applicantId}")
     public ResponseEntity<String> send(@PathVariable String applicantId) {
-        emailService.sendEmail(applicantId, false, null);
+        emailService.sendEmail(applicantId, true, null);
         return ResponseEntity.ok("");
     }
 
@@ -53,7 +53,7 @@ public class EmailController {
             year = latestRecruitInfo.getYear();
         }
 
-        emailService.sendEmail(year, state, false, null);
+        emailService.sendEmail(year, state, true, null);
         return ResponseEntity.ok("이메일 전송 시작");
     }
 }
