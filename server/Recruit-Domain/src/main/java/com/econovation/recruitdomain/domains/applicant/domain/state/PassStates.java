@@ -11,13 +11,13 @@ public enum PassStates {
         @Override
         public PassStates pass(PeriodStates period) {
             if (isPassable(period)) return PassStates.FIRST_PASSED;
-            else return this;
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
             if (isNonPassable(period)) return PassStates.FIRST_FAILED;
-            else return this;
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
@@ -60,7 +60,7 @@ public enum PassStates {
         @Override
         public PassStates pass(PeriodStates period) {
             if (isPassable(period)) return PassStates.FIRST_PASSED;
-            else return this;
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
