@@ -4,6 +4,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
 import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
+import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongStateException;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -22,9 +23,14 @@ public class GetApplicantsStatusResponse {
     private Integer year;
     private ApplicantStateResponse state;
 
-    public static GetApplicantsStatusResponse of(Map<String, Object> result) {
+    public static GetApplicantsStatusResponse of(Map<String, Object> result, PeriodStates period) {
         if (result.get(PASS_STATE_KEY) instanceof ApplicantState applicantState) {
+            String passState = applicantState.getPassState();
+            boolean isPassable = applicantState.isPassable(period);
+            boolean isNonPassable = applicantState.isNonPassable(period);
+
             return GetApplicantsStatusResponse.builder()
+<<<<<<< refactor/BE-154
                     .field((String) result.get(ApplicantQnaKeys.FIELD))
                     .field1((String) result.get(ApplicantQnaKeys.FIELD1))
                     .field2((String) result.get(ApplicantQnaKeys.FIELD2))
@@ -32,6 +38,15 @@ public class GetApplicantsStatusResponse {
                     .id((String) result.get(ApplicantQnaKeys.ID))
                     .year((Integer) result.get(ApplicantQnaKeys.YEAR))
                     .state(ApplicantStateResponse.of(applicantState.getPassState()))
+=======
+                    .field((String) result.get("field"))
+                    .field1((String) result.get("field1"))
+                    .field2((String) result.get("field2"))
+                    .name((String) result.get("name"))
+                    .id((String) result.get("id"))
+                    .year((Integer) result.get("year"))
+                    .state(ApplicantStateResponse.of(passState, isPassable, isNonPassable))
+>>>>>>> develop
                     .build();
         }
         throw ApplicantWrongStateException.wrongStatusException;

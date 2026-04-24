@@ -216,15 +216,18 @@ public class AnswerAdaptor {
 
         String escapedKeyword = Pattern.quote(keyword);
 
-        Query query = new Query()
-                .addCriteria(Criteria.where("year").is(year)
-                        .and("qna.name").regex(escapedKeyword, "i"))
-                .limit(AUTOCOMPLETE_LIMIT * 3);
+        Query query =
+                new Query()
+                        .addCriteria(
+                                Criteria.where("year")
+                                        .is(year)
+                                        .and("qna.name")
+                                        .regex(escapedKeyword, "i"))
+                        .limit(AUTOCOMPLETE_LIMIT * 3);
 
         query.fields().include("qna.name");
 
-        return mongoTemplate.find(query, MongoAnswer.class)
-                .stream()
+        return mongoTemplate.find(query, MongoAnswer.class).stream()
                 .map(this::extractName)
                 .filter(Objects::nonNull)
                 .distinct()
@@ -235,8 +238,7 @@ public class AnswerAdaptor {
 
     private Comparator<String> sort(String keyword) {
         String lower = keyword.toLowerCase();
-        return Comparator
-                .comparing((String name) -> !name.toLowerCase().startsWith(lower))
+        return Comparator.comparing((String name) -> !name.toLowerCase().startsWith(lower))
                 .thenComparing(String::length)
                 .thenComparing(String.CASE_INSENSITIVE_ORDER);
     }

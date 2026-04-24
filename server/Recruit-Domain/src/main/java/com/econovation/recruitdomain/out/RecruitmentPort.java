@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.out;
 
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import java.util.List;
 import java.util.Optional;
 

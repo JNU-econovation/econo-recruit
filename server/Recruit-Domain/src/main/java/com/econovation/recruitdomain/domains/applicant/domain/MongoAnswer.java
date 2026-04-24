@@ -18,15 +18,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "applicant")
 @CompoundIndexes({
-        @CompoundIndex(
-                name = "unique_class_of_per_year",
-                def = "{'year': 1, 'qna.classOf': 1}",
-                unique = true
-        ),
-        @CompoundIndex(
-                name = "idx_year_name",
-                def = "{'year': 1, 'name': 1}"
-        )
+    @CompoundIndex(
+            name = "unique_class_of_per_year",
+            def = "{'year': 1, 'qna.classOf': 1}",
+            unique = true),
+    @CompoundIndex(name = "idx_year_name", def = "{'year': 1, 'name': 1}")
 })
 @AllArgsConstructor
 @NoArgsConstructor

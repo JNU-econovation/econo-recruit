@@ -28,4 +28,8 @@ public interface CommentUseCase {
     List<CommentPairVo> findByApplicantId(String applicantId);
 
     void deleteCommentByCardId(Long cardId);
+
+    void changeViewMode();
+
+    Boolean isPublic();
 }

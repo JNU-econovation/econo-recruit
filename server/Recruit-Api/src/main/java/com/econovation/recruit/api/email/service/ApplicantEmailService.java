@@ -31,7 +31,7 @@ public class ApplicantEmailService {
 
     @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void sendEmail(int year, String state) {
+    public void sendEmail(int year, String state, boolean slackNotify, String slackUrl) {
         PassStates target = PassStates.findStatus(state);
         List<MongoAnswer> applicants =
                 applicantQueryUseCase.getApplicantsByYear(year).stream()
@@ -45,20 +45,16 @@ public class ApplicantEmailService {
             boolean result = sendEmail(applicant);
             if (!result) log.error("Email 발송 실패 : {}", applicant.getId());
             else {
-                String applicantId = applicant.getId();
-                String passState = applicant.getApplicantState().getPassStateToEnum().name();
-
-                Events.raise(EmailSendEvent.of(applicantId, passState, ""));
+                Events.raise(toEmailSendEvent(applicant, slackNotify, slackUrl));
             }
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void sendEmail(String applicantId) {
+    public void sendEmail(String applicantId, boolean slackNotify, String slackUrl) {
         MongoAnswer applicant = applicantQueryUseCase.getApplicantById(applicantId);
         if (sendEmail(applicant)) {
-            String passState = applicant.getApplicantState().getPassStateToEnum().name();
-            Events.raise(EmailSendEvent.of(applicantId, passState, ""));
+            Events.raise(toEmailSendEvent(applicant, slackNotify, slackUrl));
         }
     }
 
@@ -75,5 +71,16 @@ public class ApplicantEmailService {
             log.error("attachment 가 첨부되지 않았습니다. file dir : {}", attachment.getAbsolutePath());
             return emailSender.sendEmail(email, subject, template);
         }
+    }
+
+    private EmailSendEvent toEmailSendEvent(
+            MongoAnswer applicant, boolean slackNotify, String slackUrl) {
+        String passState = applicant.getApplicantState().getPassStateToEnum().name();
+        String name = applicant.getQna().getOrDefault("name", "").toString();
+        String field1 = applicant.getQna().getOrDefault("field1", "").toString();
+        String field2 = applicant.getQna().getOrDefault("field2", "").toString();
+
+        return EmailSendEvent.of(
+                applicant.getId(), passState, slackNotify, slackUrl, name, field1, field2);
     }
 }

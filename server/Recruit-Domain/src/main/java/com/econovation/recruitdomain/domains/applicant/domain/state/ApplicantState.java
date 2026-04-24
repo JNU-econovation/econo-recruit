@@ -18,6 +18,14 @@ public class ApplicantState {
         this.passState = this.passState.nonPass(period);
     }
 
+    public boolean isPassable(PeriodStates period) {
+        return passState.isPassable(period);
+    }
+
+    public boolean isNonPassable(PeriodStates period) {
+        return passState.isNonPassable(period);
+    }
+
     public String getPassState() {
         return this.passState.toString();
     }

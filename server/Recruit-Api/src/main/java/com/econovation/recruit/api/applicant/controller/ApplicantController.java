@@ -6,6 +6,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCE
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
+import com.econovation.recruit.api.applicant.docs.UpdateApplicantStateExceptionDocs;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
@@ -152,6 +153,7 @@ public class ApplicantController {
     }
 
     @Operation(summary = "지원자의 합/불 상태를 변경합니다.")
+    @ApiErrorExceptionsExample(UpdateApplicantStateExceptionDocs.class)
     @PatchMapping("/applicants/{applicant-id}/state")
     public ResponseEntity<Map<String, String>> updateStatus(
             @PathVariable("applicant-id") String applicantId,
@@ -164,10 +166,12 @@ public class ApplicantController {
     }
 
     @Operation(
-            summary = "지원서의 합/불 상태를 조회합니다. (합/불 관리자 페이지 전용)",
+            summary = "지원서의 합/불 상태를 조회합니다.",
             description =
                     """
-                    응답으로 오는 passState 값의 종류는 non-processed, non-passed, first-passed, final-passed 입니다.
+                    - passState : non-processed | non-passed | first-passed | final-passed
+                    - isPassable : 현재 상태에서 pass 할 수 있는지 여부
+                    - isNonPassable : 현재 상태에서 non-pass 할 수 있는지 여부
                     """)
     @GetMapping("/year/{year}/applicants/pass-state")
     public ResponseEntity<List<GetApplicantsStatusResponse>> getApplicantsStatus(
@@ -186,16 +190,16 @@ public class ApplicantController {
 
     @Operation(summary = "지원서들을 선택해서 일괄 삭제합니다.")
     @DeleteMapping("/applicants")
-    public ResponseEntity<String> deleteApplicant(
-            @RequestBody List<String> applicantIds
-            ) {
+    public ResponseEntity<String> deleteApplicant(@RequestBody List<String> applicantIds) {
         applicantCommandUseCase.deleteByApplicantIds(applicantIds);
         return new ResponseEntity<>(APPLICANTS_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
     }
 
     @Operation(summary = "지원자 검색 시 성함 자동완성")
     @GetMapping("/applicants/names/{year}")
-    public ResponseEntity<List<String>> getApplicantNames(@PathVariable Integer year, @RequestParam String keyword) {
-        return new ResponseEntity<>(applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
+    public ResponseEntity<List<String>> getApplicantNames(
+            @PathVariable Integer year, @RequestParam String keyword) {
+        return new ResponseEntity<>(
+                applicantQueryUseCase.autocomplete(year, keyword), HttpStatus.OK);
     }
 }

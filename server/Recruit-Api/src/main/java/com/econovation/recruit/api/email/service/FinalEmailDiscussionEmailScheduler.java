@@ -7,8 +7,6 @@ import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
-import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
-import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,8 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class FinalEmailDiscussionEmailScheduler {
     private final ApplicantEmailService emailService;
-    private final SlackMessageProvider slackMessageProvider;
-    private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final Integer MAX_EMAIL_SEND_RETRY = 3;
     private final LatestRecruitmentVo latestRecruitInfo;
@@ -147,12 +143,14 @@ public class FinalEmailDiscussionEmailScheduler {
             failQueue.add(applicant);
         }
         if (result) {
-            String applicantId = applicant.getId();
             String passState = applicant.getApplicantState().getPassStateToEnum().name();
+            String name = applicant.getQna().get("name").toString();
+            String field1 = applicant.getQna().get("field1").toString();
+            String field2 = applicant.getQna().get("field2").toString();
 
-            Events.raise(EmailSendEvent.of(applicantId, passState, ""));
-            slackMessageProvider.sendMessage(
-                    slackProperties.getUrl(), generateNotificationMessage(applicant));
+            Events.raise(
+                    EmailSendEvent.of(
+                            applicant.getId(), passState, true, null, name, field1, field2));
         }
 
         return result;
@@ -168,23 +166,5 @@ public class FinalEmailDiscussionEmailScheduler {
                                     || passState == (PassStates.FINAL_FAILED);
                         })
                 .toList();
-    }
-
-    private String generateNotificationMessage(MongoAnswer applicant) {
-        String message =
-                """
-                [메일 발송 성공]
-                - 이름 : %s
-                - 지원 분야 : %s / %s
-                - 합격 상태 : %s
-                """;
-
-        String name = applicant.getQna().get(ApplicantQnaKeys.NAME).toString();
-        String field = applicant.getQna().get(ApplicantQnaKeys.FIELD).toString();
-        String field1 = applicant.getQna().get(ApplicantQnaKeys.FIELD1).toString();
-        String field2 = applicant.getQna().get(ApplicantQnaKeys.FIELD2).toString();
-        String state = applicant.getApplicantState().getPassStateToEnum().name();
-
-        return String.format(message, name, field1, field2, state);
     }
 }

@@ -50,7 +50,9 @@ public class CommentController {
         return new ResponseEntity(comments, HttpStatus.OK);
     }
 
-    @Operation(summary = "applicationId로 댓글 조회", description = "권한별로 회장단만 모든 코멘트 조회 가능, TF들은 자신의 코멘트만 조회 가능")
+    @Operation(
+            summary = "applicationId로 댓글 조회",
+            description = "권한별로 회장단만 모든 코멘트 조회 가능, TF들은 자신의 코멘트만 조회 가능")
     @GetMapping("/applicants/{applicant-id}/comments")
     public ResponseEntity<List<CommentPairVo>> findByApplicantId(
             @PathVariable(name = "applicant-id") String applicantId) {
@@ -95,5 +97,19 @@ public class CommentController {
     public ResponseEntity minusLikeCount(@PathVariable(name = "comment-id") Long commentId) {
         commentUseCase.deleteCommentLike(commentId);
         return new ResponseEntity<>(COMMENT_LIKE_SUCCESS_DELETE_MESSAGE, HttpStatus.OK);
+    }
+
+    @Operation(summary = "댓글 전체 공개", description = "회장단만 사용 가능합니다.")
+    @PostMapping("/comments/disclosure")
+    public ResponseEntity changeDisclosure() {
+        commentUseCase.changeViewMode();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "댓글 전체 공개 상태 조회")
+    @GetMapping("/comments/disclosure")
+    public ResponseEntity<Boolean> getDisclosure() {
+        boolean isPublic = commentUseCase.isPublic();
+        return new ResponseEntity(isPublic, HttpStatus.OK);
     }
 }

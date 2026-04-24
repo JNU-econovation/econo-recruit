@@ -64,3 +64,5 @@ SET pm.next_columns_id = NULL
 WHERE pm.navigation_id = 1
   AND pm.year BETWEEN 31 AND 40
   AND pm.title = "기획자";
+
+INSERT INTO comment_disclosure (id, is_public, created_at, updated_at) VALUES (1, false, NOW(), NOW());

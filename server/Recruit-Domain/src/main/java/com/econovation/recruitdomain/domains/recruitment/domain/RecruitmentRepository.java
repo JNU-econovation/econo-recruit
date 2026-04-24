@@ -1,6 +1,5 @@
 package com.econovation.recruitdomain.domains.recruitment.domain;
 
-import com.econovation.recruitdomain.domains.applicant.domain.state.RecruitmentStates;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -18,7 +18,11 @@ public class CommentPairVo {
     private Boolean isBlurred;
 
     public static CommentPairVo of(
-            Comment comment, Boolean isLike, String interviewerName, Boolean canEdit, Boolean isBlurred) {
+            Comment comment,
+            Boolean isLike,
+            String interviewerName,
+            Boolean canEdit,
+            Boolean isBlurred) {
         return CommentPairVo.builder()
                 .id(comment.getId())
                 .createdAt(String.valueOf(Timestamp.valueOf(comment.getCreatedAt()).getTime()))
@@ -31,4 +35,3 @@ public class CommentPairVo {
                 .build();
     }
 }
-
