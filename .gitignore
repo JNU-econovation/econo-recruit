@@ -54,3 +54,6 @@ build
 
 **/ssl/*.pem*
 **/ssl/*.key*
+
+### Claude Code ###
+.claude/config.json

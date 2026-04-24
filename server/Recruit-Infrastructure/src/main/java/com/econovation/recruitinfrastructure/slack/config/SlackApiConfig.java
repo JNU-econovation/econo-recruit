@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SlackApiConfig {
-    @Value("${slack.webhook.token}")
+    @Value("${slack.webhook.token:}")
     private String token;
 
     @Bean
