@@ -3,32 +3,32 @@ jar { enabled = true }
 
 dependencies {
     api("com.slack.api:slack-api-client:1.27.2")
-    api 'io.github.openfeign:feign-httpclient:12.1'
-    api 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+    api 'io.github.openfeign:feign-httpclient:13.3'
+    api 'org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0'
 
     api project(':Recruit-Common')
     api 'org.springframework.boot:spring-boot-starter-data-redis'
-    api 'org.redisson:redisson:3.19.0'
+    api 'org.redisson:redisson:3.27.2'
 //    api('com.fasterxml.jackson.datatyp:jackson-datatype-jdk8')
     api('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-    api 'io.github.openfeign:feign-jackson:12.1'
-    api 'com.bucket4j:bucket4j-core:8.1.1'
-    api 'com.bucket4j:bucket4j-jcache:8.1.1'
+    api 'io.github.openfeign:feign-jackson:13.3'
+    api 'com.bucket4j:bucket4j-core:8.7.0'
+    api 'com.bucket4j:bucket4j-jcache:8.7.0'
 
     //for email
     api 'org.springframework.boot:spring-boot-starter-thymeleaf'
     api 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    api 'com.sun.mail:javax.mail:1.6.2'
-    implementation 'org.apache.commons:commons-email:1.5'
+    api 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.apache.commons:commons-email:1.6.0'
     api 'org.springframework.retry:spring-retry'
     // amazon ses
     api 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    api group: 'software.amazon.awssdk', name: 'ses', version: "2.19.29"
+    api group: 'software.amazon.awssdk', name: 'ses', version: "2.25.0"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:3.1.5"
-    testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock:3.1.5"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.3.0"
+    testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock:4.3.0"
 
     // pdf
-    api 'org.xhtmlrenderer:flying-saucer-pdf:9.1.20'
+    api 'org.xhtmlrenderer:flying-saucer-pdf:9.7.2'
 }
