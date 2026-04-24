@@ -38,14 +38,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = resolveToken(request);
 
-        if (!whitelistLoadPort.existsByToken(token)) {
+        if (token == null || !whitelistLoadPort.existsByToken(token)) {
             throw InvalidTokenException.EXCEPTION;
         }
 
-        if (token != null) {
-            Authentication authentication = getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        Authentication authentication = getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }
