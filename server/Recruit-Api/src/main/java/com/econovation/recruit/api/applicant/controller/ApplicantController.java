@@ -5,16 +5,15 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANTS_SUCC
 import static com.econovation.recruitcommon.consts.RecruitStatic.APPLICANT_SUCCESS_REGISTER_MESSAGE;
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
-import com.econovation.recruit.api.applicant.command.CreateAnswerCommand;
 import com.econovation.recruit.api.applicant.docs.CreateApplicantExceptionDocs;
 import com.econovation.recruit.api.applicant.docs.UpdateApplicantStateExceptionDocs;
 import com.econovation.recruit.api.applicant.dto.AnswersResponseDto;
 import com.econovation.recruit.api.applicant.dto.GetApplicantsStatusResponse;
 import com.econovation.recruit.api.applicant.usecase.ApplicantCommandUseCase;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
+import com.econovation.recruit.api.applicant.usecase.ApplicantRegisterUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
-import com.econovation.recruit.api.applicant.validate.ApplicantValidator;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitcommon.annotation.ApiErrorExceptionsExample;
 import com.econovation.recruitcommon.annotation.TimeTrace;
@@ -29,10 +28,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,12 +50,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "[1.0]. 지원서 API", description = "지원서 관련 API")
 public class ApplicantController {
 
+    private final ApplicantRegisterUseCase applicantRegisterUseCase;
     private final TimeTableRegisterUseCase timeTableRegisterUseCase;
     private final TimeTableLoadUseCase timeTableLoadUseCase;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final CommonsEmailSender commonsEmailSender;
-    private final CommandGateway commandGateway;
-    private final ApplicantValidator applicantValidator;
     private final ApplicantCommandUseCase applicantCommandUseCase;
     private final LatestRecruitmentVo latestRecruitInfo;
 
@@ -67,12 +63,9 @@ public class ApplicantController {
     @XssProtected
     @PostMapping("/applicants")
     @TimeTrace
-    public ResponseEntity registerMongoApplicant(@RequestBody Map<String, Object> qna) {
-        int year = latestRecruitInfo.getYear();
-        applicantValidator.validateRegisterApplicant(qna);
-        String applicantId = UUID.randomUUID().toString();
-        commandGateway.send(new CreateAnswerCommand(applicantId, year, qna));
-        return new ResponseEntity<>(applicantId, HttpStatus.OK);
+    public ResponseEntity<String> registerMongoApplicant(@RequestBody Map<String, Object> qna) {
+        String applicantId = applicantRegisterUseCase.register(qna);
+        return ResponseEntity.ok(applicantId);
     }
 
     @Operation(summary = "지원자 id로 지원서를 조회합니다.")

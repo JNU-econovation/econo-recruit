@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.email.service;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruitdomain.common.aop.domainEvent.Events;
@@ -84,7 +85,7 @@ public class FinalEmailDiscussionEmailScheduler {
                 }
             } catch (Exception e) {
                 log.error(
-                        "Email sending failed for: {}", applicant.getQna().get("email").toString());
+                        "Email sending failed for: {}", applicant.getQna().get(ApplicantQnaKeys.EMAIL).toString());
                 failQueue.add(applicant);
                 retryCounts.put(applicant, retryCounts.getOrDefault(applicant, 0) + 1);
             }
@@ -103,7 +104,7 @@ public class FinalEmailDiscussionEmailScheduler {
                     log.error(
                             "최대 {}번 retry 실패시: {}",
                             MAX_EMAIL_SEND_RETRY,
-                            applicant.getQna().get("email").toString());
+                            applicant.getQna().get(ApplicantQnaKeys.EMAIL).toString());
                     continue;
                 }
 
@@ -115,13 +116,13 @@ public class FinalEmailDiscussionEmailScheduler {
                         failQueue.add(applicant);
                         log.warn(
                                 "Retry failed for email: {} (Attempt {})",
-                                applicant.getQna().get("email").toString(),
+                                applicant.getQna().get(ApplicantQnaKeys.EMAIL).toString(),
                                 retryCount + 1);
                     }
                 } catch (Exception e) {
                     log.error(
                             "Retry exception for email {}:",
-                            applicant.getQna().get("email").toString());
+                            applicant.getQna().get(ApplicantQnaKeys.EMAIL).toString());
                     retryCounts.put(applicant, retryCount + 1);
                     failQueue.add(applicant);
                 }

@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.email.service;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.email_template.util.DefaultEmailTemplateGenerator;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
@@ -61,7 +62,7 @@ public class ApplicantEmailService {
         String template = templateGenerator.generateEmailTemplate(applicant);
         String subject = templateGenerator.generateSubject(applicant);
         File attachment = templateGenerator.getPortfolioFile(applicant);
-        String email = applicant.getQna().get("email").toString();
+        String email = applicant.getQna().get(ApplicantQnaKeys.EMAIL).toString();
 
         if (Objects.isNull(attachment)) return emailSender.sendEmail(email, subject, template);
         else if (attachment.exists())

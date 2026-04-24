@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.sms.service;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.recruitment.util.LatestRecruitmentVo;
 import com.econovation.recruit.api.sms.helper.NcpSmsHelper;
@@ -23,8 +24,8 @@ public class ApplicantSmsService {
     public void sendSms(MongoAnswer applicant) {
         int year = latestRecruitInfo.getYear();
 
-        String phoneNumber = applicant.getQna().get("contacted").toString();
-        String name = applicant.getQna().get("name").toString();
+        String phoneNumber = applicant.getQna().get(ApplicantQnaKeys.CONTACTED).toString();
+        String name = applicant.getQna().get(ApplicantQnaKeys.NAME).toString();
         String message =
                 """
                 안녕하세요. %s님. 에코노베이션입니다.
@@ -49,8 +50,8 @@ public class ApplicantSmsService {
         int year = latestRecruitInfo.getYear();
         Map<String, Object> qna = applicantQueryUseCase.execute(applicantId);
 
-        String phoneNumber = qna.get("contacted").toString();
-        String name = qna.get("name").toString();
+        String phoneNumber = qna.get(ApplicantQnaKeys.CONTACTED).toString();
+        String name = qna.get(ApplicantQnaKeys.NAME).toString();
         String message =
                 """
                 안녕하세요. %s님. 에코노베이션입니다.
