@@ -12,8 +12,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Date;
+import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ public class JwtTokenProvider {
 
     private Jws<Claims> getJws(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
+            return Jwts.parser().verifyWith(getSecretKey()).build().parseSignedClaims(token);
         } catch (ExpiredJwtException e) {
             throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
@@ -41,21 +41,21 @@ public class JwtTokenProvider {
         }
     }
 
-    private Key getSecretKey() {
+    private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
     }
 
     public boolean isAccessToken(String token) {
-        return getJws(token).getBody().get(TOKEN_TYPE).equals(ACCESS_TOKEN);
+        return getJws(token).getPayload().get(TOKEN_TYPE).equals(ACCESS_TOKEN);
     }
 
     public boolean isRefreshToken(String token) {
-        return getJws(token).getBody().get(TOKEN_TYPE).equals(REFRESH_TOKEN);
+        return getJws(token).getPayload().get(TOKEN_TYPE).equals(REFRESH_TOKEN);
     }
 
     public AccessTokenInfo parseAccessToken(String token) {
         if (isAccessToken(token)) {
-            Claims claims = getJws(token).getBody();
+            Claims claims = getJws(token).getPayload();
             return AccessTokenInfo.builder()
                     .userId(Long.parseLong(claims.getSubject()))
                     .role((String) claims.get(TOKEN_ROLE))
@@ -78,7 +78,6 @@ public class JwtTokenProvider {
 
     public String generateAccessToken(Long id, String role) {
         final Date issuedAt = new Date();
-        //        maxLong
         final Date accessTokenExpiresIn =
                 new Date(issuedAt.getTime() + jwtProperties.getAccessExp() * MILLI_TO_SECOND);
 
@@ -94,26 +93,26 @@ public class JwtTokenProvider {
 
     private String buildAccessToken(
             Long id, Date issuedAt, Date accessTokenExpiresIn, String role) {
-        final Key encodedKey = getSecretKey();
+        final SecretKey encodedKey = getSecretKey();
         return Jwts.builder()
-                .setIssuer(TOKEN_ISSUER)
-                .setIssuedAt(issuedAt)
-                .setSubject(id.toString())
+                .issuer(TOKEN_ISSUER)
+                .issuedAt(issuedAt)
+                .subject(id.toString())
                 .claim(TOKEN_TYPE, ACCESS_TOKEN)
                 .claim(TOKEN_ROLE, role)
-                .setExpiration(accessTokenExpiresIn)
+                .expiration(accessTokenExpiresIn)
                 .signWith(encodedKey)
                 .compact();
     }
 
     private String buildRefreshToken(Long id, Date issuedAt, Date accessTokenExpiresIn) {
-        final Key encodedKey = getSecretKey();
+        final SecretKey encodedKey = getSecretKey();
         return Jwts.builder()
-                .setIssuer(TOKEN_ISSUER)
-                .setIssuedAt(issuedAt)
-                .setSubject(id.toString())
+                .issuer(TOKEN_ISSUER)
+                .issuedAt(issuedAt)
+                .subject(id.toString())
                 .claim(TOKEN_TYPE, REFRESH_TOKEN)
-                .setExpiration(accessTokenExpiresIn)
+                .expiration(accessTokenExpiresIn)
                 .signWith(encodedKey)
                 .compact();
     }
