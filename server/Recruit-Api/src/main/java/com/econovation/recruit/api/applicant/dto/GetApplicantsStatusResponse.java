@@ -30,23 +30,13 @@ public class GetApplicantsStatusResponse {
             boolean isNonPassable = applicantState.isNonPassable(period);
 
             return GetApplicantsStatusResponse.builder()
-<<<<<<< refactor/BE-154
                     .field((String) result.get(ApplicantQnaKeys.FIELD))
                     .field1((String) result.get(ApplicantQnaKeys.FIELD1))
                     .field2((String) result.get(ApplicantQnaKeys.FIELD2))
                     .name((String) result.get(ApplicantQnaKeys.NAME))
                     .id((String) result.get(ApplicantQnaKeys.ID))
                     .year((Integer) result.get(ApplicantQnaKeys.YEAR))
-                    .state(ApplicantStateResponse.of(applicantState.getPassState()))
-=======
-                    .field((String) result.get("field"))
-                    .field1((String) result.get("field1"))
-                    .field2((String) result.get("field2"))
-                    .name((String) result.get("name"))
-                    .id((String) result.get("id"))
-                    .year((Integer) result.get("year"))
                     .state(ApplicantStateResponse.of(passState, isPassable, isNonPassable))
->>>>>>> develop
                     .build();
         }
         throw ApplicantWrongStateException.wrongStatusException;

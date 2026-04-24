@@ -116,17 +116,10 @@ public class AnswerCommandService implements ApplicantCommandUseCase {
         Card card = cardAdaptor.findByApplicantId(applicantId);
         Board deleteBoard = boardAdaptor.getBoardByCardId(card.getId());
 
-<<<<<<< refactor/BE-154
-        Board previousBoard = boardAdaptor
-                .getByNextBoardId(deleteBoard.getId())
-                .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-
-=======
         Board previousBoard =
                 boardAdaptor
                         .getByNextBoardId(deleteBoard.getId())
                         .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
->>>>>>> develop
         previousBoard.updateNextBoardID(deleteBoard.getNextBoardId());
 
         boardAdaptor.deleteByCardId(card.getId());
