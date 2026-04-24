@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.domains.label.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

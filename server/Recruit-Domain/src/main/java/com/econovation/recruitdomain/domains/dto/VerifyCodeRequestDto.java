@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.Getter;
 

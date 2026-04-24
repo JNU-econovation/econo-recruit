@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.record.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
