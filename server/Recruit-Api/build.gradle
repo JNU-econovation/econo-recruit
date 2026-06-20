@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.google.cloud.tools.jib' version '3.4.0'
+    id 'com.google.cloud.tools.jib' version '3.5.3'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
@@ -67,15 +67,15 @@ jib {
     def serverPort = "8080"
     def dockerUsername = System.getenv("DOCKERHUB_USERNAME")
     def dockerPassword = System.getenv("DOCKERHUB_PASSWORD")
-    def imageName = System.getenv("IMAGE_NAME")
-    def imageTag = System.getenv("IMAGE_TAG")
+    def imageName = System.getenv("IMAGE_NAME") ?: "blackbean99/econo-recruit"
+    def imageTag = System.getenv("IMAGE_TAG") ?: "latest"
 
     from {
         image = 'amazoncorretto:25-alpine-jdk'
     }
     to {
-        image = dockerUsername + "/" + imageName
-        tags = ['latest'] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
+        image = imageName
+        tags = [imageTag]
         auth { // docker auth
             username = dockerUsername ? dockerUsername : ""
             password = dockerPassword ? dockerPassword : ""
@@ -90,14 +90,6 @@ jib {
                 '-XX:+UseContainerSupport',
                 '-XX:+DisableExplicitGC',
                 '-server'
-        ]
-        environment = [
-                'MYSQL_HOST'    : System.getenv("MYSQL_HOST"),
-                'MYSQL_PORT'    : System.getenv("MYSQL_PORT"),
-                'MYSQL_DATABASE': System.getenv("MYSQL_DATABASE"),
-                'MYSQL_USERNAME': System.getenv("MYSQL_USERNAME"),
-                'MYSQL_PASSWORD': System.getenv("MYSQL_PASSWORD"),
-                'JWT_SECRET'    : System.getenv("JWT_SECRET")
         ]
         ports = ['8080']
     }
