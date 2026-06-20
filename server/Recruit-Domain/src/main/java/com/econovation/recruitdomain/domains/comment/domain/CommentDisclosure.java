@@ -1,9 +1,9 @@
 package com.econovation.recruitdomain.domains.comment.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,12 +1,12 @@
 package com.econovation.recruitdomain.domains.card.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import javax.annotation.Nullable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @Entity
 @NoArgsConstructor

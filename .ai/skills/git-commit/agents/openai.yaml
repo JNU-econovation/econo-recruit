@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit"
+  short_description: "Write small commits in the repository's Korean commit style."
+  default_prompt: "Use this skill to inspect the staged diff, split changes into small commits when needed, and write commit messages that match this repository's style."

@@ -11,13 +11,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Getter
 public class AuthDetails implements UserDetails {
+    private static final String ROLE_PREFIX = "ROLE_";
+
     private String idpId;
 
     private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
+        String authority = role.startsWith(ROLE_PREFIX) ? role : ROLE_PREFIX + role;
+        return Collections.singleton(new SimpleGrantedAuthority(authority));
     }
 
     @Override
