@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.13'
-    id 'com.diffplug.spotless' version '6.25.0'
+    id 'com.diffplug.spotless' version '8.7.0'
     id "org.sonarqube" version "4.4.1.3373"
 }
 
@@ -130,7 +130,7 @@ spotless {
         trimTrailingWhitespace()
 //        indentWithTabs()
         importOrder()
-        googleJavaFormat().aosp()
+        googleJavaFormat('1.28.0').aosp()
         endWithNewline()
     }
 }
