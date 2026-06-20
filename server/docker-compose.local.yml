@@ -1,4 +1,5 @@
-name: econo-recruit
+name: econo-recruit-local
+
 services:
   mysql:
     image: mysql:8.0.36
@@ -43,36 +44,6 @@ services:
       - axon-events:/axonserver/events
       - axon-config:/axonserver/config
 
-  backend:
-    image: blackbean99/econo-recruit:latest
-    restart: unless-stopped
-    container_name: backend
-    env_file:
-      - .env
-    network_mode: "host"
-    environment:
-      - TZ=Asia/Seoul
-    depends_on:
-      - redis
-      - axon-server
-      - mysql
-      - mongodb
-
-  nginx-proxy-manager:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: nginx-proxy-manager
-    restart: unless-stopped
-    ports:
-      - "10023:443"
-      - "127.0.0.1:81:81"
-    volumes:
-      - npm-data:/data
-      - npm-letsencrypt:/etc/letsencrypt
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    depends_on:
-      - backend
-
 volumes:
   mysql-data:
   mongo-data:
@@ -80,5 +51,3 @@ volumes:
   axon-data:
   axon-events:
   axon-config:
-  npm-data:
-  npm-letsencrypt:
