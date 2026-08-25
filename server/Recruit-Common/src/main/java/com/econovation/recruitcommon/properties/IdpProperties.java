@@ -1,4 +1,4 @@
-package com.econovation.recruitinfrastructure.mail;
+package com.econovation.recruitcommon.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +8,5 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @AllArgsConstructor
 @ConstructorBinding
-@ConfigurationProperties(prefix = "spring.mail")
-public class GoogleMailProperties {
-    private String host;
-    private Integer port;
-    private String username;
-    private String password;
-}
+@ConfigurationProperties(prefix = "")
+public class IdpProperties {}

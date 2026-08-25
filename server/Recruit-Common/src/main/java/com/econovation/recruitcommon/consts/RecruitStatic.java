@@ -81,31 +81,6 @@ public class RecruitStatic {
         "/api-docs"
     };
     public static final String[] RolePattern = {
-        "TF", "PRESIDENT", "OPERATION", "SWAGGER"
-    };
-
-    public static final String[] StaticResourcePatterns = {
-        "/webjars/**", "/css/**", "/js/**", "/images/**", "/favicon.ico"
-    };
-    public static final String[] PublicPostPatterns = {
-        "/api/v1/applicants/mail",
-        "/api/v1/applicants",
-        "/api/v1/timetables",
-        "/api/v1/applicants/*/timetables",
-        "/api/v1/questions",
-        "/api/v1/signup",
-        "/api/v1/token/refresh",
-        "/api/v1/login",
-        "/api/v1/register",
-        "/api/v1/password/reset",
-        "/api/v1/password/verify",
-        "/api/v1/signup/verify",
-        "/api/v1/verify-code"
-    };
-    public static final String[] PublicGetPatterns = {
-        "/api/v1/applicants",
-        "/api/v1/token",
-        "/api/v1/timetables",
-        "/api/v1/applicants/*/timetables"
+        "ROLE_TF", "ROLE_PRESIDENT", "ROLE_OPERATION", "ROLE_SWAGGER"
     };
 }

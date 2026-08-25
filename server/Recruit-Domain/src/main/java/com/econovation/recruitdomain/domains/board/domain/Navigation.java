@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.board.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity

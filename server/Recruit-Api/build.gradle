@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.google.cloud.tools.jib' version '3.5.3'
+    id 'com.google.cloud.tools.jib' version '3.4.0'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
@@ -8,9 +8,7 @@ group = 'com.jnu'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
+    sourceCompatibility = '17'
 }
 
 repositories {
@@ -47,7 +45,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     // json
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.17'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
     //    testImplementation 'org.junit.jupiter:junit-jupiter-api:4.13'
     //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
@@ -58,7 +56,7 @@ dependencies {
     implementation project(':Recruit-Infrastructure')
 
     // quartz-scheduler
-    implementation("org.springframework.boot:spring-boot-starter-quartz")
+    implementation("org.springframework.boot:spring-boot-starter-quartz:3.5.3")
 
     testRuntimeOnly 'com.h2database:h2'
 }
@@ -67,15 +65,15 @@ jib {
     def serverPort = "8080"
     def dockerUsername = System.getenv("DOCKERHUB_USERNAME")
     def dockerPassword = System.getenv("DOCKERHUB_PASSWORD")
-    def imageName = System.getenv("IMAGE_NAME") ?: "blackbean99/econo-recruit"
-    def imageTag = System.getenv("IMAGE_TAG") ?: "latest"
+    def imageName = System.getenv("IMAGE_NAME")
+    def imageTag = System.getenv("IMAGE_TAG")
 
     from {
-        image = 'amazoncorretto:25-alpine-jdk'
+        image = 'amazoncorretto:17-alpine3.17-jdk'
     }
     to {
-        image = imageName
-        tags = [imageTag]
+        image = dockerUsername + "/" + imageName
+        tags = ['latest'] // docker tag ('latest'와 'github-action으로 받은 태그' 모두에 업로드)
         auth { // docker auth
             username = dockerUsername ? dockerUsername : ""
             password = dockerPassword ? dockerPassword : ""
@@ -83,13 +81,21 @@ jib {
     }
     container {
         jvmFlags = [
-                '-Dspring.profiles.active=' + (System.getenv("ACTIVE_PROFILE") ?: "local"),
+                '-Dspring.profiles.active=local',
                 '-Dserver.port=' + serverPort,
                 '-Xms2G', '-Xmx2G',
                 '-XX:+UseG1GC',
                 '-XX:+UseContainerSupport',
                 '-XX:+DisableExplicitGC',
                 '-server'
+        ]
+        environment = [
+                'MYSQL_HOST'    : System.getenv("MYSQL_HOST"),
+                'MYSQL_PORT'    : System.getenv("MYSQL_PORT"),
+                'MYSQL_DATABASE': System.getenv("MYSQL_DATABASE"),
+                'MYSQL_USERNAME': System.getenv("MYSQL_USERNAME"),
+                'MYSQL_PASSWORD': System.getenv("MYSQL_PASSWORD"),
+                'JWT_SECRET'    : System.getenv("JWT_SECRET")
         ]
         ports = ['8080']
     }

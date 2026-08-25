@@ -2,7 +2,7 @@ package com.econovation.recruitdomain.domains.applicant.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import java.util.UUID;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

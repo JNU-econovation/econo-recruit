@@ -84,7 +84,9 @@ public class NcpSmsHelper {
         String space = " "; // 공백
         String newLine = "\n"; // 줄바꿈
         String method = "POST"; // HTTP 메소드
-        String url = ncpProperties.getSmsApiUri(); // 도메인을 제외한 "/" 아래 전체 url (쿼리스트링 포함)
+        String url =
+                "/sms/v2/services/ncp:sms:kr:324868537230:kjm/messages"; // 도메인을 제외한 "/" 아래 전체 url
+        // (쿼리스트링 포함)
         String message = method + space + url + newLine + timeStamp + newLine + accessKey;
 
         try {

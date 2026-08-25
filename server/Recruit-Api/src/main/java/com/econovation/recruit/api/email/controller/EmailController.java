@@ -34,7 +34,7 @@ public class EmailController {
                     """)
     @PostMapping("/emails/{applicantId}")
     public ResponseEntity<String> send(@PathVariable String applicantId) {
-        emailService.sendEmail(applicantId, true, null);
+        emailService.sendEmail(applicantId);
         return ResponseEntity.ok("");
     }
 
@@ -49,11 +49,11 @@ public class EmailController {
     public ResponseEntity<String> sendAll(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "state") String state) {
-        if (year == null) {
+        if (year == null || state == null) {
             year = latestRecruitInfo.getYear();
         }
 
-        emailService.sendEmail(year, state, true, null);
+        emailService.sendEmail(year, state);
         return ResponseEntity.ok("이메일 전송 시작");
     }
 }

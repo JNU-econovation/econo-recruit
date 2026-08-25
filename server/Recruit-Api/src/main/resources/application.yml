@@ -1,7 +1,4 @@
 spring:
-  threads:
-    virtual:
-      enabled: true
   profiles:
     include:
       - infrastructure
@@ -62,10 +59,11 @@ springdoc:
 #  packages-to-scan: com.econovation.recruit
   path-to-match: /api/**
   swagger-ui:
+#    path: /swagger-ui.html
     tags-sorter: alpha
+#    url: /swagger-ui.html
     display-query-params: true
     version: ${SWAGGER_VERSION:0.0.1-SNAPSHOT}
-    path: /swagger-ui
   api-docs:
     path: /api-docs
     groups:
@@ -83,9 +81,6 @@ mail:
 econovation:
   year: ${ECONOVATION_YEAR:28}
   domain: ${ECONOVATION_DOMAIN:recruit.econovation.kr}
-  file:
-    path:
-      portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
   recruit:
     period:
       passedDate: ${RECRUIT_PERIOD_PASSED_DATE:2025-03-14T09:00:00}
@@ -112,10 +107,14 @@ spring:
   config:
     activate:
       on-profile: local
+econovation:
+  file:
+    path:
+      portfolio: ${ECONOVATION_PORTFOLIO_PATH:server/portfolio.pdf}
 
 logging:
   level:
-    org.springframework.graphql: debug
+    graphql: debug
 #logging:
 #  level:
 #    org.springframework.data.*.*: debug

@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import javax.annotation.Nullable;
 import lombok.Data;
-import org.springframework.lang.Nullable;
 
 @Data
 public class QuestionRequestDto {

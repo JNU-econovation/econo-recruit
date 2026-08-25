@@ -1,8 +1,8 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import javax.annotation.Nullable;
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.lang.Nullable;
 
 @Data
 @Getter

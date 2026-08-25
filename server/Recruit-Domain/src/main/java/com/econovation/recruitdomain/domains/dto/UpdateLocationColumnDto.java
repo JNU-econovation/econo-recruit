@@ -1,6 +1,6 @@
 package com.econovation.recruitdomain.domains.dto;
 
-import jakarta.validation.constraints.Min;
+import javax.validation.constraints.Min;
 import lombok.Data;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
-import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
+import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

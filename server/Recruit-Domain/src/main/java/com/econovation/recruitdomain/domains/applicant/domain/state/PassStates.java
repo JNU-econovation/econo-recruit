@@ -11,13 +11,13 @@ public enum PassStates {
         @Override
         public PassStates pass(PeriodStates period) {
             if (isPassable(period)) return PassStates.FIRST_PASSED;
-            else throw NotOperatedException.EXCEPTION;
+            else return this;
         }
 
         @Override
         public PassStates nonPass(PeriodStates period) {
             if (isNonPassable(period)) return PassStates.FIRST_FAILED;
-            else throw NotOperatedException.EXCEPTION;
+            else return this;
         }
 
         @Override
@@ -40,9 +40,13 @@ public enum PassStates {
         @Override
         public PassStates nonPass(PeriodStates period) {
             if (isNonPassable(period)) {
-                if (period.equals(PeriodStates.FIRST_DISCUSSION)) return PassStates.FIRST_FAILED;
-                else return PassStates.FINAL_FAILED;
-            } else throw NotOperatedException.EXCEPTION;
+                if (period.equals(PeriodStates.FIRST_DISCUSSION))
+                    return PassStates.FIRST_FAILED;
+                else
+                    return PassStates.FINAL_FAILED;
+            }
+
+            else throw NotOperatedException.EXCEPTION;
         }
 
         @Override
@@ -52,15 +56,14 @@ public enum PassStates {
 
         @Override
         public boolean isNonPassable(PeriodStates period) {
-            return period.equals(PeriodStates.FIRST_DISCUSSION)
-                    || period.equals(PeriodStates.FINAL_DISCUSSION);
+            return period.equals(PeriodStates.FIRST_DISCUSSION) || period.equals(PeriodStates.FINAL_DISCUSSION);
         }
     },
     FIRST_FAILED("first-failed") {
         @Override
         public PassStates pass(PeriodStates period) {
             if (isPassable(period)) return PassStates.FIRST_PASSED;
-            else throw NotOperatedException.EXCEPTION;
+            else return this;
         }
 
         @Override
@@ -103,7 +106,7 @@ public enum PassStates {
     FINAL_FAILED("final-failed") {
         @Override
         public PassStates pass(PeriodStates period) {
-            if (isPassable(period)) return PassStates.FINAL_PASSED;
+            if(isPassable(period)) return PassStates.FINAL_PASSED;
             else throw NotOperatedException.EXCEPTION;
         }
 

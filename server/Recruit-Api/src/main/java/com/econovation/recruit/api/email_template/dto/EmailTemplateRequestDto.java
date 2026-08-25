@@ -3,8 +3,8 @@ package com.econovation.recruit.api.email_template.dto;
 import com.econovation.recruitdomain.domains.email_template.domain.EmailTemplate;
 import com.econovation.recruitdomain.domains.email_template.domain.EmailTemplateType;
 import java.time.LocalDateTime;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

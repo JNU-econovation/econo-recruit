@@ -2,9 +2,7 @@ package com.econovation.recruit.api.config.security;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.AUTH_HEADER;
 import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
-import static com.econovation.recruitcommon.consts.RecruitStatic.PublicGetPatterns;
-import static com.econovation.recruitcommon.consts.RecruitStatic.PublicPostPatterns;
-import static com.econovation.recruitcommon.consts.RecruitStatic.StaticResourcePatterns;
+
 import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
@@ -13,11 +11,11 @@ import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.out.WhitelistLoadPort;
 import java.io.IOException;
 import java.util.Arrays;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,12 +39,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = resolveToken(request);
 
-        if (token == null || !whitelistLoadPort.existsByToken(token)) {
+        if (!whitelistLoadPort.existsByToken(token)) {
             throw InvalidTokenException.EXCEPTION;
         }
 
-        Authentication authentication = getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (token != null) {
+            Authentication authentication = getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
 
         filterChain.doFilter(request, response);
     }
@@ -54,17 +54,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        String method = request.getMethod();
         AntPathMatcher antPathMatcher = new AntPathMatcher();
-        return "OPTIONS".equals(method)
-                || matchesAny(antPathMatcher, path, SwaggerPatterns)
-                || matchesAny(antPathMatcher, path, StaticResourcePatterns)
-                || ("POST".equals(method) && matchesAny(antPathMatcher, path, PublicPostPatterns))
-                || ("GET".equals(method) && matchesAny(antPathMatcher, path, PublicGetPatterns));
-    }
-
-    private boolean matchesAny(AntPathMatcher antPathMatcher, String path, String[] patterns) {
-        return Arrays.stream(patterns).anyMatch(pattern -> antPathMatcher.match(pattern, path));
+        return Arrays.stream(SwaggerPatterns)
+                .anyMatch(pattern -> antPathMatcher.match(pattern, path));
     }
 
     private String resolveToken(HttpServletRequest request) {

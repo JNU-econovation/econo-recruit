@@ -17,7 +17,7 @@ public class ApplicantResolver {
     private final ApplicantQueryUseCase applicantQueryUseCase;
 
     @QueryMapping
-    @PreAuthorize("hasAnyRole('PRESIDENT', 'OPERATION', 'TF')")
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_PRESIDENT', 'ROLE_ROLE_OPERATION', 'ROLE_ROLE_TF')")
     public AnswersResponseDto getApplicants(
             @Argument Integer year,
             @Argument Integer page,
@@ -29,7 +29,7 @@ public class ApplicantResolver {
     }
 
     @QueryMapping
-    @PreAuthorize("hasAnyRole('PRESIDENT', 'OPERATION', 'TF')")
+    @PreAuthorize("hasAnyRole('ROLE_ROLE_PRESIDENT', 'ROLE_ROLE_OPERATION', 'ROLE_ROLE_TF')")
     public Map<String, Object> getApplicant(
             @Argument String applicantId, @Argument List<String> requestedQnaFields) {
         return applicantQueryUseCase.executeFiltered(applicantId, requestedQnaFields);

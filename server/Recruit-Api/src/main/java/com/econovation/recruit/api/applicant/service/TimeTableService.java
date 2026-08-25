@@ -1,9 +1,7 @@
 package com.econovation.recruit.api.applicant.service;
 
-
 import static com.econovation.recruitcommon.consts.RecruitStatic.TIMETABLE_APPLICANT_FIELD;
 
-import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruit.api.applicant.usecase.ApplicantQueryUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableLoadUseCase;
 import com.econovation.recruit.api.applicant.usecase.TimeTableRegisterUseCase;
@@ -78,11 +76,11 @@ public class TimeTableService implements TimeTableRegisterUseCase, TimeTableLoad
                                             return "["
                                                     + allApplicantVo
                                                             .get(timeTable.getApplicantId())
-                                                            .get(ApplicantQnaKeys.FIELD)
+                                                            .get("field")
                                                     + "] : "
                                                     + allApplicantVo
                                                             .get(timeTable.getApplicantId())
-                                                            .get(ApplicantQnaKeys.NAME);
+                                                            .get("name");
                                         },
                                         Collectors.toList())));
     }

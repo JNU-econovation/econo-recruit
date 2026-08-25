@@ -1,6 +1,5 @@
 package com.econovation.recruit.utils.sort.strategy;
 
-import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +12,7 @@ public class AnswerObjectiveSortingStrategy implements SortStrategy<MongoAnswer>
     @Override
     public int compare(MongoAnswer obj1, MongoAnswer obj2) {
         return Integer.compare(
-                Arrays.asList(fieldOrder).indexOf(obj1.getQna().get(ApplicantQnaKeys.FIELD1).toString()),
-                Arrays.asList(fieldOrder).indexOf(obj2.getQna().get(ApplicantQnaKeys.FIELD1).toString()));
+                Arrays.asList(fieldOrder).indexOf(obj1.getQna().get("field1").toString()),
+                Arrays.asList(fieldOrder).indexOf(obj2.getQna().get("field1").toString()));
     }
 }

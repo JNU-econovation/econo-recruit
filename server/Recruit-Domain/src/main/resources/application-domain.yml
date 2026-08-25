@@ -31,6 +31,7 @@ spring:
         continue-on-error: false
 
     open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #     script 파일이 hibernate 초기화 이후 동작하게 하기 위한 옵션
     defer-datasource-initialization: false
   main:
@@ -73,6 +74,7 @@ spring:
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 logging:
   level:
     org.springframework.orm.jpa: ${LOG_LEVEL:INFO}
@@ -96,3 +98,4 @@ spring:
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
     hibernate:
       ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

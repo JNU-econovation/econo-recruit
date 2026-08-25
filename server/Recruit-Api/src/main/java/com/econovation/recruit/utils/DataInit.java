@@ -6,7 +6,7 @@ import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

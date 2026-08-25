@@ -1,7 +1,7 @@
 package com.econovation.recruitdomain.domains.dto;
 
+import javax.annotation.Nullable;
 import lombok.Getter;
-import org.springframework.lang.Nullable;
 
 @Getter
 public class UpdateRecordDto {

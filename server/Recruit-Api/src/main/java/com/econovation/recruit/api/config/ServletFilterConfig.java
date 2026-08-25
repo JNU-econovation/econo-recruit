@@ -1,6 +1,6 @@
 package com.econovation.recruit.api.config;
 
-import jakarta.servlet.Filter;
+import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
