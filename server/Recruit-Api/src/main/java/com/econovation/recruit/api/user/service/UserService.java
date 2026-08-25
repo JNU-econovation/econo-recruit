@@ -48,7 +48,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                 interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
         if (checkPassword(loginRequestDto.getPassword(), account.getPassword())) {
             TokenResponse tokenResponse =
-                    jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+                    jwtTokenProvider.createToken(account.getId(), account.getRole().getRole());
 
             AccessToken accessToken =
                     new AccessToken(
@@ -86,7 +86,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
         Long idpId = jwtTokenProvider.parseRefreshToken(refreshToken);
         Interviewer account = interviewerLoadPort.loadInterviewById(idpId);
         TokenResponse tokenResponse =
-                jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+                jwtTokenProvider.createToken(account.getId(), account.getRole().getRole());
 
         AccessToken accessToken =
                 new AccessToken(
