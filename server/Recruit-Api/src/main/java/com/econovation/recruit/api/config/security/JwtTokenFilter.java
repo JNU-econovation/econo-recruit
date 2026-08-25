@@ -6,6 +6,7 @@ import static com.econovation.recruitcommon.consts.RecruitStatic.BEARER;
 import static com.econovation.recruitcommon.consts.RecruitStatic.SwaggerPatterns;
 
 import com.econovation.recruitcommon.dto.AccessTokenInfo;
+import com.econovation.recruitcommon.exception.AccessTokenNotExistException;
 import com.econovation.recruitcommon.exception.InvalidTokenException;
 import com.econovation.recruitcommon.jwt.JwtTokenProvider;
 import com.econovation.recruitdomain.out.WhitelistLoadPort;
@@ -39,14 +40,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = resolveToken(request);
 
+        if (token == null) {
+            throw AccessTokenNotExistException.EXCEPTION;
+        }
+
         if (!whitelistLoadPort.existsByToken(token)) {
             throw InvalidTokenException.EXCEPTION;
         }
 
-        if (token != null) {
-            Authentication authentication = getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        Authentication authentication = getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }
