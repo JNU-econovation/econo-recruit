@@ -1,10 +1,35 @@
-version: "3.7"
+name: econo-recruit
 services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:6.0.13
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongo-data:/data/db
+
   redis:
     image: redis:alpine
-    hostname: redis
     container_name: redis
-    network_mode: "host"
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
 
   axon-server:
     image: axoniq/axonserver:4.6.11
@@ -13,6 +38,10 @@ services:
     ports:
       - "8024:8024"
       - "8124:8124"
+    volumes:
+      - axon-data:/axonserver/data
+      - axon-events:/axonserver/events
+      - axon-config:/axonserver/config
 
   backend:
     image: blackbean99/econo-recruit:latest
@@ -26,13 +55,30 @@ services:
     depends_on:
       - redis
       - axon-server
+      - mysql
+      - mongodb
 
-  nginx:
-    image: nginx:1.21.5-alpine
-    container_name: myweb-proxy
-    network_mode: "host"
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "10023:443"
+      - "127.0.0.1:81:81"
     volumes:
-      - ./proxy/nginx.conf:/etc/nginx/nginx.conf
-      - ./proxy/ssl:/etc/ssl
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - backend
+
+volumes:
+  mysql-data:
+  mongo-data:
+  redis-data:
+  axon-data:
+  axon-events:
+  axon-config:
+  npm-data:
+  npm-letsencrypt:

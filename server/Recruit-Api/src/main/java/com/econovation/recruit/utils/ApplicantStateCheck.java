@@ -5,7 +5,7 @@ import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

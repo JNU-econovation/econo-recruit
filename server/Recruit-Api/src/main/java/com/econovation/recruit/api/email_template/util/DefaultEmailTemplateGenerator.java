@@ -1,5 +1,6 @@
 package com.econovation.recruit.api.email_template.util;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitdomain.domains.email_template.domain.DefaultEmailTemplate;
@@ -66,7 +67,7 @@ public class DefaultEmailTemplateGenerator {
     }
 
     private void commonContext(MongoAnswer applicant, Context context) {
-        context.setVariable("name", applicant.getQna().get("name").toString());
+        context.setVariable("name", applicant.getQna().get(ApplicantQnaKeys.NAME).toString());
         context.setVariable("year", applicant.getYear());
     }
 }

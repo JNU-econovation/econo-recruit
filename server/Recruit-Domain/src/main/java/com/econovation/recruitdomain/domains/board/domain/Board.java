@@ -1,10 +1,10 @@
 package com.econovation.recruitdomain.domains.board.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
-import javax.annotation.Nullable;
-import javax.persistence.*;
-import javax.persistence.Column;
+import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 @Entity
 @NoArgsConstructor

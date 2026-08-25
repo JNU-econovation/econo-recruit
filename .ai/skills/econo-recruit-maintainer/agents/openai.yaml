@@ -1,0 +1,4 @@
+interface:
+  display_name: "Econo Recruit Maintainer"
+  short_description: "Maintain and debug the econo-recruit backend safely."
+  default_prompt: "Use this skill when working on the econo-recruit repository to inspect, modify, debug, and maintain the backend safely."

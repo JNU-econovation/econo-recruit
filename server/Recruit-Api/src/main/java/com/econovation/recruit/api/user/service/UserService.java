@@ -22,7 +22,7 @@ import com.econovation.recruitdomain.out.EmailVerificationRecordPort;
 import com.econovation.recruitdomain.out.InterviewerLoadPort;
 import com.econovation.recruitdomain.out.InterviewerRecordPort;
 import com.econovation.recruitdomain.out.WhitelistRecordPort;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                 interviewerLoadPort.loadInterviewerByEmail(loginRequestDto.getEmail());
         if (checkPassword(loginRequestDto.getPassword(), account.getPassword())) {
             TokenResponse tokenResponse =
-                    jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+                    jwtTokenProvider.createToken(account.getId(), account.getRole().getRole());
 
             AccessToken accessToken =
                     new AccessToken(
@@ -86,7 +86,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
         Long idpId = jwtTokenProvider.parseRefreshToken(refreshToken);
         Interviewer account = interviewerLoadPort.loadInterviewById(idpId);
         TokenResponse tokenResponse =
-                jwtTokenProvider.createToken(account.getId(), account.getRole().name());
+                jwtTokenProvider.createToken(account.getId(), account.getRole().getRole());
 
         AccessToken accessToken =
                 new AccessToken(
@@ -106,7 +106,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
     @Transactional
     public void signUp(SignUpRequestDto signUpRequestDto) {
         String email = signUpRequestDto.getEmail();
-        //        checkEmailVerified(email);
+        checkEmailVerified(email);
         if (interviewerLoadPort.loadOptionalInterviewerByEmail(email).isPresent())
             throw InterviewerAlreadySubmitException.EXCEPTION;
         String encededPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
@@ -119,7 +119,7 @@ public class UserService implements UserRegisterUseCase, UserLoginUseCase, UserL
                         .role(Role.ROLE_GUEST)
                         .build();
         interviewerRecordPort.save(interviewer);
-        //        deleteVerifiedCode(email);
+        deleteVerifiedCode(email);
     }
 
     @Override

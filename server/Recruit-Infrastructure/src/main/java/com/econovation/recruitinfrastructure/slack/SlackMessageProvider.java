@@ -21,8 +21,8 @@ public class SlackMessageProvider {
 
     @Transactional
     public void sendMessage(String url, String text) {
-        // 슬랙 url 이 null 일경우 안보냄.
-        if (Objects.isNull(url)) return;
+        // 슬랙 url 이 null 이거나 빈 값일 경우 안보냄.
+        if (Objects.isNull(url) || url.isBlank()) return;
         try {
             doSend(url, text);
         } catch (Exception ignored) {

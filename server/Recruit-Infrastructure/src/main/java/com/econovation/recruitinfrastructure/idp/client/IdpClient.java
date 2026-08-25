@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "IdpClient",
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
         configuration = IdpConfig.class)
 public interface IdpClient {
     @GetMapping("/api/users")
-    List<InterviewerResponse> loadByName(String name);
+    List<InterviewerResponse> loadByName(@RequestParam(name = "name") String name);
 
     // TODO @RequestHeader("Authorization") String accessToken
 

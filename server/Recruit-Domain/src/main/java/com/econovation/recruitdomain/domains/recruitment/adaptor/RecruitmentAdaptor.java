@@ -1,9 +1,9 @@
 package com.econovation.recruitdomain.domains.recruitment.adaptor;
 
 import com.econovation.recruitcommon.annotation.Adaptor;
-import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.domains.recruitment.domain.Recruitment;
 import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentRepository;
+import com.econovation.recruitdomain.domains.recruitment.domain.RecruitmentStates;
 import com.econovation.recruitdomain.out.RecruitmentPort;
 import java.util.List;
 import java.util.Optional;

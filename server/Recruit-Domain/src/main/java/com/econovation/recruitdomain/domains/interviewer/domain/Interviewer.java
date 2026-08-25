@@ -2,7 +2,7 @@ package com.econovation.recruitdomain.domains.interviewer.domain;
 
 import com.econovation.recruitdomain.domains.BaseTimeEntity;
 import com.econovation.recruitinfrastructure.idp.dto.InterviewerResponse;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,6 +2,7 @@ package com.econovation.recruit.api.applicant.dto;
 
 import static com.econovation.recruitcommon.consts.RecruitStatic.PASS_STATE_KEY;
 
+import com.econovation.recruitdomain.domains.applicant.constant.ApplicantQnaKeys;
 import com.econovation.recruitdomain.domains.applicant.domain.state.ApplicantState;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PeriodStates;
 import com.econovation.recruitdomain.domains.applicant.exception.ApplicantWrongStateException;
@@ -29,12 +30,12 @@ public class GetApplicantsStatusResponse {
             boolean isNonPassable = applicantState.isNonPassable(period);
 
             return GetApplicantsStatusResponse.builder()
-                    .field((String) result.get("field"))
-                    .field1((String) result.get("field1"))
-                    .field2((String) result.get("field2"))
-                    .name((String) result.get("name"))
-                    .id((String) result.get("id"))
-                    .year((Integer) result.get("year"))
+                    .field((String) result.get(ApplicantQnaKeys.FIELD))
+                    .field1((String) result.get(ApplicantQnaKeys.FIELD1))
+                    .field2((String) result.get(ApplicantQnaKeys.FIELD2))
+                    .name((String) result.get(ApplicantQnaKeys.NAME))
+                    .id((String) result.get(ApplicantQnaKeys.ID))
+                    .year((Integer) result.get(ApplicantQnaKeys.YEAR))
                     .state(ApplicantStateResponse.of(passState, isPassable, isNonPassable))
                     .build();
         }

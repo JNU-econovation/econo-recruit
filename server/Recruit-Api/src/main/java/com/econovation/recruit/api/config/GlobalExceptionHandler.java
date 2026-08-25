@@ -13,16 +13,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,7 +33,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestControllerAdvice
 @Slf4j
@@ -42,16 +43,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
-            Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+            Exception ex,
+            Object body,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
         ServletWebRequest servletWebRequest = (ServletWebRequest) request;
-        String url =
-                UriComponentsBuilder.fromHttpRequest(
-                                new ServletServerHttpRequest(servletWebRequest.getRequest()))
-                        .build()
-                        .toUriString();
+        String url = servletWebRequest.getRequest().getRequestURL().toString();
+        HttpStatus resolvedStatus = HttpStatus.resolve(status.value());
 
         ErrorResponse errorResponse =
-                new ErrorResponse(status.value(), status.name(), ex.getMessage(), url);
+                new ErrorResponse(
+                        status.value(),
+                        resolvedStatus != null ? resolvedStatus.name() : String.valueOf(status.value()),
+                        ex.getMessage(),
+                        url);
         return super.handleExceptionInternal(ex, errorResponse, headers, status, request);
     }
 
@@ -60,16 +66,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
-            HttpStatus status,
+            HttpStatusCode status,
             WebRequest request) {
 
         List<FieldError> errors = ex.getBindingResult().getFieldErrors();
         ServletWebRequest servletWebRequest = (ServletWebRequest) request;
-        String url =
-                UriComponentsBuilder.fromHttpRequest(
-                                new ServletServerHttpRequest(servletWebRequest.getRequest()))
-                        .build()
-                        .toUriString();
+        String url = servletWebRequest.getRequest().getRequestURL().toString();
+        HttpStatus resolvedStatus = HttpStatus.resolve(status.value());
         Map<String, Object> fieldAndErrorMessages =
                 errors.stream()
                         .collect(
@@ -78,7 +81,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         String errorsToJsonString = new ObjectMapper().writeValueAsString(fieldAndErrorMessages);
         ErrorResponse errorResponse =
-                new ErrorResponse(status.value(), status.name(), errorsToJsonString, url);
+                new ErrorResponse(
+                        status.value(),
+                        resolvedStatus != null ? resolvedStatus.name() : String.valueOf(status.value()),
+                        errorsToJsonString,
+                        url);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
@@ -144,11 +151,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleException(Exception e, HttpServletRequest request)
             throws IOException {
         final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) request;
-        final Long userId = SecurityUtils.getCurrentUserId();
-        String url =
-                UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(request))
-                        .build()
-                        .toUriString();
+        final Long userId =
+                Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                        .map(auth -> SecurityUtils.getCurrentUserId())
+                        .orElse(null);
+        String url = request.getRequestURL().toString();
 
         log.error("INTERNAL_SERVER_ERROR", e);
         GlobalErrorCode internalServerError = GlobalErrorCode.INTERNAL_SERVER_ERROR;
@@ -168,10 +175,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleNullPointerException(
             NullPointerException e, HttpServletRequest request) {
 
-        String url =
-                UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(request))
-                        .build()
-                        .toUriString();
+        String url = request.getRequestURL().toString();
 
         log.error("NullPointerException occurred: ", e);
 

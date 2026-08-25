@@ -9,14 +9,14 @@ aws:
     private-bucket : ${AWS_S3_BUCKET_PRIVATE:bucket-private}
     base-url: ${AWS_S3_BASE_URL:base-url}
 ncp:
-  access-key: ${NCP_ACCESS_KEY}
-  secret-key: ${NCP_SECRET_KEY}
+  access-key: ${NCP_ACCESS_KEY:}
+  secret-key: ${NCP_SECRET_KEY:}
   sender-address: ${NCP_SENDER_ADDRESS:}
   mail-base-url: ${NCP_MAIL_BASE_URL:https://mail.apigw.gov-ntruss.com}
   mail-api-url: ${NCP_MAIL_POST_URI:/api/v1/mails}
   sms-base-url: ${NCP_SMS_BASE_URL:https://sms.apigw.gov-ntruss.com}
-  sms-api-url: ${NCP_SMS_POST_URI:/sms/v2/services/ncp:sms:kr:324868537230:kjm/messages}
-  from-phone-number: ${NCP_FROM_PHONE_NUMBER}
+  sms-api-uri: ${NCP_SMS_POST_URI:}
+  from-phone-number: ${NCP_FROM_PHONE_NUMBER:}
 commons:
   email:
     host: ${COMMONS_EMAIL_HOST:smtp.naver.com}
@@ -33,7 +33,7 @@ spring:
     host: ${MAIL_HOST:smtp.naver.com}
     port: 587
     username: ${GMAIL_ADDRESS:}
-    password: ${GMAIL_PASSWORD}
+    password: ${GMAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -43,16 +43,10 @@ spring:
 slack:
   webhook:
     token: ${SLACK_WEBHOOK_TOKEN:}
-    id: ${SLACK_WEBHOOK_ID:}
-    channel :  ${SLACK_SERVICE_CHANNEL_ID:}
+    url: ${SLACK_WEBHOOK_URL:}
+    channel: ${SLACK_SERVICE_CHANNEL_ID:}
     username: ${SLACK_WEBHOOK_USERNAME:RecruitBot}
     icon-url: ${SLACK_WEBHOOK_ICON_URL:}
-  tf:
-    token: ${SLACK_TF_WEBHOOK_TOKEN:}
-    id: ${SLACK_TF_WEBHOOK_ID:}
-    channel: ${SLACK_TF_SERVICE_CHANNEL_ID:}
-    username: ${SLACK_TF_WEBHOOK_USERNAME:Recruit_알림요정}
-    icon-url: ${SLACK_TF_WEBHOOK_ICON_URL:}
 
 ---
 spring:
