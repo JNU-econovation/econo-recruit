@@ -6,8 +6,6 @@ import com.econovation.recruitdomain.common.aop.domainEvent.Events;
 import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
-import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
-import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,8 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class FinalEmailDiscussionEmailScheduler {
     private final ApplicantEmailService emailService;
-    private final SlackMessageProvider slackMessageProvider;
-    private final SlackProperties slackProperties;
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final Integer MAX_EMAIL_SEND_RETRY = 3;
     private final LatestRecruitmentVo latestRecruitInfo;
@@ -150,8 +146,6 @@ public class FinalEmailDiscussionEmailScheduler {
             String passState = applicant.getApplicantState().getPassStateToEnum().name();
 
             Events.raise(EmailSendEvent.of(applicantId, passState, ""));
-            slackMessageProvider.sendMessage(
-                    slackProperties.getUrl(), generateNotificationMessage(applicant));
         }
 
         return result;
@@ -169,21 +163,4 @@ public class FinalEmailDiscussionEmailScheduler {
                 .toList();
     }
 
-    private String generateNotificationMessage(MongoAnswer applicant) {
-        String message =
-                """
-                [메일 발송 성공]
-                - 이름 : %s
-                - 지원 분야 : %s / %s
-                - 합격 상태 : %s
-                """;
-
-        String name = applicant.getQna().get("name").toString();
-        String field = applicant.getQna().get("field").toString();
-        String field1 = applicant.getQna().get("field1").toString();
-        String field2 = applicant.getQna().get("field2").toString();
-        String state = applicant.getApplicantState().getPassStateToEnum().name();
-
-        return String.format(message, name, field1, field2, state);
-    }
 }

@@ -8,9 +8,14 @@ import com.econovation.recruitdomain.domains.applicant.domain.MongoAnswer;
 import com.econovation.recruitdomain.domains.applicant.domain.state.PassStates;
 import com.econovation.recruitdomain.domains.email_template.event.EmailSendEvent;
 import com.econovation.recruitinfrastructure.apache.CommonsEmailSender;
+import com.econovation.recruitinfrastructure.slack.SlackMessageProvider;
+import com.econovation.recruitinfrastructure.slack.config.SlackProperties;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -27,6 +32,8 @@ public class ApplicantEmailService {
     private final ApplicantQueryUseCase applicantQueryUseCase;
     private final DefaultEmailTemplateGenerator templateGenerator;
     private final LatestRecruitmentVo latestRecruitInfo;
+    private final SlackMessageProvider slackMessageProvider;
+    private final SlackProperties slackProperties;
 
     @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -67,12 +74,55 @@ public class ApplicantEmailService {
         File attachment = templateGenerator.getPortfolioFile(applicant);
         String email = applicant.getQna().get("email").toString();
 
-        if (Objects.isNull(attachment)) return emailSender.sendEmail(email, subject, template);
+        boolean result;
+        if (Objects.isNull(attachment)) result = emailSender.sendEmail(email, subject, template);
         else if (attachment.exists())
-            return emailSender.sendEmailWithAttachment(email, subject, template, attachment);
+            result = emailSender.sendEmailWithAttachment(email, subject, template, attachment);
         else {
             log.error("attachment 가 첨부되지 않았습니다. file dir : {}", attachment.getAbsolutePath());
-            return emailSender.sendEmail(email, subject, template);
+            result = emailSender.sendEmail(email, subject, template);
         }
+
+        if (result) {
+            slackMessageProvider.sendMessage(
+                    slackProperties.getUrl(), generateNotificationMessage(applicant));
+        }
+        return result;
+    }
+
+    private String generateNotificationMessage(MongoAnswer applicant) {
+        Map<String, Object> qna = applicant.getQna();
+        String fields =
+                Stream.of(getValue(qna, "field1"), getValue(qna, "field2"))
+                        .filter(value -> !value.isBlank())
+                        .distinct()
+                        .collect(Collectors.joining(" / "));
+        if (fields.isBlank()) fields = getValue(qna, "field");
+
+        return String.format(
+                """
+                [메일 발송 성공]
+                - 이름 : %s
+                - 지원 분야 : %s
+                - 합격 상태 : %s
+                """,
+                getValue(qna, "name"),
+                fields,
+                getStateName(applicant.getApplicantState().getPassStateToEnum()));
+    }
+
+    private String getValue(Map<String, Object> qna, String key) {
+        if (qna == null) return "";
+        return Objects.toString(qna.get(key), "");
+    }
+
+    private String getStateName(PassStates state) {
+        return switch (state) {
+            case NON_PROCESSED -> "미처리";
+            case FIRST_PASSED -> "1차 합격";
+            case FIRST_FAILED -> "1차 불합격";
+            case FINAL_PASSED -> "최종 합격";
+            case FINAL_FAILED -> "최종 불합격";
+        };
     }
 }
